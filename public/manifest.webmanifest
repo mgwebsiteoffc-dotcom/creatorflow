@@ -1,0 +1,36 @@
+{
+  "name": "CreatorFlow",
+  "short_name": "CreatorFlow",
+  "description": "AI-powered creator commerce for brands and creators",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b0f1a",
+  "theme_color": "#7c5cff",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity", "social"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Brand dashboard", "url": "/brand" },
+    { "name": "Creator home", "url": "/creator" }
+  ]
+}
