@@ -1,0 +1,58 @@
+@props([
+    'panel' => 'brand', // brand | creator | guest
+    'title' => null,
+])
+@php
+    $panelClass = $panel === 'creator' ? 'bg-rose-50' : 'bg-slate-50';
+    $workspace = $currentWorkspace ?? null;
+    $creator = $currentCreator ?? auth()->user()?->creator;
+@endphp
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#7c5cff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CreatorFlow">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <title>{{ $title ? $title.' · ' : '' }}CreatorFlow</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="min-h-screen {{ $panelClass }} text-slate-900">
+
+    @if($panel !== 'guest')
+        @include('partials.topbar', compact('panel', 'workspace', 'creator'))
+    @endif
+
+    <div class="mx-auto w-full max-w-6xl px-4 pb-28 pt-5 md:pb-10">
+        @if(session('status'))
+            <x-flash type="success">{{ session('status') }}</x-flash>
+        @endif
+        @if(session('error'))
+            <x-flash type="error">{{ session('error') }}</x-flash>
+        @endif
+        @if($errors->any())
+            <x-flash type="error">
+                <ul class="list-disc pl-4">
+                    @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+                </ul>
+            </x-flash>
+        @endif
+
+        {{ $slot }}
+    </div>
+
+    @if($panel !== 'guest')
+        @include('partials.bottomnav', ['panel' => $panel])
+    @endif
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+        }
+    </script>
+</body>
+</html>

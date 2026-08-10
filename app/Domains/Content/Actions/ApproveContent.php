@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Domains\Content\Actions;
+
+use App\Domains\Billing\Actions\ReleasePayout;
+use App\Models\ContentReview;
+use App\Models\ContentSubmission;
+use Illuminate\Support\Facades\DB;
+
+class ApproveContent
+{
+    public function __construct(protected ReleasePayout $releasePayout) {}
+
+    public function handle(ContentSubmission $submission, ?int $userId = null): ContentSubmission
+    {
+        return DB::transaction(function () use ($submission, $userId) {
+            $submission->approve();
+
+            ContentReview::create([
+                'content_submission_id' => $submission->id,
+                'reviewer_type' => 'brand',
+                'reviewer_id' => $userId,
+                'decision' => 'approved',
+                'comment' => 'Approved by brand',
+                'created_at' => now(),
+            ]);
+
+            // Release cash payout (if any) for the assignment.
+            $this->releasePayout->handle($submission);
+
+            $assignment = $submission->assignment;
+            if ($assignment->submissions()->where('status', 'approved')->exists()) {
+                $assignment->update(['status' => 'completed']);
+            }
+
+            return $submission->fresh();
+        });
+    }
+}
