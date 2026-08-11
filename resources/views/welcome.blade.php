@@ -508,74 +508,130 @@
         </div>
     </section>
 
+    {{-- ============================ CLIENT LOGOS ============================ --}}
+    <section class="relative overflow-hidden border-y border-slate-200 bg-white py-14">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="text-center">
+                <p class="section-eyebrow reveal">Our clients</p>
+                <h2 class="reveal mt-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">Trusted by 1,000+ modern brands</h2>
+            </div>
+
+            {{-- Static logo grid (all logos visible; hover pops color) --}}
+            <div class="mt-10 grid grid-cols-3 items-center gap-x-6 gap-y-8 sm:grid-cols-4 md:grid-cols-6">
+                @foreach($logoData as $l)
+                    @php $target = $l['link'] ?? '#'; @endphp
+                    <a href="{{ $target }}" @if($l['link']) target="_blank" rel="noopener" @endif class="reveal group flex h-16 items-center justify-center opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0">
+                        @if(! empty($l['url']))
+                            <img src="{{ $l['url'] }}" alt="{{ $l['name'] }}" class="max-h-10 max-w-full object-contain">
+                        @else
+                            <span class="text-xl font-black tracking-tight text-slate-500 group-hover:text-slate-900">{{ $l['name'] }}</span>
+                        @endif
+                    </a>
+                @endforeach
+            </div>
+
+            {{-- Marquee for the same logos (secondary reinforcement, auto-scroll) --}}
+            <div class="marquee mt-10">
+                <div class="marquee-track">
+                    @foreach(array_merge($logoData, $logoData) as $l)
+                        <div class="flex shrink-0 items-center gap-2 text-lg font-black tracking-tight text-slate-400">
+                            <span class="h-4 w-4 rounded" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);"></span>
+                            {{ $l['name'] }}
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- ============================ SAMPLE WORK · REEL CAROUSEL ============================ --}}
     <section class="relative overflow-hidden py-20">
         <div class="absolute inset-0 -z-10"
              style="background: linear-gradient(180deg, #ffffff 0%, #fbfaff 100%);"></div>
 
         <div class="mx-auto max-w-6xl px-4">
-            <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div class="max-w-2xl text-center sm:text-left">
-                    <p class="section-eyebrow reveal">Sample work · reels</p>
-                    <h2 class="section-title reveal mt-3 sm:text-left">Turning ideas into <span class="text-gradient">viral drops</span></h2>
-                    <p class="reveal mt-3 text-slate-600">Real creator videos we've shipped for real brands. Swipe →</p>
-                </div>
-                <div class="reveal flex gap-2">
-                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-violet-300 hover:text-violet-700" data-reel-prev aria-label="Previous">←</button>
-                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full text-white shadow-md" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);" data-reel-next aria-label="Next">→</button>
-                </div>
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="section-eyebrow reveal">Sample work · reels</p>
+                <h2 class="section-title reveal mt-3">Turning ideas into <span class="text-gradient">viral drops</span></h2>
+                <p class="reveal mt-3 text-slate-600">Real creator videos we've shipped for real brands.</p>
             </div>
 
-            {{-- Carousel track (snap + drag/swipe) --}}
-            <div class="reveal relative mt-10">
-                <div data-reel class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 pt-2 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-                     style="scroll-padding-left: 1rem;">
-                    @php
-                        $reels = [
-                            ['Samsara Ghee',        'Food',        'from-amber-400 to-orange-500',  '2.4M views',  '@nova.eats'],
-                            ['Luxotica Perfume',    'Cosmetics',   'from-fuchsia-400 to-pink-500',  '840K views',  '@aria.k'],
-                            ['Seven Seas Travel',   'Travel',      'from-cyan-400 to-blue-500',     '1.1M views',  '@theovlog'],
-                            ['Perfume+',            'Cosmetics',   'from-rose-400 to-red-500',      '620K views',  '@mira.reels'],
-                            ['Atul Bakery',         'Store Visit', 'from-yellow-400 to-amber-500',  '410K views',  '@foodie.desi'],
-                            ['Evereve Lifestyle',   'Lifestyle',   'from-violet-500 to-purple-600', '1.8M views',  '@zia.styles'],
-                            ['Roving Mode',         'Fashion',     'from-indigo-500 to-violet-500', '960K views',  '@fashioncore'],
-                            ['Iva Lens',            'Eyewear',     'from-emerald-400 to-teal-500',  '580K views',  '@techkai'],
-                        ];
-                    @endphp
-                    @foreach($reels as $r)
-                        <article class="group relative aspect-[9/16] w-[240px] shrink-0 snap-start overflow-hidden rounded-3xl shadow-lg sm:w-[260px] md:w-[280px]">
-                            {{-- Fake reel visual --}}
-                            <div class="absolute inset-0 bg-gradient-to-br {{ $r[2] }}"></div>
-                            <div class="absolute inset-0 opacity-40" style="background: radial-gradient(200px 200px at 30% 30%, rgba(255,255,255,.6), transparent 60%);"></div>
+            {{-- Category filter chips --}}
+            @if(! empty($categories) && count($categories) > 1)
+                <div class="reveal mt-8 flex flex-wrap justify-center gap-2" data-reel-filter>
+                    <button type="button" data-cat="all" class="tab-pill is-active">All</button>
+                    @foreach($categories as $c)
+                        <button type="button" data-cat="{{ $c }}" class="tab-pill">{{ $c }}</button>
+                    @endforeach
+                </div>
+            @endif
 
-                            {{-- Fake UI chrome --}}
-                            <div class="absolute inset-x-3 top-3 flex items-center justify-between text-white">
-                                <span class="rounded-full bg-black/40 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur">{{ $r[1] }}</span>
-                                <span class="rounded-full bg-black/40 px-2 py-0.5 text-[10px] font-semibold backdrop-blur">0:{{ str_pad(15 + $loop->index * 3, 2, '0', STR_PAD_LEFT) }}</span>
+            {{-- Carousel + controls --}}
+            <div class="reveal relative mt-10">
+                <div data-reel class="reel-track flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-6 pt-2 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    @foreach($reelsData as $r)
+                        <article data-reel-card data-cat="{{ $r['category'] }}"
+                                 class="group relative aspect-[9/16] w-[240px] shrink-0 snap-start overflow-hidden rounded-3xl shadow-lg sm:w-[260px] md:w-[280px]">
+
+                            {{-- Video (if uploaded) or gradient poster --}}
+                            @if(! empty($r['video_url']))
+                                <video
+                                    src="{{ $r['video_url'] }}"
+                                    @if(! empty($r['poster_url'])) poster="{{ $r['poster_url'] }}" @endif
+                                    class="absolute inset-0 h-full w-full object-cover"
+                                    muted loop playsinline preload="metadata"
+                                    data-reel-video></video>
+                            @elseif(! empty($r['poster_url']))
+                                <img src="{{ $r['poster_url'] }}" alt="{{ $r['title'] }}" class="absolute inset-0 h-full w-full object-cover">
+                            @else
+                                <div class="absolute inset-0 bg-gradient-to-br {{ $r['gradient'] }}"></div>
+                                <div class="absolute inset-0 opacity-40" style="background: radial-gradient(200px 200px at 30% 30%, rgba(255,255,255,.6), transparent 60%);"></div>
+                            @endif
+
+                            {{-- Chrome overlay: category chip + duration --}}
+                            <div class="pointer-events-none absolute inset-x-3 top-3 z-10 flex items-center justify-between text-white">
+                                <span class="rounded-full bg-black/50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur">{{ $r['category'] }}</span>
+                                <span class="rounded-full bg-black/50 px-2 py-0.5 text-[10px] font-semibold backdrop-blur">0:{{ str_pad(15 + $loop->index * 3, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
 
-                            {{-- Fake right-side action rail --}}
-                            <div class="absolute right-3 bottom-16 flex flex-col items-center gap-3 text-white">
+                            {{-- Right-rail actions --}}
+                            <div class="pointer-events-none absolute right-3 bottom-16 z-10 flex flex-col items-center gap-3 text-white">
                                 <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">❤</div>
                                 <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">💬</div>
                                 <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">↗</div>
                             </div>
 
-                            {{-- Bottom overlay --}}
-                            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 pt-14 text-white">
-                                <div class="text-[11px] font-semibold opacity-90">{{ $r[4] }}</div>
-                                <div class="mt-0.5 text-lg font-black leading-tight">{{ $r[0] }}</div>
-                                <div class="mt-1 flex items-center gap-2 text-[11px] opacity-90">
-                                    <span>▶ {{ $r[3] }}</span>
-                                </div>
+                            {{-- CENTERED play button — fades out when the video is playing --}}
+                            <button type="button"
+                                    class="absolute inset-0 z-10 grid place-items-center opacity-100 transition duration-300"
+                                    data-reel-play
+                                    aria-label="Play {{ $r['title'] }}">
+                                <span class="grid h-16 w-16 place-items-center rounded-full bg-white/25 text-3xl text-white shadow-lg backdrop-blur transition group-hover:scale-105 group-hover:bg-white/40">▶</span>
+                            </button>
+
+                            {{-- Bottom info gradient --}}
+                            <div class="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4 pt-14 text-white">
+                                @if($r['creator'])
+                                    <div class="text-[11px] font-semibold opacity-90">{{ $r['creator'] }}</div>
+                                @endif
+                                <div class="mt-0.5 text-lg font-black leading-tight">{{ $r['title'] }}</div>
+                                @if($r['meta'])
+                                    <div class="mt-1 flex items-center gap-2 text-[11px] opacity-90"><span>▶ {{ $r['meta'] }}</span></div>
+                                @endif
                             </div>
 
-                            {{-- Play button --}}
-                            <div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100">
-                                <div class="grid h-14 w-14 place-items-center rounded-full bg-white/30 text-2xl text-white backdrop-blur">▶</div>
-                            </div>
+                            @if(! empty($r['link']))
+                                <a href="{{ $r['link'] }}" target="_blank" rel="noopener" class="absolute inset-0 z-20 sr-only">Open reel</a>
+                            @endif
                         </article>
                     @endforeach
+                </div>
+
+                {{-- Controls: BELOW the carousel, centered — no more overlap with the reels --}}
+                <div class="mt-6 flex items-center justify-center gap-3">
+                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-violet-300 hover:text-violet-700" data-reel-prev aria-label="Previous">←</button>
+                    <div class="text-xs text-slate-500">Swipe or drag</div>
+                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full text-white shadow-md transition hover:scale-105" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);" data-reel-next aria-label="Next">→</button>
                 </div>
             </div>
         </div>

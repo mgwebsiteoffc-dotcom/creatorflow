@@ -70,20 +70,66 @@ document.addEventListener('DOMContentLoaded', () => {
         navToggle.addEventListener('click', () => navMenu.classList.toggle('hidden'));
     }
 
-    /* Reel carousel: [data-reel] scroll container + [data-reel-prev]/[data-reel-next] */
+    /* Reel carousel: [data-reel] scroll container + [data-reel-prev]/[data-reel-next]
+       Also handles [data-reel-play] play buttons and [data-reel-filter] category tabs. */
     document.querySelectorAll('[data-reel]').forEach((reel) => {
         const step = () => {
-            const first = reel.querySelector('article');
-            return first ? first.getBoundingClientRect().width + 16 : 260;
+            const visible = Array.from(reel.querySelectorAll('article'))
+                .find(a => a.style.display !== 'none');
+            return visible ? visible.getBoundingClientRect().width + 16 : 260;
         };
         const scrollBy = (dir) => reel.scrollBy({ left: dir * step(), behavior: 'smooth' });
         document.querySelectorAll('[data-reel-prev]').forEach((b) => b.addEventListener('click', () => scrollBy(-1)));
         document.querySelectorAll('[data-reel-next]').forEach((b) => b.addEventListener('click', () => scrollBy(1)));
 
+        // Play buttons — play the video, hide the button while playing
+        reel.querySelectorAll('[data-reel-play]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = btn.closest('article');
+                const video = card?.querySelector('[data-reel-video]');
+                if (video) {
+                    // Pause any other playing reel first
+                    reel.querySelectorAll('[data-reel-video]').forEach(v => {
+                        if (v !== video) { try { v.pause(); v.currentTime = 0; } catch {} }
+                    });
+                    reel.querySelectorAll('[data-reel-play]').forEach(b => b.classList.remove('opacity-0'));
+
+                    video.play().then(() => {
+                        btn.classList.add('opacity-0');
+                    }).catch(() => {});
+                    video.addEventListener('pause', () => btn.classList.remove('opacity-0'), { once: true });
+                    video.addEventListener('ended', () => btn.classList.remove('opacity-0'), { once: true });
+                }
+            });
+        });
+
+        // Category filter tabs
+        const filterBar = document.querySelector('[data-reel-filter]');
+        if (filterBar) {
+            filterBar.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-cat]');
+                if (!btn) return;
+                const cat = btn.dataset.cat;
+                filterBar.querySelectorAll('[data-cat]').forEach(b => b.classList.toggle('is-active', b === btn));
+                reel.querySelectorAll('[data-reel-card]').forEach((card) => {
+                    const show = cat === 'all' || card.dataset.cat === cat;
+                    card.style.display = show ? '' : 'none';
+                });
+                reel.scrollTo({ left: 0, behavior: 'smooth' });
+            });
+        }
+
         // Drag-to-scroll (desktop)
         let down = false, startX = 0, startLeft = 0;
-        reel.addEventListener('pointerdown', (e) => { down = true; startX = e.clientX; startLeft = reel.scrollLeft; reel.setPointerCapture(e.pointerId); reel.classList.add('cursor-grabbing'); });
-        reel.addEventListener('pointerup',   (e) => { down = false; reel.classList.remove('cursor-grabbing'); });
+        reel.addEventListener('pointerdown', (e) => {
+            // Don't drag when clicking on a play button
+            if (e.target.closest('[data-reel-play], video')) return;
+            down = true; startX = e.clientX; startLeft = reel.scrollLeft;
+            reel.setPointerCapture(e.pointerId); reel.classList.add('cursor-grabbing');
+        });
+        reel.addEventListener('pointerup',   () => { down = false; reel.classList.remove('cursor-grabbing'); });
+        reel.addEventListener('pointercancel',() => { down = false; reel.classList.remove('cursor-grabbing'); });
         reel.addEventListener('pointermove', (e) => { if (!down) return; reel.scrollLeft = startLeft - (e.clientX - startX); });
     });
 

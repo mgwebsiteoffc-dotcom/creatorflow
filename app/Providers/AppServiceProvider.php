@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Composers\HomepageComposer;
 use App\View\Composers\NotificationComposer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\View;
@@ -29,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('partials.topbar', NotificationComposer::class);
+        View::composer('welcome', HomepageComposer::class);
     }
 }

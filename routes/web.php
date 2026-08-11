@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CreatorController as AdminCreatorController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\EscrowController as AdminEscrowController;
+use App\Http\Controllers\Admin\HomepageController as AdminHomepageController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
 use App\Http\Controllers\Admin\SeoController as AdminSeoController;
 use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
@@ -142,6 +143,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/settings', [AdminSettingsController::class, 'update'])->name('settings.update');
 
     Route::get('/seo',       AdminSeoController::class)->name('seo');
+
+    Route::get('/homepage',                    [AdminHomepageController::class, 'index'])->name('homepage');
+    Route::post('/homepage',                   [AdminHomepageController::class, 'store'])->name('homepage.store');
+    Route::post('/homepage/{item}',            [AdminHomepageController::class, 'update'])->name('homepage.update');
+    Route::delete('/homepage/{item}',          [AdminHomepageController::class, 'destroy'])->name('homepage.destroy');
 
     Route::get('/escrow',   [AdminEscrowController::class, 'index'])->name('escrow.index');
     Route::post('/escrow/hold',    [AdminEscrowController::class, 'hold'])->name('escrow.hold');

@@ -59,6 +59,8 @@ class DatabaseSeeder extends Seeder
 
         // SEO-focused blog posts (only if blog_posts table exists).
         $this->call(SeoBlogSeeder::class);
+        // Client logos + sample reels (only if homepage_items table exists).
+        $this->call(HomepageSeeder::class);
 
         // ── Platform superadmin (system owner) ─────────────────────────
         User::updateOrCreate(
