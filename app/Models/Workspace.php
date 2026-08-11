@@ -14,8 +14,13 @@ class Workspace extends Model
     use HasUuid;
 
     protected $fillable = [
-        'uuid', 'agency_id', 'name', 'website', 'logo_path', 'country',
-        'currency', 'timezone', 'plan', 'plan_status', 'onboarding_step',
+        'uuid', 'agency_id', 'name', 'legal_name', 'website',
+        'contact_email', 'contact_phone',
+        'logo_path', 'country', 'currency', 'timezone',
+        'address_line1', 'address_line2', 'address_city',
+        'address_state', 'address_postal',
+        'tax_type', 'tax_id', 'billing_notes',
+        'plan', 'plan_status', 'onboarding_step',
         'onboarding_completed_at', 'settings',
     ];
 
@@ -69,5 +74,59 @@ class Workspace extends Model
     public function onboardingComplete(): bool
     {
         return $this->onboarding_completed_at !== null;
+    }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function paymentRecords(): HasMany
+    {
+        return $this->hasMany(PaymentRecord::class);
+    }
+
+    public function currencySymbol(): string
+    {
+        return static::symbolFor($this->currency ?: 'USD');
+    }
+
+    public function formatMoney(int $cents, ?string $currency = null): string
+    {
+        $currency = strtoupper($currency ?: ($this->currency ?: 'USD'));
+        $amount = $cents / 100;
+        $formatted = $currency === 'INR'
+            ? number_format($amount, 2, '.', ',')
+            : number_format($amount, 2);
+
+        return static::symbolFor($currency).$formatted;
+    }
+
+    public static function symbolFor(string $code): string
+    {
+        return match (strtoupper($code)) {
+            'INR' => '₹',
+            'USD', 'CAD', 'AUD', 'SGD', 'NZD' => '$',
+            'EUR' => '€',
+            'GBP' => '£',
+            'AED' => 'د.إ ',
+            'JPY' => '¥',
+            default => $code.' ',
+        };
+    }
+
+    public static function supportedCurrencies(): array
+    {
+        return [
+            'INR' => 'INR · ₹ Indian Rupee',
+            'USD' => 'USD · $ US Dollar',
+            'EUR' => 'EUR · € Euro',
+            'GBP' => 'GBP · £ British Pound',
+            'AED' => 'AED · UAE Dirham',
+            'AUD' => 'AUD · $ Australian Dollar',
+            'CAD' => 'CAD · $ Canadian Dollar',
+            'SGD' => 'SGD · $ Singapore Dollar',
+            'JPY' => 'JPY · ¥ Japanese Yen',
+        ];
     }
 }

@@ -100,7 +100,7 @@
             <h2 class="font-semibold">Agreement</h2>
             @if($assignment->contract)
                 <p class="mt-2 text-sm"><span class="text-slate-500">Status:</span> {{ $assignment->contract->status }}</p>
-                <p class="text-sm"><span class="text-slate-500">Fee:</span> ${{ number_format($assignment->fee_cents/100, 2) }}</p>
+                <p class="text-sm"><span class="text-slate-500">Fee:</span> {{ $currentWorkspace->formatMoney((int) $assignment->fee_cents) }}</p>
                 <details class="mt-3"><summary class="cursor-pointer text-sm text-violet-600">View agreement</summary>
                     <div class="mt-2 max-h-64 overflow-auto whitespace-pre-wrap rounded bg-slate-50 p-3 text-xs text-slate-700">{{ $assignment->contract->body }}</div>
                 </details>
@@ -110,7 +110,7 @@
 
             @if($assignment->payout)
                 <h2 class="mt-5 font-semibold">Payout</h2>
-                <p class="mt-2 text-sm">${{ number_format($assignment->payout->net_cents/100,2) }} · {{ $assignment->payout->status }}</p>
+                <p class="mt-2 text-sm">{{ $currentWorkspace->formatMoney((int) $assignment->payout->net_cents, $assignment->payout->currency) }} · {{ $assignment->payout->status }}</p>
             @endif
 
             <form method="POST" action="{{ route('messages.start', ['campaign' => $assignment->campaign_id, 'creatorId' => $assignment->creator_id]) }}" class="mt-5">

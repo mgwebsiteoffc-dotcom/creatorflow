@@ -24,7 +24,7 @@
         <div class="card space-y-4 p-5">
             <div>
                 <p class="text-xs text-slate-500">Price from</p>
-                <p class="text-2xl font-bold">${{ number_format($product->priceCents()/100, 2) }}</p>
+                <p class="text-2xl font-bold">{{ $currentWorkspace->formatMoney((int) $product->priceCents()) }}</p>
             </div>
             <div>
                 <p class="text-xs text-slate-500">Total inventory</p>
@@ -36,7 +36,7 @@
                     @foreach($product->variants as $v)
                         <li class="flex justify-between py-1.5">
                             <span>{{ $v->title ?: $v->sku ?: 'Default' }}</span>
-                            <span class="text-slate-500">${{ number_format($v->price_cents/100,2) }} · {{ $v->inventory_qty }} in stock</span>
+                            <span class="text-slate-500">{{ $currentWorkspace->formatMoney((int) $v->price_cents) }} · {{ $v->inventory_qty }} in stock</span>
                         </li>
                     @endforeach
                 </ul>

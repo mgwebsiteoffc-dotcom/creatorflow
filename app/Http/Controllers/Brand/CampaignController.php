@@ -105,6 +105,41 @@ class CampaignController extends Controller
         return back()->with('status', 'Campaign launched! Invitations are going out now.');
     }
 
+    public function pause(Campaign $campaign, TenantContext $tenant)
+    {
+        $this->authorizeWorkspace($campaign->workspace_id, $tenant);
+        $campaign->update(['status' => 'paused']);
+        return back()->with('status', 'Campaign paused. No new invitations will be sent.');
+    }
+
+    public function resume(Campaign $campaign, TenantContext $tenant)
+    {
+        $this->authorizeWorkspace($campaign->workspace_id, $tenant);
+        $campaign->update(['status' => $campaign->launched_at ? 'active' : 'inviting']);
+        return back()->with('status', 'Campaign resumed.');
+    }
+
+    public function end(Campaign $campaign, TenantContext $tenant)
+    {
+        $this->authorizeWorkspace($campaign->workspace_id, $tenant);
+        $campaign->update([
+            'status'       => 'completed',
+            'completed_at' => now(),
+            'end_date'     => $campaign->end_date ?: now(),
+        ]);
+        return back()->with('status', 'Campaign marked as completed.');
+    }
+
+    public function cancel(Campaign $campaign, TenantContext $tenant)
+    {
+        $this->authorizeWorkspace($campaign->workspace_id, $tenant);
+        $campaign->update([
+            'status'       => 'cancelled',
+            'completed_at' => now(),
+        ]);
+        return back()->with('status', 'Campaign cancelled. Pending invitations expired.');
+    }
+
     public function matches(Campaign $campaign, TenantContext $tenant)
     {
         $this->authorizeWorkspace($campaign->workspace_id, $tenant);

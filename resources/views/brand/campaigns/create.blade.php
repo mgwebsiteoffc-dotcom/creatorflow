@@ -81,7 +81,7 @@
                                    value="{{ $product->id }}" @if($seed === null) disabled @endif>
                             <div class="min-w-0 flex-1">
                                 <p class="truncate font-medium">{{ $product->title }}</p>
-                                <p class="text-xs text-slate-500">${{ number_format($product->priceCents()/100, 2) }} · {{ $product->inventoryTotal() }} in stock
+                                <p class="text-xs text-slate-500">{{ $currentWorkspace->formatMoney((int) $product->priceCents()) }} · {{ $product->inventoryTotal() }} in stock
                                     @if($product->hero_score > 70) · <span class="badge-amber">Hero {{ $product->hero_score }}</span>@endif
                                 </p>
                             </div>

@@ -5,14 +5,38 @@
             <h1 class="text-3xl font-black tracking-tight text-slate-900">{{ $campaign->title }}</h1>
             <p class="mt-1 text-sm text-slate-500">{{ $campaign->niche }} · <span class="capitalize">{{ $campaign->type }}</span></p>
         </div>
-        @if(! $campaign->isLaunched())
-            <form method="POST" action="{{ route('brand.campaigns.launch', $campaign) }}">
-                @csrf
-                <button class="btn-primary">🚀 Launch campaign</button>
-            </form>
-        @else
-            <x-badge tone="green">Launched {{ $campaign->launched_at?->diffForHumans() }}</x-badge>
-        @endif
+        <div class="flex flex-wrap items-center gap-2">
+            @if(! $campaign->isLaunched())
+                <form method="POST" action="{{ route('brand.campaigns.launch', $campaign) }}">
+                    @csrf
+                    <button class="btn-primary">🚀 Launch campaign</button>
+                </form>
+            @else
+                <x-badge tone="green">Launched {{ $campaign->launched_at?->diffForHumans() }}</x-badge>
+            @endif
+
+            @if(in_array($campaign->status, ['inviting','active']))
+                <form method="POST" action="{{ route('brand.campaigns.pause', $campaign) }}">@csrf
+                    <button class="btn-secondary !py-2 !text-xs">⏸ Pause</button>
+                </form>
+            @endif
+            @if($campaign->status === 'paused')
+                <form method="POST" action="{{ route('brand.campaigns.resume', $campaign) }}">@csrf
+                    <button class="btn-secondary !py-2 !text-xs">▶ Resume</button>
+                </form>
+            @endif
+            @if(in_array($campaign->status, ['inviting','active','paused']))
+                <form method="POST" action="{{ route('brand.campaigns.end', $campaign) }}" data-confirm="Mark this campaign as completed?">@csrf
+                    <button class="btn-secondary !py-2 !text-xs">🏁 End campaign</button>
+                </form>
+            @endif
+            @if($campaign->status !== 'cancelled' && $campaign->status !== 'completed')
+                <form method="POST" action="{{ route('brand.campaigns.cancel', $campaign) }}"
+                      data-confirm="Cancel this campaign? Pending invitations will be expired.">@csrf
+                    <button class="btn-ghost !py-2 !text-xs !text-rose-600 hover:!bg-rose-50">✕ Cancel</button>
+                </form>
+            @endif
+        </div>
     </div>
 
     <div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-5 lg:gap-5">

@@ -28,7 +28,7 @@
                 <div class="p-3">
                     <p class="truncate text-sm font-semibold">{{ $product->title }}</p>
                     <div class="mt-1 flex items-center justify-between text-xs text-slate-500">
-                        <span>${{ number_format($product->priceCents()/100, 2) }}</span>
+                        <span>{{ $currentWorkspace->formatMoney((int) $product->priceCents()) }}</span>
                         <span>{{ $product->inventoryTotal() }} in stock</span>
                     </div>
                     @if($product->hero_score > 70)

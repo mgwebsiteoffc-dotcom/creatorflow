@@ -19,6 +19,15 @@
         </a>
     @endif
 
+    @if(empty($workspace->contact_email) || empty($workspace->address_line1) || empty($workspace->currency))
+        <a href="{{ route('brand.settings.profile') }}"
+           class="mt-4 flex items-center gap-3 rounded-2xl border border-sky-200 bg-gradient-to-r from-sky-50 to-cyan-50 p-4 text-sm text-sky-900 transition hover:border-sky-300 hover:shadow-sm">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-sky-500 to-cyan-500 text-white shadow-sm">🏢</span>
+            <span class="flex-1"><strong>Complete your brand profile</strong> — set currency, address, and tax details so invoices are correct.</span>
+            <span class="text-sky-600">→</span>
+        </a>
+    @endif
+
     @if(($stats['pending_applications'] ?? 0) > 0)
         <a href="{{ route('brand.applications.index') }}"
            class="mt-4 flex items-center gap-3 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-rose-50 p-4 text-sm text-amber-900 transition hover:border-amber-300 hover:shadow-sm">
@@ -32,7 +41,7 @@
         <x-stat label="Products" :value="$stats['products']" tone="sky"/>
         <x-stat label="Active campaigns" :value="$stats['active_campaigns']" tone="violet"/>
         <x-stat label="Creators reached" :value="$stats['creators_reached']" tone="amber"/>
-        <x-stat label="Attributed revenue" :value="'$'.number_format($stats['attributed_revenue_cents']/100, 0)" tone="emerald" :hint="$stats['pending_content'].' content pending review'"/>
+        <x-stat label="Attributed revenue" :value="$workspace->formatMoney($stats['attributed_revenue_cents'])" tone="emerald" :hint="$stats['pending_content'].' content pending review'"/>
     </div>
 
     @if($suggestion)

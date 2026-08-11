@@ -20,7 +20,7 @@
     </form>
 
     <div class="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
-        <x-stat label="Attributed revenue" :value="'$'.number_format($attributedRevenueCents/100, 0)" tone="emerald"/>
+        <x-stat label="Attributed revenue" :value="$currentWorkspace->formatMoney($attributedRevenueCents)" tone="emerald"/>
         <x-stat label="Attributed orders" :value="$attributedOrders" tone="violet"/>
         <x-stat label="Active creators" :value="$creatorLeaderboard->count()" tone="sky"/>
     </div>
@@ -49,7 +49,7 @@
                 @forelse($creatorLeaderboard as $row)
                     <div class="flex items-center justify-between text-sm">
                         <span>{{ $row->creator->display_name ?? 'Creator #'.$row->creator_id }}</span>
-                        <span class="font-semibold text-emerald-600">${{ number_format(($row->revenue ?? 0)/100, 0) }} · {{ $row->orders }} orders</span>
+                        <span class="font-semibold text-emerald-600">{{ $currentWorkspace->formatMoney((int)($row->revenue ?? 0)) }} · {{ $row->orders }} orders</span>
                     </div>
                 @empty
                     <p class="text-sm text-slate-500">No creator revenue yet.</p>
