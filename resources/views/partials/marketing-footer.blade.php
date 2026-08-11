@@ -17,7 +17,7 @@
     </div>
 
     {{-- Main column grid --}}
-    <div class="relative mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-6">
+    <div class="relative mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-7">
         {{-- Brand block (2 cols) --}}
         <div class="md:col-span-2">
             <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold text-white">
@@ -64,6 +64,20 @@
                 <li><a href="#" class="hover:text-white">Privacy policy</a></li>
                 <li><a href="#" class="hover:text-white">Refund policy</a></li>
                 <li><a href="{{ url('/sitemap.xml') }}" class="hover:text-white">Sitemap</a></li>
+            </ul>
+        </div>
+
+        {{-- Cities · high-intent SEO block --}}
+        <div>
+            <h4 class="text-xs font-black uppercase tracking-widest text-white">By city</h4>
+            <ul class="mt-4 space-y-2 text-sm">
+                <li><a href="{{ route('services.city', ['influencer-marketing-agency','delhi']) }}" class="hover:text-white">Delhi · Influencer marketing</a></li>
+                <li><a href="{{ route('services.city', ['ugc-influencers','delhi']) }}" class="hover:text-white">Delhi · UGC influencers</a></li>
+                <li><a href="{{ route('services.city', ['barter-influencers','delhi']) }}" class="hover:text-white">Delhi · Barter influencers</a></li>
+                <li><a href="{{ route('services.city', ['influencer-marketing-agency','mumbai']) }}" class="hover:text-white">Mumbai · Influencer marketing</a></li>
+                <li><a href="{{ route('services.city', ['ugc-influencers','mumbai']) }}" class="hover:text-white">Mumbai · UGC influencers</a></li>
+                <li><a href="{{ route('services.city', ['micro-influencer-marketing','bangalore']) }}" class="hover:text-white">Bangalore · Micro influencers</a></li>
+                <li><a href="{{ route('services.index') }}" class="hover:text-white">All cities →</a></li>
             </ul>
         </div>
 

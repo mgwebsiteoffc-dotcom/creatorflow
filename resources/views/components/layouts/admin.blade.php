@@ -33,6 +33,7 @@
                 ['route' => 'admin.leads.index',    'label' => 'Leads',       'icon' => '📥'],
                 ['route' => 'admin.escrow.index',   'label' => 'Escrow',      'icon' => '🔒'],
                 ['route' => 'admin.blog.index',     'label' => 'Blog',        'icon' => '📝'],
+                ['route' => 'admin.seo',            'label' => 'SEO',         'icon' => '🔍'],
                 ['route' => 'admin.settings',       'label' => 'Settings',    'icon' => '⚙️'],
             ];
         @endphp

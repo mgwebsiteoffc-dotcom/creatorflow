@@ -57,6 +57,9 @@ class DatabaseSeeder extends Seeder
 
         $this->command?->info('Seeding CreatorFlow demo data…');
 
+        // SEO-focused blog posts (only if blog_posts table exists).
+        $this->call(SeoBlogSeeder::class);
+
         // ── Platform superadmin (system owner) ─────────────────────────
         User::updateOrCreate(
             ['email' => 'admin@creatorflow.test'],

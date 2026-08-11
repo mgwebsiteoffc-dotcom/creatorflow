@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CreatorController as AdminCreatorController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\EscrowController as AdminEscrowController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\SeoController as AdminSeoController;
 use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\WorkspaceController as AdminWorkspaceController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\Brand\AnalyticsController;
 use App\Http\Controllers\Brand\ApplicationController as BrandApplicationController;
 use App\Http\Controllers\Brand\AssignmentController as BrandAssignmentController;
@@ -63,6 +65,14 @@ Route::get('/blog/{slug}', [MarketingController::class, 'blogShow'])->name('blog
 // Industry & campaign-type landing pages (SEO-friendly)
 Route::get('/industry/{slug}',      [MarketingController::class, 'industryShow'])->name('industry.show');
 Route::get('/campaign/{slug}',      [MarketingController::class, 'campaignTypeShow'])->name('campaign-type.show');
+
+// Programmatic service + city landing pages (SEO)
+Route::get('/services',                     [ServiceController::class, 'index'])->name('services.index');
+Route::get('/services/{service}',           [ServiceController::class, 'show'])->name('services.show');
+Route::get('/services/{service}/{city}',    [ServiceController::class, 'showInCity'])->name('services.city');
+
+// LLM-friendly answer engines
+Route::get('/llms.txt',                     [MarketingController::class, 'llmsTxt'])->name('llms');
 
 // Marketing contact form → leads
 Route::post('/contact', [LeadController::class, 'store'])->name('leads.store');
@@ -130,6 +140,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('/settings',  [AdminSettingsController::class, 'edit'])->name('settings');
     Route::post('/settings', [AdminSettingsController::class, 'update'])->name('settings.update');
+
+    Route::get('/seo',       AdminSeoController::class)->name('seo');
 
     Route::get('/escrow',   [AdminEscrowController::class, 'index'])->name('escrow.index');
     Route::post('/escrow/hold',    [AdminEscrowController::class, 'hold'])->name('escrow.hold');

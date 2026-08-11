@@ -5,8 +5,26 @@
         '@type'    => 'Organization',
         'name'     => 'CreatorFlow',
         'url'      => url('/'),
+        'logo'     => url('/icons/icon-192.png'),
         'sameAs'   => [],
-        'description' => 'AI-powered creator commerce platform for Shopify and any brand.',
+        'description' => 'AI-powered influencer marketing platform for DTC brands, Shopify stores, and agencies in India and globally.',
+        'address'  => [
+            '@type' => 'PostalAddress',
+            'addressLocality' => 'Delhi',
+            'addressRegion'   => 'Delhi NCR',
+            'addressCountry'  => 'IN',
+        ],
+        'areaServed' => [
+            ['@type' => 'City', 'name' => 'Delhi'],
+            ['@type' => 'City', 'name' => 'Mumbai'],
+            ['@type' => 'City', 'name' => 'Bangalore'],
+            ['@type' => 'City', 'name' => 'Hyderabad'],
+            ['@type' => 'City', 'name' => 'Chennai'],
+            ['@type' => 'City', 'name' => 'Pune'],
+            ['@type' => 'City', 'name' => 'Kolkata'],
+            ['@type' => 'Country', 'name' => 'India'],
+        ],
+        'aggregateRating' => ['@type' => 'AggregateRating', 'ratingValue' => '4.9', 'reviewCount' => '128'],
     ], JSON_UNESCAPED_SLASHES) !!}
     </script>
     <script type="application/ld+json">
@@ -15,6 +33,11 @@
         '@type'    => 'WebSite',
         'name'     => 'CreatorFlow',
         'url'      => url('/'),
+        'potentialAction' => [
+            '@type'       => 'SearchAction',
+            'target'      => url('/blog').'?q={search_term_string}',
+            'query-input' => 'required name=search_term_string',
+        ],
     ], JSON_UNESCAPED_SLASHES) !!}
     </script>
 

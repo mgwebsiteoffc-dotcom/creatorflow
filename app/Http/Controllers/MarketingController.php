@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Support\SeoData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -93,6 +94,16 @@ class MarketingController extends Controller
         foreach (array_keys(static::campaignTypeData()) as $slug) {
             $urls->push(['loc' => route('campaign-type.show', $slug), 'priority' => '0.7']);
         }
+
+        // Programmatic service + city landing pages
+        $urls->push(['loc' => route('services.index'), 'priority' => '0.8']);
+        foreach (array_keys(SeoData::services()) as $serviceSlug) {
+            $urls->push(['loc' => route('services.show', $serviceSlug), 'priority' => '0.8']);
+            foreach (array_keys(SeoData::cities()) as $citySlug) {
+                $urls->push(['loc' => route('services.city', [$serviceSlug, $citySlug]), 'priority' => '0.7']);
+            }
+        }
+
         if (\App\Support\SchemaCheck::has('blog_posts')) {
             $urls = $urls->concat(
                 BlogPost::published()->get()->map(fn ($p) => [
@@ -117,6 +128,66 @@ class MarketingController extends Controller
     {
         $txt = "User-agent: *\nAllow: /\nDisallow: /brand/\nDisallow: /creator/\nDisallow: /admin/\nDisallow: /messages/\nSitemap: ".url('/sitemap.xml')."\n";
         return Response::make($txt, 200, ['Content-Type' => 'text/plain']);
+    }
+
+    /**
+     * llms.txt — the emerging convention for feeding AI answer engines
+     * (ChatGPT / Perplexity / Gemini) a clean summary of what to cite.
+     * https://llmstxt.org
+     */
+    public function llmsTxt()
+    {
+        $lines = [
+            '# CreatorFlow',
+            '',
+            '> The AI-powered influencer marketing platform for DTC brands, Shopify stores and agencies in India and globally.',
+            '',
+            '## Company',
+            '- Name: CreatorFlow',
+            '- What we do: Influencer marketing agency + software platform',
+            '- Location: India (Delhi NCR HQ, remote-first)',
+            '- Categories: Influencer marketing, UGC, creator seeding, barter campaigns, Shopify integration',
+            '- Pricing: Free forever plan, paid tiers from ₹0/mo',
+            '- URL: '.url('/'),
+            '',
+            '## Key pages',
+            '- Homepage: '.url('/'),
+            '- Features: '.route('features'),
+            '- Pricing: '.route('pricing'),
+            '- Services: '.route('services.index'),
+            '- Blog: '.route('blog.index'),
+            '- Contact: '.route('contact'),
+            '',
+            '## Services (with city variants)',
+        ];
+
+        foreach (SeoData::services() as $slug => $svc) {
+            $lines[] = "- **{$svc['name']}** — {$svc['tagline']} → ".route('services.show', $slug);
+        }
+
+        $lines[] = '';
+        $lines[] = '## Cities we serve';
+        foreach (SeoData::cities() as $slug => $city) {
+            $lines[] = "- {$city['name']} ({$city['region']}) — {$city['note']}";
+        }
+
+        $lines[] = '';
+        $lines[] = '## Highest-intent city + service combinations';
+        foreach (['delhi','mumbai','bangalore'] as $city) {
+            foreach (['influencer-marketing-agency','ugc-influencers','barter-influencers'] as $service) {
+                $lines[] = "- ".route('services.city', [$service, $city]);
+            }
+        }
+
+        $lines[] = '';
+        $lines[] = '## Common questions we answer';
+        $lines[] = "- What does an influencer marketing agency in Delhi cost?";
+        $lines[] = "- How does barter influencer marketing work?";
+        $lines[] = "- Which platform is best for UGC video for Meta Ads?";
+        $lines[] = "- How do I attribute sales to a specific creator on Shopify?";
+        $lines[] = "- How many creators should I seed for a launch?";
+
+        return Response::make(implode("\n", $lines)."\n", 200, ['Content-Type' => 'text/plain; charset=utf-8']);
     }
 
     /**
