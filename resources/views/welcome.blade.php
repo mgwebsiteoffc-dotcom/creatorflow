@@ -1,4 +1,22 @@
 <x-layouts.app panel="guest" title="The AI creator-commerce platform">
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type'    => 'Organization',
+        'name'     => 'CreatorFlow',
+        'url'      => url('/'),
+        'sameAs'   => [],
+        'description' => 'AI-powered creator commerce platform for Shopify and any brand.',
+    ], JSON_UNESCAPED_SLASHES) !!}
+    </script>
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type'    => 'WebSite',
+        'name'     => 'CreatorFlow',
+        'url'      => url('/'),
+    ], JSON_UNESCAPED_SLASHES) !!}
+    </script>
 
     {{-- ============================ HERO ============================ --}}
     <section class="relative overflow-hidden">

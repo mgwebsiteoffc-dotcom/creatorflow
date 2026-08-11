@@ -1,6 +1,9 @@
 @props([
     'panel' => 'brand', // brand | creator | guest
     'title' => null,
+    'metaDescription' => null,
+    'canonical' => null,
+    'ogImage' => null,
 ])
 @php
     $panelClass = $panel === 'creator' ? 'bg-rose-50' : ($panel === 'guest' ? 'bg-white' : 'bg-slate-50');
@@ -22,7 +25,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>{{ $title ? $title.' · ' : '' }}CreatorFlow</title>
+    <title>{{ $title ? $title.' · ' : '' }}CreatorFlow — The AI creator-commerce platform</title>
+    @php
+        $descText = trim((string) ($metaDescription ?? 'CreatorFlow is the AI-powered creator-commerce platform. Launch campaigns in minutes, seed products in bulk, and attribute revenue — for Shopify or any brand.'));
+        $canonicalUrl = $canonical ?? url()->current();
+    @endphp
+    <meta name="description" content="{{ $descText }}">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ $title ?: 'CreatorFlow' }}">
+    <meta property="og:description" content="{{ $descText }}">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    @if($ogImage)<meta property="og:image" content="{{ $ogImage }}">@endif
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $title ?: 'CreatorFlow' }}">
+    <meta name="twitter:description" content="{{ $descText }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen {{ $panelClass }} text-slate-900">

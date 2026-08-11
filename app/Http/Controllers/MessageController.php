@@ -64,15 +64,27 @@ class MessageController extends Controller
 
     public function startWithCreator(Campaign $campaign, int $creatorId, Request $request)
     {
+        $user = $request->user();
+        abort_unless($user, 403);
+
         $workspaceId = $campaign->workspace_id;
-        abort_unless($request->user()->workspaces->contains('id', $workspaceId), 403);
+
+        $isBrandMember = $user->workspaces->contains('id', $workspaceId);
+        $isTheCreator  = $user->creator && (int) $user->creator->id === (int) $creatorId;
+        abort_unless($isBrandMember || $isTheCreator, 403);
 
         $thread = MessageThread::firstOrCreate(
             ['workspace_id' => $workspaceId, 'campaign_id' => $campaign->id, 'subject' => 'Campaign chat'],
             ['uuid' => (string) Str::uuid()]
         );
 
-        $this->addParticipantIfMissing($thread, 'user', $request->user()->id);
+        // Always ensure both sides are participants.
+        // Brand: pick the workspace's owner as the brand-side participant when the creator initiated.
+        $brandUserId = $isBrandMember
+            ? $user->id
+            : optional($campaign->workspace?->users()->first())->id;
+
+        if ($brandUserId) $this->addParticipantIfMissing($thread, 'user',    $brandUserId);
         $this->addParticipantIfMissing($thread, 'creator', $creatorId);
 
         return redirect()->route('messages.show', $thread);

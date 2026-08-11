@@ -1,4 +1,17 @@
 <x-layouts.app panel="guest" title="Pricing">
+    <script type="application/ld+json">
+    {!! json_encode([
+        '@context' => 'https://schema.org',
+        '@type'    => 'FAQPage',
+        'mainEntity' => [
+            ['@type' => 'Question', 'name' => 'Is there really a free plan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. 5 campaigns per month, unlimited creators, AI briefs — all included at $0. No card required.']],
+            ['@type' => 'Question', 'name' => 'Do you take a cut from creators?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Never. Creators keep 100% of paid deals and all product value from barter.']],
+            ['@type' => 'Question', 'name' => 'Can I cancel anytime?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. Downgrade or cancel from your dashboard with one click. No lock-in.']],
+            ['@type' => 'Question', 'name' => 'Do I need a Shopify store?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Nope. CSV, WooCommerce, Amazon, or manual works too. Shopify just adds real-time order/inventory sync.']],
+            ['@type' => 'Question', 'name' => 'How does attribution work?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Unique discount codes + referral links + multi-touch tracking. You see revenue tied to each creator.']],
+        ],
+    ], JSON_UNESCAPED_SLASHES) !!}
+    </script>
     @include('marketing._hero', [
         'eyebrow' => 'Pricing · Free forever plan',
         'title'   => 'Simple pricing. <span class="text-gradient">No creator fees.</span>',

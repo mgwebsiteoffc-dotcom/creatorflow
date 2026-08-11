@@ -4,6 +4,7 @@ namespace App\Domains\Content\Actions;
 
 use App\Events\ContentSubmitted as ContentSubmittedEvent;
 use App\Jobs\RunAiContentReview;
+use App\Models\AppNotification;
 use App\Models\CampaignAssignment;
 use App\Models\ContentSubmission;
 use Illuminate\Http\UploadedFile;
@@ -57,6 +58,19 @@ class SubmitContent
         RunAiContentReview::dispatch($submission->id);
 
         event(new ContentSubmittedEvent($submission->id));
+
+        // Notify every brand user in the campaign's workspace.
+        $campaign = $assignment->campaign;
+        foreach ($campaign->workspace?->users ?? [] as $brandUser) {
+            AppNotification::notifyUser($brandUser->id, 'content.submitted', [
+                'title'       => 'New content submitted',
+                'body'        => ($assignment->creator->display_name ?? 'A creator')." submitted content for {$campaign->title}.",
+                'url'         => route('brand.assignments.show', $assignment),
+                'campaign_id' => $campaign->id,
+                'assignment_id' => $assignment->id,
+                'submission_id' => $submission->id,
+            ]);
+        }
 
         return $submission;
     }

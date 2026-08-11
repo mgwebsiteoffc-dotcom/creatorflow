@@ -42,40 +42,41 @@
                         <h2 class="text-xl font-bold text-slate-900">Send us a message</h2>
                         <p class="mt-1 text-sm text-slate-500">We'll reply within one business day.</p>
 
-                        <form class="mt-6 space-y-4" onsubmit="event.preventDefault(); this.querySelector('[data-ok]').classList.remove('hidden'); this.reset();">
+                        @if(session('status'))
+                            <div class="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">✓ {{ session('status') }}</div>
+                        @endif
+                        <form method="POST" action="{{ route('leads.store') }}" class="mt-6 space-y-4">
+                            @csrf
                             <div class="grid gap-4 sm:grid-cols-2">
                                 <div>
                                     <label class="label">Full name</label>
-                                    <input class="input" required placeholder="Your name">
+                                    <input class="input" name="name" required placeholder="Your name" value="{{ old('name') }}">
                                 </div>
                                 <div>
                                     <label class="label">Work email</label>
-                                    <input class="input" type="email" required placeholder="you@brand.com">
+                                    <input class="input" name="email" type="email" required placeholder="you@brand.com" value="{{ old('email') }}">
                                 </div>
                             </div>
                             <div>
                                 <label class="label">Brand / company</label>
-                                <input class="input" placeholder="Glow & Co.">
+                                <input class="input" name="company" placeholder="Glow & Co." value="{{ old('company') }}">
                             </div>
                             <div>
                                 <label class="label">I'm here for…</label>
                                 <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                                    @foreach(['Demo','Pricing','Partnership','Other'] as $r)
+                                    @foreach(['demo' => 'Demo','pricing' => 'Pricing','partnership' => 'Partnership','other' => 'Other'] as $v => $l)
                                         <label class="cursor-pointer">
-                                            <input type="radio" name="reason" class="sr-only" {{ $loop->first ? 'checked' : '' }}>
-                                            <div class="pick-tile">{{ $r }}</div>
+                                            <input type="radio" name="reason" value="{{ $v }}" class="sr-only" {{ old('reason', 'demo') === $v ? 'checked' : '' }}>
+                                            <div class="pick-tile">{{ $l }}</div>
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
                             <div>
                                 <label class="label">Message</label>
-                                <textarea class="input min-h-32" placeholder="Tell us about your goals…"></textarea>
+                                <textarea class="input min-h-32" name="message" placeholder="Tell us about your goals…">{{ old('message') }}</textarea>
                             </div>
                             <button class="btn-gradient w-full">Send message</button>
-                            <div data-ok class="hidden rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800">
-                                ✓ Thanks! We'll be in touch within one business day.
-                            </div>
                         </form>
                     </div>
                 </div>

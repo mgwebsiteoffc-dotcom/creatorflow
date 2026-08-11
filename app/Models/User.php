@@ -15,7 +15,8 @@ class User extends Authenticatable
 
     protected $fillable = [
         'uuid', 'name', 'email', 'password', 'avatar_path', 'phone',
-        'last_login_at',
+        'last_login_at', 'system_role', 'account_status',
+        'suspension_reason', 'suspended_at',
     ];
 
     protected $hidden = [
@@ -27,9 +28,21 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'last_login_at' => 'datetime',
+            'suspended_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_secret' => 'encrypted',
         ];
+    }
+
+    public function isSuperAdmin(): bool { return $this->system_role === 'superadmin'; }
+    public function isAdmin(): bool      { return in_array($this->system_role, ['admin','superadmin'], true); }
+    public function isSuspended(): bool  { return $this->account_status === 'suspended'; }
+
+    public function notifications()
+    {
+        return $this->hasMany(AppNotification::class, 'recipient_id')
+            ->where('recipient_type', 'user')
+            ->latest();
     }
 
     public function workspaces(): BelongsToMany

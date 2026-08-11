@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\CampaignAssignment;
+use App\Models\EscrowTransaction;
+use App\Models\Payout;
+use Illuminate\Http\Request;
+
+class EscrowController extends Controller
+{
+    public function index(Request $request)
+    {
+        $transactions = EscrowTransaction::query()
+            ->when($request->get('kind'), fn ($q, $k) => $q->where('kind', $k))
+            ->with(['workspace:id,name', 'creator:id,display_name', 'assignment:id,campaign_id'])
+            ->latest()
+            ->paginate(30)
+            ->withQueryString();
+
+        $totals = [
+            'held'     => (int) EscrowTransaction::where('kind', 'hold')->sum('amount_cents')
+                          - (int) EscrowTransaction::whereIn('kind', ['release','refund'])->sum('amount_cents'),
+            'released' => (int) EscrowTransaction::where('kind', 'release')->sum('amount_cents'),
+            'refunded' => (int) EscrowTransaction::where('kind', 'refund')->sum('amount_cents'),
+            'fees'     => (int) EscrowTransaction::where('kind', 'fee')->sum('amount_cents'),
+        ];
+
+        $pendingPayouts = Payout::with(['creator:id,display_name', 'assignment:id,campaign_id'])
+            ->where('status', 'pending')
+            ->latest()
+            ->take(20)
+            ->get();
+
+        return view('admin.escrow.index', compact('transactions', 'totals', 'pendingPayouts'));
+    }
+
+    public function hold(Request $request)
+    {
+        $data = $request->validate([
+            'assignment_id' => ['required', 'exists:campaign_assignments,id'],
+            'amount_cents'  => ['required', 'integer', 'min:1'],
+            'note'          => ['nullable', 'string', 'max:500'],
+        ]);
+        $assignment = CampaignAssignment::findOrFail($data['assignment_id']);
+
+        EscrowTransaction::create([
+            'workspace_id'  => $assignment->campaign->workspace_id,
+            'creator_id'    => $assignment->creator_id,
+            'assignment_id' => $assignment->id,
+            'kind'          => 'hold',
+            'amount_cents'  => $data['amount_cents'],
+            'currency'      => $assignment->campaign->budget_currency,
+            'note'          => $data['note'] ?? 'Manual hold',
+            'performed_by'  => $request->user()->id,
+        ]);
+
+        return back()->with('status', "Held $".number_format($data['amount_cents']/100, 2)." in escrow.");
+    }
+
+    public function release(Payout $payout, Request $request)
+    {
+        $payout->markPaid();
+
+        EscrowTransaction::create([
+            'workspace_id'  => $payout->workspace_id,
+            'creator_id'    => $payout->creator_id,
+            'assignment_id' => $payout->assignment_id,
+            'payout_id'     => $payout->id,
+            'kind'          => 'release',
+            'amount_cents'  => $payout->net_cents,
+            'currency'      => $payout->currency,
+            'note'          => 'Manual release by admin',
+            'performed_by'  => $request->user()->id,
+        ]);
+
+        return back()->with('status', "Released $".number_format($payout->net_cents/100, 2)." to creator.");
+    }
+
+    public function refund(Request $request)
+    {
+        $data = $request->validate([
+            'assignment_id' => ['required', 'exists:campaign_assignments,id'],
+            'amount_cents'  => ['required', 'integer', 'min:1'],
+            'note'          => ['nullable', 'string', 'max:500'],
+        ]);
+        $assignment = CampaignAssignment::findOrFail($data['assignment_id']);
+
+        EscrowTransaction::create([
+            'workspace_id'  => $assignment->campaign->workspace_id,
+            'creator_id'    => $assignment->creator_id,
+            'assignment_id' => $assignment->id,
+            'kind'          => 'refund',
+            'amount_cents'  => $data['amount_cents'],
+            'currency'      => $assignment->campaign->budget_currency,
+            'note'          => $data['note'] ?? 'Refund to brand',
+            'performed_by'  => $request->user()->id,
+        ]);
+
+        return back()->with('status', 'Refund recorded.');
+    }
+}

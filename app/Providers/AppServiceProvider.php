@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\View\Composers\NotificationComposer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,5 +24,7 @@ class AppServiceProvider extends ServiceProvider
                 report(new \RuntimeException("Lazy loading [{$relation}] on [".get_class($model).']'));
             }
         });
+
+        View::composer('partials.topbar', NotificationComposer::class);
     }
 }

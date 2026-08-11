@@ -1,7 +1,17 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\Admin\CreatorController as AdminCreatorController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\EscrowController as AdminEscrowController;
+use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\WorkspaceController as AdminWorkspaceController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\LeadController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Brand\AnalyticsController;
 use App\Http\Controllers\Brand\ApplicationController as BrandApplicationController;
 use App\Http\Controllers\Brand\AssignmentController as BrandAssignmentController;
@@ -48,6 +58,13 @@ Route::get('/resources', [MarketingController::class, 'resources'])->name('resou
 Route::get('/blog',      [MarketingController::class, 'blogIndex'])->name('blog.index');
 Route::get('/blog/{slug}', [MarketingController::class, 'blogShow'])->name('blog.show');
 
+// Marketing contact form → leads
+Route::post('/contact', [LeadController::class, 'store'])->name('leads.store');
+
+// Well-known SEO
+Route::get('/sitemap.xml', [MarketingController::class, 'sitemap'])->name('sitemap');
+Route::get('/robots.txt',  [MarketingController::class, 'robots']);
+
 // Shopify install + OAuth (also reachable while authenticated).
 Route::prefix('shopify')->name('shopify.')->group(function () {
     Route::get('/install', [ShopifyInstallController::class, 'install'])->name('install');
@@ -71,6 +88,54 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+    // Notifications (shared for brand + creator)
+    Route::get('/notifications',   [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/{notification}', [NotificationController::class, 'open'])->name('notifications.open');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead'])->name('notifications.readAll');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Admin panel (system owner)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', AdminDashboardController::class)->name('dashboard');
+
+    Route::get('/users',   [AdminUserController::class, 'index'])->name('users.index');
+    Route::post('/users/{user}/suspend',   [AdminUserController::class, 'suspend'])->name('users.suspend');
+    Route::post('/users/{user}/unsuspend', [AdminUserController::class, 'unsuspend'])->name('users.unsuspend');
+    Route::post('/users/{user}/make-admin',   [AdminUserController::class, 'makeAdmin'])->name('users.makeAdmin');
+    Route::post('/users/{user}/remove-admin', [AdminUserController::class, 'removeAdmin'])->name('users.removeAdmin');
+
+    Route::get('/creators',  [AdminCreatorController::class, 'index'])->name('creators.index');
+    Route::post('/creators/{creator}/suspend',   [AdminCreatorController::class, 'suspend'])->name('creators.suspend');
+    Route::post('/creators/{creator}/reinstate', [AdminCreatorController::class, 'reinstate'])->name('creators.reinstate');
+    Route::get('/creators/import', [AdminCreatorController::class, 'importForm'])->name('creators.import');
+    Route::post('/creators/import', [AdminCreatorController::class, 'importStore'])->name('creators.import.store');
+
+    Route::get('/workspaces',  [AdminWorkspaceController::class, 'index'])->name('workspaces.index');
+    Route::post('/workspaces/{workspace}/suspend',   [AdminWorkspaceController::class, 'suspend'])->name('workspaces.suspend');
+    Route::post('/workspaces/{workspace}/reinstate', [AdminWorkspaceController::class, 'reinstate'])->name('workspaces.reinstate');
+
+    Route::get('/leads',  [AdminLeadController::class, 'index'])->name('leads.index');
+    Route::post('/leads/{lead}', [AdminLeadController::class, 'update'])->name('leads.update');
+
+    Route::get('/settings',  [AdminSettingsController::class, 'edit'])->name('settings');
+    Route::post('/settings', [AdminSettingsController::class, 'update'])->name('settings.update');
+
+    Route::get('/escrow',   [AdminEscrowController::class, 'index'])->name('escrow.index');
+    Route::post('/escrow/hold',    [AdminEscrowController::class, 'hold'])->name('escrow.hold');
+    Route::post('/escrow/payouts/{payout}/release', [AdminEscrowController::class, 'release'])->name('escrow.release');
+    Route::post('/escrow/refund',  [AdminEscrowController::class, 'refund'])->name('escrow.refund');
+
+    Route::get('/blog',           [AdminBlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/create',    [AdminBlogController::class, 'create'])->name('blog.create');
+    Route::post('/blog',          [AdminBlogController::class, 'store'])->name('blog.store');
+    Route::get('/blog/{post}/edit', [AdminBlogController::class, 'edit'])->name('blog.edit');
+    Route::post('/blog/{post}',   [AdminBlogController::class, 'update'])->name('blog.update');
+    Route::delete('/blog/{post}', [AdminBlogController::class, 'destroy'])->name('blog.destroy');
 });
 
 /*
@@ -163,5 +228,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages/{thread}', [MessageController::class, 'show'])->name('messages.show');
     Route::post('/messages/{thread}', [MessageController::class, 'store'])->name('messages.store');
-    Route::post('/campaigns/{campaign}/chat/{creatorId}', [MessageController::class, 'startWithCreator'])->name('messages.start');
+    // Support both POST (form buttons) and GET (direct navigation from emails / notifications).
+    Route::match(['GET', 'POST'], '/campaigns/{campaign}/chat/{creatorId}', [MessageController::class, 'startWithCreator'])->name('messages.start');
 });

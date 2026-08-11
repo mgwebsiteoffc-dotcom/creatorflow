@@ -70,6 +70,20 @@ document.addEventListener('DOMContentLoaded', () => {
         navToggle.addEventListener('click', () => navMenu.classList.toggle('hidden'));
     }
 
+    /* Notifications dropdown */
+    document.querySelectorAll('[data-notif-wrap]').forEach((wrap) => {
+        const btn = wrap.querySelector('[data-notif-toggle]');
+        const panel = wrap.querySelector('[data-notif-panel]');
+        if (!btn || !panel) return;
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            panel.classList.toggle('hidden');
+        });
+        document.addEventListener('click', (e) => {
+            if (! wrap.contains(e.target)) panel.classList.add('hidden');
+        });
+    });
+
     /* Onboarding wizard: [data-wizard] with [data-step="1"] blocks and [data-next]/[data-prev] buttons.
        Rules:
        - Only PAST steps that were successfully advanced past show as "done" (green ✓).

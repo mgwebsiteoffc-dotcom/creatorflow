@@ -112,7 +112,13 @@
                 @if($suggestion)
                     <div class="rounded-xl bg-slate-50 p-3 text-sm">
                         <p class="font-semibold">AI prediction</p>
-                        <p class="text-slate-600">{{ $suggestion['predicted']['content_assets'] ?? '—' }} content assets · ROI {{ $suggestion['predicted']['roi_p50'] ?? '—' }}x</p>
+                        <p class="text-slate-600">
+                            {{ $suggestion['predicted']['content_assets'] ?? '—' }} content assets ·
+                            ROI
+                            @if(is_numeric($suggestion['predicted']['roi_p50'] ?? null))
+                                {{ number_format((float) $suggestion['predicted']['roi_p50'], 1) }}×
+                            @else — @endif
+                        </p>
                     </div>
                 @endif
                 <button class="btn-primary w-full">Create draft</button>

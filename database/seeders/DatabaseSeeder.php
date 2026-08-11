@@ -57,6 +57,19 @@ class DatabaseSeeder extends Seeder
 
         $this->command?->info('Seeding CreatorFlow demo data…');
 
+        // ── Platform superadmin (system owner) ─────────────────────────
+        User::updateOrCreate(
+            ['email' => 'admin@creatorflow.test'],
+            [
+                'uuid' => (string) Str::uuid(),
+                'name' => 'Platform Admin',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+                'system_role' => 'superadmin',
+                'account_status' => 'active',
+            ]
+        );
+
         // ── Users ──────────────────────────────────────────────────────
         $brandUser = User::updateOrCreate(
             ['email' => 'brand@creatorflow.test'],

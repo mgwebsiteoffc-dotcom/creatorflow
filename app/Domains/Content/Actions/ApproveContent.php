@@ -3,6 +3,7 @@
 namespace App\Domains\Content\Actions;
 
 use App\Domains\Billing\Actions\ReleasePayout;
+use App\Models\AppNotification;
 use App\Models\ContentReview;
 use App\Models\ContentSubmission;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +33,14 @@ class ApproveContent
             if ($assignment->submissions()->where('status', 'approved')->exists()) {
                 $assignment->update(['status' => 'completed']);
             }
+
+            AppNotification::notifyCreator($assignment->creator_id, 'content.approved', [
+                'title'         => 'Your content was approved 🎉',
+                'body'          => 'The brand approved your submission. Payout is on its way.',
+                'url'           => route('creator.assignments.show', $assignment),
+                'assignment_id' => $assignment->id,
+                'submission_id' => $submission->id,
+            ]);
 
             return $submission->fresh();
         });

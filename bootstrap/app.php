@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureIsAdmin;
 use App\Http\Middleware\EnsureIsCreator;
 use App\Http\Middleware\ResolveWorkspace;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'workspace' => ResolveWorkspace::class,
             'creator' => EnsureIsCreator::class,
+            'admin' => EnsureIsAdmin::class,
         ]);
 
         $middleware->web(append: [

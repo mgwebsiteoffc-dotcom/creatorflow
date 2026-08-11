@@ -95,6 +95,18 @@ class Creator extends Model
         return $this->hasMany(Payout::class);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(AppNotification::class, 'recipient_id')
+            ->where('recipient_type', 'creator')
+            ->latest();
+    }
+
+    public function isSuspended(): bool
+    {
+        return $this->status === 'suspended';
+    }
+
     public function scopeActive($query)
     {
         return $query->where('status', 'active')->where('open_to_work', true);

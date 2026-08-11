@@ -43,12 +43,54 @@
 
         <div class="flex items-center gap-2">
             <button id="pwa-install" class="btn-secondary hidden !py-1.5 !text-xs">Install app</button>
+
+            {{-- Notifications bell --}}
+            <div class="relative" data-notif-wrap>
+                <button type="button" data-notif-toggle class="btn-ghost relative !p-2" title="Notifications">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0"/></svg>
+                    @if(($unreadCount ?? 0) > 0)
+                        <span class="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">{{ min(9, $unreadCount) }}{{ $unreadCount > 9 ? '+' : '' }}</span>
+                    @endif
+                </button>
+                <div data-notif-panel class="absolute right-0 top-full z-50 mt-2 hidden w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
+                    <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+                        <div>
+                            <p class="text-sm font-bold text-slate-900">Notifications</p>
+                            <p class="text-[11px] text-slate-500">{{ $unreadCount ?? 0 }} unread</p>
+                        </div>
+                        <a href="{{ route('notifications.index') }}" class="text-xs font-semibold text-violet-700 hover:text-violet-900">See all →</a>
+                    </div>
+                    <div class="max-h-96 overflow-y-auto">
+                        @forelse(($recentNotifications ?? []) as $n)
+                            <a href="{{ route('notifications.open', $n) }}"
+                               class="flex items-start gap-2 border-b border-slate-100 px-4 py-3 last:border-0
+                                      {{ $n->read_at ? '' : 'bg-violet-50/40' }} hover:bg-slate-50">
+                                <span class="mt-0.5 text-lg">{{ str_contains($n->type, 'approved') ? '✅' : (str_contains($n->type, 'content') ? '🎬' : '🔔') }}</span>
+                                <div class="min-w-0 flex-1">
+                                    <p class="truncate text-sm font-semibold text-slate-900">{{ $n->data['title'] ?? '' }}</p>
+                                    @if($n->data['body'] ?? null)<p class="line-clamp-2 text-xs text-slate-500">{{ $n->data['body'] }}</p>@endif
+                                    <p class="mt-0.5 text-[11px] text-slate-400">{{ $n->created_at->diffForHumans() }}</p>
+                                </div>
+                                @if(! $n->read_at)<span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-violet-600"></span>@endif
+                            </a>
+                        @empty
+                            <div class="px-4 py-8 text-center text-xs text-slate-500">You're all caught up 🎉</div>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+
             <a href="{{ route('messages.index') }}" class="btn-ghost !p-2" title="Messages">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6.5A8 8 0 1121 12z"/></svg>
             </a>
             @if($panel === 'brand' && $workspace)
                 <span class="hidden max-w-[140px] truncate rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 sm:inline-block">{{ $workspace->name }}</span>
             @endif
+            @auth
+                @if(auth()->user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" class="btn-secondary !py-1.5 !text-xs" title="Admin panel">🛡️ Admin</a>
+                @endif
+            @endauth
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button class="btn-secondary !py-1.5 !text-xs">Sign out</button>

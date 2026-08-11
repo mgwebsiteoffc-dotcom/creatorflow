@@ -50,7 +50,13 @@
                         <div><dt class="text-slate-500">Type</dt><dd class="font-semibold capitalize">{{ $suggestion['type'] }}</dd></div>
                         <div><dt class="text-slate-500">Creators</dt><dd class="font-semibold">{{ $suggestion['target_creators'] }}</dd></div>
                         <div><dt class="text-slate-500">Invite pool</dt><dd class="font-semibold">{{ $suggestion['invite_pool_size'] }}</dd></div>
-                        <div><dt class="text-slate-500">Pred. ROI</dt><dd class="font-semibold text-emerald-600">{{ $suggestion['predicted']['roi_p50'] ?? '—' }}x</dd></div>
+                        <div><dt class="text-slate-500">Pred. ROI</dt>
+                            <dd class="font-semibold text-emerald-600">
+                                @if(is_numeric($suggestion['predicted']['roi_p50'] ?? null))
+                                    {{ number_format((float) $suggestion['predicted']['roi_p50'], 1) }}×
+                                @else — @endif
+                            </dd>
+                        </div>
                     </dl>
                 </div>
                 <div class="flex flex-col gap-2">
