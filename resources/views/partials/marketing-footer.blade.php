@@ -6,7 +6,7 @@
     <div class="relative border-b border-white/10">
         <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 md:flex-row">
             <div>
-                <h3 class="text-lg font-black text-white">CreatorFlow Weekly</h3>
+                <h3 class="text-lg font-black text-white">CreatorPlex Weekly</h3>
                 <p class="text-xs text-slate-400">One 5-minute read every Friday. Playbooks, benchmarks, viral drops.</p>
             </div>
             <form onsubmit="event.preventDefault(); alert('Subscribed ✓')" class="flex w-full max-w-md gap-2 md:w-auto">
@@ -25,7 +25,7 @@
                       style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">
                     <span class="text-sm font-black">CF</span>
                 </span>
-                <span>CreatorFlow</span>
+                <span>CreatorPlex</span>
             </a>
             <p class="mt-4 max-w-md text-sm text-slate-400">
                 Tech- and AI-powered creator marketing. Launch campaigns in minutes, seed products in bulk,
@@ -176,7 +176,7 @@
     {{-- Bottom bar --}}
     <div class="relative border-t border-white/10">
         <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-5 text-xs text-slate-400 sm:flex-row">
-            <span>© {{ date('Y') }} CreatorFlow. Built for creators &amp; brands.</span>
+            <span>© {{ date('Y') }} CreatorPlex. Built for creators &amp; brands.</span>
             <span class="flex items-center gap-4">
                 <span class="flex items-center gap-2">
                     <span class="inline-flex h-2 w-2 rounded-full bg-emerald-400"></span> All systems operational

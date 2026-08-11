@@ -1,4 +1,4 @@
-<x-layouts.app panel="guest" :title="$meta['label'].' — CreatorFlow resources'"
+<x-layouts.app panel="guest" :title="$meta['label'].' — CreatorPlex resources'"
     :metaDescription="$meta['sub'].' Free, India-first, no signup.'">
 
     <section class="relative overflow-hidden">

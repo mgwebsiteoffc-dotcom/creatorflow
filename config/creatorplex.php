@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | CreatorFlow platform configuration
+    | CreatorPlex platform configuration
     |--------------------------------------------------------------------------
     |
     | These values drive the core domain: plans, AI drivers, marketplace

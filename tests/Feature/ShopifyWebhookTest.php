@@ -18,7 +18,7 @@ class ShopifyWebhookTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        config(['creatorflow.demo.fake_external_calls' => true]);
+        config(['creatorplex.demo.fake_external_calls' => true]);
     }
 
     private function shopifyChannel(): Channel

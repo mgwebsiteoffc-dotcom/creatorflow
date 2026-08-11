@@ -27,7 +27,7 @@ class ReleasePayout
             return $assignment->payout;
         }
 
-        $rate = (float) config('creatorflow.marketplace.paid_platform_fee_rate');
+        $rate = (float) config('creatorplex.marketplace.paid_platform_fee_rate');
 
         // Waive platform fee on growth/enterprise plans.
         if (in_array($campaign->workspace->plan, ['growth', 'enterprise'], true)) {
@@ -49,7 +49,7 @@ class ReleasePayout
             'net_cents' => $net,
             'method' => 'stripe_connect',
             'status' => 'pending',
-            'scheduled_for' => now()->addDays((int) config('creatorflow.marketplace.payout_clawback_days')),
+            'scheduled_for' => now()->addDays((int) config('creatorplex.marketplace.payout_clawback_days')),
         ]);
 
         $assignment->update([

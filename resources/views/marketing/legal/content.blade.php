@@ -1,7 +1,7 @@
 <x-marketing.legal-layout title="Content Guidelines"
-    metaDescription="CreatorFlow content guidelines — what creators can and cannot post in brand campaigns.">
+    metaDescription="CreatorPlex content guidelines — what creators can and cannot post in brand campaigns.">
 
-    <p>These guidelines apply to every piece of content created through a CreatorFlow campaign.</p>
+    <p>These guidelines apply to every piece of content created through a CreatorPlex campaign.</p>
 
     <h2>Disclosure</h2>
     <ul>

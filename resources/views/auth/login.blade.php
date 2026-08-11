@@ -10,14 +10,14 @@
                         <div class="mb-6 flex items-center gap-2 md:hidden">
                             <span class="grid h-9 w-9 place-items-center rounded-xl text-xs font-black text-white"
                                   style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">CF</span>
-                            <span class="font-bold">CreatorFlow</span>
+                            <span class="font-bold">CreatorPlex</span>
                         </div>
 
                         <span class="chip">
                             <span class="chip-dot"></span> Welcome back
                         </span>
                         <h1 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-                            Sign in to <span class="text-gradient">CreatorFlow</span>
+                            Sign in to <span class="text-gradient">CreatorPlex</span>
                         </h1>
                         <p class="mt-2 text-sm text-slate-500">
                             One account for brand and creator dashboards.
@@ -65,7 +65,7 @@
 
                         <div class="mt-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
                             <div class="flex items-center gap-2 font-semibold text-slate-700">🛡️ Platform admin (SaaS owner)</div>
-                            <p class="mt-1">Sign in with your admin email — after login you'll be redirected to <code class="rounded bg-white px-1 py-0.5">/admin</code>. Demo seed: <code class="rounded bg-white px-1 py-0.5">admin@creatorflow.test</code> · <code class="rounded bg-white px-1 py-0.5">password</code>.</p>
+                            <p class="mt-1">Sign in with your admin email — after login you'll be redirected to <code class="rounded bg-white px-1 py-0.5">/admin</code>. Demo seed: <code class="rounded bg-white px-1 py-0.5">admin@creatorplex.test</code> · <code class="rounded bg-white px-1 py-0.5">password</code>.</p>
                         </div>
                     </div>
                 </div>

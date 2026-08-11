@@ -27,11 +27,11 @@ class UserFactory extends Factory
 
     public function brand(): static
     {
-        return $this->state(fn () => ['email' => 'brand@creatorflow.test']);
+        return $this->state(fn () => ['email' => 'brand@creatorplex.test']);
     }
 
     public function creatorUser(): static
     {
-        return $this->state(fn () => ['email' => 'creator@creatorflow.test']);
+        return $this->state(fn () => ['email' => 'creator@creatorplex.test']);
     }
 }

@@ -1,8 +1,8 @@
 <x-marketing.legal-layout title="Refund Policy"
-    metaDescription="CreatorFlow refund policy for brands and creators — how refunds work for campaigns, subscriptions, and escrow.">
+    metaDescription="CreatorPlex refund policy for brands and creators — how refunds work for campaigns, subscriptions, and escrow.">
 
     <h2>Subscription fees</h2>
-    <p>Monthly CreatorFlow subscription fees are non-refundable once the billing period has started. If you cancel, you keep access until the end of the current period. Annual plans are refundable pro-rata within the first 30 days of the annual cycle if you have not launched any active campaigns.</p>
+    <p>Monthly CreatorPlex subscription fees are non-refundable once the billing period has started. If you cancel, you keep access until the end of the current period. Annual plans are refundable pro-rata within the first 30 days of the annual cycle if you have not launched any active campaigns.</p>
 
     <h2>Campaign funds (paid campaigns)</h2>
     <ul>
@@ -12,11 +12,11 @@
     </ul>
 
     <h2>Barter campaigns</h2>
-    <p>For barter (product-only) campaigns, no cash escrow is held. Brands are responsible for shipping the promised product. If a creator fails to deliver, brands can flag the creator to reduce their performance score — but product costs are not reimbursed by CreatorFlow.</p>
+    <p>For barter (product-only) campaigns, no cash escrow is held. Brands are responsible for shipping the promised product. If a creator fails to deliver, brands can flag the creator to reduce their performance score — but product costs are not reimbursed by CreatorPlex.</p>
 
     <h2>Platform fees</h2>
     <p>Platform + processing fees on completed campaigns are non-refundable.</p>
 
     <h2>How to request a refund</h2>
-    <p>Email <a href="mailto:billing@creatorflow.in">billing@creatorflow.in</a> with your workspace name, invoice ID, and reason. Approved refunds are returned to the original payment method within 7 business days.</p>
+    <p>Email <a href="mailto:billing@creatorplex.in">billing@creatorplex.in</a> with your workspace name, invoice ID, and reason. Approved refunds are returned to the original payment method within 7 business days.</p>
 </x-marketing.legal-layout>

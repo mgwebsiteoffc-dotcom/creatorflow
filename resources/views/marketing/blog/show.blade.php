@@ -9,8 +9,8 @@
         '@type'    => 'BlogPosting',
         'headline' => $post['title'],
         'datePublished' => $post['date'] ?? null,
-        'author'   => ['@type' => 'Person', 'name' => $post['author'] ?? 'CreatorFlow'],
-        'publisher'=> ['@type' => 'Organization', 'name' => 'CreatorFlow', 'url' => url('/')],
+        'author'   => ['@type' => 'Person', 'name' => $post['author'] ?? 'CreatorPlex'],
+        'publisher'=> ['@type' => 'Organization', 'name' => 'CreatorPlex', 'url' => url('/')],
         'mainEntityOfPage' => route('blog.show', $post['slug']),
         'description' => $post['meta_description'] ?? ($post['excerpt'] ?? ''),
     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}

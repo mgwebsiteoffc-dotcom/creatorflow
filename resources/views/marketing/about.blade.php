@@ -1,6 +1,6 @@
 <x-layouts.app panel="guest" title="About">
     @include('marketing._hero', [
-        'eyebrow' => 'About CreatorFlow',
+        'eyebrow' => 'About CreatorPlex',
         'title'   => 'We\'re building the <span class="text-gradient">creator commerce</span> operating system',
         'sub'     => 'Because running influencer campaigns shouldn\'t feel like duct-taping five tools together. One backend, two doors, endless upside.',
         'ctaText' => 'Join us',
@@ -28,10 +28,10 @@
             <p class="section-eyebrow">Our story</p>
             <h2 class="section-title mt-3 text-left">Built by operators who lived the pain</h2>
             <p class="mt-6 text-lg text-slate-600">
-                Our founding team ran creator campaigns for DTC brands doing 8-figure GMV. Every launch meant spreadsheets, DMs, tag-based attribution guesses, and 3am ops fires. We built CreatorFlow because we wanted the tool we couldn't buy.
+                Our founding team ran creator campaigns for DTC brands doing 8-figure GMV. Every launch meant spreadsheets, DMs, tag-based attribution guesses, and 3am ops fires. We built CreatorPlex because we wanted the tool we couldn't buy.
             </p>
             <p class="mt-4 text-slate-600">
-                Today CreatorFlow powers seeding, UGC, and paid creator campaigns for 1,000+ brands — from Shopify's fastest movers to global retail. Same product, same engine, whether you're doing your first 5-creator drop or seeding 500 at once.
+                Today CreatorPlex powers seeding, UGC, and paid creator campaigns for 1,000+ brands — from Shopify's fastest movers to global retail. Same product, same engine, whether you're doing your first 5-creator drop or seeding 500 at once.
             </p>
         </div>
     </section>

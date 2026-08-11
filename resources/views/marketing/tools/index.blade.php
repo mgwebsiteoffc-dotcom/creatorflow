@@ -20,7 +20,7 @@
             '@context' => 'https://schema.org',
             '@type'    => 'BreadcrumbList',
             'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'CreatorFlow', 'item' => $siteUrl],
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'CreatorPlex', 'item' => $siteUrl],
                 ['@type' => 'ListItem', 'position' => 2, 'name' => 'Free tools', 'item' => route('tools.index')],
             ],
         ];
@@ -32,10 +32,10 @@
                  'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. Every tool on this page — the ROI calculator, creator rate calculator and AI brief generator — is free, requires no signup and works in your browser. You keep every result.']],
                 ['@type' => 'Question', 'name' => 'Do the calculators support Indian rupees and Indian creator benchmarks?',
                  'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. All numbers default to Indian rupees with proper ₹1,84,200 grouping, and rate benchmarks include an India region multiplier priced from thousands of real Delhi, Mumbai, Bangalore, Hyderabad and Gurugram deals.']],
-                ['@type' => 'Question', 'name' => 'Can I use these tools before I sign up on CreatorFlow?',
-                 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Absolutely. The tools are the fastest way to see how CreatorFlow thinks about creator marketing. When you are ready to run a campaign end-to-end — invitations, contracts, product seeding, attribution — start the free plan.']],
+                ['@type' => 'Question', 'name' => 'Can I use these tools before I sign up on CreatorPlex?',
+                 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Absolutely. The tools are the fastest way to see how CreatorPlex thinks about creator marketing. When you are ready to run a campaign end-to-end — invitations, contracts, product seeding, attribution — start the free plan.']],
                 ['@type' => 'Question', 'name' => 'Are the rate benchmarks accurate for micro and nano influencers in India?',
-                 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. The rate calculator is anchored on CreatorFlow deal data across nano (1K–10K), micro (10K–100K), mid (100K–500K), macro (500K–1M) and mega (1M+) creators in every top Indian metro.']],
+                 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. The rate calculator is anchored on CreatorPlex deal data across nano (1K–10K), micro (10K–100K), mid (100K–500K), macro (500K–1M) and mega (1M+) creators in every top Indian metro.']],
             ],
         ];
     @endphp
@@ -50,7 +50,7 @@
                 Free <span class="text-gradient">influencer marketing</span> tools for<br class="hidden sm:block"> Indian DTC brands &amp; creators
             </h1>
             <p class="mt-4 max-w-2xl text-lg text-slate-600">
-                Model campaign ROI in rupees, benchmark creator rates for Delhi / Mumbai / Bangalore, and generate a launch-ready creator brief in one click. Built by the CreatorFlow team.
+                Model campaign ROI in rupees, benchmark creator rates for Delhi / Mumbai / Bangalore, and generate a launch-ready creator brief in one click. Built by the CreatorPlex team.
             </p>
             <div class="mt-6 flex flex-wrap items-center gap-3">
                 <a href="#grid" class="btn-primary">Try a tool</a>
@@ -115,7 +115,7 @@
         <div class="prose prose-slate max-w-none">
             <h2 class="text-3xl font-black tracking-tight text-slate-900">Why Indian brands and creators trust these free tools</h2>
             <p class="text-slate-600">
-                Every tool on this page is priced, benchmarked and tuned for the Indian influencer marketing market — Delhi NCR, Mumbai, Bangalore, Hyderabad, Chennai, Pune, Gurugram, Kolkata, Ahmedabad and Jaipur. The rate calculator sits on top of thousands of real barter and paid deals we've analysed on CreatorFlow. The ROI model uses assumptions that match how Shopify DTC brands in India actually convert. The AI brief generator produces briefs that read like a real growth marketer wrote them — not a lorem-ipsum template.
+                Every tool on this page is priced, benchmarked and tuned for the Indian influencer marketing market — Delhi NCR, Mumbai, Bangalore, Hyderabad, Chennai, Pune, Gurugram, Kolkata, Ahmedabad and Jaipur. The rate calculator sits on top of thousands of real barter and paid deals we've analysed on CreatorPlex. The ROI model uses assumptions that match how Shopify DTC brands in India actually convert. The AI brief generator produces briefs that read like a real growth marketer wrote them — not a lorem-ipsum template.
             </p>
 
             <h3 class="mt-8">Who these tools are for</h3>
@@ -130,11 +130,11 @@
             <ol class="text-slate-600">
                 <li><strong>Start with the ROI calculator (₹)</strong> — pick the number of creators and rough follower size, get expected reach, orders and revenue in Indian rupees.</li>
                 <li><strong>Cross-check with the rate calculator</strong> — feed the same follower count + engagement rate + niche + region ("India") to see fair market rate per Reel, UGC video or full YouTube integration.</li>
-                <li><strong>Generate a brief</strong> — describe your product in one line, pick niche + format + tone, and paste the output straight into your CreatorFlow campaign (or WhatsApp it to a creator).</li>
+                <li><strong>Generate a brief</strong> — describe your product in one line, pick niche + format + tone, and paste the output straight into your CreatorPlex campaign (or WhatsApp it to a creator).</li>
             </ol>
 
             <h3 class="mt-8">Indian creator marketing rate benchmarks (2026)</h3>
-            <p class="text-slate-600">Rough ballpark ranges from CreatorFlow deals in the last 90 days across Delhi NCR, Mumbai and Bangalore:</p>
+            <p class="text-slate-600">Rough ballpark ranges from CreatorPlex deals in the last 90 days across Delhi NCR, Mumbai and Bangalore:</p>
             <div class="not-prose mt-4 overflow-x-auto rounded-2xl border border-slate-200">
                 <table class="w-full text-sm">
                     <thead class="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -163,5 +163,5 @@
         </div>
     </section>
 
-    @include('marketing._cta', ['title' => 'Want these tools inside your workflow?', 'sub' => 'CreatorFlow bakes ROI modelling, rate benchmarks, and AI briefs into a full campaign engine. Free to start.'])
+    @include('marketing._cta', ['title' => 'Want these tools inside your workflow?', 'sub' => 'CreatorPlex bakes ROI modelling, rate benchmarks, and AI briefs into a full campaign engine. Free to start.'])
 </x-layouts.app>

@@ -1,11 +1,11 @@
 <x-marketing.legal-layout title="Cookie Policy"
-    metaDescription="CreatorFlow cookie policy — which cookies we use, what they do, and how you can control them.">
+    metaDescription="CreatorPlex cookie policy — which cookies we use, what they do, and how you can control them.">
 
-    <p>Cookies are small text files that websites store on your device. This policy explains the cookies CreatorFlow uses and how to control them.</p>
+    <p>Cookies are small text files that websites store on your device. This policy explains the cookies CreatorPlex uses and how to control them.</p>
 
     <h2>1. Strictly necessary</h2>
     <ul>
-        <li><code>creatorflow_session</code> — keeps you signed in for the duration of your visit.</li>
+        <li><code>creatorplex_session</code> — keeps you signed in for the duration of your visit.</li>
         <li><code>XSRF-TOKEN</code> — protects against cross-site request forgery.</li>
         <li><code>current_workspace</code> — remembers which workspace you're viewing.</li>
     </ul>

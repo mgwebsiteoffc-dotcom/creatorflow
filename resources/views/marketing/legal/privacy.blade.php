@@ -1,7 +1,7 @@
 <x-marketing.legal-layout title="Privacy Policy"
-    metaDescription="CreatorFlow privacy policy — what data we collect from brands and creators, how we use it, and your rights under Indian data protection law.">
+    metaDescription="CreatorPlex privacy policy — what data we collect from brands and creators, how we use it, and your rights under Indian data protection law.">
 
-    <p>This Privacy Policy explains what personal data CreatorFlow collects, how we use it, who we share it with, and your rights. We comply with the Digital Personal Data Protection Act, 2023 (India) and the GDPR where applicable.</p>
+    <p>This Privacy Policy explains what personal data CreatorPlex collects, how we use it, who we share it with, and your rights. We comply with the Digital Personal Data Protection Act, 2023 (India) and the GDPR where applicable.</p>
 
     <h2>1. Data we collect</h2>
     <ul>
@@ -38,7 +38,7 @@
         <li>Correction — fix inaccurate data.</li>
         <li>Erasure — request deletion (subject to legal retention).</li>
         <li>Portability — export your workspace as CSV.</li>
-        <li>Grievance — write to our Data Protection Officer at <a href="mailto:privacy@creatorflow.in">privacy@creatorflow.in</a>.</li>
+        <li>Grievance — write to our Data Protection Officer at <a href="mailto:privacy@creatorplex.in">privacy@creatorplex.in</a>.</li>
     </ul>
 
     <h2>6. Cookies</h2>

@@ -86,10 +86,10 @@ class AiSettingsController extends Controller
             );
             $response = $provider->complete([
                 ['role' => 'system', 'content' => 'Respond in one short sentence.'],
-                ['role' => 'user',   'content' => 'Say "CreatorFlow AI is connected." and nothing else.'],
+                ['role' => 'user',   'content' => 'Say "CreatorPlex AI is connected." and nothing else.'],
             ], ['temperature' => 0]);
 
-            $ok = str_contains(strtolower($response->text), 'creatorflow');
+            $ok = str_contains(strtolower($response->text), 'creatorplex');
             $settings->update([
                 'ai_last_test_status' => $ok ? 'ok:openai' : 'partial',
                 'ai_last_tested_at'   => now(),

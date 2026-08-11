@@ -76,7 +76,7 @@ class OnboardingController extends Controller
         CreatorPreference::create(['creator_id' => $creator->id]);
 
         return redirect()->route('creator.dashboard')
-            ->with('status', 'Welcome to CreatorFlow! Your profile is live.');
+            ->with('status', 'Welcome to CreatorPlex! Your profile is live.');
     }
 
     protected function syncSocial(Creator $creator, string $platform, ?string $handle, array $data): void

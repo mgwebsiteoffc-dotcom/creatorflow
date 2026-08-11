@@ -3,7 +3,7 @@
     {!! json_encode([
         '@context' => 'https://schema.org',
         '@type'    => 'Organization',
-        'name'     => 'CreatorFlow',
+        'name'     => 'CreatorPlex',
         'url'      => url('/'),
         'logo'     => url('/icons/icon-192.png'),
         'sameAs'   => [],
@@ -31,7 +31,7 @@
     {!! json_encode([
         '@context' => 'https://schema.org',
         '@type'    => 'WebSite',
-        'name'     => 'CreatorFlow',
+        'name'     => 'CreatorPlex',
         'url'      => url('/'),
         'potentialAction' => [
             '@type'       => 'SearchAction',
@@ -69,7 +69,7 @@
                 </h1>
 
                 <p class="reveal mt-5 max-w-xl text-lg text-slate-600">
-                    CreatorFlow is a tech- and AI-powered creator marketing platform.
+                    CreatorPlex is a tech- and AI-powered creator marketing platform.
                     Launch campaigns in minutes, seed products in bulk, review content,
                     and attribute every sale — for Shopify stores or any brand.
                 </p>
@@ -271,7 +271,7 @@
             <div class="grid gap-12 md:grid-cols-2 md:items-center">
                 <div class="reveal">
                     <p class="section-eyebrow">Why choose us?</p>
-                    <h2 class="section-title mt-3 text-left">Why CreatorFlow always works.</h2>
+                    <h2 class="section-title mt-3 text-left">Why CreatorPlex always works.</h2>
                     <p class="mt-4 text-slate-600">
                         We combine cutting-edge AI, a giant verified creator database, and human expertise —
                         so every campaign hits the right people with the right message.
@@ -607,7 +607,7 @@
             <div class="mx-auto max-w-2xl text-center">
                 <p class="section-eyebrow reveal">Features in action</p>
                 <h2 class="section-title reveal mt-3">One dashboard. <span class="text-gradient">Every campaign lever.</span></h2>
-                <p class="section-sub reveal mt-3">Peek at the actual CreatorFlow surfaces you'll be shipping campaigns from.</p>
+                <p class="section-sub reveal mt-3">Peek at the actual CreatorPlex surfaces you'll be shipping campaigns from.</p>
             </div>
 
             @php
@@ -723,7 +723,7 @@
             <div class="mt-12 grid gap-6 md:grid-cols-3">
                 @php
                     $quotes = [
-                        ['q' => 'CreatorFlow ran our barter campaign end-to-end and the UGC boosted our perfume launch instantly.', 'name' => 'Luxotica', 'role' => 'Cosmetic brand', 'grad' => 'from-pink-500 to-rose-500'],
+                        ['q' => 'CreatorPlex ran our barter campaign end-to-end and the UGC boosted our perfume launch instantly.', 'name' => 'Luxotica', 'role' => 'Cosmetic brand', 'grad' => 'from-pink-500 to-rose-500'],
                         ['q' => 'Our brand awareness campaign gave us the right exposure in the education space and drove quality traffic.', 'name' => 'Mywbut', 'role' => 'EdTech platform', 'grad' => 'from-violet-500 to-indigo-500'],
                         ['q' => 'The product review campaign delivered authentic influencer content that built real trust for our fashion line.', 'name' => 'weRbangali', 'role' => 'Regional fashion brand', 'grad' => 'from-cyan-500 to-emerald-500'],
                     ];

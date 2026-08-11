@@ -34,7 +34,7 @@ class CampaignInvitation extends Notification
             ->greeting("Hi {$creator?->display_name},")
             ->line("{$campaign?->workspace->name} invited you to a creator campaign.")
             ->action('View invitation', route('creator.invitations'))
-            ->line('Free product, fair pay, and clear briefs — that\'s CreatorFlow.');
+            ->line('Free product, fair pay, and clear briefs — that\'s CreatorPlex.');
     }
 
     public function toArray(object $notifiable): array

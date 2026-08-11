@@ -6,7 +6,7 @@
                 <span class="text-sm font-black">CF</span>
                 <span class="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-cyan-400 ring-2 ring-white"></span>
             </span>
-            <span class="text-slate-900">CreatorFlow</span>
+            <span class="text-slate-900">CreatorPlex</span>
         </a>
 
         <nav id="nav-menu" class="absolute left-0 right-0 top-16 hidden flex-col gap-1 border-b border-slate-200 bg-white/95 p-4 backdrop-blur md:static md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0">

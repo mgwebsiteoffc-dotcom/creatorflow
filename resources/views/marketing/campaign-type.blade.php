@@ -7,7 +7,7 @@
     {!! json_encode([
         '@context' => 'https://schema.org', '@type' => 'Service',
         'name'     => strip_tags($item['title']).' campaigns',
-        'provider' => ['@type' => 'Organization', 'name' => 'CreatorFlow', 'url' => url('/')],
+        'provider' => ['@type' => 'Organization', 'name' => 'CreatorPlex', 'url' => url('/')],
         'url'      => route('campaign-type.show', $slug),
         'description' => $item['meta'] ?? $item['tagline'],
     ], JSON_UNESCAPED_SLASHES) !!}
@@ -125,7 +125,7 @@
             <div class="mx-auto max-w-2xl text-center">
                 <p class="section-eyebrow reveal">Rate card</p>
                 <h2 class="section-title reveal mt-3">Fair pricing by creator tier</h2>
-                <p class="section-sub reveal mt-3">Benchmarks from 12,000+ CreatorFlow deals in India.</p>
+                <p class="section-sub reveal mt-3">Benchmarks from 12,000+ CreatorPlex deals in India.</p>
             </div>
             <div class="reveal mt-10 grid gap-4 md:grid-cols-4">
                 @foreach($item['pricing'] as $p)

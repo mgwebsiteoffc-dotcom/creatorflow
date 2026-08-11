@@ -1,7 +1,7 @@
 <x-marketing.legal-layout title="Shipping Policy"
-    metaDescription="CreatorFlow shipping policy — how brands should ship product to creators in barter and seeding campaigns.">
+    metaDescription="CreatorPlex shipping policy — how brands should ship product to creators in barter and seeding campaigns.">
 
-    <p>CreatorFlow itself does not ship physical goods — we are a software platform. This policy explains our expectations of <strong>brands</strong> when they ship product to creators.</p>
+    <p>CreatorPlex itself does not ship physical goods — we are a software platform. This policy explains our expectations of <strong>brands</strong> when they ship product to creators.</p>
 
     <h2>Timelines</h2>
     <ul>

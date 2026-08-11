@@ -2,7 +2,7 @@
 
 ## 1.1 Elevator Pitch
 
-CreatorFlow is the AI-powered creator-commerce platform where any brand — Shopify store or not — can turn products into fully managed creator campaigns in one click, and where creators discover products, get paid, and build their portfolio — all from a mobile-first PWA.
+CreatorPlex is the AI-powered creator-commerce platform where any brand — Shopify store or not — can turn products into fully managed creator campaigns in one click, and where creators discover products, get paid, and build their portfolio — all from a mobile-first PWA.
 
 ## 1.2 Why Now
 
@@ -86,7 +86,7 @@ A brand's `channel` determines only:
 > The brief is strong; here are places I'd push back or upgrade.
 
 **A) "Sync orders where applicable" should be bolder.**
-Make **automatic Draft Order / discount-code creation** the hero of bulk seeding. The moment a creator accepts, CreatorFlow creates a Shopify draft order (or a $0 tagged order) applying a unique code, so inventory, fulfillment, tracking, and returns stay in Shopify. This is the single biggest differentiator vs Shopify Collabs.
+Make **automatic Draft Order / discount-code creation** the hero of bulk seeding. The moment a creator accepts, CreatorPlex creates a Shopify draft order (or a $0 tagged order) applying a unique code, so inventory, fulfillment, tracking, and returns stay in Shopify. This is the single biggest differentiator vs Shopify Collabs.
 
 **B) "AI generates a brief" is table stakes; the differentiator is AI operating the loop.**
 - AI writes the **first outreach message** and A/B tests variants.
@@ -121,7 +121,7 @@ Combine unique discount codes + referral links + post-purchase surveys ("How did
 
 ## 1.7 Success Metrics (North Star)
 
-- **North Star:** *Attributed GMV driven through CreatorFlow per month* (ties product to real commerce).
+- **North Star:** *Attributed GMV driven through CreatorPlex per month* (ties product to real commerce).
 - Activation: % of new brands that launch a campaign within 7 days.
 - Liquidity: creator-to-active-campaign ratio; invite acceptance rate.
 - Creator retention: % of creators who complete a second campaign.

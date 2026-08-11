@@ -1,8 +1,8 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "mgwebsiteoffc-dotcom/creatorflow",
+    "name": "mgwebsiteoffc-dotcom/creatorplex",
     "type": "project",
-    "description": "CreatorFlow \u2014 AI-powered creator commerce platform (Shopify + web) on Laravel 11/13, MySQL and a mobile-first PWA.",
+    "description": "CreatorPlex \u2014 AI-powered creator commerce platform (Shopify + web) on Laravel 11/13, MySQL and a mobile-first PWA.",
     "keywords": [
         "laravel",
         "creator-economy",

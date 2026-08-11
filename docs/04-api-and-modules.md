@@ -84,7 +84,7 @@ app/
 - Versioned via URL; version only breaking changes.
 - Idempotency on writes (`Idempotency-Key` header) for order/discount/payout creation.
 - Rate limiting per token and per workspace.
-- Webhooks both **incoming** (Shopify, Stripe) and **outgoing** (CreatorFlow events to brand endpoints).
+- Webhooks both **incoming** (Shopify, Stripe) and **outgoing** (CreatorPlex events to brand endpoints).
 
 ### Example endpoints (Brand API)
 
@@ -149,7 +149,7 @@ POST   /api/v1/me/threads/{id}/messages
 
 ## 4.4 Event & Webhook Outbound
 
-Allow brands to subscribe to CreatorFlow events (`campaign.launched`, `content.submitted`, `assignment.completed`) via a signed webhook URL. Useful for agencies and custom-stack D2C brands. Store endpoints + signing secret in `webhook_endpoints`, deliver with retries + backoff.
+Allow brands to subscribe to CreatorPlex events (`campaign.launched`, `content.submitted`, `assignment.completed`) via a signed webhook URL. Useful for agencies and custom-stack D2C brands. Store endpoints + signing secret in `webhook_endpoints`, deliver with retries + backoff.
 
 ## 4.5 PWA / Frontend Approach
 

@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 /**
  * Fallback channel for brands without a connected store. Products are
  * entered manually or imported from CSV; orders are tracked inside
- * CreatorFlow rather than pushed to an external platform.
+ * CreatorPlex rather than pushed to an external platform.
  */
 class ManualChannel implements CommerceChannel
 {

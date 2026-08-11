@@ -1,6 +1,6 @@
 @php
     $canonical  = route('services.city', [$serviceSlug, $citySlug]);
-    $title      = "{$service['name']} in {$city['name']} · CreatorFlow";
+    $title      = "{$service['name']} in {$city['name']} · CreatorPlex";
     $desc       = "{$service['name']} in {$city['name']}: {$service['tagline']} {$city['note']} — trusted by 1,000+ DTC brands.";
     $h1         = "{$service['name']} in {$city['name']}";
 
@@ -19,7 +19,7 @@
         'serviceType' => $service['short'],
         'url'       => $canonical,
         'description' => $desc,
-        'provider'  => ['@type' => 'Organization', 'name' => 'CreatorFlow', 'url' => url('/')],
+        'provider'  => ['@type' => 'Organization', 'name' => 'CreatorPlex', 'url' => url('/')],
         'areaServed' => [
             '@type' => 'City', 'name' => $city['name'],
             'geo'   => ['@type' => 'GeoCoordinates', 'latitude' => $city['lat'], 'longitude' => $city['lng']],
@@ -29,7 +29,7 @@
     $localBusinessLd = [
         '@context' => 'https://schema.org',
         '@type'    => 'ProfessionalService',
-        'name'     => "CreatorFlow · {$city['name']}",
+        'name'     => "CreatorPlex · {$city['name']}",
         'url'      => $canonical,
         'address'  => [
             '@type'  => 'PostalAddress',

@@ -96,7 +96,7 @@ A marketplace with no creators is dead at launch.
 
 - **Shopify Plus partners/agencies** — resell/recommend.
 - **UGC creator collectives and editing services** — supply and add-on services.
-- **Ad agencies** — use CreatorFlow's UGC pipeline for their clients.
+- **Ad agencies** — use CreatorPlex's UGC pipeline for their clients.
 - **Stripe partner** credits and go-to-market support.
 - Complementary tools: email/SMS platforms (Klaviyo), reviews, subscriptions — co-marketing and app embeds.
 

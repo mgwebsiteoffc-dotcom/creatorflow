@@ -1,6 +1,6 @@
 <x-layouts.app panel="guest"
-    title="Install CreatorFlow on Shopify"
-    metaDescription="Connect your Shopify store to CreatorFlow — India's AI-powered influencer marketing platform. Free plan available.">
+    title="Install CreatorPlex on Shopify"
+    metaDescription="Connect your Shopify store to CreatorPlex — India's AI-powered influencer marketing platform. Free plan available.">
 
     <section class="relative overflow-hidden">
         <div class="aurora"></div>
@@ -12,7 +12,7 @@
                 <div class="reveal">
                     <span class="chip"><span class="chip-dot"></span> Shopify app · Free to start</span>
                     <h1 class="mt-4 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
-                        Connect your <span class="text-gradient">Shopify store</span> to CreatorFlow
+                        Connect your <span class="text-gradient">Shopify store</span> to CreatorPlex
                     </h1>
                     <p class="mt-4 text-lg text-slate-600">
                         Sync products, seed creators in bulk, and attribute revenue — all inside one dashboard. Setup takes under 60 seconds.

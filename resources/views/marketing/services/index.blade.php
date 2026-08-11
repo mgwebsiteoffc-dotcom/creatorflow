@@ -1,6 +1,6 @@
 <x-layouts.app panel="guest"
     title="Influencer marketing services — every service, every Indian city"
-    metaDescription="CreatorFlow influencer marketing services — UGC, barter, micro, nano, macro and paid campaigns for Delhi, Mumbai, Bangalore, Hyderabad, Pune and all of India."
+    metaDescription="CreatorPlex influencer marketing services — UGC, barter, micro, nano, macro and paid campaigns for Delhi, Mumbai, Bangalore, Hyderabad, Pune and all of India."
     :canonical="route('services.index')">
 
     @php
@@ -8,16 +8,16 @@
             '@context' => 'https://schema.org',
             '@type'    => 'BreadcrumbList',
             'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'CreatorFlow', 'item' => url('/')],
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'CreatorPlex', 'item' => url('/')],
                 ['@type' => 'ListItem', 'position' => 2, 'name' => 'Services',    'item' => route('services.index')],
             ],
         ];
         $collectionLd = [
             '@context' => 'https://schema.org',
             '@type'    => 'CollectionPage',
-            'name'     => 'CreatorFlow services',
+            'name'     => 'CreatorPlex services',
             'url'      => route('services.index'),
-            'description' => 'All CreatorFlow influencer marketing services and city landing pages for India.',
+            'description' => 'All CreatorPlex influencer marketing services and city landing pages for India.',
             'numberOfItems' => count($services) * count($cities),
         ];
     @endphp

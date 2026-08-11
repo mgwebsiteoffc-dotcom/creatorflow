@@ -53,7 +53,7 @@ class DemoCreatorFactory
             'display_name' => $name,
             'slug' => $handle,
             'bio' => 'Creator sharing authentic takes on '.strtolower(implode(' & ', (array) $creatorNiches)).'.',
-            'email' => "{$handle}@creatorflow.test",
+            'email' => "{$handle}@creatorplex.test",
             'country' => $country,
             'city' => $city,
             'niches' => $creatorNiches,

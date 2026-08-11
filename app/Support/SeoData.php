@@ -195,15 +195,15 @@ class SeoData
         return [
             [
                 'q' => "How much does {$service['short']} cost in {$loc}?",
-                'a' => "Barter (product-only) campaigns cost only the retail value of seeded items — often ₹0 in cash. Paid {$service['short']} in {$loc} ranges from ₹5,000 for nano-creators (1K–10K followers) to ₹1.5L+ for macro creators. CreatorFlow's rate calculator gives fair benchmarks for your niche.",
+                'a' => "Barter (product-only) campaigns cost only the retail value of seeded items — often ₹0 in cash. Paid {$service['short']} in {$loc} ranges from ₹5,000 for nano-creators (1K–10K followers) to ₹1.5L+ for macro creators. CreatorPlex's rate calculator gives fair benchmarks for your niche.",
             ],
             [
-                'q' => "Which brands use CreatorFlow for {$service['short']}" . ($city ? " in {$city['name']}" : '') . "?",
-                'a' => "Over 1,000 DTC brands run {$service['short']} on CreatorFlow — including {$loc}-based brands across beauty, fashion, food, tech, home and travel. See sample work on our home page.",
+                'q' => "Which brands use CreatorPlex for {$service['short']}" . ($city ? " in {$city['name']}" : '') . "?",
+                'a' => "Over 1,000 DTC brands run {$service['short']} on CreatorPlex — including {$loc}-based brands across beauty, fashion, food, tech, home and travel. See sample work on our home page.",
             ],
             [
                 'q' => "Do I need a Shopify store to run {$service['short']}?",
-                'a' => 'No. CreatorFlow works with Shopify (native sync), WooCommerce, Amazon, CSV, or manual product entry. Shopify unlocks automatic order + inventory sync but is optional.',
+                'a' => 'No. CreatorPlex works with Shopify (native sync), WooCommerce, Amazon, CSV, or manual product entry. Shopify unlocks automatic order + inventory sync but is optional.',
             ],
             [
                 'q' => "How is {$service['short']} performance measured?",
@@ -214,7 +214,7 @@ class SeoData
                 'a' => "Most brands launch their first campaign within 24 hours of signup. AI briefs cut creative direction time from days to minutes.",
             ],
             [
-                'q' => "Does CreatorFlow handle contracts and payouts?",
+                'q' => "Does CreatorPlex handle contracts and payouts?",
                 'a' => "Yes. Contracts are auto-generated per creator and cover usage rights, deliverables and payment. Payouts run through Stripe Connect with a configurable escrow hold.",
             ],
             [

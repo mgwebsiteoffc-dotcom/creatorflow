@@ -117,7 +117,7 @@
         <section class="border-y border-slate-200 bg-white/60 py-8">
             <div class="mx-auto max-w-6xl px-4">
                 <p class="text-center text-[11px] font-bold uppercase tracking-widest text-slate-500">
-                    {{ ucwords(strtolower(strip_tags($item['title']))) }} brands running on CreatorFlow
+                    {{ ucwords(strtolower(strip_tags($item['title']))) }} brands running on CreatorPlex
                 </p>
                 <div class="marquee mt-4">
                     <div class="marquee-track">

@@ -47,7 +47,7 @@ Keep SaaS primary; use transaction fees selectively to avoid taxing SMB seeding 
 - **Barter campaigns:** 0% platform commission (product is the value; this drives liquidity). Optional small "service fee" on expedited payouts to creators.
 - **Paid campaign fees:** Platform fee of **8–10% of creator fee** capped per assignment (or included in higher tiers). Can be reduced/waived on Pro and above to drive subscription upgrades.
 - **Affiliate campaigns:** Take rate of **1–2% of attributed sales** OR include in subscription at higher tiers. This aligns with GMV and is easy to defend.
-- **Marketplace managed campaigns** (where CreatorFlow handles sourcing/payouts end-to-end): **15–20%** service fee.
+- **Marketplace managed campaigns** (where CreatorPlex handles sourcing/payouts end-to-end): **15–20%** service fee.
 - **Creator instant payouts:** small convenience fee (e.g., 1.5–2%) — a creator-paid optional perk, not a brand tax.
 - **Whitelisting/ads access:** optional add-on; revenue share or flat fee.
 

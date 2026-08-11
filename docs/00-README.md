@@ -1,6 +1,6 @@
-# CreatorFlow — Product Design & Validation
+# CreatorPlex — Product Design & Validation
 
-**CreatorFlow** is a unified creator-marketing platform for brands and creators. Two onboarding channels (Shopify App and a standalone Web Platform) feed **one** backend, one creator marketplace, one campaign engine, one messaging system, and one database.
+**CreatorPlex** is a unified creator-marketing platform for brands and creators. Two onboarding channels (Shopify App and a standalone Web Platform) feed **one** backend, one creator marketplace, one campaign engine, one messaging system, and one database.
 
 This document set is the product, UX, technical, and GTM blueprint. It is written specifically for the chosen stack:
 
@@ -32,7 +32,7 @@ This document set is the product, UX, technical, and GTM blueprint. It is writte
 
 ## The One-Page Thesis
 
-CreatorFlow is **the operating system for creator commerce**, not another influencer-search tool.
+CreatorPlex is **the operating system for creator commerce**, not another influencer-search tool.
 
 1. **One product, two doors.** Shopify is a distribution channel and an integration, not a separate codebase. A `channels` abstraction means WooCommerce, Amazon, and a generic CSV/API importer plug into the same product/campaign/order model.
 2. **Products are the atomic unit.** Every campaign is anchored to real products with inventory, pricing, images, and fulfillment. This turns "influencer marketing" into **measurable commerce**.
@@ -44,4 +44,4 @@ CreatorFlow is **the operating system for creator commerce**, not another influe
 
 > **Treat Shopify as a channel adapter behind a unified `Commerce` domain, not as the product itself.**
 
-Every competitor that started as a Shopify app trapped their data model in Shopify's shape and struggled to serve non-Shopify brands. CreatorFlow inverts that: the core domain is **channel-agnostic**, and Shopify is the richest adapter (with webhooks, discount codes, orders, and Draft Orders). This makes "same backend" non-negotiable and testable.
+Every competitor that started as a Shopify app trapped their data model in Shopify's shape and struggled to serve non-Shopify brands. CreatorPlex inverts that: the core domain is **channel-agnostic**, and Shopify is the richest adapter (with webhooks, discount codes, orders, and Draft Orders). This makes "same backend" non-negotiable and testable.

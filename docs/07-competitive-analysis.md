@@ -10,13 +10,13 @@ The creator-marketing stack splits into several categories:
 - **Affiliate/ambassador** (Refersion, Friendbuy — adjacent)
 - **Creator UGC/content marketplaces** (insense, Billo — adjacent)
 
-CreatorFlow competes across marketplace + workflow + commerce + AI, anchored by **products and attributed sales**.
+CreatorPlex competes across marketplace + workflow + commerce + AI, anchored by **products and attributed sales**.
 
 ## 7.2 Competitor Comparison Matrix
 
 Legend: ● strong / ◐ partial / ○ weak/absent
 
-| Capability | CreatorFlow | InfluCollabs | Shopify Collabs | Aspire | Grin | Upfluence | Modash | CreatorIQ |
+| Capability | CreatorPlex | InfluCollabs | Shopify Collabs | Aspire | Grin | Upfluence | Modash | CreatorIQ |
 |---|---|---|---|---|---|---|---|---|
 | Shopify integration | ● deep (auto-orders, discounts, webhooks) | ◐ | ● native | ◐ | ● | ◐ | ○ | ◐ |
 | Non-Shopify brands (web/CSV/Woo) | ● | ◐ | ○ | ● | ◐ | ● | ● | ● |
@@ -99,7 +99,7 @@ Legend: ● strong / ◐ partial / ○ weak/absent
 
 ## 7.5 Positioning Statement
 
-> **For D2C brands and agencies who want influencer marketing that actually moves product, CreatorFlow is the AI creator-commerce platform that turns your product catalog into measured creator campaigns in one click — with automatic product sync, bulk seeding, fulfillment, content review, and sales attribution. Unlike Shopify Collabs or discovery tools like Modash, CreatorFlow is product-anchored, AI-operated, and works whether or not you sell on Shopify.**
+> **For D2C brands and agencies who want influencer marketing that actually moves product, CreatorPlex is the AI creator-commerce platform that turns your product catalog into measured creator campaigns in one click — with automatic product sync, bulk seeding, fulfillment, content review, and sales attribution. Unlike Shopify Collabs or discovery tools like Modash, CreatorPlex is product-anchored, AI-operated, and works whether or not you sell on Shopify.**
 
 ### Strategic pillars
 - **Commerce-native** (orders, inventory, revenue), not content-only.

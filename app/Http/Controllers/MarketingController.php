@@ -44,7 +44,7 @@ class MarketingController extends Controller
             ."• MUST INCLUDE (5 bullets)\n"
             ."• DO / DON'T (3 do, 3 don't)\n"
             ."• DELIVERABLES (format, aspect, deadline placeholder, 90-day usage rights)\n"
-            ."• COMPENSATION (as agreed in CreatorFlow contract, +25%% bonus for videos >5%% ER)\n"
+            ."• COMPENSATION (as agreed in CreatorPlex contract, +25%% bonus for videos >5%% ER)\n"
             ."Prefix the whole brief with 'CAMPAIGN BRIEF · %s' and today's date.\n"
             ."Tune tone and references for the Indian creator marketplace (Delhi / Mumbai / Bangalore Reels + Shorts audience).",
             $data['product_name'],
@@ -59,7 +59,7 @@ class MarketingController extends Controller
             $response = $ai->complete(
                 task: 'generate_brief',
                 messages: [
-                    ['role' => 'system', 'content' => 'You are a senior creator-marketing strategist for CreatorFlow, an India-first influencer marketing platform. Write clear, useful, non-generic campaign briefs.'],
+                    ['role' => 'system', 'content' => 'You are a senior creator-marketing strategist for CreatorPlex, an India-first influencer marketing platform. Write clear, useful, non-generic campaign briefs.'],
                     ['role' => 'user',   'content' => $prompt],
                 ],
                 options: ['temperature' => (float) (\App\Models\PlatformSetting::current()->ai_temperature ?? 0.4), 'seed' => [
@@ -70,7 +70,7 @@ class MarketingController extends Controller
             return response()->json([
                 'brief'  => trim($response->text),
                 'model'  => $response->model,
-                'source' => config('creatorflow.ai.driver') === 'openai' ? 'openai' : 'mock',
+                'source' => config('creatorplex.ai.driver') === 'openai' ? 'openai' : 'mock',
             ]);
         } catch (\Throwable $e) {
             // Return graceful failure so the frontend can drop to its offline template.
@@ -125,13 +125,13 @@ class MarketingController extends Controller
                 'title' => 'The DTC seeding playbook for Indian brands',
                 'summary' => 'How to seed 100 creators in 30 days without spending on fees. Cover story: Glow &amp; Co., Delhi.',
                 'read_min' => 12,
-                'body' => "## Why seeding beats paid for launch weeks\nBarter (product-only) campaigns average 62% acceptance in India when the offer is clear, the product is desirable, and the brief is tight. That's 4× the acceptance rate of cold paid outreach.\n\n## The 5-step playbook\n1. **Shortlist** 300 creators using CreatorFlow's marketplace filtered by city + tier + niche.\n2. **Rank** them by engagement rate (min 4%) and audience overlap.\n3. **Personalise** the outreach — reference their recent post.\n4. **Ship** the product within 3 business days (see our Shipping Policy).\n5. **Ask** for a Reel + Story + 1 permission for whitelisting.\n\n## Delhi micro-influencer campaign math\nWith 100 seeded creators × 32K avg followers × 6% ER × 1.4% CVR × ₹1,299 AOV, expected revenue = ₹3.5L on a ~₹1.2L product-cost outlay. That's a 2.9× ROAS on retail — before whitelisting.\n",
+                'body' => "## Why seeding beats paid for launch weeks\nBarter (product-only) campaigns average 62% acceptance in India when the offer is clear, the product is desirable, and the brief is tight. That's 4× the acceptance rate of cold paid outreach.\n\n## The 5-step playbook\n1. **Shortlist** 300 creators using CreatorPlex's marketplace filtered by city + tier + niche.\n2. **Rank** them by engagement rate (min 4%) and audience overlap.\n3. **Personalise** the outreach — reference their recent post.\n4. **Ship** the product within 3 business days (see our Shipping Policy).\n5. **Ask** for a Reel + Story + 1 permission for whitelisting.\n\n## Delhi micro-influencer campaign math\nWith 100 seeded creators × 32K avg followers × 6% ER × 1.4% CVR × ₹1,299 AOV, expected revenue = ₹3.5L on a ~₹1.2L product-cost outlay. That's a 2.9× ROAS on retail — before whitelisting.\n",
             ],
             [
                 'slug' => 'india-creator-rate-benchmarks-2026',
                 'category' => 'benchmarks',
                 'title' => 'India creator rate benchmarks 2026 (₹)',
-                'summary' => 'Every rate benchmark from 12,000+ CreatorFlow deals across Delhi, Mumbai, Bangalore.',
+                'summary' => 'Every rate benchmark from 12,000+ CreatorPlex deals across Delhi, Mumbai, Bangalore.',
                 'read_min' => 6,
                 'body' => "## Nano (1K–10K)\nUGC: ₹0–₹2,500 · Reel: ₹1,500–₹6,000 · YouTube 60s: ₹3,000–₹10,000\n\n## Micro (10K–100K)\nUGC: ₹1,500–₹8,000 · Reel: ₹5,000–₹40,000 · YouTube 60s: ₹15,000–₹90,000\n\n## Mid (100K–500K)\nUGC: ₹6,000–₹35,000 · Reel: ₹30,000–₹1,50,000 · YouTube 60s: ₹80,000–₹4,00,000\n\n## Macro (500K–1M)\nUGC: ₹25,000–₹80,000 · Reel: ₹1,00,000–₹4,00,000 · YouTube 60s: ₹3,00,000–₹10,00,000\n\n## Mega (1M+)\nUGC: ₹60,000+ · Reel: ₹3,00,000+ · YouTube 60s: ₹8,00,000+\n\nUse the [rate calculator](/tools/creator-rate-calculator) with the actual creator's ER + niche for a live number.",
             ],
@@ -141,7 +141,7 @@ class MarketingController extends Controller
                 'title' => 'Attribution 101 — tie every ₹ back to the creator',
                 'summary' => 'Discount codes + UTM + referral links + assisted conversions in one flow.',
                 'read_min' => 8,
-                'body' => "## Every creator gets 3 handles\n1. A **unique discount code** (e.g. RIYA10)\n2. A **UTM-tagged referral link** synced from your Shopify store\n3. A **short.link** so the tracking survives copy-paste to Reels captions\n\n## Rolling up assisted conversions\nCreatorFlow's multi-touch attribution assigns full credit to the last-touch code + 30% assist credit to any earlier touch. Set the attribution window (7–30 days) in `Admin → Settings`.\n",
+                'body' => "## Every creator gets 3 handles\n1. A **unique discount code** (e.g. RIYA10)\n2. A **UTM-tagged referral link** synced from your Shopify store\n3. A **short.link** so the tracking survives copy-paste to Reels captions\n\n## Rolling up assisted conversions\nCreatorPlex's multi-touch attribution assigns full credit to the last-touch code + 30% assist credit to any earlier touch. Set the attribution window (7–30 days) in `Admin → Settings`.\n",
             ],
             [
                 'slug' => 'brief-template-pack',
@@ -163,7 +163,7 @@ class MarketingController extends Controller
                 'slug' => 'product-tour-video',
                 'category' => 'videos',
                 'title' => '15-min product tour',
-                'summary' => 'Everything CreatorFlow does, in the time it takes to make chai.',
+                'summary' => 'Everything CreatorPlex does, in the time it takes to make chai.',
                 'read_min' => 15,
                 'body' => "Watch the founder walk through a full campaign — marketplace search, campaign create, audience targeting, invitation, contract, content review, attribution.\n\nBook a 1:1 walkthrough via the [contact page](/contact).",
             ],
@@ -301,12 +301,12 @@ class MarketingController extends Controller
     public function llmsTxt()
     {
         $lines = [
-            '# CreatorFlow',
+            '# CreatorPlex',
             '',
             '> The AI-powered influencer marketing platform for DTC brands, Shopify stores and agencies in India and globally.',
             '',
             '## Company',
-            '- Name: CreatorFlow',
+            '- Name: CreatorPlex',
             '- What we do: Influencer marketing agency + software platform',
             '- Location: India (Delhi NCR HQ, remote-first)',
             '- Categories: Influencer marketing, UGC, creator seeding, barter campaigns, Shopify integration',
@@ -367,10 +367,10 @@ class MarketingController extends Controller
                 'emoji'   => '👗',
                 'grad'    => 'from-fuchsia-500 to-pink-500',
                 'accent'  => '#ec4899',
-                'meta'    => 'Run fashion & lifestyle influencer campaigns on CreatorFlow — AI-matched creators, bulk seeding, live attribution.',
+                'meta'    => 'Run fashion & lifestyle influencer campaigns on CreatorPlex — AI-matched creators, bulk seeding, live attribution.',
                 'hero_kpis' => [['6.8%', 'Avg engagement'], ['5.4×', 'Avg ROAS'], ['Reels', 'Best format']],
                 'why_headline' => 'Why creators outperform ads for fashion',
-                'why_body'     => 'Fashion is an emotion buy. Buyers convert when a creator they trust wears the piece in a real setting. CreatorFlow powers the loop: match, seed, ship, review, attribute.',
+                'why_body'     => 'Fashion is an emotion buy. Buyers convert when a creator they trust wears the piece in a real setting. CreatorPlex powers the loop: match, seed, ship, review, attribute.',
                 'why_points'   => [
                     ['icon'=>'👥', 'title'=>'Trust wins',   'body'=>'Buyers trust creators over paid ads 3.2× in apparel.'],
                     ['icon'=>'🎬', 'title'=>'Reels convert','body'=>'6.8% avg ER on Reels — 2.4× your best paid ad CTR.'],
@@ -390,9 +390,9 @@ class MarketingController extends Controller
                 'testimonial' => ['q'=>'We stopped booking creators by follower count and started booking by audience overlap. Our CPA dropped 42% in six weeks.', 'name'=>'Growth Lead', 'company'=>'DTC fashion brand'],
                 'faqs'  => [
                     ['q'=>'How much does a fashion influencer campaign cost in India?','a'=>'Barter (product-only) campaigns cost you just the retail value of the seeded items. Paid campaigns range from ₹5,000 for nano-creators to ₹80,000+ for macro fashion creators.'],
-                    ['q'=>'Do creators need to have a Shopify account?','a'=>'No. Creators sign up free on CreatorFlow. When a brand approves them, we generate a unique discount code and (for Shopify brands) create the order with tracking automatically.'],
+                    ['q'=>'Do creators need to have a Shopify account?','a'=>'No. Creators sign up free on CreatorPlex. When a brand approves them, we generate a unique discount code and (for Shopify brands) create the order with tracking automatically.'],
                     ['q'=>'How is fashion campaign performance measured?','a'=>'Every creator gets a unique code + referral link. Attributed revenue, orders, CVR, ER and ROAS show in real-time on your campaign page.'],
-                    ['q'=>'Can I run barter-only fashion campaigns?','a'=>'Yes. 68% of fashion campaigns on CreatorFlow are barter-only. Set the campaign type to Barter and the creator fee to 0.'],
+                    ['q'=>'Can I run barter-only fashion campaigns?','a'=>'Yes. 68% of fashion campaigns on CreatorPlex are barter-only. Set the campaign type to Barter and the creator fee to 0.'],
                     ['q'=>'What product types work best?','a'=>'Wear-first (tees, dresses, activewear) convert fastest. Accessories (jewellery, eyewear) work great for micro-creator seeding thanks to lower per-unit cost.'],
                 ],
             ],
@@ -409,7 +409,7 @@ class MarketingController extends Controller
                 'why_body'     => 'Buyers scroll for honest reactions: swatches, before/afters, GRWM reels. The shelf you can\'t buy: authentic content that shows results.',
                 'why_points'   => [
                     ['icon'=>'🎯','title'=>'#1 seeding category','body'=>'62% average acceptance rate — creators want beauty products.'],
-                    ['icon'=>'💥','title'=>'Highest ER of any niche','body'=>'8.1% average engagement on beauty content on CreatorFlow.'],
+                    ['icon'=>'💥','title'=>'Highest ER of any niche','body'=>'8.1% average engagement on beauty content on CreatorPlex.'],
                     ['icon'=>'🖼️','title'=>'Ad-ready UGC library','body'=>'One 30-creator seed = 90+ assets you can whitelist for paid.'],
                 ],
                 'playbook' => [
@@ -423,9 +423,9 @@ class MarketingController extends Controller
                     ['name'=>'Glow & Co.','result'=>'50-creator launch, ₹8.4L attributed revenue, 220 UGC assets in 2 weeks','grad'=>'from-rose-500 to-orange-500'],
                     ['name'=>'Foxtale',   'result'=>'Barter → paid whitelist funnel, 7.2× ROAS quarter-over-quarter',           'grad'=>'from-pink-500 to-fuchsia-500'],
                 ],
-                'testimonial' => ['q'=>'CreatorFlow ran our barter seeding end-to-end. UGC quality was so good we\'re now using it in our paid ads.','name'=>'Head of Growth','company'=>'DTC skincare brand'],
+                'testimonial' => ['q'=>'CreatorPlex ran our barter seeding end-to-end. UGC quality was so good we\'re now using it in our paid ads.','name'=>'Head of Growth','company'=>'DTC skincare brand'],
                 'faqs'  => [
-                    ['q'=>'Do beauty creators disclose that content is sponsored?','a'=>'Yes. CreatorFlow contracts include #ad / #paidpartnership requirements per platform. AI content review flags missing disclosure.'],
+                    ['q'=>'Do beauty creators disclose that content is sponsored?','a'=>'Yes. CreatorPlex contracts include #ad / #paidpartnership requirements per platform. AI content review flags missing disclosure.'],
                     ['q'=>'Which beauty products work best for seeding?','a'=>'Everyday-use SKUs with visible results: serums, lipsticks, mascaras, foundations. Fragrance seeding works but needs better creative direction.'],
                     ['q'=>'How do I run FDA / regulatory-compliant campaigns?','a'=>'Add compliance rules to the brief (no medical claims, no comparisons by name). AI content review flags violations before content ships.'],
                     ['q'=>'Can I invite verified beauty influencers only?','a'=>'Yes — filter the creator marketplace by verified + niche = Beauty & Skincare.'],
@@ -439,7 +439,7 @@ class MarketingController extends Controller
                 'emoji'   => '🥗',
                 'grad'    => 'from-emerald-500 to-teal-500',
                 'accent'  => '#10b981',
-                'meta'    => 'Run food, beverage, wellness and fitness influencer campaigns with CreatorFlow.',
+                'meta'    => 'Run food, beverage, wellness and fitness influencer campaigns with CreatorPlex.',
                 'hero_kpis' => [['9.4%','Avg engagement'], ['4.6×','Avg ROAS'], ['3.2×','Repeat rate']],
                 'why_headline' => 'Food + fitness convert on demonstration',
                 'why_body'     => 'Unlike fashion (aesthetic) or beauty (trust), food and fitness convert on proof. Show it working, show the recipe, show the transformation.',
@@ -511,10 +511,10 @@ class MarketingController extends Controller
                 'emoji'   => '✈️',
                 'grad'    => 'from-sky-500 to-indigo-500',
                 'accent'  => '#0ea5e9',
-                'meta'    => 'Hotels, resorts, tourism boards: run creator campaigns via CreatorFlow with barter stays and POV reels.',
+                'meta'    => 'Hotels, resorts, tourism boards: run creator campaigns via CreatorPlex with barter stays and POV reels.',
                 'hero_kpis' => [['5.6%','Avg engagement'], ['3.8×','Avg ROAS'], ['68%','Barter share']],
                 'why_headline' => 'Travel is a barter goldmine',
-                'why_body'     => 'A free 2-night stay costs you the empty-room marginal cost. To a mid-tier travel creator it\'s ₹40,000+ perceived value. That asymmetry is why 68% of travel campaigns on CreatorFlow are barter-only.',
+                'why_body'     => 'A free 2-night stay costs you the empty-room marginal cost. To a mid-tier travel creator it\'s ₹40,000+ perceived value. That asymmetry is why 68% of travel campaigns on CreatorPlex are barter-only.',
                 'why_points'   => [
                     ['icon'=>'🛏','title'=>'Off-season weekdays','body'=>'Fill empty rooms with creator stays.'],
                     ['icon'=>'📽','title'=>'POV walkthroughs','body'=>'The single highest-CTR travel format.'],
@@ -627,14 +627,14 @@ class MarketingController extends Controller
                 'emoji'   => '📣',
                 'grad'    => 'from-violet-500 to-fuchsia-500',
                 'accent'  => '#a855f7',
-                'meta'    => 'Scale brand awareness with a multi-creator burst campaign on CreatorFlow.',
+                'meta'    => 'Scale brand awareness with a multi-creator burst campaign on CreatorPlex.',
                 'hero_kpis' => [['20–50', 'Creators / burst'], ['15–45s', 'Video length'], ['3× ER', 'vs solo book']],
                 'when_headline' => 'Awareness campaigns build recall, not conversion',
                 'when_body'     => 'Measure success in reach, impressions and assisted conversions — not last-click revenue. Ideal for new brand launches, category expansions, and rebrands.',
                 'features' => [
                     ['icon'=>'🔥','title'=>'Multi-creator burst','body'=>'20–50 creators in a single 2-week window creates a cultural moment.'],
                     ['icon'=>'📱','title'=>'Repurpose for paid','body'=>'20-creator burst → 60+ ad-ready assets for Meta/TikTok.'],
-                    ['icon'=>'🎯','title'=>'ER-weighted matching','body'=>'CreatorFlow ranks by engagement rate, not follower count.'],
+                    ['icon'=>'🎯','title'=>'ER-weighted matching','body'=>'CreatorPlex ranks by engagement rate, not follower count.'],
                 ],
                 'process' => [
                     ['step'=>1,'title'=>'Draft master brief','body'=>'AI generates one brief, personalized per creator.'],
@@ -690,7 +690,7 @@ class MarketingController extends Controller
                 'meta'    => 'Self-managed influencer marketing platform: unlimited creator search, AI briefs, contracts, attribution.',
                 'hero_kpis' => [['100K+', 'Creators'], ['12+', 'Filters'], ['24h', 'To first campaign']],
                 'when_headline' => 'For in-house teams that own the strategy',
-                'when_body'     => 'You know your brand better than any agency. Self-managed gives you the full CreatorFlow toolkit without the campaign manager.',
+                'when_body'     => 'You know your brand better than any agency. Self-managed gives you the full CreatorPlex toolkit without the campaign manager.',
                 'features' => [
                     ['icon'=>'🔎','title'=>'Unlimited search','body'=>'100K+ verified creators, 12+ filters.'],
                     ['icon'=>'✨','title'=>'AI briefs on demand','body'=>'One prompt → launch-ready brief.'],
@@ -717,7 +717,7 @@ class MarketingController extends Controller
                 'emoji'   => '🎁',
                 'grad'    => 'from-pink-500 to-rose-500',
                 'accent'  => '#ec4899',
-                'meta'    => 'Barter influencer campaigns: zero cash, 62% accept rate, automatic Shopify orders on CreatorFlow.',
+                'meta'    => 'Barter influencer campaigns: zero cash, 62% accept rate, automatic Shopify orders on CreatorPlex.',
                 'hero_kpis' => [['62%', 'Accept rate'], ['4–8×', 'ROAS on retail'], ['Auto', 'Shopify orders']],
                 'when_headline' => 'Highest-ROI creator format when done right',
                 'when_body'     => 'You pay only the cost of goods. Creators get product they genuinely want. Right playbook returns 4–8× on retail-value spend.',
@@ -728,13 +728,13 @@ class MarketingController extends Controller
                 ],
                 'process' => [
                     ['step'=>1,'title'=>'Set campaign type = Barter','body'=>'Creator fee stays at 0.'],
-                    ['step'=>2,'title'=>'Assume 30% accept rate','body'=>'CreatorFlow invites 3× your target automatically.'],
+                    ['step'=>2,'title'=>'Assume 30% accept rate','body'=>'CreatorPlex invites 3× your target automatically.'],
                     ['step'=>3,'title'=>'Auto-Shopify order','body'=>'Zero manual ops.'],
                     ['step'=>4,'title'=>'Content lands','body'=>'AI review → your approval → live.'],
                 ],
                 'faqs' => [
-                    ['q'=>'Do creators really accept barter?','a'=>'Yes — 62% average across CreatorFlow. Beauty hits 78%, Fashion 55%.'],
-                    ['q'=>'What if a creator ghosts?','a'=>'Their performance score drops (visible to all future brands). Ghost rate on CreatorFlow is 4%.'],
+                    ['q'=>'Do creators really accept barter?','a'=>'Yes — 62% average across CreatorPlex. Beauty hits 78%, Fashion 55%.'],
+                    ['q'=>'What if a creator ghosts?','a'=>'Their performance score drops (visible to all future brands). Ghost rate on CreatorPlex is 4%.'],
                     ['q'=>'Barter + commission hybrid?','a'=>'Yes — set the campaign type to Hybrid. Product + % revenue share.'],
                     ['q'=>'When barter doesn\'t work?','a'=>'Very expensive electronics (₹50K+), services with high delivery cost, products that don\'t photograph well.'],
                     ['q'=>'Max creators per seed?','a'=>'Unlimited. Some brands seed 100–500 creators per launch.'],
@@ -782,7 +782,7 @@ class MarketingController extends Controller
             'date'      => optional($p->published_at ?? $p->created_at)->toDateString(),
             'read'      => $p->read_minutes ?: '5 min',
             'category'  => $p->category ?: 'Article',
-            'author'    => $p->author?->name ?? 'CreatorFlow team',
+            'author'    => $p->author?->name ?? 'CreatorPlex team',
             'grad'      => $p->cover_gradient ?: 'from-violet-500 to-pink-500',
             'cover_image_path' => $p->cover_image_path,
             'meta_title'       => $p->metaTitle(),

@@ -91,7 +91,7 @@ class Workspace extends Model
 
     public function entitlements(): array
     {
-        return config("creatorflow.plans.{$this->plan}", config('creatorflow.plans.free'));
+        return config("creatorplex.plans.{$this->plan}", config('creatorplex.plans.free'));
     }
 
     public function onboardingComplete(): bool

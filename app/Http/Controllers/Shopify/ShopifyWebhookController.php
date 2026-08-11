@@ -50,10 +50,10 @@ class ShopifyWebhookController extends Controller
 
     protected function verifyHmac(Request $request, ?string $hmac): bool
     {
-        $secret = config('creatorflow.shopify.webhook_secret');
+        $secret = config('creatorplex.shopify.webhook_secret');
 
         // Allow unsigned local/test webhooks when no secret is configured.
-        if (empty($secret) || config('creatorflow.demo.fake_external_calls')) {
+        if (empty($secret) || config('creatorplex.demo.fake_external_calls')) {
             return true;
         }
 

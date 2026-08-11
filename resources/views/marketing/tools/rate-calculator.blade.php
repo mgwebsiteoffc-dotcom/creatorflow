@@ -12,7 +12,7 @@
                 ['@type' => 'Question', 'name' => 'What is a fair UGC rate for a nano creator in Delhi?',
                  'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Nano creators (1K–10K) in Delhi typically charge ₹0 – ₹2,500 per UGC photo for barter or seeding campaigns and ₹1,500 – ₹6,000 for a paid Reel with usage rights.']],
                 ['@type' => 'Question', 'name' => 'How does engagement rate affect a creator\'s rate?',
-                 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Higher ER commands premium pricing. This calculator applies an ER bonus multiplier that scales up to 1.6× at 8%+ ER — matching how CreatorFlow deals actually get negotiated.']],
+                 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Higher ER commands premium pricing. This calculator applies an ER bonus multiplier that scales up to 1.6× at 8%+ ER — matching how CreatorPlex deals actually get negotiated.']],
                 ['@type' => 'Question', 'name' => 'Are Mumbai and Bangalore creator rates different from Delhi?',
                  'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Rates across the top 3 Indian metros (Delhi, Mumbai, Bangalore) are within 10–15% of each other. Mumbai fashion + celebrity creators trend higher, Bangalore tech creators trend higher for B2B, Delhi is the deepest overall pool.']],
             ],
@@ -20,7 +20,7 @@
         $swAppLd = [
             '@context' => 'https://schema.org',
             '@type' => 'SoftwareApplication',
-            'name' => 'CreatorFlow Rate Calculator',
+            'name' => 'CreatorPlex Rate Calculator',
             'applicationCategory' => 'BusinessApplication',
             'operatingSystem' => 'Web',
             'offers' => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'INR'],
@@ -30,7 +30,7 @@
             '@context' => 'https://schema.org',
             '@type' => 'BreadcrumbList',
             'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'CreatorFlow', 'item' => url('/')],
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'CreatorPlex', 'item' => url('/')],
                 ['@type' => 'ListItem', 'position' => 2, 'name' => 'Free tools', 'item' => route('tools.index')],
                 ['@type' => 'ListItem', 'position' => 3, 'name' => 'Rate Calculator', 'item' => route('tools.rate')],
             ],
@@ -46,7 +46,7 @@
             <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
                 Creator <span class="text-gradient">Rate Calculator</span> · India
             </h1>
-            <p class="mt-3 max-w-2xl text-slate-600">Benchmarked from 12,000+ CreatorFlow deals across Delhi, Mumbai, Bangalore, Hyderabad and Pune. Enter followers, ER, and niche — get fair Indian rupee rates for UGC, Reels, TikToks and YouTube integrations.</p>
+            <p class="mt-3 max-w-2xl text-slate-600">Benchmarked from 12,000+ CreatorPlex deals across Delhi, Mumbai, Bangalore, Hyderabad and Pune. Enter followers, ER, and niche — get fair Indian rupee rates for UGC, Reels, TikToks and YouTube integrations.</p>
         </div>
     </section>
 
@@ -199,5 +199,5 @@
         </div>
     </section>
 
-    @include('marketing._cta', ['title' => 'Fair rates aren\'t enough. Automate the deal.', 'sub' => 'CreatorFlow handles contracts, payouts, and attribution in one flow.'])
+    @include('marketing._cta', ['title' => 'Fair rates aren\'t enough. Automate the deal.', 'sub' => 'CreatorPlex handles contracts, payouts, and attribution in one flow.'])
 </x-layouts.app>

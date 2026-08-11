@@ -138,7 +138,7 @@ Use **job batching** for bulk seeding (e.g., 100-creator invite batch) with prog
 ## 2.6 File Storage
 
 - S3-compatible object storage (**Cloudflare R2** recommended at start: zero egress, ideal for UGC video/images; S3 for production maturity).
-- Buckets: `creatorflow-uploads`, `creatorflow-ugc`, `creatorflow-exports`, `creatorflow-ai`.
+- Buckets: `creatorplex-uploads`, `creatorplex-ugc`, `creatorplex-exports`, `creatorplex-ai`.
 - Uploads via **S3 presigned URLs / direct-to-storage** to avoid app-server bandwidth; Laravel handles authorization.
 - Image variants via Glide/Imgix; video thumbnails via FFmpeg on a worker.
 - Virus-scan uploads (ClamAV) and moderate images (AI safety + Rekognition optional).

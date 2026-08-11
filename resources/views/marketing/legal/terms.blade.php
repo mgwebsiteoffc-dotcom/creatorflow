@@ -1,9 +1,9 @@
 <x-marketing.legal-layout title="Terms of Use"
-    metaDescription="CreatorFlow terms of use — the rules that govern how brands and creators use our influencer marketing platform in India.">
+    metaDescription="CreatorPlex terms of use — the rules that govern how brands and creators use our influencer marketing platform in India.">
 
-    <p>These Terms of Use ("Terms") govern your access to and use of CreatorFlow — the AI-powered creator-commerce platform ("Service") operated by CreatorFlow Technologies Pvt. Ltd. ("CreatorFlow"). By creating an account or using the Service, you agree to these Terms.</p>
+    <p>These Terms of Use ("Terms") govern your access to and use of CreatorPlex — the AI-powered creator-commerce platform ("Service") operated by CreatorPlex Technologies Pvt. Ltd. ("CreatorPlex"). By creating an account or using the Service, you agree to these Terms.</p>
 
-    <h2>1. Who can use CreatorFlow</h2>
+    <h2>1. Who can use CreatorPlex</h2>
     <p>You must be at least 18 years old and legally able to enter into contracts. Brands must be a registered business (Proprietorship, LLP, Pvt. Ltd., or equivalent). Creators must own the social handles they connect. Creators under 18 may only join with a parent/guardian who agrees to these Terms on their behalf.</p>
 
     <h2>2. Accounts and workspaces</h2>
@@ -14,7 +14,7 @@
     </ul>
 
     <h2>3. Campaigns and creator relationships</h2>
-    <p>CreatorFlow is a marketplace + workflow tool. Brands and creators enter into their own commercial relationship — CreatorFlow is not a party to those contracts. Every accepted invitation generates a machine-readable contract that both sides agree to. Deliverables, usage rights, and compensation are set per campaign.</p>
+    <p>CreatorPlex is a marketplace + workflow tool. Brands and creators enter into their own commercial relationship — CreatorPlex is not a party to those contracts. Every accepted invitation generates a machine-readable contract that both sides agree to. Deliverables, usage rights, and compensation are set per campaign.</p>
 
     <h2>4. Payments, fees, and escrow</h2>
     <ul>
@@ -31,15 +31,15 @@
     <ul>
         <li>No misrepresentation of follower counts, engagement, or audience demographics.</li>
         <li>No buying followers, bots, or fake engagement.</li>
-        <li>No off-platform circumvention of CreatorFlow's escrow or attribution once creators are matched via the Service.</li>
+        <li>No off-platform circumvention of CreatorPlex's escrow or attribution once creators are matched via the Service.</li>
         <li>No content that violates local law, promotes hate, glorifies self-harm, or is sexually explicit involving minors.</li>
     </ul>
 
     <h2>7. Intellectual property</h2>
-    <p>CreatorFlow's platform, brand, code, and content are ours. You retain ownership of everything you upload; you grant us a limited license to store, display, and process it to operate the Service.</p>
+    <p>CreatorPlex's platform, brand, code, and content are ours. You retain ownership of everything you upload; you grant us a limited license to store, display, and process it to operate the Service.</p>
 
     <h2>8. Liability</h2>
-    <p>CreatorFlow is provided "as is". To the maximum extent permitted by law, our liability for any claim relating to the Service is limited to the fees you paid us in the 3 months preceding the claim.</p>
+    <p>CreatorPlex is provided "as is". To the maximum extent permitted by law, our liability for any claim relating to the Service is limited to the fees you paid us in the 3 months preceding the claim.</p>
 
     <h2>9. Governing law</h2>
     <p>These Terms are governed by the laws of India. Any dispute is subject to the exclusive jurisdiction of the courts of New Delhi.</p>

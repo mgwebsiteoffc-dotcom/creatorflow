@@ -11,10 +11,10 @@
                             <span class="chip-dot"></span> Free · No card required
                         </span>
                         <h1 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-                            Create your <span class="text-gradient">CreatorFlow</span> account
+                            Create your <span class="text-gradient">CreatorPlex</span> account
                         </h1>
                         <p class="mt-2 text-sm text-slate-500">
-                            Two doors. One product. Pick how you'll use CreatorFlow.
+                            Two doors. One product. Pick how you'll use CreatorPlex.
                         </p>
 
                         <form method="POST" action="{{ route('register') }}" class="mt-8 space-y-5">
@@ -95,7 +95,7 @@
             <div class="md:col-span-2">
                 <div class="sticky top-24 space-y-5">
                     <div class="rounded-3xl border border-slate-200 bg-white p-6">
-                        <h3 class="text-sm font-bold uppercase tracking-widest text-violet-700">Why CreatorFlow</h3>
+                        <h3 class="text-sm font-bold uppercase tracking-widest text-violet-700">Why CreatorPlex</h3>
                         <ul class="mt-4 space-y-4 text-sm text-slate-700">
                             @foreach([
                                 ['Free forever plan', '5 campaigns/mo · unlimited creators'],

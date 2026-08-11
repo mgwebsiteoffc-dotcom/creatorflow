@@ -35,7 +35,7 @@ class AiGateway
             'subject_type' => $subjectType ?? 'generic',
             'subject_id' => $subjectId ?? 0,
             'task' => $task,
-            'model' => $options['model'] ?? config('creatorflow.ai.openai.model', 'unknown'),
+            'model' => $options['model'] ?? config('creatorplex.ai.openai.model', 'unknown'),
             'prompt' => json_encode($messages),
             'status' => 'running',
         ]);

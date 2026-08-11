@@ -1,8 +1,8 @@
 <x-layouts.app panel="guest" title="Blog">
     @include('marketing._hero', [
-        'eyebrow' => 'CreatorFlow blog',
+        'eyebrow' => 'CreatorPlex blog',
         'title'   => 'Insights from the <span class="text-gradient">creator commerce</span> frontline',
-        'sub'     => 'Playbooks, benchmarks, and honest takes from the team building CreatorFlow — and the brands running on it.',
+        'sub'     => 'Playbooks, benchmarks, and honest takes from the team building CreatorPlex — and the brands running on it.',
         'ctaText' => 'Subscribe',
         'ctaHref' => '#news',
     ])
@@ -62,7 +62,7 @@
             <div class="pointer-events-none absolute -right-10 -top-10 h-64 w-64 rounded-full bg-gradient-to-br from-violet-500/40 to-pink-500/30 blur-3xl"></div>
             <div class="grid gap-6 md:grid-cols-2 md:items-center">
                 <div class="text-white">
-                    <h2 class="text-3xl font-black">CreatorFlow Weekly</h2>
+                    <h2 class="text-3xl font-black">CreatorPlex Weekly</h2>
                     <p class="mt-2 text-white/80">One 5-minute read every Friday. Zero fluff.</p>
                 </div>
                 <form onsubmit="event.preventDefault(); alert('Subscribed ✓')" class="flex flex-col gap-3 sm:flex-row">

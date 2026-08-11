@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
     {
         Storage::fake('public');
 
-        $this->command?->info('Seeding CreatorFlow demo data…');
+        $this->command?->info('Seeding CreatorPlex demo data…');
 
         // SEO-focused blog posts (only if blog_posts table exists).
         $this->call(SeoBlogSeeder::class);
@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
 
         // ── Platform superadmin (system owner) ─────────────────────────
         User::updateOrCreate(
-            ['email' => 'admin@creatorflow.test'],
+            ['email' => 'admin@creatorplex.test'],
             [
                 'uuid' => (string) Str::uuid(),
                 'name' => 'Platform Admin',
@@ -77,12 +77,12 @@ class DatabaseSeeder extends Seeder
 
         // ── Users ──────────────────────────────────────────────────────
         $brandUser = User::updateOrCreate(
-            ['email' => 'brand@creatorflow.test'],
+            ['email' => 'brand@creatorplex.test'],
             ['uuid' => (string) Str::uuid(), 'name' => 'Demo Brand Owner', 'password' => Hash::make('password'), 'email_verified_at' => now()]
         );
 
         $creatorUser = User::updateOrCreate(
-            ['email' => 'creator@creatorflow.test'],
+            ['email' => 'creator@creatorplex.test'],
             ['uuid' => (string) Str::uuid(), 'name' => 'Jamie Rivera', 'password' => Hash::make('password'), 'email_verified_at' => now()]
         );
 
@@ -265,7 +265,7 @@ class DatabaseSeeder extends Seeder
         // Also seed a second completed campaign for analytics.
         $this->seedHistoricalCampaign($workspace, $products[4], $creators, $brandUser, $attribute);
 
-        $this->command?->info('✓ Done. Login as brand@creatorflow.test / password or creator@creatorflow.test / password');
+        $this->command?->info('✓ Done. Login as brand@creatorplex.test / password or creator@creatorplex.test / password');
     }
 
     /**
@@ -464,7 +464,7 @@ class DatabaseSeeder extends Seeder
                     'uuid' => (string) Str::uuid(),
                     'display_name' => $name.' '.['Lopez','Patel','Chen','Garcia','Kim','Nguyen','Silva','Ahmed','Murphy','Ross'][$i % 10],
                     'bio' => 'Creator sharing authentic takes on '.strtolower(implode(' & ', $creatorNiches)).'.',
-                    'email' => Str::slug($handles[$i]).'@creatorflow.test',
+                    'email' => Str::slug($handles[$i]).'@creatorplex.test',
                     'country' => $country,
                     'city' => $city,
                     'gender' => $gender,

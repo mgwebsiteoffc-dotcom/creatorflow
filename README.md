@@ -1,6 +1,6 @@
-# CreatorFlow
+# CreatorPlex
 
-CreatorFlow is a unified, AI-powered **creator-commerce platform** for brands and creators. Two entry points — a **Shopify App** and a standalone **Web Platform** — share one backend, one creator marketplace, one campaign engine, one messaging system and one database.
+CreatorPlex is a unified, AI-powered **creator-commerce platform** for brands and creators. Two entry points — a **Shopify App** and a standalone **Web Platform** — share one backend, one creator marketplace, one campaign engine, one messaging system and one database.
 
 This is a real, runnable Laravel implementation (not a prototype): migrations, models, a `CommerceChannel` contract with a Shopify adapter, AI campaign/matching/content flows, queued jobs, events, a full demo seeder, and mobile-first PWA panels for both brands and creators.
 
@@ -26,7 +26,7 @@ php artisan key:generate
 
 # SQLite (zero setup) — switch the DB line in .env, then:
 touch database/database.sqlite
-# OR create a MySQL `creatorflow` database and keep DB_CONNECTION=mysql
+# OR create a MySQL `creatorplex` database and keep DB_CONNECTION=mysql
 
 php artisan migrate
 php artisan db:seed          # full demo dataset
@@ -39,8 +39,8 @@ Open <http://localhost:8000>.
 
 | Role | Email | Password |
 |------|-------|----------|
-| Brand (Pro, Shopify-connected) | `brand@creatorflow.test` | `password` |
-| Creator | `creator@creatorflow.test` | `password` |
+| Brand (Pro, Shopify-connected) | `brand@creatorplex.test` | `password` |
+| Creator | `creator@creatorplex.test` | `password` |
 
 See [SETUP.md](SETUP.md) for the full code map, environment variables and testing.
 

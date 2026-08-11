@@ -46,7 +46,7 @@ class AttributeOrder
         }
 
         // 2. Referral tag in the order note/raw payload.
-        $referral = data_get($order->raw_payload, 'note_attributes.creatorflow_creator')
+        $referral = data_get($order->raw_payload, 'note_attributes.creatorplex_creator')
             ?? data_get($order->raw_payload, 'referral_code');
 
         if ($referral) {

@@ -43,7 +43,7 @@ class ShopifyDiscountFactory
 
         return [
             'price_rule' => [
-                'title' => "CreatorFlow: {$code}",
+                'title' => "CreatorPlex: {$code}",
                 'target_type' => $targetType,
                 'target_selection' => 'all',
                 'allocation_method' => $type === 'fixed_amount' ? 'across' : 'each',

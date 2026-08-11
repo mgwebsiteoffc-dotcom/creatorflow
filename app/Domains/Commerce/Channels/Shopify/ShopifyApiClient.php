@@ -10,7 +10,7 @@ use RuntimeException;
 /**
  * Thin, testable wrapper around the Shopify Admin REST/GraphQL API.
  *
- * When config('creatorflow.demo.fake_external_calls') is true (the default in
+ * When config('creatorplex.demo.fake_external_calls') is true (the default in
  * local/dev), no HTTP call is made and a stub payload is returned. Seeders
  * and tests rely on this; production sets FAKE_EXTERNAL_CALLS=false.
  */

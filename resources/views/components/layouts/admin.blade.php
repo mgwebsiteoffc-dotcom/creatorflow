@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>{{ $title ? $title.' · ' : '' }}Admin · CreatorFlow</title>
+    <title>{{ $title ? $title.' · ' : '' }}Admin · CreatorPlex</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-slate-100 text-slate-900">
@@ -19,7 +19,7 @@
         <a href="{{ route('admin.dashboard') }}" class="mb-3 flex items-center gap-2 rounded-xl bg-white/5 p-3">
             <span class="grid h-8 w-8 place-items-center rounded-lg text-xs font-black text-white" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">CF</span>
             <div>
-                <div class="text-sm font-bold text-white">CreatorFlow</div>
+                <div class="text-sm font-bold text-white">CreatorPlex</div>
                 <div class="text-[10px] uppercase tracking-widest text-slate-400">Admin</div>
             </div>
         </a>

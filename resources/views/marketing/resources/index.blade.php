@@ -1,6 +1,6 @@
 <x-layouts.app panel="guest"
     title="Resources — playbooks, benchmarks, templates & videos for Indian brands"
-    metaDescription="Free CreatorFlow resources — India-first playbooks, 2026 rate benchmarks, brief templates and product-tour videos for DTC brands and creators.">
+    metaDescription="Free CreatorPlex resources — India-first playbooks, 2026 rate benchmarks, brief templates and product-tour videos for DTC brands and creators.">
 
     @include('marketing._hero', [
         'eyebrow' => 'Resources · Learn, ship, grow',
@@ -59,7 +59,7 @@
             <div class="grid gap-6 md:grid-cols-2 md:items-center">
                 <div class="text-white">
                     <span class="chip !border-white/20 !bg-white/10 !text-white"><span class="chip-dot !bg-white"></span> Newsletter</span>
-                    <h2 class="mt-4 text-3xl font-black">Get the CreatorFlow Weekly.</h2>
+                    <h2 class="mt-4 text-3xl font-black">Get the CreatorPlex Weekly.</h2>
                     <p class="mt-2 text-white/80">One email, every Friday. Playbooks, benchmarks and the best campaigns of the week. Read in 5 min.</p>
                 </div>
                 <form onsubmit="event.preventDefault(); alert('Subscribed ✓')" class="flex flex-col gap-3 sm:flex-row">

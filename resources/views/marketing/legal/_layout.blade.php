@@ -8,7 +8,7 @@
             </nav>
             <h1 class="mt-3 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">{{ $title }}</h1>
             <p class="mt-3 text-sm text-slate-500">
-                Last updated: {{ $updated ?? now()->format('F Y') }} · CreatorFlow ("we", "us", "our") · Operating in India.
+                Last updated: {{ $updated ?? now()->format('F Y') }} · CreatorPlex ("we", "us", "our") · Operating in India.
             </p>
             <div class="mt-3 flex flex-wrap gap-2 text-xs">
                 <a href="{{ route('legal.terms') }}" class="chip">Terms</a>
@@ -28,7 +28,7 @@
         </article>
 
         <div class="mt-16 rounded-2xl border border-slate-200 bg-white p-6">
-            <p class="text-sm text-slate-600">Questions? Email <a href="mailto:hello@creatorflow.in" class="text-violet-700 hover:underline">hello@creatorflow.in</a> — we reply within one business day.</p>
+            <p class="text-sm text-slate-600">Questions? Email <a href="mailto:hello@creatorplex.in" class="text-violet-700 hover:underline">hello@creatorplex.in</a> — we reply within one business day.</p>
         </div>
     </section>
 </x-layouts.app>

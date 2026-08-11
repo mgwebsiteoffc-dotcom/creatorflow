@@ -7,7 +7,7 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 
 /**
- * Maps Shopify product payloads into CreatorFlow's channel-agnostic
+ * Maps Shopify product payloads into CreatorPlex's channel-agnostic
  * product/variant/image shape.
  */
 class ShopifyProductTransformer

@@ -14,10 +14,10 @@
 
                 <div class="mt-10 space-y-4">
                     @foreach([
-                        ['💼', 'Sales & demos', 'sales@creatorflow.app'],
-                        ['🤝', 'Partnerships',  'partners@creatorflow.app'],
-                        ['📰', 'Press',         'press@creatorflow.app'],
-                        ['🛟', 'Support',        'help@creatorflow.app'],
+                        ['💼', 'Sales & demos', 'sales@creatorplex.app'],
+                        ['🤝', 'Partnerships',  'partners@creatorplex.app'],
+                        ['📰', 'Press',         'press@creatorplex.app'],
+                        ['🛟', 'Support',        'help@creatorplex.app'],
                     ] as $c)
                         <div class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4">
                             <span class="grid h-11 w-11 place-items-center rounded-xl bg-slate-100 text-lg">{{ $c[0] }}</span>

@@ -105,7 +105,7 @@
             <div class="grid grid-cols-3 border-b border-slate-200 bg-slate-50 text-sm font-semibold text-slate-500">
                 <div class="p-4">You currently use</div>
                 <div class="p-4 text-center">Job to be done</div>
-                <div class="bg-gradient-to-r from-violet-600 to-pink-600 p-4 text-center text-white">CreatorFlow</div>
+                <div class="bg-gradient-to-r from-violet-600 to-pink-600 p-4 text-center text-white">CreatorPlex</div>
             </div>
             @foreach([
                 ['Notion + Google Sheets', 'Campaign planning',   '✅'],

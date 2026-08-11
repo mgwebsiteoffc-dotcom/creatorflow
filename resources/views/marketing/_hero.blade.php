@@ -1,4 +1,4 @@
-@props(['eyebrow' => 'CreatorFlow', 'title' => '', 'sub' => '', 'ctaText' => 'Start free', 'ctaHref' => null])
+@props(['eyebrow' => 'CreatorPlex', 'title' => '', 'sub' => '', 'ctaText' => 'Start free', 'ctaHref' => null])
 @php $ctaHref = $ctaHref ?? route('register'); @endphp
 
 <section class="relative overflow-hidden">

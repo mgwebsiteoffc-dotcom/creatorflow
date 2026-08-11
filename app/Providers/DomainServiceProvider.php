@@ -58,10 +58,10 @@ class DomainServiceProvider extends ServiceProvider
      */
     protected function resolveAiConfig(): array
     {
-        $driver  = (string) config('creatorflow.ai.driver', 'fake');
-        $key     = config('creatorflow.ai.openai.key');
-        $model   = (string) config('creatorflow.ai.openai.model', 'gpt-4o-mini');
-        $embed   = (string) config('creatorflow.ai.openai.embedding_model', 'text-embedding-3-small');
+        $driver  = (string) config('creatorplex.ai.driver', 'fake');
+        $key     = config('creatorplex.ai.openai.key');
+        $model   = (string) config('creatorplex.ai.openai.model', 'gpt-4o-mini');
+        $embed   = (string) config('creatorplex.ai.openai.embedding_model', 'text-embedding-3-small');
         $baseUrl = null;
 
         try {

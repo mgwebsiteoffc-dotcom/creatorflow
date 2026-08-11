@@ -1,7 +1,7 @@
 @php
     $canonical  = route('services.show', $slug);
-    $title      = "{$service['name']} in India · CreatorFlow";
-    $desc       = "{$service['name']}: {$service['tagline']} 1,000+ brands trust CreatorFlow across India for {$service['short']}.";
+    $title      = "{$service['name']} in India · CreatorPlex";
+    $desc       = "{$service['name']}: {$service['tagline']} 1,000+ brands trust CreatorPlex across India for {$service['short']}.";
     $breadcrumbLd = [
         '@context' => 'https://schema.org', '@type' => 'BreadcrumbList',
         'itemListElement' => [
@@ -16,7 +16,7 @@
         'serviceType' => $service['short'],
         'url'       => $canonical,
         'description' => $desc,
-        'provider'  => ['@type' => 'Organization', 'name' => 'CreatorFlow', 'url' => url('/')],
+        'provider'  => ['@type' => 'Organization', 'name' => 'CreatorPlex', 'url' => url('/')],
         'areaServed' => ['@type' => 'Country', 'name' => 'India'],
         'aggregateRating' => ['@type' => 'AggregateRating', 'ratingValue' => '4.9', 'reviewCount' => '128'],
     ];

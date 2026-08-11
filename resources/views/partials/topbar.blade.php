@@ -27,7 +27,7 @@
         <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold">
             <span class="grid h-8 w-8 place-items-center rounded-xl text-xs font-black text-white shadow-sm"
                   style="background-image: {{ $logoGrad }};">CF</span>
-            <span class="hidden text-slate-900 sm:block">CreatorFlow</span>
+            <span class="hidden text-slate-900 sm:block">CreatorPlex</span>
             <span class="badge-violet {{ $panel === 'creator' ? '!bg-rose-100 !text-rose-700' : '' }}">{{ ucfirst($panel) }}</span>
         </a>
 

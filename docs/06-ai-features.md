@@ -84,7 +84,7 @@ On submission, before a human sees it:
 
 ## 6.2 Innovative Differentiating AI Workflows
 
-These are where CreatorFlow pulls ahead:
+These are where CreatorPlex pulls ahead:
 
 **A) "Campaign in a Box" from a product URL.**
 Paste any product URL (not just Shopify) — AI scrapes/parses it and builds the full campaign. This unifies the Shopify and web entry points and is a killer top-of-funnel tool.

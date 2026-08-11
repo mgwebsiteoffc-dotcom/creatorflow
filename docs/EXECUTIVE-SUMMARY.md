@@ -1,6 +1,6 @@
-# CreatorFlow — Executive Summary (Quick Reference)
+# CreatorPlex — Executive Summary (Quick Reference)
 
-**One product, two doors, one backend.** CreatorFlow is an AI-powered creator-commerce platform. Shopify and the web are *onboarding channels* into the same products, campaigns, creator marketplace, messaging, orders, payouts, analytics, and AI.
+**One product, two doors, one backend.** CreatorPlex is an AI-powered creator-commerce platform. Shopify and the web are *onboarding channels* into the same products, campaigns, creator marketplace, messaging, orders, payouts, analytics, and AI.
 
 **Stack:** Laravel 11 · MySQL 8 · Redis/Horizon · Blade + Livewire/Alpine · mobile-first PWA · Reverb · S3/R2 · Meilisearch · Stripe Connect · pluggable AI gateway.
 

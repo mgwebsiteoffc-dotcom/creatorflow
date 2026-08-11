@@ -44,15 +44,15 @@ class ShopifyInstallController extends Controller
         ]);
 
         $shop = $data['shop'];
-        $apiVersion = config('creatorflow.shopify.api_version');
-        $scopes = implode(',', config('creatorflow.shopify.scopes'));
+        $apiVersion = config('creatorplex.shopify.api_version');
+        $scopes = implode(',', config('creatorplex.shopify.scopes'));
         $redirectUri = route('shopify.callback');
         $nonce = Str::random(24);
 
         session(['shopify_oauth_nonce' => $nonce, 'shopify_shop' => $shop]);
 
         $url = "https://{$shop}/admin/oauth/authorize?".http_build_query([
-            'client_id' => config('creatorflow.shopify.client_id'),
+            'client_id' => config('creatorplex.shopify.client_id'),
             'scope' => $scopes,
             'redirect_uri' => $redirectUri,
             'state' => $nonce,
@@ -78,12 +78,12 @@ class ShopifyInstallController extends Controller
 
         // In local/demo without real Shopify credentials, fabricate a token so
         // the install flow still completes end-to-end.
-        if (config('creatorflow.demo.fake_external_calls') || ! config('creatorflow.shopify.client_id')) {
+        if (config('creatorplex.demo.fake_external_calls') || ! config('creatorplex.shopify.client_id')) {
             $accessToken = 'fake_token_'.Str::random(24);
         } else {
             $response = Http::post("https://{$shop}/admin/oauth/access_token", [
-                'client_id' => config('creatorflow.shopify.client_id'),
-                'client_secret' => config('creatorflow.shopify.client_secret'),
+                'client_id' => config('creatorplex.shopify.client_id'),
+                'client_secret' => config('creatorplex.shopify.client_secret'),
                 'code' => $code,
             ])->throw()->json();
 

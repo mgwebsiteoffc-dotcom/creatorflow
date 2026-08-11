@@ -1,16 +1,16 @@
 <x-marketing.legal-layout title="Creator Agreement"
-    metaDescription="CreatorFlow creator agreement — the terms that apply to influencers and UGC creators using the platform.">
+    metaDescription="CreatorPlex creator agreement — the terms that apply to influencers and UGC creators using the platform.">
 
-    <p>This Creator Agreement supplements the <a href="{{ route('legal.terms') }}">Terms of Use</a> and applies specifically to creators who sign up on CreatorFlow.</p>
+    <p>This Creator Agreement supplements the <a href="{{ route('legal.terms') }}">Terms of Use</a> and applies specifically to creators who sign up on CreatorPlex.</p>
 
-    <h2>1. Your relationship with CreatorFlow</h2>
-    <p>You are an independent contractor — not an employee of CreatorFlow or of any brand you work with through the Service. You are responsible for your own income tax, GST (if applicable), and business registration.</p>
+    <h2>1. Your relationship with CreatorPlex</h2>
+    <p>You are an independent contractor — not an employee of CreatorPlex or of any brand you work with through the Service. You are responsible for your own income tax, GST (if applicable), and business registration.</p>
 
     <h2>2. Accepting invitations</h2>
     <ul>
         <li>Every invitation you accept becomes a machine-readable contract with the brand, listing deliverables, deadlines, usage rights, and compensation.</li>
         <li>Once accepted, deliver on time. Repeat late deliveries lower your performance score.</li>
-        <li>You cannot circumvent CreatorFlow's escrow or attribution once matched via the Service.</li>
+        <li>You cannot circumvent CreatorPlex's escrow or attribution once matched via the Service.</li>
     </ul>
 
     <h2>3. Payouts</h2>

@@ -37,8 +37,8 @@ class ShopifyChannel implements CommerceChannel
         return new ShopifyApiClient(
             shopDomain: $shopDomain,
             accessToken: (string) ($credentials['access_token'] ?? ''),
-            apiVersion: (string) config('creatorflow.shopify.api_version'),
-            fake: (bool) config('creatorflow.demo.fake_external_calls'),
+            apiVersion: (string) config('creatorplex.shopify.api_version'),
+            fake: (bool) config('creatorplex.demo.fake_external_calls'),
         );
     }
 
@@ -171,10 +171,10 @@ class ShopifyChannel implements CommerceChannel
             'draft_order' => [
                 'line_items' => [$lineItem],
                 'email' => $creator->email,
-                'note' => 'CreatorFlow gift for creator #'.$creator->id.' (assignment '.$assignment->uuid.')',
-                'tags' => 'creatorflow,barter,creator_'.$creator->id,
+                'note' => 'CreatorPlex gift for creator #'.$creator->id.' (assignment '.$assignment->uuid.')',
+                'tags' => 'creatorplex,barter,creator_'.$creator->id,
                 'applied_discount' => [
-                    'title' => 'CreatorFlow Gift',
+                    'title' => 'CreatorPlex Gift',
                     'value' => '100',
                     'value_type' => 'percentage',
                     'amount' => '0.00',

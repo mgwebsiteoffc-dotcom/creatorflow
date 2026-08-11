@@ -33,7 +33,7 @@
         $swAppLd = [
             '@context' => 'https://schema.org',
             '@type' => 'SoftwareApplication',
-            'name' => 'CreatorFlow ROI Calculator',
+            'name' => 'CreatorPlex ROI Calculator',
             'applicationCategory' => 'BusinessApplication',
             'operatingSystem' => 'Web',
             'offers' => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'INR'],
@@ -43,7 +43,7 @@
             '@context' => 'https://schema.org',
             '@type' => 'BreadcrumbList',
             'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'CreatorFlow', 'item' => url('/')],
+                ['@type' => 'ListItem', 'position' => 1, 'name' => 'CreatorPlex', 'item' => url('/')],
                 ['@type' => 'ListItem', 'position' => 2, 'name' => 'Free tools', 'item' => route('tools.index')],
                 ['@type' => 'ListItem', 'position' => 3, 'name' => 'ROI Calculator', 'item' => route('tools.roi')],
             ],
@@ -206,7 +206,7 @@
 
             <h3 class="mt-8">Barter vs paid campaigns — which delivers better ROAS in India?</h3>
             <p class="text-slate-600">
-                Barter (product-only) campaigns typically produce <strong>4× – 8× ROAS on retail</strong> because your only outflow is product COGS + our platform fee — most Indian DTC brands see barter working best for beauty, skincare, fashion and food where product experience is the story. Paid campaigns run <strong>2× – 5× ROAS</strong> but let you brief harder and control creative direction more tightly. Blended barter + paid (hybrid) campaigns are the norm on CreatorFlow for brands scaling past ₹50L/month.
+                Barter (product-only) campaigns typically produce <strong>4× – 8× ROAS on retail</strong> because your only outflow is product COGS + our platform fee — most Indian DTC brands see barter working best for beauty, skincare, fashion and food where product experience is the story. Paid campaigns run <strong>2× – 5× ROAS</strong> but let you brief harder and control creative direction more tightly. Blended barter + paid (hybrid) campaigns are the norm on CreatorPlex for brands scaling past ₹50L/month.
             </p>
 
             <h3 class="mt-8">Frequently asked questions</h3>
@@ -228,5 +228,5 @@
         </div>
     </section>
 
-    @include('marketing._cta', ['title' => 'Model it here. Run it inside CreatorFlow.', 'sub' => 'Free plan includes 5 campaigns/month with real-time attribution baked in.'])
+    @include('marketing._cta', ['title' => 'Model it here. Run it inside CreatorPlex.', 'sub' => 'Free plan includes 5 campaigns/month with real-time attribution baked in.'])
 </x-layouts.app>
