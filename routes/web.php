@@ -60,6 +60,10 @@ Route::get('/resources', [MarketingController::class, 'resources'])->name('resou
 Route::get('/blog',      [MarketingController::class, 'blogIndex'])->name('blog.index');
 Route::get('/blog/{slug}', [MarketingController::class, 'blogShow'])->name('blog.show');
 
+// Industry & campaign-type landing pages (SEO-friendly)
+Route::get('/industry/{slug}',      [MarketingController::class, 'industryShow'])->name('industry.show');
+Route::get('/campaign/{slug}',      [MarketingController::class, 'campaignTypeShow'])->name('campaign-type.show');
+
 // Marketing contact form → leads
 Route::post('/contact', [LeadController::class, 'store'])->name('leads.store');
 

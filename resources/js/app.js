@@ -70,6 +70,23 @@ document.addEventListener('DOMContentLoaded', () => {
         navToggle.addEventListener('click', () => navMenu.classList.toggle('hidden'));
     }
 
+    /* Reel carousel: [data-reel] scroll container + [data-reel-prev]/[data-reel-next] */
+    document.querySelectorAll('[data-reel]').forEach((reel) => {
+        const step = () => {
+            const first = reel.querySelector('article');
+            return first ? first.getBoundingClientRect().width + 16 : 260;
+        };
+        const scrollBy = (dir) => reel.scrollBy({ left: dir * step(), behavior: 'smooth' });
+        document.querySelectorAll('[data-reel-prev]').forEach((b) => b.addEventListener('click', () => scrollBy(-1)));
+        document.querySelectorAll('[data-reel-next]').forEach((b) => b.addEventListener('click', () => scrollBy(1)));
+
+        // Drag-to-scroll (desktop)
+        let down = false, startX = 0, startLeft = 0;
+        reel.addEventListener('pointerdown', (e) => { down = true; startX = e.clientX; startLeft = reel.scrollLeft; reel.setPointerCapture(e.pointerId); reel.classList.add('cursor-grabbing'); });
+        reel.addEventListener('pointerup',   (e) => { down = false; reel.classList.remove('cursor-grabbing'); });
+        reel.addEventListener('pointermove', (e) => { if (!down) return; reel.scrollLeft = startLeft - (e.clientX - startX); });
+    });
+
     /* Notifications dropdown */
     document.querySelectorAll('[data-notif-wrap]').forEach((wrap) => {
         const btn = wrap.querySelector('[data-notif-toggle]');

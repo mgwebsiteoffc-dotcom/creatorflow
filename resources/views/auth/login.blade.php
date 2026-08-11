@@ -62,6 +62,11 @@
                             New here?
                             <a href="{{ route('register') }}" class="font-semibold text-violet-700 hover:text-violet-900">Create an account →</a>
                         </p>
+
+                        <div class="mt-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
+                            <div class="flex items-center gap-2 font-semibold text-slate-700">🛡️ Platform admin (SaaS owner)</div>
+                            <p class="mt-1">Sign in with your admin email — after login you'll be redirected to <code class="rounded bg-white px-1 py-0.5">/admin</code>. Demo seed: <code class="rounded bg-white px-1 py-0.5">admin@creatorflow.test</code> · <code class="rounded bg-white px-1 py-0.5">password</code>.</p>
+                        </div>
                     </div>
                 </div>
             </div>

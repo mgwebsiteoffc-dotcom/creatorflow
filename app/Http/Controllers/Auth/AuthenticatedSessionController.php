@@ -42,6 +42,11 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('creator.dashboard');
         }
 
+        // Superadmins / admins with no workspace go straight to the admin panel.
+        if ($user->isAdmin() && ! $workspace) {
+            return redirect()->intended(route('admin.dashboard'));
+        }
+
         return redirect()->intended(route('brand.dashboard'));
     }
 

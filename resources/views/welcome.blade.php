@@ -485,42 +485,131 @@
         </div>
     </section>
 
-    {{-- ============================ SAMPLE WORK ============================ --}}
+    {{-- ============================ SAMPLE WORK · REEL CAROUSEL ============================ --}}
     <section class="relative overflow-hidden py-20">
         <div class="absolute inset-0 -z-10"
              style="background: linear-gradient(180deg, #ffffff 0%, #fbfaff 100%);"></div>
 
         <div class="mx-auto max-w-6xl px-4">
-            <div class="mx-auto max-w-2xl text-center">
-                <p class="section-eyebrow reveal">Sample work</p>
-                <h2 class="section-title reveal mt-3">Turning ideas into beautiful collabs</h2>
+            <div class="mx-auto flex max-w-6xl flex-col items-center gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div class="max-w-2xl text-center sm:text-left">
+                    <p class="section-eyebrow reveal">Sample work · reels</p>
+                    <h2 class="section-title reveal mt-3 sm:text-left">Turning ideas into <span class="text-gradient">viral drops</span></h2>
+                    <p class="reveal mt-3 text-slate-600">Real creator videos we've shipped for real brands. Swipe →</p>
+                </div>
+                <div class="reveal flex gap-2">
+                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-violet-300 hover:text-violet-700" data-reel-prev aria-label="Previous">←</button>
+                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full text-white shadow-md" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);" data-reel-next aria-label="Next">→</button>
+                </div>
             </div>
 
-            <div class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
-                @php
-                    $works = [
-                        ['Samsara Ghee', 'Food', 'from-amber-400 to-orange-500'],
-                        ['Luxotica', 'Cosmetics', 'from-fuchsia-400 to-pink-500'],
-                        ['Seven Seas', 'Travel', 'from-cyan-400 to-blue-500'],
-                        ['Perfume+', 'Cosmetics', 'from-rose-400 to-red-500'],
-                        ['Atul Bakery', 'Store Visit', 'from-yellow-400 to-amber-500'],
-                        ['Evereve', 'Lifestyle', 'from-violet-500 to-purple-600'],
-                        ['Roving Mode', 'Fashion', 'from-indigo-500 to-violet-500'],
-                        ['Iva Lens', 'Eyewear', 'from-emerald-400 to-teal-500'],
-                    ];
-                @endphp
-                @foreach($works as $w)
-                    <div class="reveal group relative aspect-[4/5] overflow-hidden rounded-2xl bg-gradient-to-br {{ $w[2] }} shadow-md">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0"></div>
-                        <div class="absolute inset-0 flex flex-col justify-between p-4 text-white">
-                            <span class="self-start rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider backdrop-blur">{{ $w[1] }}</span>
-                            <div>
-                                <div class="text-xl font-black leading-tight">{{ $w[0] }}</div>
-                                <div class="mt-0.5 text-xs opacity-90">Case study →</div>
+            {{-- Carousel track (snap + drag/swipe) --}}
+            <div class="reveal relative mt-10">
+                <div data-reel class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-6 pt-2 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                     style="scroll-padding-left: 1rem;">
+                    @php
+                        $reels = [
+                            ['Samsara Ghee',        'Food',        'from-amber-400 to-orange-500',  '2.4M views',  '@nova.eats'],
+                            ['Luxotica Perfume',    'Cosmetics',   'from-fuchsia-400 to-pink-500',  '840K views',  '@aria.k'],
+                            ['Seven Seas Travel',   'Travel',      'from-cyan-400 to-blue-500',     '1.1M views',  '@theovlog'],
+                            ['Perfume+',            'Cosmetics',   'from-rose-400 to-red-500',      '620K views',  '@mira.reels'],
+                            ['Atul Bakery',         'Store Visit', 'from-yellow-400 to-amber-500',  '410K views',  '@foodie.desi'],
+                            ['Evereve Lifestyle',   'Lifestyle',   'from-violet-500 to-purple-600', '1.8M views',  '@zia.styles'],
+                            ['Roving Mode',         'Fashion',     'from-indigo-500 to-violet-500', '960K views',  '@fashioncore'],
+                            ['Iva Lens',            'Eyewear',     'from-emerald-400 to-teal-500',  '580K views',  '@techkai'],
+                        ];
+                    @endphp
+                    @foreach($reels as $r)
+                        <article class="group relative aspect-[9/16] w-[240px] shrink-0 snap-start overflow-hidden rounded-3xl shadow-lg sm:w-[260px] md:w-[280px]">
+                            {{-- Fake reel visual --}}
+                            <div class="absolute inset-0 bg-gradient-to-br {{ $r[2] }}"></div>
+                            <div class="absolute inset-0 opacity-40" style="background: radial-gradient(200px 200px at 30% 30%, rgba(255,255,255,.6), transparent 60%);"></div>
+
+                            {{-- Fake UI chrome --}}
+                            <div class="absolute inset-x-3 top-3 flex items-center justify-between text-white">
+                                <span class="rounded-full bg-black/40 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur">{{ $r[1] }}</span>
+                                <span class="rounded-full bg-black/40 px-2 py-0.5 text-[10px] font-semibold backdrop-blur">0:{{ str_pad(15 + $loop->index * 3, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
+
+                            {{-- Fake right-side action rail --}}
+                            <div class="absolute right-3 bottom-16 flex flex-col items-center gap-3 text-white">
+                                <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">❤</div>
+                                <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">💬</div>
+                                <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">↗</div>
+                            </div>
+
+                            {{-- Bottom overlay --}}
+                            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 pt-14 text-white">
+                                <div class="text-[11px] font-semibold opacity-90">{{ $r[4] }}</div>
+                                <div class="mt-0.5 text-lg font-black leading-tight">{{ $r[0] }}</div>
+                                <div class="mt-1 flex items-center gap-2 text-[11px] opacity-90">
+                                    <span>▶ {{ $r[3] }}</span>
+                                </div>
+                            </div>
+
+                            {{-- Play button --}}
+                            <div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100">
+                                <div class="grid h-14 w-14 place-items-center rounded-full bg-white/30 text-2xl text-white backdrop-blur">▶</div>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ============================ APP SCREENSHOTS ============================ --}}
+    <section id="screens" class="relative overflow-hidden py-20">
+        <div class="absolute inset-0 -z-10 bg-gradient-to-b from-slate-50 to-white"></div>
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="mx-auto max-w-2xl text-center">
+                <p class="section-eyebrow reveal">Features in action</p>
+                <h2 class="section-title reveal mt-3">One dashboard. <span class="text-gradient">Every campaign lever.</span></h2>
+                <p class="section-sub reveal mt-3">Peek at the actual CreatorFlow surfaces you'll be shipping campaigns from.</p>
+            </div>
+
+            @php
+                $screens = [
+                    [
+                        'title' => 'Campaign management',
+                        'body'  => 'Review applicants, track deliverables, share access with your team. Approvals in one click.',
+                        'bullets' => ['Accept / reject applications inline', 'Bulk seed 100s of creators', 'Team roles with granular access'],
+                    ],
+                    [
+                        'title' => 'Creator marketplace',
+                        'body'  => '100K+ verified creators. Filter by niche, region, follower count, engagement — invite instantly.',
+                        'bullets' => ['12+ filters incl. audience overlap', 'AI match score per creator', 'Save shortlists for later'],
+                    ],
+                    [
+                        'title' => 'Analytics & attribution',
+                        'body'  => 'Every rupee attributed to the creator who drove it. Codes, UTM, referral links — all rolled up.',
+                        'bullets' => ['Live ROAS by campaign', 'Per-creator revenue and CVR', 'Export CSV for finance'],
+                    ],
+                ];
+            @endphp
+
+            <div class="mt-14 space-y-24">
+                @foreach($screens as $i => $s)
+                    <div class="grid gap-10 md:grid-cols-2 md:items-center {{ $i % 2 === 1 ? 'md:[&>*:first-child]:order-last' : '' }}">
+                        <div class="reveal">
+                            <span class="section-eyebrow">Screenshot · #{{ $i + 1 }}</span>
+                            <h3 class="section-title mt-3 text-left">{{ $s['title'] }}</h3>
+                            <p class="mt-4 text-slate-600">{{ $s['body'] }}</p>
+                            <ul class="mt-6 space-y-3 text-sm">
+                                @foreach($s['bullets'] as $b)
+                                    <li class="flex items-start gap-3">
+                                        <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white">✓</span>
+                                        <span class="text-slate-700">{{ $b }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                            <a href="{{ route('features') }}" class="btn-gradient mt-8">Explore all features →</a>
                         </div>
-                        <div class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                             style="background: radial-gradient(200px 200px at 50% 50%, rgba(255,255,255,.25), transparent 60%);"></div>
+
+                        {{-- Fake dashboard screenshot --}}
+                        <div class="reveal">
+                            @include('marketing._app-screenshot', ['variant' => $i])
+                        </div>
                     </div>
                 @endforeach
             </div>
