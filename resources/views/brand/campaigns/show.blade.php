@@ -159,6 +159,25 @@
         </div>
     </div>
 
+    {{-- AUDIENCE TARGETING --}}
+    @php $audienceSummary = $campaign->audienceSummary(); @endphp
+    @if(!empty($audienceSummary))
+        <section class="mt-6 rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50 to-pink-50 p-5">
+            <div class="flex items-center gap-2">
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white">🎯</div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Who we're inviting</h2>
+                    <p class="text-xs text-slate-500">Invitations only go to creators matching every criteria below.</p>
+                </div>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+                @foreach($audienceSummary as $line)
+                    <span class="inline-flex items-center gap-1 rounded-full bg-white/80 px-3 py-1 text-xs font-medium text-violet-800 border border-violet-100">{{ $line }}</span>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
     {{-- REFERENCES MANAGER --}}
     <div class="mt-6">
         @include('partials.references-manager', ['campaign' => $campaign])

@@ -23,14 +23,42 @@ class GenerateMatches
      */
     public function run(Campaign $campaign, int $limit = 100): Collection
     {
-        $candidates = Creator::active()
+        $criteria = (array) ($campaign->audience_criteria ?? []);
+
+        $query = Creator::active()
             ->where(function ($q) use ($campaign) {
                 $q->where('accepts_barter', true)
                     ->orWhere('accepts_paid', true)
                     ->orWhere('accepts_affiliate', true);
             })
             ->where('fraud_risk', '<', 40)
-            ->with(['nicheRows', 'socialAccounts'])
+            ->with(['nicheRows', 'socialAccounts']);
+
+        // Apply audience filters (cities, tiers, gender, age, languages, follower/ER bounds).
+        $query
+            ->inCities($criteria['cities'] ?? [])
+            ->inTiers($criteria['tiers'] ?? [])
+            ->genderIn($criteria['genders'] ?? [])
+            ->ageIn($criteria['age_ranges'] ?? [])
+            ->languageIn($criteria['languages'] ?? []);
+
+        if (! empty($criteria['min_followers'])) {
+            $query->where('follower_count_total', '>=', (int) $criteria['min_followers']);
+        }
+        if (! empty($criteria['max_followers'])) {
+            $query->where('follower_count_total', '<=', (int) $criteria['max_followers']);
+        }
+        if (! empty($criteria['min_engagement'])) {
+            $query->where('engagement_rate', '>=', (float) $criteria['min_engagement']);
+        }
+        if (! empty($criteria['audience_gender']) && ! empty($criteria['audience_min_pct'])) {
+            $col = $criteria['audience_gender'] === 'female' ? 'audience_female_pct' : 'audience_male_pct';
+            if (\Illuminate\Support\Facades\Schema::hasColumn('creators', $col)) {
+                $query->where($col, '>=', (int) $criteria['audience_min_pct']);
+            }
+        }
+
+        $candidates = $query
             ->inRandomOrder()
             ->take(max($limit * 3, 200))
             ->get();

@@ -113,6 +113,7 @@ class CreatorController extends Controller
                     )
                     : null;
 
+                $followers = (int) ($data['followers'] ?? 0);
                 $creator = Creator::create([
                     'uuid'         => (string) Str::uuid(),
                     'user_id'      => $user?->id,
@@ -122,14 +123,21 @@ class CreatorController extends Controller
                     'email'        => $email,
                     'country'      => strtoupper((string) ($data['country'] ?? '')) ?: null,
                     'city'         => $data['city'] ?? null,
+                    'state'        => $data['state'] ?? null,
+                    'gender'       => in_array(strtolower((string) ($data['gender'] ?? '')), ['female','male','non_binary','other']) ? strtolower($data['gender']) : null,
+                    'age_range'    => in_array((string) ($data['age_range'] ?? ''), ['13-17','18-24','25-34','35-44','45-54','55+']) ? $data['age_range'] : null,
+                    'tier'         => \App\Support\CreatorTaxonomy::tierFromFollowers($followers),
+                    'languages'    => array_filter(array_map('trim', explode(',', $data['languages'] ?? ''))),
                     'niches'       => array_filter(array_map('trim', explode(',', $data['niches'] ?? ''))),
                     'status'       => 'active',
                     'open_to_work' => true,
                     'accepts_barter' => filter_var($data['accepts_barter'] ?? true, FILTER_VALIDATE_BOOLEAN),
                     'accepts_paid'   => filter_var($data['accepts_paid']   ?? true, FILTER_VALIDATE_BOOLEAN),
                     'rate_ugc_cents' => isset($data['rate_ugc_cents']) ? (int) $data['rate_ugc_cents'] : null,
-                    'follower_count_total' => (int) ($data['followers'] ?? 0),
+                    'follower_count_total' => $followers,
                     'engagement_rate' => (float) ($data['engagement_rate'] ?? 0),
+                    'audience_female_pct' => isset($data['audience_female_pct']) ? (int) $data['audience_female_pct'] : null,
+                    'audience_male_pct'   => isset($data['audience_male_pct'])   ? (int) $data['audience_male_pct']   : null,
                     'performance_score' => 60,
                     'fraud_risk' => 5,
                 ]);

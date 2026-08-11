@@ -14,7 +14,8 @@ class Campaign extends Model
     protected $fillable = [
         'uuid', 'workspace_id', 'created_by', 'title', 'type', 'status',
         'niche', 'summary', 'brief', 'objectives', 'content_types',
-        'deliverables', 'usage_rights', 'exclusivity', 'start_date', 'end_date',
+        'deliverables', 'usage_rights', 'exclusivity', 'audience_criteria',
+        'start_date', 'end_date',
         'budget_total_cents', 'budget_currency', 'creator_fee_cents',
         'product_cost_cents', 'commission_rate', 'target_creators',
         'invite_pool_size', 'acceptance_rate_assumed', 'waitlist_size',
@@ -28,6 +29,7 @@ class Campaign extends Model
         'deliverables' => 'array',
         'usage_rights' => 'array',
         'exclusivity' => 'array',
+        'audience_criteria' => 'array',
         'ai_metadata' => 'array',
         'start_date' => 'date',
         'end_date' => 'date',
@@ -38,6 +40,51 @@ class Campaign extends Model
         'acceptance_rate_assumed' => 'decimal:2',
         'ai_predicted_roi' => 'decimal:2',
     ];
+
+    protected $attributes = [
+        'audience_criteria' => null,
+    ];
+
+    /**
+     * Convenience helper — describe audience picks in plain English for chips/summaries.
+     */
+    public function audienceSummary(): array
+    {
+        $a = (array) ($this->audience_criteria ?? []);
+        $tax = \App\Support\CreatorTaxonomy::class;
+        $out = [];
+
+        if (! empty($a['cities'])) {
+            $names = collect($a['cities'])->map(fn ($c) => $tax::cities()[$c]['name'] ?? ucwords(str_replace('-', ' ', $c)))->all();
+            $out[] = 'Cities: '.implode(', ', $names);
+        }
+        if (! empty($a['tiers'])) {
+            $names = collect($a['tiers'])->map(fn ($t) => $tax::tiers()[$t]['label'] ?? $t)->all();
+            $out[] = 'Tiers: '.implode(', ', $names);
+        }
+        if (! empty($a['genders'])) {
+            $names = collect($a['genders'])->map(fn ($g) => $tax::genders()[$g] ?? $g)->all();
+            $out[] = 'Creator gender: '.implode(', ', $names);
+        }
+        if (! empty($a['age_ranges'])) {
+            $out[] = 'Creator age: '.implode(', ', $a['age_ranges']);
+        }
+        if (! empty($a['languages'])) {
+            $names = collect($a['languages'])->map(fn ($l) => $tax::languages()[$l] ?? $l)->all();
+            $out[] = 'Languages: '.implode(', ', $names);
+        }
+        if (! empty($a['audience_gender']) && ! empty($a['audience_min_pct'])) {
+            $g = $tax::genders()[$a['audience_gender']] ?? $a['audience_gender'];
+            $out[] = "Audience {$g} ≥ {$a['audience_min_pct']}%";
+        }
+        if (! empty($a['min_followers']) || ! empty($a['max_followers'])) {
+            $out[] = 'Followers: '.($a['min_followers'] ? number_format($a['min_followers']) : '0').' – '.($a['max_followers'] ? number_format($a['max_followers']) : '∞');
+        }
+        if (! empty($a['min_engagement'])) {
+            $out[] = 'ER ≥ '.$a['min_engagement'].'%';
+        }
+        return $out;
+    }
 
     public function workspace(): BelongsTo
     {

@@ -70,6 +70,23 @@ class MatchCreatorForCampaign
             // Offline / provider unavailable — ignore.
         }
 
+        // Audience fit bonuses (city + tier from campaign audience_criteria).
+        $criteria = (array) ($campaign->audience_criteria ?? []);
+        if (! empty($criteria['cities']) && $creator->city) {
+            $names = collect($criteria['cities'])->map(function ($c) {
+                $known = \App\Support\CreatorTaxonomy::cities()[$c] ?? null;
+                return strtolower($known['name'] ?? str_replace('-', ' ', $c));
+            });
+            if ($names->contains(strtolower($creator->city))) {
+                $reasons[] = 'Based in '.$creator->city;
+            }
+        }
+        if (! empty($criteria['tiers']) && $tier = $creator->currentTier()) {
+            if (in_array($tier, $criteria['tiers'], true)) {
+                $reasons[] = ucfirst($tier).' tier match';
+            }
+        }
+
         $score = round(
             $nicheScore * 0.30 +
             $engagementScore * 0.20 +

@@ -51,7 +51,33 @@ class CampaignController extends Controller
             'products.*.variant_id' => ['nullable', 'exists:product_variants,id'],
             'products.*.target_creators' => ['required', 'integer', 'min:1'],
             'products.*.fee_cents' => ['nullable', 'integer', 'min:0'],
+
+            // Audience targeting for the invitation engine
+            'audience'                    => ['nullable', 'array'],
+            'audience.cities'             => ['nullable', 'array'],
+            'audience.cities.*'           => ['string', 'max:80'],
+            'audience.tiers'              => ['nullable', 'array'],
+            'audience.tiers.*'            => ['in:nano,micro,mid,macro,mega'],
+            'audience.genders'            => ['nullable', 'array'],
+            'audience.genders.*'          => ['in:female,male,non_binary,other'],
+            'audience.age_ranges'         => ['nullable', 'array'],
+            'audience.age_ranges.*'       => ['in:13-17,18-24,25-34,35-44,45-54,55+'],
+            'audience.languages'          => ['nullable', 'array'],
+            'audience.languages.*'        => ['string', 'max:6'],
+            'audience.min_followers'      => ['nullable', 'integer', 'min:0'],
+            'audience.max_followers'      => ['nullable', 'integer', 'min:0'],
+            'audience.min_engagement'     => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'audience.audience_gender'    => ['nullable', 'in:female,male'],
+            'audience.audience_min_pct'   => ['nullable', 'integer', 'min:0', 'max:100'],
         ]);
+
+        // Clean empty arrays so we can store a nullable JSON blob.
+        $audience = collect($data['audience'] ?? [])
+            ->map(fn ($v) => is_array($v) ? array_values(array_filter($v, fn ($x) => $x !== null && $x !== '')) : $v)
+            ->filter(fn ($v) => is_array($v) ? ! empty($v) : ($v !== null && $v !== ''))
+            ->all();
+        $data['audience_criteria'] = ! empty($audience) ? $audience : null;
+        unset($data['audience']);
 
         $workspace = $tenant->active();
 

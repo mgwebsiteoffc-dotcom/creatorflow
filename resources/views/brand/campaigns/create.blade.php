@@ -68,6 +68,135 @@
                     <div data-md-preview class="hidden mt-2 min-h-56 rounded-xl border border-slate-200 bg-white p-4"></div>
                 </div>
 
+                {{-- ────────────── Audience targeting (invitations use this) ────────────── --}}
+                @php
+                    $cityOpts   = \App\Support\CreatorTaxonomy::cityOptions();
+                    $tierOpts   = \App\Support\CreatorTaxonomy::tiers();
+                    $genderOpts = \App\Support\CreatorTaxonomy::genders();
+                    $ageOpts    = \App\Support\CreatorTaxonomy::ageRanges();
+                    $langOpts   = \App\Support\CreatorTaxonomy::languages();
+                @endphp
+                <div class="pt-2">
+                    <h3 class="font-semibold">🎯 Who should we invite?</h3>
+                    <p class="mt-0.5 text-xs text-slate-500">Invitations only go to creators matching these criteria. Leave a group empty to include everyone.</p>
+                </div>
+
+                <div class="rounded-2xl border border-violet-100 bg-violet-50/30 p-4 space-y-4">
+
+                    {{-- Cities --}}
+                    <div>
+                        <div class="mb-1.5 flex items-center justify-between">
+                            <label class="label !mb-0">📍 Cities</label>
+                            <div class="flex gap-2 text-xs">
+                                <button type="button" data-multi-toggle="aud-cities" data-action="all"  class="text-violet-600 hover:underline">All</button>
+                                <button type="button" data-multi-toggle="aud-cities" data-action="none" class="text-slate-500 hover:underline">Clear</button>
+                            </div>
+                        </div>
+                        <div class="flex max-h-40 flex-wrap gap-1.5 overflow-y-auto" data-multi-group="aud-cities">
+                            @foreach($cityOpts as $slug => $label)
+                                <label class="cursor-pointer">
+                                    <input type="checkbox" name="audience[cities][]" value="{{ $slug }}" class="peer sr-only">
+                                    <span class="chip-body">{{ $label }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    {{-- Tiers --}}
+                    <div>
+                        <div class="mb-1.5 flex items-center justify-between">
+                            <label class="label !mb-0">⭐ Follower tiers</label>
+                            <div class="flex gap-2 text-xs">
+                                <button type="button" data-multi-toggle="aud-tiers" data-action="all"  class="text-violet-600 hover:underline">All</button>
+                                <button type="button" data-multi-toggle="aud-tiers" data-action="none" class="text-slate-500 hover:underline">Clear</button>
+                            </div>
+                        </div>
+                        <div class="grid gap-2 sm:grid-cols-3 lg:grid-cols-5" data-multi-group="aud-tiers">
+                            @foreach($tierOpts as $slug => $t)
+                                <label class="cursor-pointer">
+                                    <input type="checkbox" name="audience[tiers][]" value="{{ $slug }}" class="peer sr-only">
+                                    <span class="pick-tile-body">
+                                        <span class="block text-sm font-semibold text-slate-800">{{ $t['label'] }}</span>
+                                        <span class="block text-[10px] text-slate-500">{{ $t['range'] }}</span>
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="grid gap-4 md:grid-cols-2">
+                        {{-- Gender --}}
+                        <div>
+                            <label class="label">👤 Creator gender</label>
+                            <div class="flex flex-wrap gap-1.5">
+                                @foreach($genderOpts as $slug => $label)
+                                    <label class="cursor-pointer">
+                                        <input type="checkbox" name="audience[genders][]" value="{{ $slug }}" class="peer sr-only">
+                                        <span class="chip-body">{{ $label }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- Age --}}
+                        <div>
+                            <label class="label">🎂 Creator age</label>
+                            <div class="flex flex-wrap gap-1.5">
+                                @foreach($ageOpts as $slug => $label)
+                                    <label class="cursor-pointer">
+                                        <input type="checkbox" name="audience[age_ranges][]" value="{{ $slug }}" class="peer sr-only">
+                                        <span class="chip-body">{{ $label }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Languages --}}
+                    <div>
+                        <label class="label">🗣️ Languages spoken</label>
+                        <div class="flex flex-wrap gap-1.5">
+                            @foreach($langOpts as $slug => $label)
+                                <label class="cursor-pointer">
+                                    <input type="checkbox" name="audience[languages][]" value="{{ $slug }}" class="peer sr-only">
+                                    <span class="chip-body">{{ $label }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="grid gap-3 md:grid-cols-3">
+                        <div>
+                            <label class="label">Min followers</label>
+                            <input class="input" type="number" name="audience[min_followers]" placeholder="10000">
+                        </div>
+                        <div>
+                            <label class="label">Max followers</label>
+                            <input class="input" type="number" name="audience[max_followers]" placeholder="—">
+                        </div>
+                        <div>
+                            <label class="label">Min engagement %</label>
+                            <input class="input" type="number" step="0.1" name="audience[min_engagement]" placeholder="3">
+                        </div>
+                    </div>
+
+                    {{-- Audience gender skew (of the creator's followers) --}}
+                    <div class="rounded-xl border border-white/70 bg-white/70 p-3">
+                        <p class="text-xs font-semibold text-slate-600">👥 Their audience skew (optional)</p>
+                        <div class="mt-2 grid gap-2 md:grid-cols-2">
+                            <select class="input" name="audience[audience_gender]">
+                                <option value="">Any audience gender</option>
+                                <option value="female">Predominantly female followers</option>
+                                <option value="male">Predominantly male followers</option>
+                            </select>
+                            <div class="flex items-center gap-2">
+                                <label class="label !mb-0 whitespace-nowrap">Min %</label>
+                                <input class="input" type="number" min="0" max="100" name="audience[audience_min_pct]" placeholder="60">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <h3 class="pt-2 font-semibold">Products &amp; creator targets</h3>
                 <p class="text-xs text-slate-500">Set how many creators should receive each product. We automatically invite ~3x based on a 30% acceptance rate and maintain a waitlist.</p>
 
@@ -133,6 +262,16 @@
                 };
                 cb.addEventListener('change', sync);
                 sync();
+            });
+
+            // Audience multi-select bulk toggles
+            document.querySelectorAll('[data-multi-toggle]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const group = document.querySelector(`[data-multi-group="${btn.dataset.multiToggle}"]`);
+                    if (!group) return;
+                    const checked = btn.dataset.action === 'all';
+                    group.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = checked);
+                });
             });
         </script>
     @endif

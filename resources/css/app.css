@@ -435,6 +435,43 @@ html, body {
         background-image: linear-gradient(135deg,#7c3aed,#ec4899);
     }
 
+    /* Filter chip (multi-select, click-to-toggle inside a <label>) */
+    .chip-body {
+        display: inline-flex; align-items: center; gap: .35rem;
+        border-radius: 9999px; padding: .45rem .85rem;
+        border: 1.5px solid #e2e8f0;
+        background: #fff;
+        font-size: .78rem; font-weight: 600; color: #475569;
+        transition: all .15s ease;
+    }
+    label:hover .chip-body { border-color: #c4b5fd; }
+    label:has(input:checked) .chip-body {
+        color: #fff; border-color: transparent;
+        background-image: linear-gradient(135deg,#7c3aed,#ec4899);
+        box-shadow: 0 8px 18px -10px rgba(219,39,119,.5);
+    }
+
+    /* Tile with a body div wrapper (used for tier picker cards) */
+    .pick-tile-body {
+        display: block;
+        border-radius: 1rem;
+        border: 1.5px solid #e2e8f0;
+        background: #fff;
+        padding: .85rem 1rem;
+        text-align: left;
+        transition: all .18s ease;
+    }
+    label:hover .pick-tile-body { border-color: #c4b5fd; transform: translateY(-1px); }
+    label:has(input:checked) .pick-tile-body {
+        border-color: transparent;
+        color: #fff;
+        background-image: linear-gradient(135deg,#7c3aed,#ec4899);
+        box-shadow: 0 10px 24px -12px rgba(219,39,119,.55);
+    }
+    label:has(input:checked) .pick-tile-body .text-slate-800,
+    label:has(input:checked) .pick-tile-body .text-slate-500,
+    label:has(input:checked) .pick-tile-body .text-slate-400 { color: #fff !important; opacity: .95; }
+
 @media all and (display-mode: standalone) {
     body { padding-bottom: env(safe-area-inset-bottom); }
 }

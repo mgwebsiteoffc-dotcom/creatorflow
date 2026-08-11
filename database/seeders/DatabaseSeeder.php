@@ -425,14 +425,38 @@ class DatabaseSeeder extends Seeder
     {
         $firstNames = ['Jamie', 'Aisha', 'Morgan', 'Priya', 'Sofia', 'Leo', 'Maya', 'Noah', 'Zara', 'Eli', 'Nina', 'Omar', 'Lila', 'Kai', 'Ivy', 'Theo', 'Ruby', 'Sam', 'Ava', 'Milo'];
         $handles = ['glowwithjamie', 'aishaeats', 'morganmoves', 'priyapours', 'sofiastyles', 'leolifts', 'mayamakes', 'noahknows', 'zarazone', 'elieats', 'ninanotes', 'omaroutdoors', 'lilalooks', 'kaikneads', 'ivyinvests', 'theotrends', 'rubyruns', 'samskincare', 'avaathome', 'milomixes'];
-        $cities = [['Austin', 'US'], ['London', 'GB'], ['Toronto', 'CA'], ['Mumbai', 'IN'], ['Brooklyn', 'US'], ['Berlin', 'DE'], ['Sydney', 'AU'], ['Austin', 'US'], ['Miami', 'US'], ['Nashville', 'US']];
+        // India-focused city rotation so the city / tier filters have realistic data to search
+        $cities = [
+            ['Delhi', 'IN'],     ['Mumbai', 'IN'],   ['Bangalore', 'IN'], ['Gurugram', 'IN'],
+            ['Hyderabad', 'IN'], ['Pune', 'IN'],     ['Chennai', 'IN'],   ['Kolkata', 'IN'],
+            ['Ahmedabad', 'IN'], ['Jaipur', 'IN'],   ['Noida', 'IN'],     ['Kochi', 'IN'],
+            ['Delhi', 'IN'],     ['Mumbai', 'IN'],   ['Bangalore', 'IN'], ['Goa', 'IN'],
+            ['Lucknow', 'IN'],   ['Indore', 'IN'],   ['Delhi', 'IN'],     ['Mumbai', 'IN'],
+        ];
+        $genders   = ['female', 'male', 'female', 'female', 'male', 'non_binary'];
+        $ages      = ['18-24', '25-34', '25-34', '35-44', '18-24'];
+        $langsPool = [['en','hi'], ['en','hi','pa'], ['en','ta'], ['en','te'], ['en','mr'], ['en','bn'], ['en','gu'], ['en','kn'], ['en','ml'], ['hi','ur']];
 
         $creators = [];
         foreach ($firstNames as $i => $name) {
             [$city, $country] = $cities[$i % count($cities)];
             $creatorNiches = collect($this->niches)->random(rand(1, 3))->all();
-            $followers = rand(3000, 250000);
+            // Vary follower counts across every tier so tier filter demos work
+            $tierPools = [
+                [1_500, 9_000],       // nano
+                [12_000, 90_000],     // micro
+                [120_000, 450_000],   // mid
+                [550_000, 950_000],   // macro
+                [1_200_000, 4_500_000], // mega
+            ];
+            [$fMin, $fMax] = $tierPools[$i % count($tierPools)];
+            $followers  = rand($fMin, $fMax);
             $engagement = round(rand(250, 950) / 100, 2);
+            $tier       = \App\Support\CreatorTaxonomy::tierFromFollowers($followers);
+            $gender     = $genders[$i % count($genders)];
+            $age        = $ages[$i % count($ages)];
+            $langs      = $langsPool[$i % count($langsPool)];
+            $femalePct  = $gender === 'female' ? rand(55, 82) : rand(30, 55);
 
             $creator = Creator::updateOrCreate(
                 ['slug' => Str::slug($handles[$i])],
@@ -443,6 +467,10 @@ class DatabaseSeeder extends Seeder
                     'email' => Str::slug($handles[$i]).'@creatorflow.test',
                     'country' => $country,
                     'city' => $city,
+                    'gender' => $gender,
+                    'age_range' => $age,
+                    'tier' => $tier,
+                    'languages' => $langs,
                     'niches' => $creatorNiches,
                     'status' => 'active',
                     'open_to_work' => true,
@@ -451,9 +479,13 @@ class DatabaseSeeder extends Seeder
                     'rate_ugc_cents' => rand(10000, 50000),
                     'rate_video_cents' => rand(15000, 75000),
                     'rate_post_cents' => rand(8000, 40000),
+                    'currency' => 'INR',
                     'follower_count_total' => $followers,
                     'engagement_rate' => $engagement,
                     'avg_views' => (int) round($followers * ($engagement / 100)),
+                    'audience_female_pct' => $femalePct,
+                    'audience_male_pct'   => 100 - $femalePct,
+                    'audience_top_age'    => ['18-24','25-34','25-34','35-44'][$i % 4],
                     'performance_score' => round(rand(60, 98), 2),
                     'fraud_risk' => round(rand(2, 20), 2),
                     'payout_method_status' => 'verified',

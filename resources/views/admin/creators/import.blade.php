@@ -33,12 +33,18 @@
                 <div><code class="rounded bg-slate-100 px-1.5 py-0.5">tiktok_handle</code></div>
                 <div><code class="rounded bg-slate-100 px-1.5 py-0.5">youtube_handle</code></div>
                 <div><code class="rounded bg-slate-100 px-1.5 py-0.5">accepts_paid</code>, <code class="rounded bg-slate-100 px-1.5 py-0.5">accepts_barter</code> · true/false</div>
+                <div><code class="rounded bg-slate-100 px-1.5 py-0.5">gender</code> · female/male/non_binary/other</div>
+                <div><code class="rounded bg-slate-100 px-1.5 py-0.5">age_range</code> · 13-17, 18-24, 25-34, 35-44, 45-54, 55+</div>
+                <div><code class="rounded bg-slate-100 px-1.5 py-0.5">state</code>, <code class="rounded bg-slate-100 px-1.5 py-0.5">languages</code> · comma list (en,hi)</div>
+                <div><code class="rounded bg-slate-100 px-1.5 py-0.5">audience_female_pct</code>, <code class="rounded bg-slate-100 px-1.5 py-0.5">audience_male_pct</code></div>
             </div>
 
-            <div class="mt-6 rounded-xl bg-slate-50 p-3 font-mono text-[11px] leading-relaxed text-slate-700">
-                name,email,country,niches,followers,engagement_rate,instagram_handle<br>
-                Aria Kim,aria@x.com,IN,Beauty,62000,8.1,ariak<br>
-                Theo V,theo@x.com,US,Lifestyle,1200000,5.4,theovlog
+            <p class="mt-4 text-xs text-slate-500">Tier (nano / micro / mid / macro / mega) is auto-derived from <code>followers</code>. City must match one of Delhi, Mumbai, Bangalore, Hyderabad, Chennai, Pune, Kolkata, Ahmedabad, Jaipur, Gurugram, Noida, Lucknow, Chandigarh, Indore, Kochi, Goa, Surat, Bhopal.</p>
+
+            <div class="mt-4 rounded-xl bg-slate-50 p-3 font-mono text-[11px] leading-relaxed text-slate-700">
+                name,email,country,city,gender,age_range,languages,niches,followers,engagement_rate,instagram_handle<br>
+                Aria Kim,aria@x.com,IN,Delhi,female,25-34,"en,hi",Beauty,62000,8.1,ariak<br>
+                Theo V,theo@x.com,IN,Mumbai,male,25-34,"en,mr",Lifestyle,1200000,5.4,theovlog
             </div>
         </div>
     </div>

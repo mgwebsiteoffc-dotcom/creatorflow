@@ -35,6 +35,7 @@ class CreateCampaign
                 'content_types' => $data['content_types'] ?? ['video'],
                 'deliverables' => $data['deliverables'] ?? null,
                 'usage_rights' => $data['usage_rights'] ?? null,
+                'audience_criteria' => $data['audience_criteria'] ?? null,
                 'start_date' => $data['start_date'] ?? null,
                 'end_date' => $data['end_date'] ?? null,
                 'budget_total_cents' => $data['budget_total_cents'] ?? 0,
