@@ -32,11 +32,11 @@
                         </div>
 
                         <div class="grid gap-4 sm:grid-cols-2">
-                            <div>
-                                <label class="label">Display name *</label>
+                            <div data-field>
+                                <label class="label">Display name <span class="text-rose-500">*</span></label>
                                 <input class="input" name="display_name" data-required value="{{ old('display_name', auth()->user()->name) }}" placeholder="Alex Rivera">
                             </div>
-                            <div>
+                            <div data-field>
                                 <label class="label">Country (ISO 2)</label>
                                 <input class="input" name="country" maxlength="2" placeholder="US" value="{{ old('country') }}">
                             </div>

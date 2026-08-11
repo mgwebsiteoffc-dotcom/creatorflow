@@ -1,21 +1,21 @@
 <x-layouts.app panel="brand" title="Products">
-    <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold">Products</h1>
-            <p class="text-sm text-slate-500">Synced, uploaded or manually added — all in one catalog.</p>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">Products</h1>
+            <p class="mt-1 text-sm text-slate-500">Synced, uploaded or manually added — all in one catalog.</p>
         </div>
         <div class="flex gap-2">
-            <a href="{{ route('brand.products.import') }}" class="btn-secondary text-sm">Import CSV</a>
-            <a href="{{ route('brand.products.create') }}" class="btn-primary text-sm">+ Add product</a>
+            <a href="{{ route('brand.products.import') }}" class="btn-secondary !py-2 text-sm">Import CSV</a>
+            <a href="{{ route('brand.products.create') }}" class="btn-primary !py-2 text-sm">+ Add product</a>
         </div>
     </div>
 
-    <form method="GET" class="mb-4 flex gap-2">
+    <form method="GET" class="mt-6 flex gap-2">
         <input class="input" name="q" value="{{ request('q') }}" placeholder="Search products…">
         <button class="btn-secondary">Search</button>
     </form>
 
-    <div class="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+    <div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         @forelse($products as $product)
             <a href="{{ route('brand.products.show', $product) }}" class="card overflow-hidden hover:border-violet-300">
                 <div class="aspect-square bg-slate-100">
@@ -47,5 +47,5 @@
         @endforelse
     </div>
 
-    <div class="mt-6">{{ $products->links() }}</div>
+    <div class="mt-8">{{ $products->links() }}</div>
 </x-layouts.app>

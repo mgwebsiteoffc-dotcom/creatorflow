@@ -70,50 +70,104 @@ document.addEventListener('DOMContentLoaded', () => {
         navToggle.addEventListener('click', () => navMenu.classList.toggle('hidden'));
     }
 
-    /* Onboarding wizard: [data-wizard] with [data-step="1"] blocks and [data-next]/[data-prev] buttons */
+    /* Onboarding wizard: [data-wizard] with [data-step="1"] blocks and [data-next]/[data-prev] buttons.
+       Rules:
+       - Only PAST steps that were successfully advanced past show as "done" (green ✓).
+       - Current step shows as "active" (gradient).
+       - Future steps and never-visited past ones show as neutral.
+       - Users can only JUMP to steps they have already visited.
+       - Wizard blocks form submission unless we are on the last step and it was reached via a full Next flow.
+    */
     document.querySelectorAll('[data-wizard]').forEach((wiz) => {
         const steps = Array.from(wiz.querySelectorAll('[data-step]'));
         const dots = Array.from(wiz.querySelectorAll('[data-dot]'));
         const bars = Array.from(wiz.querySelectorAll('[data-bar]'));
         const total = steps.length;
-        let current = 1;
+        // If URL has ?step=N or the wizard element has data-start-step, hydrate
+        const urlStep = Number(new URL(window.location.href).searchParams.get('step') || 0);
+        const startStep = urlStep || Number(wiz.dataset.startStep || 1) || 1;
+        let current = Math.min(Math.max(startStep, 1), total);
+        // Track the highest step the user has legitimately reached via Next (validation-passing).
+        // This is what turns dots green. Bumping backwards via Back doesn't un-green.
+        let reached = current;
 
         const render = () => {
             steps.forEach((s) => s.classList.toggle('is-active', Number(s.dataset.step) === current));
             dots.forEach((d) => {
                 const n = Number(d.dataset.dot);
-                d.classList.toggle('is-active', n === current);
-                d.classList.toggle('is-done', n < current);
-                if (n < current) d.textContent = '✓';
-                else d.textContent = n;
+                const isActive = n === current;
+                const isDone = n < reached;                 // completed = strictly before the highest reached step
+                d.classList.toggle('is-active', isActive);
+                d.classList.toggle('is-done', isDone && !isActive);
+                d.textContent = (isDone && !isActive) ? '✓' : n;
+                d.style.cursor = (n <= reached) ? 'pointer' : 'not-allowed';
+                d.disabled = n > reached;
+                d.setAttribute('aria-current', isActive ? 'step' : 'false');
             });
             bars.forEach((b) => {
                 const n = Number(b.dataset.bar);
-                b.classList.toggle('is-done', n < current);
+                b.classList.toggle('is-done', n < reached);
             });
             const progress = wiz.querySelector('[data-progress]');
             if (progress) progress.textContent = `Step ${current} of ${total}`;
-            // scroll wizard into view smoothly
             wiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        const clearFieldError = (field) => {
+            field.classList.remove('ring-2', 'ring-rose-400');
+            const holder = field.closest('[data-field]') || field.parentElement;
+            holder?.querySelector('[data-field-error]')?.remove();
+        };
+        const setFieldError = (field, msg) => {
+            field.classList.add('ring-2', 'ring-rose-400');
+            const holder = field.closest('[data-field]') || field.parentElement;
+            if (!holder) return;
+            if (holder.querySelector('[data-field-error]')) return;
+            const err = document.createElement('p');
+            err.setAttribute('data-field-error', '');
+            err.className = 'mt-1 text-xs font-medium text-rose-600';
+            err.textContent = msg;
+            holder.appendChild(err);
         };
 
         const validateStep = (stepEl) => {
             let ok = true;
+            let firstBad = null;
             stepEl.querySelectorAll('[data-required]').forEach((field) => {
-                // required checkbox group: at least one checked
                 if (field.dataset.required === 'group') {
                     const name = field.dataset.name;
-                    const anyChecked = wiz.querySelectorAll(`input[name="${name}"]:checked, input[name="${name}[]"]:checked`).length > 0;
-                    field.classList.toggle('ring-2', !anyChecked);
-                    field.classList.toggle('ring-rose-400', !anyChecked);
-                    if (!anyChecked) ok = false;
-                } else if (field.value === '' || field.value == null) {
-                    field.classList.add('ring-2', 'ring-rose-400');
-                    ok = false;
+                    const min = Number(field.dataset.min || 1);
+                    const count = wiz.querySelectorAll(
+                        `input[name="${name}"]:checked, input[name="${name}[]"]:checked`
+                    ).length;
+                    const wrap = field;
+                    wrap.classList.toggle('ring-2', count < min);
+                    wrap.classList.toggle('ring-rose-400', count < min);
+                    wrap.classList.toggle('rounded-2xl', count < min);
+                    let msgEl = wrap.parentElement.querySelector('[data-field-error]');
+                    if (count < min) {
+                        if (!msgEl) {
+                            msgEl = document.createElement('p');
+                            msgEl.setAttribute('data-field-error', '');
+                            msgEl.className = 'mt-1 text-xs font-medium text-rose-600';
+                            wrap.parentElement.appendChild(msgEl);
+                        }
+                        msgEl.textContent = `Please pick at least ${min}.`;
+                        ok = false;
+                        if (!firstBad) firstBad = wrap;
+                    } else if (msgEl) { msgEl.remove(); }
                 } else {
-                    field.classList.remove('ring-2', 'ring-rose-400');
+                    const val = (field.value ?? '').toString().trim();
+                    if (val === '') {
+                        setFieldError(field, 'This field is required.');
+                        ok = false;
+                        if (!firstBad) firstBad = field;
+                    } else {
+                        clearFieldError(field);
+                    }
                 }
             });
+            if (firstBad) firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return ok;
         };
 
@@ -125,14 +179,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 const cur = steps.find((s) => Number(s.dataset.step) === current);
                 if (!validateStep(cur)) return;
-                if (current < total) { current++; render(); }
+                if (current < total) {
+                    current++;
+                    if (current > reached) reached = current;
+                    render();
+                }
             } else if (prev) {
                 e.preventDefault();
                 if (current > 1) { current--; render(); }
             } else if (jump) {
                 e.preventDefault();
                 const n = Number(jump.dataset.jump);
-                if (n <= current) { current = n; render(); }
+                if (n <= reached) { current = n; render(); }
+            }
+        });
+
+        // Guard against submits triggered from anywhere but the last step's explicit submit button.
+        if (wiz.tagName === 'FORM') {
+            wiz.addEventListener('submit', (e) => {
+                if (current !== total) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Validate current step so the user sees what's wrong
+                    const cur = steps.find((s) => Number(s.dataset.step) === current);
+                    if (cur && validateStep(cur) && current < total) {
+                        current++;
+                        if (current > reached) reached = current;
+                        render();
+                    }
+                    return false;
+                }
+                // On last step — validate it too, block if invalid
+                const cur = steps.find((s) => Number(s.dataset.step) === total);
+                if (cur && !validateStep(cur)) { e.preventDefault(); return false; }
+            });
+        }
+
+        // Prevent Enter key from submitting the wizard form from any step but the last
+        wiz.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.target.tagName === 'INPUT' && wiz.tagName === 'FORM' && current !== total) {
+                e.preventDefault();
+                const cur = steps.find((s) => Number(s.dataset.step) === current);
+                if (validateStep(cur)) {
+                    current++;
+                    if (current > reached) reached = current;
+                    render();
+                }
             }
         });
 

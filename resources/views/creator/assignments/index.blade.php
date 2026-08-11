@@ -1,9 +1,14 @@
 <x-layouts.app panel="creator" title="My work">
-    <h1 class="text-2xl font-bold">My work</h1>
-    <div class="mt-3 flex gap-2 text-sm">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">My work</h1>
+            <p class="mt-1 text-sm text-slate-500">Active and past collaborations, all in one place.</p>
+        </div>
+    </div>
+    <div class="mt-6 flex flex-wrap gap-2">
         @foreach(['active' => 'Active', 'completed' => 'Completed'] as $k => $label)
             <a href="{{ route('creator.assignments.index', ['status' => $k]) }}"
-               class="rounded-full px-3 py-1.5 @if($status === $k) bg-rose-600 text-white @else bg-slate-100 text-slate-600 @endif">{{ $label }}</a>
+               class="tab-pill {{ $status === $k ? 'is-active' : '' }}">{{ $label }}</a>
         @endforeach
     </div>
 

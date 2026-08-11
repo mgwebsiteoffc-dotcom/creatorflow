@@ -9,15 +9,26 @@
 
             {{-- Images --}}
             <div>
-                <label class="label">Images</label>
-                <div id="img-drop" class="relative cursor-pointer rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50/60 p-8 text-center transition hover:border-violet-400 hover:bg-violet-50/40">
+                <div class="mb-3 flex items-center justify-between">
+                    <label class="label !mb-0">Product images <span class="ml-1 text-xs font-normal text-slate-400">(up to 6)</span></label>
+                    <span id="img-count" class="text-xs font-semibold text-slate-500">0 / 6 selected</span>
+                </div>
+                <div id="img-drop"
+                     class="relative cursor-pointer overflow-hidden rounded-2xl border-2 border-dashed border-violet-300 p-10 text-center transition hover:border-violet-500"
+                     style="background-image: linear-gradient(135deg, #faf5ff 0%, #fdf2f8 60%, #fff7ed 100%);">
                     <input id="img-input" type="file" name="images[]" accept="image/*" multiple class="absolute inset-0 h-full w-full cursor-pointer opacity-0">
                     <div class="pointer-events-none">
-                        <div class="mx-auto grid h-12 w-12 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-white shadow-sm">📷</div>
-                        <div class="mt-3 text-sm font-semibold text-slate-800">Drop images here or click to browse</div>
-                        <div class="mt-1 text-xs text-slate-500">PNG, JPG, WEBP · up to 5MB each · max 6 images</div>
+                        <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl text-2xl text-white shadow-lg"
+                             style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">📷</div>
+                        <div class="mt-4 text-base font-bold text-slate-900">Drop images here or click to browse</div>
+                        <div class="mt-1 text-xs text-slate-500">PNG · JPG · WEBP · up to 5 MB each · first image becomes primary</div>
+                        <div class="mt-4 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white px-3 py-1.5 text-xs font-semibold text-violet-700 shadow-sm">
+                            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+                            Choose files
+                        </div>
                     </div>
                 </div>
+                <p class="mt-2 text-xs text-slate-500">Products with images get 3× more creator applications.</p>
                 <div id="img-previews" class="mt-4 hidden grid-cols-3 gap-3 sm:grid-cols-6"></div>
             </div>
 
@@ -81,8 +92,10 @@
             if (!input) return;
 
             const MAX = 6;
+            const counter = document.getElementById('img-count');
             const render = () => {
                 const files = Array.from(input.files || []).slice(0, MAX);
+                if (counter) counter.textContent = `${files.length} / ${MAX} selected`;
                 previews.innerHTML = '';
                 if (!files.length) { previews.classList.add('hidden'); previews.classList.remove('grid'); return; }
                 previews.classList.remove('hidden'); previews.classList.add('grid');

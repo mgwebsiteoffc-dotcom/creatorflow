@@ -1,8 +1,13 @@
 <x-layouts.app panel="creator" title="Marketplace">
-    <h1 class="text-2xl font-bold">Find campaigns</h1>
-    <p class="text-sm text-slate-500">Brands looking for creators like you.</p>
+    <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">Find campaigns</h1>
+            <p class="mt-1 text-sm text-slate-500">Brands looking for creators like you.</p>
+        </div>
+        <a href="{{ route('creator.applications') }}" class="btn-secondary !py-2 text-sm">My applications →</a>
+    </div>
 
-    <form method="GET" class="mt-4 flex gap-2">
+    <form method="GET" class="mt-6 flex gap-2">
         <select class="input max-w-xs" name="type">
             <option value="">All types</option>
             @foreach(['barter' => 'Barter / gifting', 'paid' => 'Paid', 'affiliate' => 'Affiliate'] as $v => $l)

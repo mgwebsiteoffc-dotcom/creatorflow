@@ -1,8 +1,12 @@
 <x-layouts.app panel="creator" title="Invitations">
-    <h1 class="text-2xl font-bold">Invitations</h1>
-    <p class="text-sm text-slate-500">Brands want to work with you.</p>
+    <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">Invitations</h1>
+            <p class="mt-1 text-sm text-slate-500">Brands want to work with you.</p>
+        </div>
+    </div>
 
-    <div class="mt-5 space-y-3">
+    <div class="mt-6 space-y-3">
         @forelse($invitations as $inv)
             @include('creator._invitation', ['inv' => $inv])
         @empty

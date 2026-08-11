@@ -65,7 +65,7 @@ class OnboardingController extends Controller
             'currency' => $workspace->currency,
         ]);
 
-        return redirect()->route('brand.onboarding')->with('status', "{$product->title} added.");
+        return redirect()->route('brand.onboarding', ['step' => 3])->with('status', "{$product->title} added.");
     }
 
     public function analyze(TenantContext $tenant, AnalyzeStore $analyze)
@@ -78,7 +78,8 @@ class OnboardingController extends Controller
 
         $analyze->run($workspace);
 
-        return back()->with('status', 'AI analysis complete — hero products and niche detected.');
+        return redirect()->route('brand.onboarding', ['step' => 4])
+            ->with('status', 'AI analysis complete — hero products and niche detected.');
     }
 
     public function complete(TenantContext $tenant)

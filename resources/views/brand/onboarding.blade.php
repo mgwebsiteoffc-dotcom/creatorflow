@@ -61,8 +61,8 @@
                         </div>
 
                         <div class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
-                            <p class="text-xs text-slate-500">Already have products? <button type="button" data-next class="font-semibold text-violet-700 hover:text-violet-900">Skip to analysis →</button></p>
-                            <button type="button" data-next class="btn-gradient">Next: Add a product</button>
+                            <p class="text-xs text-slate-500">You'll be able to add more products later.</p>
+                            <button type="button" data-next class="btn-gradient">Next: Add a product →</button>
                         </div>
                     </div>
 

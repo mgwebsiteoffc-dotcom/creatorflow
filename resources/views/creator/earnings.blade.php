@@ -1,8 +1,12 @@
 <x-layouts.app panel="creator" title="Earnings">
-    <h1 class="text-2xl font-bold">Earnings</h1>
-    <p class="text-sm text-slate-500">Fast payouts after content approval via Stripe Connect.</p>
+    <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">Earnings</h1>
+            <p class="mt-1 text-sm text-slate-500">Fast payouts after content approval via Stripe Connect.</p>
+        </div>
+    </div>
 
-    <div class="mt-5 grid grid-cols-2 gap-3">
+    <div class="mt-6 grid grid-cols-2 gap-4">
         <x-stat label="Available" :value="'$'.number_format($availableCents/100,2)" tone="emerald"/>
         <x-stat label="Pending" :value="'$'.number_format($pendingCents/100,2)" tone="amber"/>
     </div>

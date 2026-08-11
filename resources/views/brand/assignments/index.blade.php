@@ -1,13 +1,18 @@
 <x-layouts.app panel="brand" title="Assignments">
-    <h1 class="text-2xl font-bold">Assignments</h1>
-    <div class="mt-3 flex gap-2 text-sm">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">Assignments</h1>
+            <p class="mt-1 text-sm text-slate-500">Track creators from acceptance to approved content.</p>
+        </div>
+    </div>
+    <div class="mt-6 flex flex-wrap gap-2">
         @foreach(['active' => 'Active', 'submitted' => 'Needs review', 'completed' => 'Completed', 'all' => 'All'] as $k => $label)
             <a href="{{ route('brand.assignments.index', ['status' => $k]) }}"
-               class="rounded-full px-3 py-1.5 @if($status === $k) bg-violet-600 text-white @else bg-slate-100 text-slate-600 @endif">{{ $label }}</a>
+               class="tab-pill {{ $status === $k ? 'is-active' : '' }}">{{ $label }}</a>
         @endforeach
     </div>
 
-    <div class="mt-5 space-y-2">
+    <div class="mt-6 space-y-3">
         @forelse($assignments as $a)
             <a href="{{ route('brand.assignments.show', $a) }}" class="card flex items-center gap-3 p-3">
                 <div class="grid h-10 w-10 place-items-center rounded-full bg-rose-100 font-bold text-rose-700">{{ strtoupper(substr($a->creator->display_name,0,1)) }}</div>

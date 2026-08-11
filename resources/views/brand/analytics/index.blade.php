@@ -1,8 +1,12 @@
 <x-layouts.app panel="brand" title="Analytics">
-    <h1 class="text-2xl font-bold">Analytics &amp; attribution</h1>
-    <p class="text-sm text-slate-500">Revenue tied to creators via unique codes, referral links and multi-touch attribution.</p>
+    <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">Analytics &amp; attribution</h1>
+            <p class="mt-1 text-sm text-slate-500">Revenue tied to creators via unique codes, referral links and multi-touch attribution.</p>
+        </div>
+    </div>
 
-    <form method="GET" class="card mt-5 flex flex-wrap items-end gap-3 p-4">
+    <form method="GET" class="card mt-6 flex flex-wrap items-end gap-3 p-5">
         <div class="min-w-[220px] flex-1">
             <label class="label">Campaign</label>
             <select class="input" name="campaign_id">
