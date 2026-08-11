@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Brand;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Support\TenantContext;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -33,10 +35,13 @@ class ProductController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'product_type' => ['nullable', 'string', 'max:190'],
+            'niche' => ['nullable', 'string', 'max:190'],
             'vendor' => ['nullable', 'string', 'max:190'],
             'price_cents' => ['required', 'integer', 'min:0'],
             'inventory_qty' => ['required', 'integer', 'min:0'],
             'sku' => ['nullable', 'string', 'max:190'],
+            'images'   => ['nullable', 'array', 'max:6'],
+            'images.*' => ['image', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
         ]);
 
         $workspace = $tenant->active();
@@ -54,7 +59,7 @@ class ProductController extends Controller
             'description' => $data['description'] ?? null,
             'product_type' => $data['product_type'] ?? null,
             'vendor' => $data['vendor'] ?? $workspace->name,
-            'niche' => $workspace->settings['ai_niche'] ?? null,
+            'niche' => $data['niche'] ?? ($workspace->settings['ai_niche'] ?? null),
             'status' => 'active',
             'tags' => [],
             'metadata' => ['source' => 'manual'],
@@ -67,6 +72,21 @@ class ProductController extends Controller
             'inventory_qty' => $data['inventory_qty'],
             'currency' => $workspace->currency,
         ]);
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images', []) as $i => $file) {
+                if (! $file) continue;
+                $path = $file->store("products/{$product->id}", 'public');
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'disk' => 'public',
+                    'path' => Storage::disk('public')->url($path),
+                    'position' => $i,
+                    'is_primary' => $i === 0,
+                    'alt' => $product->title,
+                ]);
+            }
+        }
 
         return redirect()->route('brand.products.index')->with('status', "{$product->title} added.");
     }

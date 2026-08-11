@@ -50,19 +50,21 @@
                 <div class="space-y-2">
                     @foreach($products as $product)
                         @php $seed = collect($suggestion['seed_products'] ?? [])->firstWhere('product_id', $product->id); @endphp
-                        <label class="flex items-center gap-3 rounded-xl border border-slate-200 p-3 has-[:checked]:border-violet-400 has-[:checked]:bg-violet-50/40">
-                            <input type="checkbox" class="product-toggle h-4 w-4 rounded" data-target="target-{{ $product->id }}"
+                        <label class="product-row flex items-center gap-3 rounded-xl border border-slate-200 p-3 transition has-[:checked]:border-violet-400 has-[:checked]:bg-violet-50/40">
+                            <input type="checkbox" class="product-toggle h-4 w-4 rounded border-slate-300 text-violet-600 focus:ring-violet-400"
                                    @checked($seed !== null)>
-                            <input type="hidden" name="products[{{ $loop->index }}][product_id]" value="{{ $product->id }}">
+                            <input type="hidden" class="product-id" name="products[{{ $loop->index }}][product_id]"
+                                   value="{{ $product->id }}" @if($seed === null) disabled @endif>
                             <div class="min-w-0 flex-1">
                                 <p class="truncate font-medium">{{ $product->title }}</p>
                                 <p class="text-xs text-slate-500">${{ number_format($product->priceCents()/100, 2) }} · {{ $product->inventoryTotal() }} in stock
                                     @if($product->hero_score > 70) · <span class="badge-amber">Hero {{ $product->hero_score }}</span>@endif
                                 </p>
                             </div>
-                            <input type="number" min="1" name="products[{{ $loop->index }}][target_creators]"
-                                   id="target-{{ $product->id }}" value="{{ $seed['target_creators'] ?? 10 }}"
-                                   class="input w-20 !py-1.5 text-center" @if($seed === null) disabled @endif>
+                            <input type="number" min="1" class="product-target input w-20 !py-1.5 text-center"
+                                   name="products[{{ $loop->index }}][target_creators]"
+                                   value="{{ $seed['target_creators'] ?? 10 }}"
+                                   @if($seed === null) disabled @endif>
                         </label>
                     @endforeach
                 </div>
@@ -94,10 +96,13 @@
         </form>
 
         <script>
-            document.querySelectorAll('.product-toggle').forEach(t => {
-                t.addEventListener('change', () => {
-                    document.getElementById(t.dataset.target).disabled = !t.checked;
-                });
+            document.querySelectorAll('.product-row').forEach(row => {
+                const cb = row.querySelector('.product-toggle');
+                const sync = () => {
+                    row.querySelectorAll('.product-id, .product-target').forEach(el => { el.disabled = !cb.checked; });
+                };
+                cb.addEventListener('change', sync);
+                sync();
             });
         </script>
     @endif

@@ -21,7 +21,7 @@
 @endphp
 
 <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur">
-    <div class="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 px-4">
+    <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4 md:px-6 lg:px-8">
         <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold">
             <span class="grid h-8 w-8 place-items-center rounded-xl text-xs font-black text-white shadow-sm"
                   style="background-image: {{ $logoGrad }};">CF</span>

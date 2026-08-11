@@ -86,7 +86,10 @@
                 <p class="mt-2 text-sm">${{ number_format($assignment->payout->net_cents/100,2) }} · {{ $assignment->payout->status }}</p>
             @endif
 
-            <a href="{{ route('messages.start', ['campaign' => $assignment->campaign_id, 'creatorId' => $assignment->creator_id]) }}" class="btn-secondary mt-5 w-full">Message creator</a>
+            <form method="POST" action="{{ route('messages.start', ['campaign' => $assignment->campaign_id, 'creatorId' => $assignment->creator_id]) }}" class="mt-5">
+                @csrf
+                <button type="submit" class="btn-secondary w-full">Message creator</button>
+            </form>
         </div>
     </div>
 </x-layouts.app>

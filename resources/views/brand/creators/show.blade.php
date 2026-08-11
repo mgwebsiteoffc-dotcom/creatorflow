@@ -34,7 +34,14 @@
 
             <div class="card p-5">
                 <h2 class="font-semibold">Invite to campaign</h2>
-                @php $camps = auth()->user()->workspaces->flatMap->campaigns()->whereIn('status', ['draft','inviting','active'])->get(); @endphp
+                @php
+                    $camps = collect();
+                    foreach (auth()->user()->workspaces as $ws) {
+                        $camps = $camps->merge(
+                            $ws->campaigns()->whereIn('status', ['draft','inviting','active'])->get()
+                        );
+                    }
+                @endphp
                 @if($camps->isEmpty())
                     <p class="mt-2 text-sm text-slate-500">Create an active campaign first.</p>
                 @else

@@ -108,7 +108,10 @@
                     <p class="text-xs text-slate-500">{{ $assignment->payout->status }} · released after approval</p>
                 </div>
             @endif
-            <a href="{{ route('messages.start', ['campaign' => $assignment->campaign_id, 'creatorId' => $assignment->creator_id]) }}" class="btn-secondary w-full">Message brand</a>
+            <form method="POST" action="{{ route('messages.start', ['campaign' => $assignment->campaign_id, 'creatorId' => $assignment->creator_id]) }}">
+                @csrf
+                <button type="submit" class="btn-secondary w-full">Message brand</button>
+            </form>
         </div>
     </div>
 </x-layouts.app>

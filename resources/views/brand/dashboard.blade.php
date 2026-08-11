@@ -1,8 +1,8 @@
 <x-layouts.app panel="brand" title="Dashboard">
-    <div class="mb-6 flex flex-wrap items-end justify-between gap-3">
+    <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
-            <h1 class="text-2xl font-bold">Welcome back 👋</h1>
-            <p class="text-sm text-slate-500">{{ $workspace->name }} · plan: <span class="font-medium capitalize">{{ $workspace->plan }}</span></p>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">Welcome back 👋</h1>
+            <p class="mt-1 text-sm text-slate-500">{{ $workspace->name }} · plan <span class="font-semibold capitalize text-slate-700">{{ $workspace->plan }}</span></p>
         </div>
         <div class="flex gap-2">
             <a href="{{ route('brand.products.import') }}" class="btn-secondary !py-2 text-sm">Import CSV</a>
@@ -11,12 +11,15 @@
     </div>
 
     @if(! $workspace->onboardingComplete())
-        <a href="{{ route('brand.onboarding') }}" class="mb-6 block rounded-2xl border border-violet-200 bg-violet-50 p-4 text-sm text-violet-800">
-            👉 Finish onboarding: connect products and launch your first AI campaign.
+        <a href="{{ route('brand.onboarding') }}"
+           class="mt-6 flex items-center gap-3 rounded-2xl border border-violet-200 bg-gradient-to-r from-violet-50 to-pink-50 p-4 text-sm text-violet-900 transition hover:border-violet-300 hover:shadow-sm">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white shadow-sm">👉</span>
+            <span class="flex-1"><strong>Finish onboarding</strong> — connect products and launch your first AI campaign.</span>
+            <span class="text-violet-500">→</span>
         </a>
     @endif
 
-    <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
         <x-stat label="Products" :value="$stats['products']" tone="sky"/>
         <x-stat label="Active campaigns" :value="$stats['active_campaigns']" tone="violet"/>
         <x-stat label="Creators reached" :value="$stats['creators_reached']" tone="amber"/>
@@ -24,7 +27,7 @@
     </div>
 
     @if($suggestion)
-        <div class="mt-6 card overflow-hidden">
+        <div class="mt-8 card overflow-hidden">
             <div class="flex items-center gap-2 border-b border-slate-100 bg-gradient-to-r from-violet-50 to-cyan-50 px-5 py-3">
                 <span>✨</span>
                 <h2 class="font-semibold">AI campaign suggestion</h2>
@@ -64,14 +67,14 @@
             </div>
         </div>
     @else
-        <x-empty-state title="No products yet" icon="📦" class="mt-6">
+        <x-empty-state title="No products yet" icon="📦" class="mt-8">
             Connect Shopify, upload a CSV, or add products manually so AI can suggest your first campaign.
             <x-slot:action><a href="{{ route('brand.onboarding') }}" class="btn-primary">Add products</a></x-slot:action>
         </x-empty-state>
     @endif
 
-    <h2 class="mt-8 text-lg font-bold">Recent campaigns</h2>
-    <div class="mt-3 space-y-3">
+    <h2 class="mt-10 text-lg font-bold">Recent campaigns</h2>
+    <div class="mt-4 space-y-3">
         @forelse($recentCampaigns as $campaign)
             @include('brand.campaigns._card', ['campaign' => $campaign])
         @empty
