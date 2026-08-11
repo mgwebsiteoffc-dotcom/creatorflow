@@ -21,6 +21,32 @@ class WorkspaceController extends Controller
         return view('admin.workspaces.index', compact('workspaces'));
     }
 
+    public function show(Workspace $workspace)
+    {
+        $workspace->load(['users', 'channels', 'subscription']);
+
+        $campaigns = $workspace->campaigns()->withCount(['assignments','products'])->latest()->take(20)->get();
+        $products  = $workspace->products()->latest()->take(12)->get();
+        $invoices  = \App\Support\SchemaCheck::has('invoices')
+            ? $workspace->invoices()->latest()->take(20)->get()
+            : collect();
+        $payments  = \App\Support\SchemaCheck::has('payment_records')
+            ? $workspace->paymentRecords()->latest()->take(20)->get()
+            : collect();
+
+        $stats = [
+            'campaigns'   => $workspace->campaigns()->count(),
+            'products'    => $workspace->products()->count(),
+            'team'        => $workspace->users()->count(),
+            'gmv'         => (int) \App\Models\Attribution::where('workspace_id', $workspace->id)->sum('revenue_cents'),
+            'paid'        => \App\Support\SchemaCheck::has('payment_records')
+                ? (int) $workspace->paymentRecords()->where('direction','outflow')->where('status','succeeded')->sum('amount_cents')
+                : 0,
+        ];
+
+        return view('admin.workspaces.show', compact('workspace','campaigns','products','invoices','payments','stats'));
+    }
+
     public function suspend(Workspace $workspace, Request $request)
     {
         $workspace->update([

@@ -27,6 +27,31 @@ class CreatorController extends Controller
         return view('admin.creators.index', compact('creators'));
     }
 
+    public function show(Creator $creator)
+    {
+        $creator->load(['user', 'nicheRows', 'socialAccounts', 'portfolioItems']);
+
+        $assignments = $creator->assignments()
+            ->with(['campaign:id,title,workspace_id', 'campaign.workspace:id,name', 'campaignProduct.product:id,title'])
+            ->latest()->take(30)->get();
+
+        $applications = \App\Support\SchemaCheck::has('applications')
+            ? $creator->applications()->with('campaign:id,title,workspace_id', 'campaign.workspace:id,name')->latest()->take(20)->get()
+            : collect();
+
+        $payouts = \App\Models\Payout::where('creator_id', $creator->id)
+            ->with('assignment:id,campaign_id')->latest()->take(20)->get();
+
+        $stats = [
+            'assignments_total' => $creator->assignments()->count(),
+            'assignments_done'  => $creator->assignments()->whereIn('status', ['approved','completed'])->count(),
+            'earnings_paid'     => (int) $creator->payouts()->where('status', 'paid')->sum('net_cents'),
+            'earnings_pending'  => (int) $creator->payouts()->where('status', 'pending')->sum('net_cents'),
+        ];
+
+        return view('admin.creators.show', compact('creator', 'assignments', 'applications', 'payouts', 'stats'));
+    }
+
     public function suspend(Creator $creator, Request $request)
     {
         $creator->update([

@@ -22,6 +22,24 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function show(User $user)
+    {
+        $user->load(['workspaces', 'creator']);
+
+        $paymentRecords = collect();
+        $notifications  = collect();
+        if (\App\Support\SchemaCheck::has('payment_records')) {
+            $paymentRecords = \App\Models\PaymentRecord::where('recorded_by', $user->id)
+                ->with('workspace:id,name')->latest()->take(20)->get();
+        }
+        if (\App\Support\SchemaCheck::has('notifications')) {
+            $notifications = \App\Models\AppNotification::where('recipient_type', 'user')
+                ->where('recipient_id', $user->id)->latest()->take(20)->get();
+        }
+
+        return view('admin.users.show', compact('user', 'paymentRecords', 'notifications'));
+    }
+
     public function suspend(User $user, Request $request)
     {
         abort_if($user->id === $request->user()->id, 400, 'You cannot suspend yourself.');

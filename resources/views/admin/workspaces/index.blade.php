@@ -23,7 +23,12 @@
             <tbody class="divide-y divide-slate-100">
                 @foreach($workspaces as $w)
                     <tr>
-                        <td class="p-3"><span class="font-semibold text-slate-900">{{ $w->name }}</span><br><span class="text-xs text-slate-500">{{ $w->website ?: '—' }}</span></td>
+                        <td class="p-3">
+                            <a href="{{ route('admin.workspaces.show', $w) }}" class="group">
+                                <span class="font-semibold text-slate-900 group-hover:text-violet-700">{{ $w->name }}</span><br>
+                                <span class="text-xs text-slate-500">{{ $w->website ?: '—' }}</span>
+                            </a>
+                        </td>
                         <td class="p-3"><x-badge tone="violet">{{ $w->plan }}</x-badge></td>
                         <td class="p-3 text-slate-600">{{ $w->users_count }}</td>
                         <td class="p-3 text-slate-600">{{ $w->campaigns_count }}</td>

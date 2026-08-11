@@ -31,6 +31,7 @@
                 ['route' => 'admin.creators.index', 'label' => 'Creators',    'icon' => '🎬'],
                 ['route' => 'admin.workspaces.index','label' => 'Workspaces', 'icon' => '🏢'],
                 ['route' => 'admin.leads.index',    'label' => 'Leads',       'icon' => '📥'],
+                ['route' => 'admin.billing.index',  'label' => 'Billing',     'icon' => '💳'],
                 ['route' => 'admin.escrow.index',   'label' => 'Escrow',      'icon' => '🔒'],
                 ['route' => 'admin.homepage',       'label' => 'Homepage',    'icon' => '🏠'],
                 ['route' => 'admin.blog.index',     'label' => 'Blog',        'icon' => '📝'],

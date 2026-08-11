@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BillingController as AdminBillingController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CreatorController as AdminCreatorController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
@@ -121,20 +122,26 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/', AdminDashboardController::class)->name('dashboard');
 
     Route::get('/users',   [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}',            [AdminUserController::class, 'show'])->name('users.show');
     Route::post('/users/{user}/suspend',   [AdminUserController::class, 'suspend'])->name('users.suspend');
     Route::post('/users/{user}/unsuspend', [AdminUserController::class, 'unsuspend'])->name('users.unsuspend');
     Route::post('/users/{user}/make-admin',   [AdminUserController::class, 'makeAdmin'])->name('users.makeAdmin');
     Route::post('/users/{user}/remove-admin', [AdminUserController::class, 'removeAdmin'])->name('users.removeAdmin');
 
     Route::get('/creators',  [AdminCreatorController::class, 'index'])->name('creators.index');
-    Route::post('/creators/{creator}/suspend',   [AdminCreatorController::class, 'suspend'])->name('creators.suspend');
-    Route::post('/creators/{creator}/reinstate', [AdminCreatorController::class, 'reinstate'])->name('creators.reinstate');
     Route::get('/creators/import', [AdminCreatorController::class, 'importForm'])->name('creators.import');
     Route::post('/creators/import', [AdminCreatorController::class, 'importStore'])->name('creators.import.store');
+    Route::get('/creators/{creator}',            [AdminCreatorController::class, 'show'])->name('creators.show');
+    Route::post('/creators/{creator}/suspend',   [AdminCreatorController::class, 'suspend'])->name('creators.suspend');
+    Route::post('/creators/{creator}/reinstate', [AdminCreatorController::class, 'reinstate'])->name('creators.reinstate');
 
     Route::get('/workspaces',  [AdminWorkspaceController::class, 'index'])->name('workspaces.index');
+    Route::get('/workspaces/{workspace}',            [AdminWorkspaceController::class, 'show'])->name('workspaces.show');
     Route::post('/workspaces/{workspace}/suspend',   [AdminWorkspaceController::class, 'suspend'])->name('workspaces.suspend');
     Route::post('/workspaces/{workspace}/reinstate', [AdminWorkspaceController::class, 'reinstate'])->name('workspaces.reinstate');
+
+    // Billing / invoices — system-wide
+    Route::get('/billing',   [AdminBillingController::class, 'index'])->name('billing.index');
 
     Route::get('/leads',  [AdminLeadController::class, 'index'])->name('leads.index');
     Route::post('/leads/{lead}', [AdminLeadController::class, 'update'])->name('leads.update');

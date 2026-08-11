@@ -25,13 +25,13 @@
                 @foreach($creators as $c)
                     <tr>
                         <td class="p-3">
-                            <div class="flex items-center gap-3">
+                            <a href="{{ route('admin.creators.show', $c) }}" class="flex items-center gap-3 group">
                                 <div class="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-rose-500 to-pink-500 font-bold text-white">{{ strtoupper(substr($c->display_name,0,1)) }}</div>
                                 <div>
-                                    <div class="font-semibold text-slate-900">{{ $c->display_name }}</div>
+                                    <div class="font-semibold text-slate-900 group-hover:text-violet-700">{{ $c->display_name }}</div>
                                     <div class="text-xs text-slate-500">{{ $c->email ?: '—' }}</div>
                                 </div>
-                            </div>
+                            </a>
                         </td>
                         <td class="p-3 text-slate-600">{{ number_format($c->follower_count_total) }}</td>
                         <td class="p-3">

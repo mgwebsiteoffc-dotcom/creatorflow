@@ -30,13 +30,13 @@
                 @foreach($users as $u)
                     <tr>
                         <td class="p-3">
-                            <div class="flex items-center gap-3">
+                            <a href="{{ route('admin.users.show', $u) }}" class="flex items-center gap-3 group">
                                 <div class="grid h-9 w-9 place-items-center rounded-full bg-slate-100 font-bold text-slate-500">{{ strtoupper(substr($u->name,0,1)) }}</div>
                                 <div>
-                                    <div class="font-semibold text-slate-900">{{ $u->name }}</div>
+                                    <div class="font-semibold text-slate-900 group-hover:text-violet-700">{{ $u->name }}</div>
                                     <div class="text-xs text-slate-500">{{ $u->email }}</div>
                                 </div>
-                            </div>
+                            </a>
                         </td>
                         <td class="p-3">
                             @if($u->isSuperAdmin())<x-badge tone="violet">Superadmin</x-badge>
