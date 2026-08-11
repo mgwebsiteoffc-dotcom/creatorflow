@@ -17,7 +17,7 @@
     </div>
 
     {{-- Main column grid --}}
-    <div class="relative mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-7">
+    <div class="relative mx-auto grid max-w-6xl gap-10 px-4 py-14 md:grid-cols-6">
         {{-- Brand block (2 cols) --}}
         <div class="md:col-span-2">
             <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold text-white">
@@ -67,20 +67,6 @@
             </ul>
         </div>
 
-        {{-- Cities · high-intent SEO block --}}
-        <div>
-            <h4 class="text-xs font-black uppercase tracking-widest text-white">By city</h4>
-            <ul class="mt-4 space-y-2 text-sm">
-                <li><a href="{{ route('services.city', ['influencer-marketing-agency','delhi']) }}" class="hover:text-white">Delhi · Influencer marketing</a></li>
-                <li><a href="{{ route('services.city', ['ugc-influencers','delhi']) }}" class="hover:text-white">Delhi · UGC influencers</a></li>
-                <li><a href="{{ route('services.city', ['barter-influencers','delhi']) }}" class="hover:text-white">Delhi · Barter influencers</a></li>
-                <li><a href="{{ route('services.city', ['influencer-marketing-agency','mumbai']) }}" class="hover:text-white">Mumbai · Influencer marketing</a></li>
-                <li><a href="{{ route('services.city', ['ugc-influencers','mumbai']) }}" class="hover:text-white">Mumbai · UGC influencers</a></li>
-                <li><a href="{{ route('services.city', ['micro-influencer-marketing','bangalore']) }}" class="hover:text-white">Bangalore · Micro influencers</a></li>
-                <li><a href="{{ route('services.index') }}" class="hover:text-white">All cities →</a></li>
-            </ul>
-        </div>
-
         {{-- Industries --}}
         <div>
             <h4 class="text-xs font-black uppercase tracking-widest text-white">By industry</h4>
@@ -124,28 +110,22 @@
     </div>
 
     {{-- ============================ HORIZONTAL CITY + POLICY STRIP ============================ --}}
-    <div class="relative border-t border-white/10">
+    <div class="relative border-t border-white/10 bg-black/20">
         <div class="mx-auto max-w-6xl px-4 py-6 text-xs leading-relaxed text-slate-400">
             @php
-                $cityLinks = [
-                    'Delhi'     => route('services.city', ['influencer-marketing-agency','delhi']),
-                    'Mumbai'    => route('services.city', ['influencer-marketing-agency','mumbai']),
-                    'Bangalore' => route('services.city', ['influencer-marketing-agency','bangalore']),
-                    'Hyderabad' => route('services.city', ['influencer-marketing-agency','hyderabad']),
-                    'Chennai'   => route('services.city', ['influencer-marketing-agency','chennai']),
-                    'Pune'      => route('services.city', ['influencer-marketing-agency','pune']),
-                    'Kolkata'   => route('services.city', ['influencer-marketing-agency','kolkata']),
-                    'Ahmedabad' => route('services.city', ['influencer-marketing-agency','ahmedabad']),
-                    'Jaipur'    => route('services.city', ['influencer-marketing-agency','jaipur']),
-                    'Gurugram'  => route('services.city', ['influencer-marketing-agency','gurugram']),
-                    'Noida'     => route('services.city', ['influencer-marketing-agency','india']),
-                    'Chandigarh'=> route('services.city', ['influencer-marketing-agency','india']),
-                    'Kochi'     => route('services.city', ['influencer-marketing-agency','india']),
-                    'Goa'       => route('services.city', ['influencer-marketing-agency','india']),
-                    'Lucknow'   => route('services.city', ['influencer-marketing-agency','india']),
-                    'Indore'    => route('services.city', ['influencer-marketing-agency','india']),
-                    'Surat'     => route('services.city', ['influencer-marketing-agency','india']),
-                    'Bhopal'    => route('services.city', ['influencer-marketing-agency','india']),
+                // Cities we actually have city landing pages for (SeoData::cities).
+                $footerCityMap = [
+                    'delhi'     => 'Delhi',
+                    'mumbai'    => 'Mumbai',
+                    'bangalore' => 'Bangalore',
+                    'hyderabad' => 'Hyderabad',
+                    'chennai'   => 'Chennai',
+                    'pune'      => 'Pune',
+                    'kolkata'   => 'Kolkata',
+                    'ahmedabad' => 'Ahmedabad',
+                    'jaipur'    => 'Jaipur',
+                    'gurugram'  => 'Gurugram',
+                    'india'     => 'Pan-India',
                 ];
                 $policyLinks = [
                     'Terms of Use'       => route('legal.terms'),
@@ -159,14 +139,35 @@
                 ];
             @endphp
 
-            <p><span class="font-semibold uppercase tracking-widest text-slate-300">Influencer marketing in:</span>
-                @foreach($cityLinks as $name => $href)
-                    <a href="{{ $href }}" class="hover:text-white">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
+            <p class="[&_a]:mx-0.5 [&_a]:hover:text-white [&_a]:underline-offset-2">
+                <span class="mr-1 font-semibold uppercase tracking-widest text-slate-300">Influencer marketing in:</span>
+                @foreach($footerCityMap as $slug => $name)
+                    <a href="{{ route('services.city', ['influencer-marketing-agency', $slug]) }}">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
                 @endforeach
             </p>
-            <p class="mt-3"><span class="font-semibold uppercase tracking-widest text-slate-300">Policies:</span>
+            <p class="mt-2 [&_a]:mx-0.5 [&_a]:hover:text-white">
+                <span class="mr-1 font-semibold uppercase tracking-widest text-slate-300">UGC influencers in:</span>
+                @foreach($footerCityMap as $slug => $name)
+                    <a href="{{ route('services.city', ['ugc-influencers', $slug]) }}">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
+                @endforeach
+            </p>
+            <p class="mt-2 [&_a]:mx-0.5 [&_a]:hover:text-white">
+                <span class="mr-1 font-semibold uppercase tracking-widest text-slate-300">Barter influencers in:</span>
+                @foreach($footerCityMap as $slug => $name)
+                    <a href="{{ route('services.city', ['barter-influencers', $slug]) }}">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
+                @endforeach
+            </p>
+            <p class="mt-2 [&_a]:mx-0.5 [&_a]:hover:text-white">
+                <span class="mr-1 font-semibold uppercase tracking-widest text-slate-300">Micro influencer marketing in:</span>
+                @foreach($footerCityMap as $slug => $name)
+                    <a href="{{ route('services.city', ['micro-influencer-marketing', $slug]) }}">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
+                @endforeach
+            </p>
+
+            <p class="mt-4 pt-3 border-t border-white/5 [&_a]:mx-0.5 [&_a]:hover:text-white">
+                <span class="mr-1 font-semibold uppercase tracking-widest text-slate-300">Policies:</span>
                 @foreach($policyLinks as $name => $href)
-                    <a href="{{ $href }}" class="hover:text-white">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
+                    <a href="{{ $href }}">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
                 @endforeach
             </p>
         </div>
