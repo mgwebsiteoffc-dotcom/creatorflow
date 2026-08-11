@@ -200,6 +200,26 @@
         </div>
     </section>
 
+    {{-- ============================ CLIENTS · SCROLLING MARQUEE ============================ --}}
+    <section class="relative overflow-hidden border-y border-slate-200 bg-gradient-to-r from-violet-50 via-white to-pink-50 py-10">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="text-center">
+                <p class="section-eyebrow">Our clients</p>
+                <h2 class="mt-2 text-lg font-semibold text-slate-800">Trusted by 1,000+ modern brands</h2>
+            </div>
+
+            <div class="marquee mt-8" aria-hidden="true">
+                <div class="marquee-track">
+                    @foreach(array_merge($logoData, $logoData) as $l)
+                        <div class="shrink-0">
+                            <x-marketing.brand-logo :name="$l['name']" :url="$l['url']" size="md" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
     {{-- ============================ CAMPAIGN TYPES ============================ --}}
     <section id="campaigns" class="mx-auto max-w-6xl px-4 py-20">
         <div class="mx-auto max-w-2xl text-center">
@@ -475,31 +495,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    {{-- ============================ CLIENT LOGOS ============================ --}}
-    <section class="relative overflow-hidden border-y border-slate-200 bg-white py-14">
-        <div class="mx-auto max-w-6xl px-4">
-            <div class="text-center">
-                <p class="section-eyebrow reveal">Our clients</p>
-                <h2 class="reveal mt-2 text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">Trusted by 1,000+ modern brands</h2>
-            </div>
-
-            {{-- Static logo grid (all logos visible; hover pops color) --}}
-            <div class="mt-10 grid grid-cols-3 items-center gap-x-6 gap-y-8 sm:grid-cols-4 md:grid-cols-6">
-                @foreach($logoData as $l)
-                    @php $target = $l['link'] ?? '#'; @endphp
-                    <a href="{{ $target }}" @if($l['link']) target="_blank" rel="noopener" @endif class="reveal group flex h-16 items-center justify-center opacity-70 grayscale transition hover:opacity-100 hover:grayscale-0">
-                        @if(! empty($l['url']))
-                            <img src="{{ $l['url'] }}" alt="{{ $l['name'] }}" class="max-h-10 max-w-full object-contain">
-                        @else
-                            <span class="text-xl font-black tracking-tight text-slate-500 group-hover:text-slate-900">{{ $l['name'] }}</span>
-                        @endif
-                    </a>
-                @endforeach
-            </div>
-
         </div>
     </section>
 

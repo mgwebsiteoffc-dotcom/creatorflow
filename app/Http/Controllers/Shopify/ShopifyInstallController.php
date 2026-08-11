@@ -17,11 +17,30 @@ class ShopifyInstallController extends Controller
 {
     /**
      * Step 1: merchant clicks install — redirect to Shopify grant screen.
+     *
+     * If no `shop` parameter is present we render a tiny public install form
+     * so the CTA never dead-ends with a validation 422.
      */
     public function install(Request $request)
     {
+        // No shop provided → show the install form (public, unauthenticated).
+        if (! $request->filled('shop')) {
+            return view('shopify.install');
+        }
+
+        // Normalise: users may paste "mystore" or "mystore.myshopify.com" or a full URL.
+        $shop = trim((string) $request->input('shop'));
+        $shop = preg_replace('#^https?://#', '', $shop);
+        $shop = preg_replace('#/.*$#', '', $shop);
+        if ($shop !== '' && ! str_contains($shop, '.myshopify.com')) {
+            $shop = $shop.'.myshopify.com';
+        }
+        $request->merge(['shop' => $shop]);
+
         $data = $request->validate([
             'shop' => ['required', 'string', 'regex:/^[a-zA-Z0-9][a-zA-Z0-9\-]*\.myshopify\.com$/'],
+        ], [
+            'shop.regex' => 'Enter your store as mystore.myshopify.com (or just "mystore").',
         ]);
 
         $shop = $data['shop'];

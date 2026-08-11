@@ -103,7 +103,7 @@ Route::get('/robots.txt',  [MarketingController::class, 'robots']);
 
 // Shopify install + OAuth (also reachable while authenticated).
 Route::prefix('shopify')->name('shopify.')->group(function () {
-    Route::get('/install', [ShopifyInstallController::class, 'install'])->name('install');
+    Route::match(['GET','POST'], '/install', [ShopifyInstallController::class, 'install'])->name('install');
     Route::get('/callback', [ShopifyInstallController::class, 'callback'])->name('callback');
 });
 

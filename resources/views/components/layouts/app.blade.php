@@ -6,7 +6,11 @@
     'ogImage' => null,
 ])
 @php
-    $panelClass = $panel === 'creator' ? 'bg-rose-50' : ($panel === 'guest' ? 'bg-white' : 'bg-slate-50');
+    // Guest pages get a soft playful gradient (violet → pink → amber wash) so
+    // the marketing site never feels like a plain white sheet.
+    $panelClass = $panel === 'creator'
+        ? 'bg-rose-50'
+        : ($panel === 'guest' ? 'guest-bg' : 'bg-slate-50');
     $workspace = $currentWorkspace ?? null;
     $creator = $currentCreator ?? auth()->user()?->creator;
     $isGuest = $panel === 'guest';
@@ -43,7 +47,36 @@
     <meta name="twitter:description" content="{{ $descText }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen {{ $panelClass }} text-slate-900">
+<body class="min-h-screen {{ $panelClass }} text-slate-900 antialiased">
+
+    @if($isGuest)
+        {{-- Global playful background: soft aurora blobs + subtle grid + drifting SVG shapes.
+             Fixed so it stays in view as you scroll. Everything is pointer-events-none. --}}
+        <div class="guest-bg-layer" aria-hidden="true">
+            <span class="blob blob-1"></span>
+            <span class="blob blob-2"></span>
+            <span class="blob blob-3"></span>
+            <span class="blob blob-4"></span>
+
+            <svg class="floater floater-a" viewBox="0 0 60 60" fill="none">
+                <defs><linearGradient id="fla" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+                <circle cx="30" cy="30" r="24" stroke="url(#fla)" stroke-width="2" opacity=".55"/>
+                <circle cx="30" cy="30" r="10" fill="url(#fla)" opacity=".18"/>
+            </svg>
+            <svg class="floater floater-b" viewBox="0 0 60 60" fill="none">
+                <defs><linearGradient id="flb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+                <polygon points="30,4 56,52 4,52" stroke="url(#flb)" stroke-width="2" fill="none" opacity=".55"/>
+            </svg>
+            <svg class="floater floater-c" viewBox="0 0 60 60" fill="none">
+                <defs><linearGradient id="flc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+                <path d="M6 30 Q18 6 30 30 T54 30" stroke="url(#flc)" stroke-width="3" fill="none" opacity=".55" stroke-linecap="round"/>
+            </svg>
+            <svg class="floater floater-d" viewBox="0 0 60 60" fill="none">
+                <defs><linearGradient id="fld" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
+                <rect x="8" y="8" width="44" height="44" rx="10" stroke="url(#fld)" stroke-width="2" opacity=".5"/>
+            </svg>
+        </div>
+    @endif
 
     @if($isGuest)
         @include('partials.marketing-nav')
