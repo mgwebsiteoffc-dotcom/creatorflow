@@ -17,15 +17,19 @@ class LeadController extends Controller
             'message' => ['nullable', 'string', 'max:5000'],
         ]);
 
-        Lead::create($data + [
-            'source'       => $request->input('source', 'contact_form'),
-            'utm_source'   => $request->input('utm_source'),
-            'utm_campaign' => $request->input('utm_campaign'),
-            'utm_medium'   => $request->input('utm_medium'),
-            'ip'           => $request->ip(),
-            'user_agent'   => substr((string) $request->userAgent(), 0, 500),
-            'status'       => 'new',
-        ]);
+        try {
+            Lead::create($data + [
+                'source'       => $request->input('source', 'contact_form'),
+                'utm_source'   => $request->input('utm_source'),
+                'utm_campaign' => $request->input('utm_campaign'),
+                'utm_medium'   => $request->input('utm_medium'),
+                'ip'           => $request->ip(),
+                'user_agent'   => substr((string) $request->userAgent(), 0, 500),
+                'status'       => 'new',
+            ]);
+        } catch (\Throwable $e) {
+            report($e);
+        }
 
         return back()->with('status', "Thanks! We'll be in touch within one business day.");
     }

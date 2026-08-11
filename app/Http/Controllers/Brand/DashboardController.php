@@ -23,8 +23,10 @@ class DashboardController extends Controller
             'attributed_revenue_cents' => (int) \App\Models\Attribution::where('workspace_id', $workspace->id)->sum('revenue_cents'),
             'pending_content' => \App\Models\ContentSubmission::whereIn('campaign_id', $campaignIds)
                 ->whereIn('status', ['submitted', 'in_review'])->count(),
-            'pending_applications' => \App\Models\Application::whereIn('campaign_id', $campaignIds)
-                ->whereIn('status', ['submitted','shortlisted'])->count(),
+            'pending_applications' => \App\Support\SchemaCheck::has('applications')
+                ? \App\Models\Application::whereIn('campaign_id', $campaignIds)
+                    ->whereIn('status', ['submitted','shortlisted'])->count()
+                : 0,
             'unread_messages' => 0,
         ];
 

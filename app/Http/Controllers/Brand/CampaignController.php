@@ -70,15 +70,18 @@ class CampaignController extends Controller
     {
         $this->authorizeWorkspace($campaign->workspace_id, $tenant);
 
-        $campaign->load([
+        $eager = [
             'products.product.primaryImage', 'products.variant',
             'matches.creator.nicheRows',
             'assignments.creator', 'assignments.order', 'assignments.submissions',
             'invitations.creator',
             'applications.creator.socialAccounts',
             'applications.creator.nicheRows',
-            'references.uploader',
-        ]);
+        ];
+        if (\App\Support\SchemaCheck::has('campaign_references')) {
+            $eager[] = 'references.uploader';
+        }
+        $campaign->load($eager);
 
         $pendingApplications = $campaign->applications
             ->whereIn('status', ['submitted', 'shortlisted'])
@@ -156,9 +159,12 @@ class CampaignController extends Controller
                 ]);
             }
         }
-        foreach (\App\Models\EventLog::where('aggregate_type', 'Campaign')
-                    ->where('aggregate_id', $campaign->id)
-                    ->latest('created_at')->take(10)->get() as $ev) {
+        $eventLogs = \App\Support\SchemaCheck::has('event_log')
+            ? \App\Models\EventLog::where('aggregate_type', 'Campaign')
+                ->where('aggregate_id', $campaign->id)
+                ->latest('created_at')->take(10)->get()
+            : collect();
+        foreach ($eventLogs as $ev) {
             $timeline->push([
                 'at' => $ev->created_at, 'icon' => '⚙️',
                 'title' => str_replace('.', ' → ', $ev->event),

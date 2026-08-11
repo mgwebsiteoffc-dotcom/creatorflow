@@ -12,20 +12,27 @@ class EscrowController extends Controller
 {
     public function index(Request $request)
     {
-        $transactions = EscrowTransaction::query()
-            ->when($request->get('kind'), fn ($q, $k) => $q->where('kind', $k))
-            ->with(['workspace:id,name', 'creator:id,display_name', 'assignment:id,campaign_id'])
-            ->latest()
-            ->paginate(30)
-            ->withQueryString();
+        $hasEscrow = \App\Support\SchemaCheck::has('escrow_transactions');
 
-        $totals = [
-            'held'     => (int) EscrowTransaction::where('kind', 'hold')->sum('amount_cents')
-                          - (int) EscrowTransaction::whereIn('kind', ['release','refund'])->sum('amount_cents'),
-            'released' => (int) EscrowTransaction::where('kind', 'release')->sum('amount_cents'),
-            'refunded' => (int) EscrowTransaction::where('kind', 'refund')->sum('amount_cents'),
-            'fees'     => (int) EscrowTransaction::where('kind', 'fee')->sum('amount_cents'),
-        ];
+        if ($hasEscrow) {
+            $transactions = EscrowTransaction::query()
+                ->when($request->get('kind'), fn ($q, $k) => $q->where('kind', $k))
+                ->with(['workspace:id,name', 'creator:id,display_name', 'assignment:id,campaign_id'])
+                ->latest()
+                ->paginate(30)
+                ->withQueryString();
+
+            $totals = [
+                'held'     => (int) EscrowTransaction::where('kind', 'hold')->sum('amount_cents')
+                              - (int) EscrowTransaction::whereIn('kind', ['release','refund'])->sum('amount_cents'),
+                'released' => (int) EscrowTransaction::where('kind', 'release')->sum('amount_cents'),
+                'refunded' => (int) EscrowTransaction::where('kind', 'refund')->sum('amount_cents'),
+                'fees'     => (int) EscrowTransaction::where('kind', 'fee')->sum('amount_cents'),
+            ];
+        } else {
+            $transactions = new \Illuminate\Pagination\LengthAwarePaginator(collect(), 0, 30);
+            $totals = ['held' => 0, 'released' => 0, 'refunded' => 0, 'fees' => 0];
+        }
 
         $pendingPayouts = Payout::with(['creator:id,display_name', 'assignment:id,campaign_id'])
             ->where('status', 'pending')
@@ -33,7 +40,9 @@ class EscrowController extends Controller
             ->take(20)
             ->get();
 
-        return view('admin.escrow.index', compact('transactions', 'totals', 'pendingPayouts'));
+        $schemaMissing = ! $hasEscrow;
+
+        return view('admin.escrow.index', compact('transactions', 'totals', 'pendingPayouts', 'schemaMissing'));
     }
 
     public function hold(Request $request)

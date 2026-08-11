@@ -6,6 +6,13 @@
         </div>
     </div>
 
+    @if(! empty($schemaMissing))
+        <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+            <div class="flex-1"><p class="font-bold">escrow_transactions table not migrated yet.</p><p class="mt-1 text-xs text-amber-800">Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code> to enable holds, refunds and the ledger.</p></div>
+        </div>
+    @endif
+
     <div class="mt-8 grid gap-4 md:grid-cols-4">
         <x-stat label="Currently held" :value="'$'.number_format($totals['held']/100, 2)" tone="amber"/>
         <x-stat label="Released" :value="'$'.number_format($totals['released']/100, 2)" tone="emerald"/>

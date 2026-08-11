@@ -32,23 +32,28 @@ class AppNotification extends Model
         });
     }
 
-    public static function notifyUser(int $userId, string $type, array $data): self
+    public static function notifyUser(int $userId, string $type, array $data): ?self
     {
-        return self::create([
-            'recipient_type' => 'user',
-            'recipient_id' => $userId,
-            'type' => $type,
-            'data' => $data,
-        ]);
+        return self::safeCreate('user', $userId, $type, $data);
     }
 
-    public static function notifyCreator(int $creatorId, string $type, array $data): self
+    public static function notifyCreator(int $creatorId, string $type, array $data): ?self
     {
-        return self::create([
-            'recipient_type' => 'creator',
-            'recipient_id' => $creatorId,
-            'type' => $type,
-            'data' => $data,
-        ]);
+        return self::safeCreate('creator', $creatorId, $type, $data);
+    }
+
+    protected static function safeCreate(string $recipientType, int $recipientId, string $type, array $data): ?self
+    {
+        try {
+            return self::create([
+                'recipient_type' => $recipientType,
+                'recipient_id'   => $recipientId,
+                'type'           => $type,
+                'data'           => $data,
+            ]);
+        } catch (\Throwable) {
+            // notifications table not migrated yet; skip
+            return null;
+        }
     }
 }

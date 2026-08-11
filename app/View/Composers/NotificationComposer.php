@@ -3,6 +3,7 @@
 namespace App\View\Composers;
 
 use App\Models\AppNotification;
+use App\Support\SchemaCheck;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -11,7 +12,7 @@ class NotificationComposer
     public function compose(View $view): void
     {
         $user = Auth::user();
-        if (! $user) {
+        if (! $user || ! SchemaCheck::has('notifications')) {
             $view->with(['recentNotifications' => collect(), 'unreadCount' => 0]);
             return;
         }
@@ -23,9 +24,13 @@ class NotificationComposer
             ->where('recipient_id', $recipientId)
             ->latest();
 
-        $view->with([
-            'recentNotifications' => (clone $q)->take(8)->get(),
-            'unreadCount' => (clone $q)->whereNull('read_at')->count(),
-        ]);
+        try {
+            $view->with([
+                'recentNotifications' => (clone $q)->take(8)->get(),
+                'unreadCount' => (clone $q)->whereNull('read_at')->count(),
+            ]);
+        } catch (\Throwable) {
+            $view->with(['recentNotifications' => collect(), 'unreadCount' => 0]);
+        }
     }
 }

@@ -10,11 +10,31 @@ class SettingsController extends Controller
 {
     public function edit()
     {
-        return view('admin.settings.edit', ['settings' => PlatformSetting::current()]);
+        if (! \App\Support\SchemaCheck::has('platform_settings')) {
+            // Return a placeholder object so the view can still render its form.
+            $settings = new PlatformSetting([
+                'paid_platform_fee_rate'   => 0.10,
+                'barter_platform_fee_rate' => 0.05,
+                'processing_markup_rate'   => 0.029,
+                'processing_markup_fixed_cents' => 30,
+                'escrow_hold_days'         => 7,
+                'minimum_payout_cents'     => 1000,
+                'require_creator_verification' => true,
+                'allow_public_signup'      => true,
+            ]);
+            return view('admin.settings.edit', ['settings' => $settings, 'schemaMissing' => true]);
+        }
+        return view('admin.settings.edit', [
+            'settings' => PlatformSetting::current(),
+            'schemaMissing' => false,
+        ]);
     }
 
     public function update(Request $request)
     {
+        if (! \App\Support\SchemaCheck::has('platform_settings')) {
+            return back()->with('error', 'Platform settings schema not migrated. Run `php artisan migrate` first.');
+        }
         $data = $request->validate([
             'paid_platform_fee_rate'   => ['required', 'numeric', 'min:0', 'max:1'],
             'barter_platform_fee_rate' => ['required', 'numeric', 'min:0', 'max:1'],

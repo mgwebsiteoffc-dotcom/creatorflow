@@ -19,12 +19,16 @@ class EventLog extends Model
 
     public static function record(string $event, ?string $aggregateType = null, ?int $aggregateId = null, ?array $payload = null): void
     {
-        static::create([
-            'event' => $event,
-            'aggregate_type' => $aggregateType,
-            'aggregate_id' => $aggregateId,
-            'payload' => $payload,
-            'created_at' => now(),
-        ]);
+        try {
+            static::create([
+                'event' => $event,
+                'aggregate_type' => $aggregateType,
+                'aggregate_id' => $aggregateId,
+                'payload' => $payload,
+                'created_at' => now(),
+            ]);
+        } catch (\Throwable) {
+            // Table may not be migrated yet; swallow silently.
+        }
     }
 }

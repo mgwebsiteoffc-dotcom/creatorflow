@@ -22,14 +22,18 @@ class MarketingController extends Controller
 
     public function blogIndex()
     {
-        $dbPosts = BlogPost::published()->latest('published_at')->latest()->get();
+        $dbPosts = \App\Support\SchemaCheck::has('blog_posts')
+            ? BlogPost::published()->latest('published_at')->latest()->get()
+            : collect();
         $posts = $dbPosts->isNotEmpty() ? $dbPosts->map(fn ($p) => $this->normalize($p))->all() : $this->demoPosts();
         return view('marketing.blog.index', ['posts' => $posts]);
     }
 
     public function blogShow(string $slug)
     {
-        $db = BlogPost::published()->where('slug', $slug)->first();
+        $db = \App\Support\SchemaCheck::has('blog_posts')
+            ? BlogPost::published()->where('slug', $slug)->first()
+            : null;
         if ($db) {
             $related = BlogPost::published()->where('id', '!=', $db->id)->latest()->take(3)->get()
                 ->map(fn ($p) => $this->normalize($p))->all();
@@ -89,13 +93,15 @@ class MarketingController extends Controller
         foreach (array_keys(static::campaignTypeData()) as $slug) {
             $urls->push(['loc' => route('campaign-type.show', $slug), 'priority' => '0.7']);
         }
-        $urls = $urls->concat(
-            BlogPost::published()->get()->map(fn ($p) => [
-                'loc' => route('blog.show', $p->slug),
-                'lastmod' => optional($p->updated_at)->toAtomString(),
-                'priority' => '0.7',
-            ])
-        );
+        if (\App\Support\SchemaCheck::has('blog_posts')) {
+            $urls = $urls->concat(
+                BlogPost::published()->get()->map(fn ($p) => [
+                    'loc' => route('blog.show', $p->slug),
+                    'lastmod' => optional($p->updated_at)->toAtomString(),
+                    'priority' => '0.7',
+                ])
+            );
+        }
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         foreach ($urls as $u) {

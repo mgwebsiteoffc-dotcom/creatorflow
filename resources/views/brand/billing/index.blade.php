@@ -18,6 +18,20 @@
         <a href="{{ route('brand.billing.index') }}"    class="tab-pill is-active">💳 Billing</a>
     </div>
 
+    @if(! empty($schemaMissing))
+        <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+            <div class="flex-1">
+                <p class="font-bold">Billing schema hasn't been migrated yet.</p>
+                <p class="mt-1 text-xs text-amber-800">Run
+                    <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code>
+                    from the project root to create the <code class="rounded bg-white/70 px-1.5 py-0.5">payment_records</code> table.
+                    Until then, this page shows an empty state and the "Record a payment" form is disabled.
+                </p>
+            </div>
+        </div>
+    @endif
+
     {{-- Totals --}}
     <div class="mt-8 grid gap-4 md:grid-cols-4">
         <x-stat label="Paid this month" :value="$workspace->formatMoney($totals['paid_this_month'])" tone="violet"/>
@@ -153,7 +167,7 @@
                         <label class="label">Paid on</label>
                         <input class="input" type="date" name="paid_at" value="{{ now()->format('Y-m-d') }}">
                     </div>
-                    <button class="btn-primary w-full">Save record</button>
+                    <button class="btn-primary w-full" @if(! empty($schemaMissing)) disabled title="Run php artisan migrate first" @endif>Save record</button>
                 </form>
             </div>
 

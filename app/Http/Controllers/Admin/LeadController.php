@@ -11,6 +11,16 @@ class LeadController extends Controller
     public function index(Request $request)
     {
         $status = $request->get('status', 'all');
+
+        if (! \App\Support\SchemaCheck::has('leads')) {
+            return view('admin.leads.index', [
+                'leads'  => new \Illuminate\Pagination\LengthAwarePaginator(collect(), 0, 25),
+                'status' => $status,
+                'counts' => array_fill_keys(['all','new','contacted','qualified','won','lost'], 0),
+                'schemaMissing' => true,
+            ]);
+        }
+
         $leads = Lead::query()
             ->when($status !== 'all', fn ($q) => $q->where('status', $status))
             ->when($request->get('q'), fn ($q, $term) => $q->where('email', 'like', "%{$term}%")->orWhere('name', 'like', "%{$term}%"))

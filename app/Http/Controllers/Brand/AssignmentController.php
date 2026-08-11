@@ -39,11 +39,14 @@ class AssignmentController extends Controller
     {
         abort_unless($assignment->campaign->workspace_id === $tenant->id(), 403);
 
-        $assignment->load([
+        $eager = [
             'creator.nicheRows', 'creator.socialAccounts',
-            'campaign.references',
             'campaignProduct.product', 'order', 'submissions', 'contract', 'payout',
-        ]);
+        ];
+        if (\App\Support\SchemaCheck::has('campaign_references')) {
+            $eager[] = 'campaign.references';
+        }
+        $assignment->load($eager);
 
         return view('brand.assignments.show', compact('assignment'));
     }

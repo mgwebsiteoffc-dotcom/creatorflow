@@ -134,16 +134,18 @@ class CreatorController extends Controller
         }
         fclose($handle);
 
-        CreatorImport::create([
-            'user_id'       => $request->user()->id,
-            'source'        => 'csv',
-            'filename'      => $file->getClientOriginalName(),
-            'total_rows'    => $rows,
-            'imported_rows' => $imported,
-            'failed_rows'   => $failed,
-            'errors'        => array_slice($errors, 0, 100),
-            'status'        => $failed > 0 ? 'partial' : 'completed',
-        ]);
+        if (\App\Support\SchemaCheck::has('creator_imports')) {
+            CreatorImport::create([
+                'user_id'       => $request->user()->id,
+                'source'        => 'csv',
+                'filename'      => $file->getClientOriginalName(),
+                'total_rows'    => $rows,
+                'imported_rows' => $imported,
+                'failed_rows'   => $failed,
+                'errors'        => array_slice($errors, 0, 100),
+                'status'        => $failed > 0 ? 'partial' : 'completed',
+            ]);
+        }
 
         return redirect()->route('admin.creators.index')
             ->with('status', "Imported {$imported} creator(s). {$failed} failed.");

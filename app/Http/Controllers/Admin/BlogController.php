@@ -12,8 +12,15 @@ class BlogController extends Controller
 {
     public function index()
     {
+        if (! \App\Support\SchemaCheck::has('blog_posts')) {
+            return view('admin.blog.index', [
+                'posts' => new \Illuminate\Pagination\LengthAwarePaginator(collect(), 0, 20),
+                'schemaMissing' => true,
+            ]);
+        }
         return view('admin.blog.index', [
             'posts' => BlogPost::latest()->paginate(20),
+            'schemaMissing' => false,
         ]);
     }
 
