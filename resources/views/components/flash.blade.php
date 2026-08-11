@@ -6,8 +6,8 @@
         default => 'bg-sky-50 text-sky-800 border-sky-200',
     };
 @endphp
-<div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)"
+<div data-flash
      class="mb-4 flex items-start justify-between gap-3 rounded-2xl border px-4 py-3 text-sm {{ $styles }}">
     <div>{{ $slot }}</div>
-    <button @click="show=false" class="text-current opacity-60 hover:opacity-100">&times;</button>
+    <button type="button" data-flash-close class="text-current opacity-60 hover:opacity-100">&times;</button>
 </div>

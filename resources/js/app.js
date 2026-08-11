@@ -69,4 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navToggle && navMenu) {
         navToggle.addEventListener('click', () => navMenu.classList.toggle('hidden'));
     }
+
+    /* Auto-dismissing flashes + close button */
+    document.querySelectorAll('[data-flash]').forEach((el) => {
+        const close = () => { el.style.transition = 'opacity .3s ease'; el.style.opacity = '0'; setTimeout(() => el.remove(), 300); };
+        el.querySelector('[data-flash-close]')?.addEventListener('click', close);
+        setTimeout(close, 6000);
+    });
 });

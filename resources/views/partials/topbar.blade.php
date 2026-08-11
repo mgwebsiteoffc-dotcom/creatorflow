@@ -15,15 +15,18 @@
         ['route' => 'creator.profile.show', 'label' => 'Profile'],
     ];
     $links = $panel === 'creator' ? $creatorLinks : $brandLinks;
-    $primary = $panel === 'creator' ? 'bg-rose-600' : 'bg-violet-600';
+    $logoGrad = $panel === 'creator'
+        ? 'linear-gradient(135deg,#f43f5e,#ec4899 60%,#f59e0b)'
+        : 'linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b)';
 @endphp
 
-<header class="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur">
+<header class="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur">
     <div class="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-3 px-4">
         <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold">
-            <span class="grid h-8 w-8 place-items-center rounded-xl {{ $primary }} text-white">CF</span>
-            <span class="hidden sm:block">CreatorFlow</span>
-            <span class="badge {{ $panel === 'creator' ? 'badge-rose' : 'badge-violet' }}">{{ ucfirst($panel) }}</span>
+            <span class="grid h-8 w-8 place-items-center rounded-xl text-xs font-black text-white shadow-sm"
+                  style="background-image: {{ $logoGrad }};">CF</span>
+            <span class="hidden text-slate-900 sm:block">CreatorFlow</span>
+            <span class="badge-violet {{ $panel === 'creator' ? '!bg-rose-100 !text-rose-700' : '' }}">{{ ucfirst($panel) }}</span>
         </a>
 
         <nav class="hidden items-center gap-1 md:flex">
@@ -37,16 +40,16 @@
         </nav>
 
         <div class="flex items-center gap-2">
-            <button id="pwa-install" class="btn-secondary hidden !py-1.5 text-xs">Install app</button>
-            <a href="{{ route('messages.index') }}" class="btn-ghost !px-2.5" title="Messages">
+            <button id="pwa-install" class="btn-secondary hidden !py-1.5 !text-xs">Install app</button>
+            <a href="{{ route('messages.index') }}" class="btn-ghost !p-2" title="Messages">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6.5A8 8 0 1121 12z"/></svg>
             </a>
             @if($panel === 'brand' && $workspace)
-                <span class="hidden text-xs text-slate-500 sm:block">{{ $workspace->name }}</span>
+                <span class="hidden max-w-[140px] truncate rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600 sm:inline-block">{{ $workspace->name }}</span>
             @endif
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button class="btn-secondary !py-1.5 text-xs">Sign out</button>
+                <button class="btn-secondary !py-1.5 !text-xs">Sign out</button>
             </form>
         </div>
     </div>
