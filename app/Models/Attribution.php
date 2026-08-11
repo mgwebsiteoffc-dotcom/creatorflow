@@ -40,9 +40,4 @@ class Attribution extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
-
-    public function creator(): BelongsTo
-    {
-        return $this->belongsTo(\App\Models\Creator::class);
-    }
 }
