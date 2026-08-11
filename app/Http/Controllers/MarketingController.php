@@ -19,6 +19,68 @@ class MarketingController extends Controller
     public function toolRateCalculator(){ return view('marketing.tools.rate-calculator'); }
     public function toolBriefGenerator(){ return view('marketing.tools.brief-generator'); }
 
+    /**
+     * POST /tools/brief-generator/ai — returns a JSON body { brief: "..." }.
+     * Uses the admin-configured AI provider (OpenAI or offline mock).
+     */
+    public function generateBriefApi(\Illuminate\Http\Request $request, \App\Domains\AI\AiGateway $ai)
+    {
+        $data = $request->validate([
+            'product_name' => ['required', 'string', 'max:200'],
+            'description'  => ['nullable', 'string', 'max:2000'],
+            'niche'        => ['nullable', 'string', 'max:80'],
+            'format'       => ['nullable', 'string', 'max:80'],
+            'tone'         => ['nullable', 'string', 'max:40'],
+        ]);
+
+        $prompt = sprintf(
+            "Write a launch-ready influencer campaign brief in plain text (no markdown).\n"
+            ."Brand product: %s\nWhat it does: %s\nNiche: %s\nFormat: %s\nTone: %s\n"
+            ."Structure the brief with clear sections separated by '━━━':\n"
+            ."• THE PRODUCT (2 sentences)\n"
+            ."• WHY IT MATTERS (2 sentences that motivate the creator)\n"
+            ."• HOOK OPTIONS (3 punchy options in the requested tone)\n"
+            ."• STORYBOARD (5 shots numbered 1–5)\n"
+            ."• MUST INCLUDE (5 bullets)\n"
+            ."• DO / DON'T (3 do, 3 don't)\n"
+            ."• DELIVERABLES (format, aspect, deadline placeholder, 90-day usage rights)\n"
+            ."• COMPENSATION (as agreed in CreatorFlow contract, +25%% bonus for videos >5%% ER)\n"
+            ."Prefix the whole brief with 'CAMPAIGN BRIEF · %s' and today's date.\n"
+            ."Tune tone and references for the Indian creator marketplace (Delhi / Mumbai / Bangalore Reels + Shorts audience).",
+            $data['product_name'],
+            $data['description'] ?? '(not provided)',
+            $data['niche'] ?? 'Lifestyle',
+            $data['format'] ?? 'Instagram Reel',
+            $data['tone'] ?? 'Authentic',
+            $data['product_name'],
+        );
+
+        try {
+            $response = $ai->complete(
+                task: 'generate_brief',
+                messages: [
+                    ['role' => 'system', 'content' => 'You are a senior creator-marketing strategist for CreatorFlow, an India-first influencer marketing platform. Write clear, useful, non-generic campaign briefs.'],
+                    ['role' => 'user',   'content' => $prompt],
+                ],
+                options: ['temperature' => (float) (\App\Models\PlatformSetting::current()->ai_temperature ?? 0.4), 'seed' => [
+                    'product_title' => $data['product_name'],
+                ]],
+            );
+
+            return response()->json([
+                'brief'  => trim($response->text),
+                'model'  => $response->model,
+                'source' => config('creatorflow.ai.driver') === 'openai' ? 'openai' : 'mock',
+            ]);
+        } catch (\Throwable $e) {
+            // Return graceful failure so the frontend can drop to its offline template.
+            return response()->json([
+                'error' => 'AI service unavailable',
+                'hint'  => 'Client will fall back to the offline template.',
+            ], 503);
+        }
+    }
+
     public function resources()  { return view('marketing.resources.index'); }
 
     public function blogIndex()

@@ -9,6 +9,7 @@ use App\Domains\AI\Providers\OpenAiProvider;
 use App\Domains\Commerce\Channels\ChannelRegistry;
 use App\Domains\Commerce\Channels\ManualChannel;
 use App\Domains\Commerce\Channels\Shopify\ShopifyChannel;
+use App\Support\SchemaCheck;
 use App\Support\TenantContext;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,17 +29,16 @@ class DomainServiceProvider extends ServiceProvider
             return $registry;
         });
 
+        // Resolve AI provider from admin-managed settings, with env fallback so
+        // the app never boots into a broken state.
         $this->app->singleton(AiProvider::class, function () {
-            $driver = config('creatorflow.ai.driver', 'fake');
+            [$driver, $key, $model, $embed, $baseUrl] = $this->resolveAiConfig();
 
-            return match ($driver) {
-                'openai' => new OpenAiProvider(
-                    (string) config('creatorflow.ai.openai.key'),
-                    (string) config('creatorflow.ai.openai.model'),
-                    (string) config('creatorflow.ai.openai.embedding_model'),
-                ),
-                default => new FakeAiProvider(),
-            };
+            if ($driver === 'openai' && $key) {
+                return new OpenAiProvider($key, $model, $embed, timeout: 30, baseUrl: $baseUrl);
+            }
+
+            return new FakeAiProvider();
         });
 
         $this->app->singleton(AiGateway::class, function ($app) {
@@ -49,5 +49,36 @@ class DomainServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+    }
+
+    /**
+     * Prefer DB-managed AI settings; fall back to env.
+     *
+     * @return array{0:string,1:?string,2:string,3:string,4:?string}
+     */
+    protected function resolveAiConfig(): array
+    {
+        $driver  = (string) config('creatorflow.ai.driver', 'fake');
+        $key     = config('creatorflow.ai.openai.key');
+        $model   = (string) config('creatorflow.ai.openai.model', 'gpt-4o-mini');
+        $embed   = (string) config('creatorflow.ai.openai.embedding_model', 'text-embedding-3-small');
+        $baseUrl = null;
+
+        try {
+            if (SchemaCheck::has('platform_settings')) {
+                $row = \App\Models\PlatformSetting::query()->first();
+                if ($row) {
+                    if (! empty($row->ai_driver))     $driver = (string) $row->ai_driver;
+                    if (! empty($row->ai_openai_key)) $key    = (string) $row->ai_openai_key;
+                    if (! empty($row->ai_openai_model))           $model = (string) $row->ai_openai_model;
+                    if (! empty($row->ai_openai_embedding_model)) $embed = (string) $row->ai_openai_embedding_model;
+                    if (! empty($row->ai_base_url))               $baseUrl = (string) $row->ai_base_url;
+                }
+            }
+        } catch (\Throwable $e) {
+            // Never fail app boot because settings table is missing / DB down.
+        }
+
+        return [$driver, $key, $model, $embed, $baseUrl];
     }
 }

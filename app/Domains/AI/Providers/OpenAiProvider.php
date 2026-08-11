@@ -17,7 +17,10 @@ class OpenAiProvider implements AiProvider
         protected string $model,
         protected string $embeddingModel,
         protected int $timeout = 30,
-    ) {}
+        protected ?string $baseUrl = null,
+    ) {
+        $this->baseUrl = rtrim($this->baseUrl ?: 'https://api.openai.com/v1', '/');
+    }
 
     public function complete(array $messages, array $options = []): AiResponse
     {
@@ -34,7 +37,7 @@ class OpenAiProvider implements AiProvider
         $response = Http::withToken($this->apiKey)
             ->timeout($this->timeout)
             ->asJson()
-            ->post('https://api.openai.com/v1/chat/completions', $json)
+            ->post($this->baseUrl.'/chat/completions', $json)
             ->throw()
             ->json();
 
@@ -51,7 +54,7 @@ class OpenAiProvider implements AiProvider
         $response = Http::withToken($this->apiKey)
             ->timeout($this->timeout)
             ->asJson()
-            ->post('https://api.openai.com/v1/embeddings', [
+            ->post($this->baseUrl.'/embeddings', [
                 'model' => $this->embeddingModel,
                 'input' => array_values($inputs),
             ])

@@ -2,7 +2,7 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
             <h1 class="text-3xl font-black tracking-tight text-slate-900">Platform settings</h1>
-            <p class="mt-1 text-sm text-slate-500">Fees, markup, escrow hold, signup rules.</p>
+            <p class="mt-1 text-sm text-slate-500">Fees, markup, escrow hold, signup rules. For AI provider + keys, see <a href="{{ route('admin.ai.edit') }}" class="text-violet-700 hover:underline">🤖 AI settings</a>.</p>
         </div>
     </div>
 

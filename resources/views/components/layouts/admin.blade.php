@@ -36,6 +36,7 @@
                 ['route' => 'admin.homepage',       'label' => 'Homepage',    'icon' => '🏠'],
                 ['route' => 'admin.blog.index',     'label' => 'Blog',        'icon' => '📝'],
                 ['route' => 'admin.seo',            'label' => 'SEO',         'icon' => '🔍'],
+                ['route' => 'admin.ai.edit',        'label' => 'AI keys',     'icon' => '🤖'],
                 ['route' => 'admin.settings',       'label' => 'Settings',    'icon' => '⚙️'],
             ];
         @endphp

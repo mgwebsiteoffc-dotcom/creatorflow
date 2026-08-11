@@ -58,6 +58,9 @@ Route::prefix('tools')->name('tools.')->group(function () {
     Route::get('/roi-calculator',      [MarketingController::class, 'toolRoiCalculator'])->name('roi');
     Route::get('/creator-rate-calculator', [MarketingController::class, 'toolRateCalculator'])->name('rate');
     Route::get('/brief-generator',     [MarketingController::class, 'toolBriefGenerator'])->name('brief');
+    // Server-side AI endpoint (falls back gracefully when AI is offline).
+    Route::post('/brief-generator/ai', [MarketingController::class, 'generateBriefApi'])->name('brief.generate')
+        ->middleware('throttle:20,1');
 });
 
 Route::get('/resources', [MarketingController::class, 'resources'])->name('resources');
@@ -148,6 +151,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('/settings',  [AdminSettingsController::class, 'edit'])->name('settings');
     Route::post('/settings', [AdminSettingsController::class, 'update'])->name('settings.update');
+
+    // AI provider settings (superadmin manages the AI key + driver)
+    Route::get('/ai',       [\App\Http\Controllers\Admin\AiSettingsController::class, 'edit'])->name('ai.edit');
+    Route::post('/ai',      [\App\Http\Controllers\Admin\AiSettingsController::class, 'update'])->name('ai.update');
+    Route::post('/ai/test', [\App\Http\Controllers\Admin\AiSettingsController::class, 'test'])->name('ai.test');
 
     Route::get('/seo',       AdminSeoController::class)->name('seo');
 
