@@ -267,15 +267,19 @@ class DatabaseSeeder extends Seeder
      * Walk an assignment through its lifecycle based on index so the demo
      * shows a realistic spread of statuses, content, orders and payouts.
      */
-    protected function progressAssignment($assignment, int $index, $campaign, AttributeOrder $attribute, $products): void
+ protected function progressAssignment($assignment, int $index, $campaign, AttributeOrder $attribute, $products): void
     {
         $cp = $assignment->campaignProduct;
         $creator = $assignment->creator;
 
+        // Price used for the simulated attributed order below.
+        $price = $cp->variant?->price_cents
+            ?? $cp->product->variants->first()?->price_cents
+            ?? $cp->product->priceCents();
+
         // Sign contract
         $assignment->contract?->signAsCreator('127.0.0.1');
         $assignment->update(['status' => 'contract_signed']);
-
         // The order was already created by CreateCreatorOrder (run synchronously
         // in run()). Fetch it and advance its lifecycle.
         $order = $assignment->order;

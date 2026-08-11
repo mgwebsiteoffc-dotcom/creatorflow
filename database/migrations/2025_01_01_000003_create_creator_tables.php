@@ -97,7 +97,8 @@ return new class extends Migration
             $table->enum('availability_status', ['available', 'busy', 'inactive'])->default('available');
             $table->integer('response_time_hours')->nullable();
             $table->json('notifications_json')->nullable();
-            $table->timestamp('updated_at')->nullable();
+            $table->timestamps();
+
         });
 
         Schema::create('creator_audience_snapshots', function (Blueprint $table) {

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamp('last_read_at')->nullable();
             $table->boolean('muted')->default(false);
             $table->primary(['thread_id', 'participant_type', 'participant_id'], 'mtp_primary');
-            $table->index(['participant_type', 'participant_id']);
+            $table->index(['participant_type', 'participant_id'], 'mtp_participant_idx');
         });
 
         Schema::create('messages', function (Blueprint $table) {

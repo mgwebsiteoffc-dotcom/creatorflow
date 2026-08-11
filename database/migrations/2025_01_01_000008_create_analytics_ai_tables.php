@@ -44,9 +44,13 @@ return new class extends Migration
         });
 
         Schema::create('analytics_daily_campaign', function (Blueprint $table) {
+            // Composite primary key requires every column NOT NULL.
+            // creator_id = 0 represents a campaign-total rollup; a positive
+            // value references a creator (no FK here so the aggregate row is
+            // valid and creator deletes don't destroy historical rollups).
             $table->foreignId('workspace_id')->constrained()->cascadeOnDelete();
             $table->foreignId('campaign_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('creator_id')->nullable()->constrained()->nullOnDelete();
+            $table->unsignedBigInteger('creator_id')->default(0);
             $table->date('date');
             $table->integer('impressions')->default(0);
             $table->integer('clicks')->default(0);
@@ -57,6 +61,7 @@ return new class extends Migration
             $table->integer('product_cost_cents')->default(0);
             $table->integer('fee_cents')->default(0);
             $table->primary(['workspace_id', 'campaign_id', 'creator_id', 'date'], 'adc_pk');
+            $table->index('creator_id');
         });
 
         Schema::create('ai_runs', function (Blueprint $table) {

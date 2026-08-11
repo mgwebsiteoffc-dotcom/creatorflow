@@ -97,7 +97,7 @@ return new class extends Migration
         Schema::create('product_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('variant_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('variant_id')->nullable()->constrained('product_variants')->nullOnDelete();
             $table->string('disk', 40)->default('local');
             $table->string('path', 500);
             $table->string('alt')->nullable();

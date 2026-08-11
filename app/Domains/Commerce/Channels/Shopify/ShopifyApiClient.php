@@ -19,7 +19,7 @@ class ShopifyApiClient
     public function __construct(
         public string $shopDomain,
         protected string $accessToken,
-        protected string $apiVersion,
+        public string $apiVersion,
         protected bool $fake = true,
     ) {}
 
