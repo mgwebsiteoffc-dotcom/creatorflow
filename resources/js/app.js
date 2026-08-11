@@ -231,6 +231,96 @@ document.addEventListener('DOMContentLoaded', () => {
         render();
     });
 
+    /* Markdown mini-editor with live preview.
+       Applied to any [data-md-editor] wrapper. Shares the same server-side
+       renderer's grammar (headings, bold, italic, links, lists, blockquote, code).
+       Preview is done in JS with a small parser mirroring App\Support\BriefMarkdown. */
+    const mdInline = (t) => {
+        t = t.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        const codes = [];
+        t = t.replace(/`([^`]+)`/g, (_, c) => { codes.push(`<code>${c}</code>`); return `\x01CODE${codes.length-1}\x01`; });
+        t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/gi, (_, txt, url) => `<a href="${url}" target="_blank" rel="noopener">${txt}</a>`);
+        t = t.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+        t = t.replace(/__([^_\n]+)__/g, '<strong>$1</strong>');
+        t = t.replace(/(^|[^\*\w])\*([^*\n]+)\*(?!\w)/g, '$1<em>$2</em>');
+        t = t.replace(/(^|[^_\w])_([^_\n]+)_(?!\w)/g, '$1<em>$2</em>');
+        t = t.replace(/\x01CODE(\d+)\x01/g, (_, i) => codes[+i] || '');
+        return t;
+    };
+    const mdRender = (md) => {
+        if (!md || !md.trim()) return '<p class="text-sm italic text-slate-400">Nothing to preview.</p>';
+        const lines = md.replace(/\r\n?/g, '\n').split('\n');
+        let html = '', listStack = [], inBq = false, buf = [];
+        const flushPara = () => { if (buf.length) { html += '<p>' + mdInline(buf.join(' ')) + '</p>'; buf = []; } };
+        const closeLists = () => { while (listStack.length) html += `</${listStack.pop()}>`; };
+        const closeBq = () => { if (inBq) { html += '</blockquote>'; inBq = false; } };
+        for (const raw of lines) {
+            const line = raw.replace(/\s+$/, '');
+            if (line === '') { flushPara(); closeLists(); closeBq(); continue; }
+            let m;
+            if (/^\s*(---|\*\*\*|___)\s*$/.test(line)) { flushPara(); closeLists(); closeBq(); html += '<hr>'; continue; }
+            if ((m = line.match(/^(#{1,3})\s+(.+)$/))) { flushPara(); closeLists(); closeBq(); html += `<h${m[1].length}>${mdInline(m[2])}</h${m[1].length}>`; continue; }
+            if ((m = line.match(/^>\s?(.*)$/))) { flushPara(); closeLists(); if (!inBq) { html += '<blockquote>'; inBq = true; } html += `<p>${mdInline(m[1])}</p>`; continue; }
+            if ((m = line.match(/^\s*\d+\.\s+(.+)$/))) { flushPara(); closeBq(); if (!listStack.length || listStack.at(-1) !== 'ol') { if (listStack.length) html += `</${listStack.pop()}>`; html += '<ol>'; listStack.push('ol'); } html += `<li>${mdInline(m[1])}</li>`; continue; }
+            if ((m = line.match(/^\s*[-*•]\s+(.+)$/))) { flushPara(); closeBq(); if (!listStack.length || listStack.at(-1) !== 'ul') { if (listStack.length) html += `</${listStack.pop()}>`; html += '<ul>'; listStack.push('ul'); } html += `<li>${mdInline(m[1])}</li>`; continue; }
+            closeLists(); closeBq(); buf.push(line);
+        }
+        flushPara(); closeLists(); closeBq();
+        return html;
+    };
+
+    document.querySelectorAll('[data-md-editor]').forEach((wrap) => {
+        const ta = wrap.querySelector('[data-md-textarea]');
+        const preview = wrap.querySelector('[data-md-preview]');
+        const modes = wrap.querySelectorAll('[data-md-mode]');
+        const tools = wrap.querySelectorAll('[data-md]');
+        if (!ta) return;
+
+        const setMode = (mode) => {
+            modes.forEach(b => b.classList.toggle('is-active', b.dataset.mdMode === mode));
+            if (mode === 'preview') {
+                preview.innerHTML = `<div class="brief-body">${mdRender(ta.value)}</div>`;
+                preview.classList.remove('hidden');
+                ta.classList.add('hidden');
+            } else {
+                preview.classList.add('hidden');
+                ta.classList.remove('hidden');
+            }
+        };
+        modes.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mdMode)));
+
+        const wrapSel = (before, after = before, placeholder = '') => {
+            const start = ta.selectionStart, end = ta.selectionEnd;
+            const sel = ta.value.slice(start, end) || placeholder;
+            ta.value = ta.value.slice(0, start) + before + sel + after + ta.value.slice(end);
+            ta.focus();
+            ta.setSelectionRange(start + before.length, start + before.length + sel.length);
+        };
+        const linePrefix = (prefix, placeholder = '') => {
+            const start = ta.selectionStart;
+            const before = ta.value.slice(0, start);
+            const lineStart = before.lastIndexOf('\n') + 1;
+            const linesAfter = ta.value.slice(lineStart).split('\n')[0] || placeholder;
+            ta.value = ta.value.slice(0, lineStart) + prefix + linesAfter + ta.value.slice(lineStart + linesAfter.length);
+            ta.focus();
+            ta.setSelectionRange(lineStart + prefix.length, lineStart + prefix.length + linesAfter.length);
+        };
+        tools.forEach(btn => btn.addEventListener('click', () => {
+            const kind = btn.dataset.md;
+            if (kind === 'b') wrapSel('**','**','bold text');
+            else if (kind === 'i') wrapSel('*','*','italic text');
+            else if (kind === 'code') wrapSel('`','`','code');
+            else if (kind === 'link') {
+                const url = prompt('Link URL', 'https://');
+                if (url) wrapSel('[', `](${url})`, 'link text');
+            }
+            else if (kind === 'h2') linePrefix('## ', 'Heading');
+            else if (kind === 'ul') linePrefix('- ', 'List item');
+            else if (kind === 'ol') linePrefix('1. ', 'List item');
+            else if (kind === 'quote') linePrefix('> ', 'Quote');
+        }));
+    });
+
     /* Auto-dismissing flashes + close button */
     document.querySelectorAll('[data-flash]').forEach((el) => {
         const close = () => { el.style.transition = 'opacity .3s ease'; el.style.opacity = '0'; setTimeout(() => el.remove(), 300); };

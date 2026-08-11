@@ -69,6 +69,33 @@
             </div>
         </div>
 
+        <div class="space-y-5">
+        <div class="card p-5">
+            <div class="flex items-center gap-2">
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white">📋</div>
+                <h2 class="text-lg font-bold text-slate-900">Brief</h2>
+            </div>
+            <div class="mt-3">
+                <x-brief :markdown="$assignment->campaign->brief" compact />
+            </div>
+        </div>
+
+        @if(($assignment->campaign->references ?? collect())->isNotEmpty())
+            <div class="card p-5">
+                <div class="flex items-center gap-2">
+                    <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 text-white">📎</div>
+                    <h2 class="text-lg font-bold text-slate-900">References</h2>
+                    <span class="ml-auto text-xs font-semibold text-slate-500">{{ $assignment->campaign->references->count() }}</span>
+                </div>
+                <div class="mt-3 space-y-2">
+                    @foreach($assignment->campaign->references as $ref)
+                        @include('partials.reference-tile', ['ref' => $ref, 'canDelete' => false])
+                    @endforeach
+                </div>
+                <a href="{{ route('brand.campaigns.show', $assignment->campaign) }}#references" class="mt-3 inline-block text-xs font-semibold text-violet-700 hover:text-violet-900">Manage references →</a>
+            </div>
+        @endif
+
         <div class="card p-5">
             <h2 class="font-semibold">Agreement</h2>
             @if($assignment->contract)
@@ -90,6 +117,7 @@
                 @csrf
                 <button type="submit" class="btn-secondary w-full">Message creator</button>
             </form>
+        </div>
         </div>
     </div>
 </x-layouts.app>

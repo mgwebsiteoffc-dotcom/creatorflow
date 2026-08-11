@@ -48,10 +48,15 @@
 
     <div class="mt-8 grid gap-5 lg:grid-cols-3">
         <div class="card p-5 lg:col-span-2">
-            <h2 class="font-semibold">Brief</h2>
-            <div class="prose prose-sm mt-2 max-w-none whitespace-pre-wrap text-slate-700">{{ $campaign->brief ?: 'No brief yet.' }}</div>
+            <div class="flex items-center gap-2">
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white">📋</div>
+                <h2 class="text-lg font-bold text-slate-900">Brief</h2>
+            </div>
+            <div class="mt-4">
+                <x-brief :markdown="$campaign->brief" />
+            </div>
 
-            <h2 class="mt-6 font-semibold">Products</h2>
+            <h2 class="mt-8 text-lg font-bold text-slate-900">Products</h2>
             <div class="mt-2 space-y-2">
                 @foreach($campaign->products as $cp)
                     <div class="flex items-center gap-3 rounded-xl border border-slate-100 p-3">
@@ -89,6 +94,11 @@
                 @endforelse
             </div>
         </div>
+    </div>
+
+    {{-- REFERENCES MANAGER --}}
+    <div class="mt-6">
+        @include('partials.references-manager', ['campaign' => $campaign])
     </div>
 
     <h2 class="mt-10 text-lg font-bold">Assignments</h2>

@@ -40,7 +40,8 @@ class AssignmentController extends Controller
         abort_unless($assignment->campaign->workspace_id === $tenant->id(), 403);
 
         $assignment->load([
-            'creator.nicheRows', 'creator.socialAccounts', 'campaign',
+            'creator.nicheRows', 'creator.socialAccounts',
+            'campaign.references',
             'campaignProduct.product', 'order', 'submissions', 'contract', 'payout',
         ]);
 

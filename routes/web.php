@@ -6,6 +6,7 @@ use App\Http\Controllers\Brand\AnalyticsController;
 use App\Http\Controllers\Brand\ApplicationController as BrandApplicationController;
 use App\Http\Controllers\Brand\AssignmentController as BrandAssignmentController;
 use App\Http\Controllers\Brand\CampaignController;
+use App\Http\Controllers\Brand\CampaignReferenceController;
 use App\Http\Controllers\Brand\CreatorMarketplaceController;
 use App\Http\Controllers\Brand\CsvImportController;
 use App\Http\Controllers\Brand\DashboardController as BrandDashboardController;
@@ -133,6 +134,8 @@ Route::middleware(['auth', 'workspace'])->prefix('brand')->name('brand.')->group
     Route::get('/campaigns/{campaign}', [CampaignController::class, 'show'])->name('campaigns.show');
     Route::post('/campaigns/{campaign}/launch', [CampaignController::class, 'launch'])->name('campaigns.launch');
     Route::get('/campaigns/{campaign}/matches', [CampaignController::class, 'matches'])->name('campaigns.matches');
+    Route::post('/campaigns/{campaign}/references', [CampaignReferenceController::class, 'store'])->name('campaigns.references.store');
+    Route::delete('/campaigns/{campaign}/references/{reference}', [CampaignReferenceController::class, 'destroy'])->name('campaigns.references.destroy');
 
     Route::get('/applications',  [BrandApplicationController::class, 'index'])->name('applications.index');
     Route::post('/applications/{application}/shortlist', [BrandApplicationController::class, 'shortlist'])->name('applications.shortlist');

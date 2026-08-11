@@ -67,7 +67,8 @@ class AssignmentController extends Controller
         abort_unless($assignment->creator_id === $request->user()->creator->id, 403);
 
         $assignment->load([
-            'campaign.workspace', 'campaignProduct.product.primaryImage',
+            'campaign.workspace', 'campaign.references',
+            'campaignProduct.product.primaryImage',
             'campaignProduct.variant', 'order', 'contract', 'submissions', 'payout',
         ]);
 

@@ -84,6 +84,11 @@ class Campaign extends Model
         return $this->hasMany(DiscountCode::class);
     }
 
+    public function references(): HasMany
+    {
+        return $this->hasMany(CampaignReference::class)->latest();
+    }
+
     public function scopeActive($query)
     {
         return $query->whereIn('status', ['matching', 'inviting', 'active']);

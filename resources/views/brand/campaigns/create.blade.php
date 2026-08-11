@@ -39,9 +39,33 @@
                         <input class="input" name="niche" value="{{ old('niche', $suggestion['niche'] ?? '') }}">
                     </div>
                 </div>
-                <div>
-                    <label class="label">Brief (Markdown)</label>
-                    <textarea class="input min-h-40" name="brief">{{ old('brief', $suggestion['brief'] ?? '') }}</textarea>
+                <div data-md-editor>
+                    <div class="flex items-center justify-between">
+                        <label class="label !mb-0">Brief <span class="ml-1 text-xs font-normal text-slate-400">(supports **bold**, *italic*, lists, links)</span></label>
+                        <div class="flex gap-1 rounded-lg border border-slate-200 bg-white p-0.5 text-xs">
+                            <button type="button" data-md-mode="write"   class="tab-pill !py-1 !px-2.5 !text-xs is-active">Write</button>
+                            <button type="button" data-md-mode="preview" class="tab-pill !py-1 !px-2.5 !text-xs">Preview</button>
+                        </div>
+                    </div>
+
+                    {{-- Toolbar --}}
+                    <div class="mt-2 flex flex-wrap items-center gap-1 rounded-t-xl border border-b-0 border-slate-200 bg-slate-50 p-1.5 text-xs" data-md-toolbar>
+                        <button type="button" data-md="h2"  title="Heading"   class="rounded px-2 py-1 font-bold text-slate-700 hover:bg-white">H</button>
+                        <button type="button" data-md="b"   title="Bold"      class="rounded px-2 py-1 font-bold text-slate-700 hover:bg-white">B</button>
+                        <button type="button" data-md="i"   title="Italic"    class="rounded px-2 py-1 italic text-slate-700 hover:bg-white">I</button>
+                        <span class="mx-1 h-4 w-px bg-slate-300"></span>
+                        <button type="button" data-md="ul"  title="Bullet list" class="rounded px-2 py-1 text-slate-700 hover:bg-white">• List</button>
+                        <button type="button" data-md="ol"  title="Numbered list" class="rounded px-2 py-1 text-slate-700 hover:bg-white">1. List</button>
+                        <span class="mx-1 h-4 w-px bg-slate-300"></span>
+                        <button type="button" data-md="quote" title="Quote"  class="rounded px-2 py-1 text-slate-700 hover:bg-white">❝</button>
+                        <button type="button" data-md="link"  title="Link"   class="rounded px-2 py-1 text-slate-700 hover:bg-white">🔗</button>
+                        <button type="button" data-md="code"  title="Code"   class="rounded px-2 py-1 font-mono text-slate-700 hover:bg-white">{`}</button>
+                    </div>
+
+                    <textarea data-md-textarea class="input !rounded-t-none min-h-56" name="brief"
+                              placeholder="## About the brand&#10;What you make and who it's for.&#10;&#10;## Goal&#10;What success looks like.&#10;&#10;## Do&#10;- Use natural lighting&#10;- Tag the brand&#10;&#10;## Don't&#10;- Overclaim results">{{ old('brief', $suggestion['brief'] ?? '') }}</textarea>
+
+                    <div data-md-preview class="hidden mt-2 min-h-56 rounded-xl border border-slate-200 bg-white p-4"></div>
                 </div>
 
                 <h3 class="pt-2 font-semibold">Products &amp; creator targets</h3>

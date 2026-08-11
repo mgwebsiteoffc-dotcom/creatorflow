@@ -236,6 +236,57 @@ html, body {
     to   { transform: translateX(-50%); }
 }
 
+/* -------- Campaign brief rich-text -------- */
+.brief-body { color: #334155; font-size: .95rem; line-height: 1.7; }
+.brief-body > * + * { margin-top: .85em; }
+.brief-body h1, .brief-body h2, .brief-body h3 {
+    font-weight: 800; letter-spacing: -0.01em; color: #0f172a;
+    line-height: 1.25;
+}
+.brief-body h1 { font-size: 1.4rem; margin-top: 1.2em; }
+.brief-body h2 { font-size: 1.15rem; margin-top: 1.4em;
+    padding-bottom: .3rem;
+    background-image: linear-gradient(90deg,#7c3aed,#ec4899);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.brief-body h3 { font-size: 1rem; margin-top: 1.2em; color: #4c1d95; }
+.brief-body p { color: #475569; }
+.brief-body strong { color: #0f172a; font-weight: 700; }
+.brief-body em { color: #6d28d9; font-style: italic; }
+.brief-body code {
+    background: #f1f5f9; padding: .1em .35em; border-radius: .35rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .88em; color: #be185d;
+}
+.brief-body ul, .brief-body ol { padding-left: 1.4em; }
+.brief-body ul { list-style: none; }
+.brief-body ul > li { position: relative; padding-left: .35em; }
+.brief-body ul > li::before {
+    content: ""; position: absolute; left: -1em; top: .65em;
+    width: .5em; height: .5em; border-radius: 9999px;
+    background-image: linear-gradient(135deg,#7c3aed,#ec4899);
+}
+.brief-body ol { list-style: decimal; }
+.brief-body ol > li::marker { color: #7c3aed; font-weight: 700; }
+.brief-body li + li { margin-top: .35em; }
+.brief-body blockquote {
+    position: relative;
+    padding: .7rem 1rem .7rem 1.1rem;
+    background: linear-gradient(90deg, rgba(124,58,237,.06), transparent);
+    border-left: 3px solid #7c3aed; border-radius: 0 .75rem .75rem 0;
+    color: #334155; font-style: italic;
+}
+.brief-body blockquote p { margin: 0; }
+.brief-body a { color: #6d28d9; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.brief-body a:hover { color: #4c1d95; }
+.brief-body hr { border: 0; height: 1px; background: #e2e8f0; margin: 1.5em 0; }
+
+.brief-body--compact { font-size: .875rem; }
+.brief-body--compact > * + * { margin-top: .65em; }
+.brief-body--compact h1 { font-size: 1.15rem; }
+.brief-body--compact h2 { font-size: 1rem; }
+.brief-body--compact h3 { font-size: .95rem; }
+
 /* Prose fallback (typography plugin isn't installed) */
 .prose { color: #334155; line-height: 1.75; }
 .prose > * + * { margin-top: 1.25em; }

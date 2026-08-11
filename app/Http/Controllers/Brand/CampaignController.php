@@ -77,6 +77,7 @@ class CampaignController extends Controller
             'invitations.creator',
             'applications.creator.socialAccounts',
             'applications.creator.nicheRows',
+            'references.uploader',
         ]);
 
         $pendingApplications = $campaign->applications
