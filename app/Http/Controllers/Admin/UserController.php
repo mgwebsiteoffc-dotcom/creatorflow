@@ -16,7 +16,7 @@ class UserController extends Controller
             ->when($request->get('role'), fn ($q, $r) => $q->where('system_role', $r))
             ->withCount(['workspaces'])
             ->latest()
-            ->paginate(25)
+            ->paginate((int) min(200, max(10, $request->integer('per_page') ?: 25)))
             ->withQueryString();
 
         return view('admin.users.index', compact('users'));

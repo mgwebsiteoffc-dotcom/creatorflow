@@ -15,7 +15,7 @@ class WorkspaceController extends Controller
             ->when($request->get('status') === 'suspended', fn ($q) => $q->where('account_status', 'suspended'))
             ->withCount(['campaigns', 'products', 'users'])
             ->latest()
-            ->paginate(25)
+            ->paginate((int) min(200, max(10, $request->integer('per_page') ?: 25)))
             ->withQueryString();
 
         return view('admin.workspaces.index', compact('workspaces'));

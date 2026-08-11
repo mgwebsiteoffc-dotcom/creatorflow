@@ -21,7 +21,7 @@ class CreatorController extends Controller
             ->when($request->get('status'), fn ($q, $s) => $q->where('status', $s))
             ->withCount(['assignments'])
             ->latest()
-            ->paginate(25)
+            ->paginate((int) min(200, max(10, $request->integer('per_page') ?: 25)))
             ->withQueryString();
 
         return view('admin.creators.index', compact('creators'));

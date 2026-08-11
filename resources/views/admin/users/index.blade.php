@@ -18,6 +18,11 @@
             <option value="">All statuses</option>
             <option value="suspended" @selected(request('status')==='suspended')>Suspended</option>
         </select>
+        <select class="input max-w-[120px]" name="per_page" onchange="this.form.submit()">
+            @foreach([25, 50, 100, 200] as $n)
+                <option value="{{ $n }}" @selected((int) request('per_page', 25) === $n)>{{ $n }} / page</option>
+            @endforeach
+        </select>
         <button class="btn-secondary">Filter</button>
     </form>
 

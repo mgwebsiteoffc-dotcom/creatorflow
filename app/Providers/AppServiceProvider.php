@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\View\Composers\HomepageComposer;
 use App\View\Composers\NotificationComposer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,5 +32,9 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('partials.topbar', NotificationComposer::class);
         View::composer('welcome', HomepageComposer::class);
+
+        // Use Tailwind pagination markup + our own view for a branded look.
+        Paginator::defaultView('pagination.creatorplex');
+        Paginator::defaultSimpleView('pagination.creatorplex-simple');
     }
 }

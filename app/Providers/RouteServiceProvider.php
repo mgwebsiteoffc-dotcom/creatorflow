@@ -11,11 +11,20 @@ class RouteServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Route::pattern('workspace', '[0-9]+');
-        Route::pattern('campaign', '[0-9a-f\-]{36}');
-        Route::pattern('product', '[0-9a-f\-]{36}');
-        Route::pattern('creator', '[0-9a-f\-]{36}');
-        Route::pattern('assignment', '[0-9a-f\-]{36}');
-        Route::pattern('submission', '[0-9a-f\-]{36}');
+        // Every model in this app uses HasUuid → getRouteKeyName() = 'uuid'.
+        // Accept either a numeric id (older routes / manual URLs) OR a full uuid.
+        $idOrUuid = '[0-9a-f\-]{36}|[0-9]+';
+
+        Route::pattern('workspace',  $idOrUuid);
+        Route::pattern('user',       $idOrUuid);
+        Route::pattern('campaign',   $idOrUuid);
+        Route::pattern('product',    $idOrUuid);
+        Route::pattern('creator',    $idOrUuid);
+        Route::pattern('assignment', $idOrUuid);
+        Route::pattern('submission', $idOrUuid);
+        Route::pattern('invitation', $idOrUuid);
+        Route::pattern('lead',       $idOrUuid);
+        Route::pattern('post',       $idOrUuid);
+        Route::pattern('payout',     $idOrUuid);
     }
 }
