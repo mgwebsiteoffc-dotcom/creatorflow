@@ -3,9 +3,10 @@
     'title' => null,
 ])
 @php
-    $panelClass = $panel === 'creator' ? 'bg-rose-50' : 'bg-slate-50';
+    $panelClass = $panel === 'creator' ? 'bg-rose-50' : ($panel === 'guest' ? 'bg-white' : 'bg-slate-50');
     $workspace = $currentWorkspace ?? null;
     $creator = $currentCreator ?? auth()->user()?->creator;
+    $isGuest = $panel === 'guest';
 @endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -18,16 +19,21 @@
     <meta name="apple-mobile-web-app-title" content="CreatorFlow">
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>{{ $title ? $title.' · ' : '' }}CreatorFlow</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen {{ $panelClass }} text-slate-900">
 
-    @if($panel !== 'guest')
+    @if($isGuest)
+        @include('partials.marketing-nav')
+    @else
         @include('partials.topbar', compact('panel', 'workspace', 'creator'))
     @endif
 
-    <div class="mx-auto w-full max-w-6xl px-4 pb-28 pt-5 md:pb-10">
+    <div class="{{ $isGuest ? 'w-full' : 'mx-auto w-full max-w-6xl px-4 pb-28 pt-5 md:pb-10' }}">
         @if(session('status'))
             <x-flash type="success">{{ session('status') }}</x-flash>
         @endif
@@ -45,7 +51,9 @@
         {{ $slot }}
     </div>
 
-    @if($panel !== 'guest')
+    @if($isGuest)
+        @include('partials.marketing-footer')
+    @else
         @include('partials.bottomnav', ['panel' => $panel])
     @endif
 
