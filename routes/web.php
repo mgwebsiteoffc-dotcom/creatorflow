@@ -63,9 +63,24 @@ Route::prefix('tools')->name('tools.')->group(function () {
         ->middleware('throttle:20,1');
 });
 
-Route::get('/resources', [MarketingController::class, 'resources'])->name('resources');
+Route::get('/resources',                   [MarketingController::class, 'resources'])->name('resources');
+Route::get('/resources/{category}',        [MarketingController::class, 'resourceCategory'])
+    ->whereIn('category', ['playbooks', 'benchmarks', 'templates', 'videos'])
+    ->name('resources.category');
+Route::get('/resources/item/{slug}',       [MarketingController::class, 'resourceShow'])->name('resources.show');
 Route::get('/blog',      [MarketingController::class, 'blogIndex'])->name('blog.index');
 Route::get('/blog/{slug}', [MarketingController::class, 'blogShow'])->name('blog.show');
+
+// Legal pages — real pages so footer links stop 404-ing.
+Route::prefix('legal')->name('legal.')->group(function () {
+    Route::get('/terms',              [\App\Http\Controllers\LegalController::class, 'terms'])->name('terms');
+    Route::get('/privacy',            [\App\Http\Controllers\LegalController::class, 'privacy'])->name('privacy');
+    Route::get('/refund',             [\App\Http\Controllers\LegalController::class, 'refund'])->name('refund');
+    Route::get('/cookies',            [\App\Http\Controllers\LegalController::class, 'cookies'])->name('cookies');
+    Route::get('/shipping',           [\App\Http\Controllers\LegalController::class, 'shipping'])->name('shipping');
+    Route::get('/content-guidelines', [\App\Http\Controllers\LegalController::class, 'content'])->name('content');
+    Route::get('/creator-agreement',  [\App\Http\Controllers\LegalController::class, 'creatorAgreement'])->name('creator-agreement');
+});
 
 // Industry & campaign-type landing pages (SEO-friendly)
 Route::get('/industry/{slug}',      [MarketingController::class, 'industryShow'])->name('industry.show');

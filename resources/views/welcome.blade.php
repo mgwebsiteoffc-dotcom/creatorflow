@@ -200,36 +200,6 @@
         </div>
     </section>
 
-    {{-- ============================ CLIENTS MARQUEE ============================ --}}
-    <section class="border-y border-slate-200 bg-white/60 py-10">
-        <div class="mx-auto max-w-6xl px-4">
-            <div class="text-center">
-                <p class="section-eyebrow">Our clients</p>
-                <h2 class="mt-2 text-lg font-semibold text-slate-800">Trusted by 1,000+ modern brands</h2>
-            </div>
-
-            <div class="marquee mt-8">
-                <div class="marquee-track">
-                    @foreach(['Stadows','ABCD','Disano','Soapywise','Iva Lens','Atul Bakery','Evereve','Mithila','Luxotica','Samsara','Seven Seas','Perfume+'] as $brand)
-                        <div class="flex shrink-0 items-center gap-2 text-2xl font-black tracking-tight text-slate-400">
-                            <span class="h-6 w-6 rounded-md"
-                                  style="background-image:linear-gradient(135deg,rgba(124,58,237,.55),rgba(236,72,153,.45));"></span>
-                            {{ $brand }}
-                        </div>
-                    @endforeach
-                    {{-- duplicate for seamless loop --}}
-                    @foreach(['Stadows','ABCD','Disano','Soapywise','Iva Lens','Atul Bakery','Evereve','Mithila','Luxotica','Samsara','Seven Seas','Perfume+'] as $brand)
-                        <div class="flex shrink-0 items-center gap-2 text-2xl font-black tracking-tight text-slate-400">
-                            <span class="h-6 w-6 rounded-md"
-                                  style="background-image:linear-gradient(135deg,rgba(124,58,237,.55),rgba(236,72,153,.45));"></span>
-                            {{ $brand }}
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </section>
-
     {{-- ============================ CAMPAIGN TYPES ============================ --}}
     <section id="campaigns" class="mx-auto max-w-6xl px-4 py-20">
         <div class="mx-auto max-w-2xl text-center">
@@ -530,17 +500,6 @@
                 @endforeach
             </div>
 
-            {{-- Marquee for the same logos (secondary reinforcement, auto-scroll) --}}
-            <div class="marquee mt-10">
-                <div class="marquee-track">
-                    @foreach(array_merge($logoData, $logoData) as $l)
-                        <div class="flex shrink-0 items-center gap-2 text-lg font-black tracking-tight text-slate-400">
-                            <span class="h-4 w-4 rounded" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);"></span>
-                            {{ $l['name'] }}
-                        </div>
-                    @endforeach
-                </div>
-            </div>
         </div>
     </section>
 
@@ -568,6 +527,15 @@
 
             {{-- Carousel + controls --}}
             <div class="reveal relative mt-10">
+                {{-- Prev / Next arrows floating over the middle of the reels --}}
+                <button type="button"
+                        class="absolute left-2 top-1/2 z-20 hidden -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-lg backdrop-blur transition hover:border-violet-300 hover:text-violet-700 md:grid"
+                        data-reel-prev aria-label="Previous">←</button>
+                <button type="button"
+                        class="absolute right-2 top-1/2 z-20 hidden -translate-y-1/2 grid h-12 w-12 place-items-center rounded-full text-white shadow-lg transition hover:scale-105 md:grid"
+                        style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);"
+                        data-reel-next aria-label="Next">→</button>
+
                 <div data-reel class="reel-track flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-6 pt-2 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                     @foreach($reelsData as $r)
                         <article data-reel-card data-cat="{{ $r['category'] }}"
@@ -627,11 +595,11 @@
                     @endforeach
                 </div>
 
-                {{-- Controls: BELOW the carousel, centered — no more overlap with the reels --}}
-                <div class="mt-6 flex items-center justify-center gap-3">
-                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-violet-300 hover:text-violet-700" data-reel-prev aria-label="Previous">←</button>
-                    <div class="text-xs text-slate-500">Swipe or drag</div>
-                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full text-white shadow-md transition hover:scale-105" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);" data-reel-next aria-label="Next">→</button>
+                {{-- Mobile-only controls (side arrows are hidden on small screens) --}}
+                <div class="mt-4 flex items-center justify-center gap-3 md:hidden">
+                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm" data-reel-prev aria-label="Previous">←</button>
+                    <div class="text-xs text-slate-500">Swipe →</div>
+                    <button type="button" class="grid h-11 w-11 place-items-center rounded-full text-white shadow-md" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);" data-reel-next aria-label="Next">→</button>
                 </div>
             </div>
         </div>

@@ -81,7 +81,94 @@ class MarketingController extends Controller
         }
     }
 
-    public function resources()  { return view('marketing.resources.index'); }
+    public function resources()
+    {
+        return view('marketing.resources.index', [
+            'categories' => static::resourceCategories(),
+            'items'      => static::resourcesData(),
+        ]);
+    }
+
+    public function resourceCategory(string $category)
+    {
+        $meta = static::resourceCategories()[$category] ?? abort(404);
+        $items = collect(static::resourcesData())->where('category', $category)->values();
+        return view('marketing.resources.category', compact('category', 'meta', 'items'));
+    }
+
+    public function resourceShow(string $slug)
+    {
+        $item = collect(static::resourcesData())->firstWhere('slug', $slug) ?? abort(404);
+        return view('marketing.resources.show', compact('item'));
+    }
+
+    /**
+     * Content library — each item is a real, on-page article/download. We ship
+     * these as static content so /resources isn't a page of dead links.
+     */
+    public static function resourceCategories(): array
+    {
+        return [
+            'playbooks'  => ['label' => 'Playbooks',  'icon' => '📘', 'grad' => 'from-violet-500 to-pink-500',   'sub' => 'Step-by-step guides to run better campaigns.'],
+            'benchmarks' => ['label' => 'Benchmarks', 'icon' => '📊', 'grad' => 'from-cyan-500 to-emerald-500',  'sub' => 'India-first rate + ROI benchmarks, updated 2026.'],
+            'templates'  => ['label' => 'Templates',  'icon' => '🧾', 'grad' => 'from-amber-500 to-rose-500',    'sub' => 'Briefs, contracts, spreadsheets — copy + edit.'],
+            'videos'     => ['label' => 'Videos',     'icon' => '🎥', 'grad' => 'from-indigo-500 to-violet-500', 'sub' => 'Product tours and micro-lessons under 15 min.'],
+        ];
+    }
+
+    public static function resourcesData(): array
+    {
+        return [
+            [
+                'slug' => 'dtc-seeding-playbook',
+                'category' => 'playbooks',
+                'title' => 'The DTC seeding playbook for Indian brands',
+                'summary' => 'How to seed 100 creators in 30 days without spending on fees. Cover story: Glow &amp; Co., Delhi.',
+                'read_min' => 12,
+                'body' => "## Why seeding beats paid for launch weeks\nBarter (product-only) campaigns average 62% acceptance in India when the offer is clear, the product is desirable, and the brief is tight. That's 4× the acceptance rate of cold paid outreach.\n\n## The 5-step playbook\n1. **Shortlist** 300 creators using CreatorFlow's marketplace filtered by city + tier + niche.\n2. **Rank** them by engagement rate (min 4%) and audience overlap.\n3. **Personalise** the outreach — reference their recent post.\n4. **Ship** the product within 3 business days (see our Shipping Policy).\n5. **Ask** for a Reel + Story + 1 permission for whitelisting.\n\n## Delhi micro-influencer campaign math\nWith 100 seeded creators × 32K avg followers × 6% ER × 1.4% CVR × ₹1,299 AOV, expected revenue = ₹3.5L on a ~₹1.2L product-cost outlay. That's a 2.9× ROAS on retail — before whitelisting.\n",
+            ],
+            [
+                'slug' => 'india-creator-rate-benchmarks-2026',
+                'category' => 'benchmarks',
+                'title' => 'India creator rate benchmarks 2026 (₹)',
+                'summary' => 'Every rate benchmark from 12,000+ CreatorFlow deals across Delhi, Mumbai, Bangalore.',
+                'read_min' => 6,
+                'body' => "## Nano (1K–10K)\nUGC: ₹0–₹2,500 · Reel: ₹1,500–₹6,000 · YouTube 60s: ₹3,000–₹10,000\n\n## Micro (10K–100K)\nUGC: ₹1,500–₹8,000 · Reel: ₹5,000–₹40,000 · YouTube 60s: ₹15,000–₹90,000\n\n## Mid (100K–500K)\nUGC: ₹6,000–₹35,000 · Reel: ₹30,000–₹1,50,000 · YouTube 60s: ₹80,000–₹4,00,000\n\n## Macro (500K–1M)\nUGC: ₹25,000–₹80,000 · Reel: ₹1,00,000–₹4,00,000 · YouTube 60s: ₹3,00,000–₹10,00,000\n\n## Mega (1M+)\nUGC: ₹60,000+ · Reel: ₹3,00,000+ · YouTube 60s: ₹8,00,000+\n\nUse the [rate calculator](/tools/creator-rate-calculator) with the actual creator's ER + niche for a live number.",
+            ],
+            [
+                'slug' => 'attribution-101',
+                'category' => 'playbooks',
+                'title' => 'Attribution 101 — tie every ₹ back to the creator',
+                'summary' => 'Discount codes + UTM + referral links + assisted conversions in one flow.',
+                'read_min' => 8,
+                'body' => "## Every creator gets 3 handles\n1. A **unique discount code** (e.g. RIYA10)\n2. A **UTM-tagged referral link** synced from your Shopify store\n3. A **short.link** so the tracking survives copy-paste to Reels captions\n\n## Rolling up assisted conversions\nCreatorFlow's multi-touch attribution assigns full credit to the last-touch code + 30% assist credit to any earlier touch. Set the attribution window (7–30 days) in `Admin → Settings`.\n",
+            ],
+            [
+                'slug' => 'brief-template-pack',
+                'category' => 'templates',
+                'title' => 'Brief template pack (10 briefs)',
+                'summary' => 'Copy-and-edit briefs for every campaign type — product review, launch week, barter, whitelisting.',
+                'read_min' => 3,
+                'body' => "Use these as a starting point — every one plugs into the AI brief generator to be reshaped in seconds.\n\n1. Beauty · Barter · Reel\n2. Beauty · Paid · Reel + Story\n3. Fashion · Try-on haul · Reel\n4. Food · Recipe · Reel\n5. Home · Room reset · Reel\n6. Tech · Unboxing · YouTube Short\n7. Fitness · Progress · Reel\n8. Travel · Stay review · Reel + carousel\n9. Wellness · Morning routine · Reel\n10. Kids · Product demo · Reel\n\nFire up the [AI brief generator](/tools/brief-generator) and pick one to hydrate with your product.",
+            ],
+            [
+                'slug' => 'barter-mastery-course',
+                'category' => 'playbooks',
+                'title' => 'Barter mastery — free 6-part guide',
+                'summary' => 'The full case study of how a Delhi skincare brand seeded 240 creators in 60 days on product cost alone.',
+                'read_min' => 15,
+                'body' => "### Part 1 · Offer design\nMake the barter offer feel worth ₹5,000 even if COGS is ₹800.\n\n### Part 2 · Creator sourcing\nCity + tier + niche + audience overlap filter → 500-creator shortlist.\n\n### Part 3 · The 4-sentence pitch\nHook · gift · ask · CTA.\n\n### Part 4 · Contract + rights\n90-day paid usage on Reel + Story is the sweet spot.\n\n### Part 5 · Content review\nAI review catches missing #ad + weak hook in <2 seconds.\n\n### Part 6 · Whitelisting\nTurn top 20% of seeded creators into paid-ad creative.\n",
+            ],
+            [
+                'slug' => 'product-tour-video',
+                'category' => 'videos',
+                'title' => '15-min product tour',
+                'summary' => 'Everything CreatorFlow does, in the time it takes to make chai.',
+                'read_min' => 15,
+                'body' => "Watch the founder walk through a full campaign — marketplace search, campaign create, audience targeting, invitation, contract, content review, attribution.\n\nBook a 1:1 walkthrough via the [contact page](/contact).",
+            ],
+        ];
+    }
 
     public function blogIndex()
     {
@@ -146,12 +233,26 @@ class MarketingController extends Controller
             ['loc' => route('tools.rate'),            'priority' => '0.6'],
             ['loc' => route('tools.brief'),           'priority' => '0.6'],
             ['loc' => route('resources'),             'priority' => '0.6'],
+            ['loc' => route('resources.category', 'playbooks'),  'priority' => '0.55'],
+            ['loc' => route('resources.category', 'benchmarks'), 'priority' => '0.55'],
+            ['loc' => route('resources.category', 'templates'),  'priority' => '0.55'],
+            ['loc' => route('resources.category', 'videos'),     'priority' => '0.55'],
+            ['loc' => route('legal.terms'),           'priority' => '0.4'],
+            ['loc' => route('legal.privacy'),         'priority' => '0.4'],
+            ['loc' => route('legal.refund'),          'priority' => '0.4'],
+            ['loc' => route('legal.cookies'),         'priority' => '0.3'],
+            ['loc' => route('legal.shipping'),        'priority' => '0.3'],
+            ['loc' => route('legal.content'),         'priority' => '0.3'],
+            ['loc' => route('legal.creator-agreement'), 'priority' => '0.3'],
             ['loc' => route('blog.index'),            'priority' => '0.8'],
             ['loc' => route('register'),              'priority' => '0.5'],
         ]);
 
         foreach (array_keys(static::industryData()) as $slug) {
             $urls->push(['loc' => route('industry.show', $slug), 'priority' => '0.7']);
+        }
+        foreach (static::resourcesData() as $r) {
+            $urls->push(['loc' => route('resources.show', $r['slug']), 'priority' => '0.6']);
         }
         foreach (array_keys(static::campaignTypeData()) as $slug) {
             $urls->push(['loc' => route('campaign-type.show', $slug), 'priority' => '0.7']);

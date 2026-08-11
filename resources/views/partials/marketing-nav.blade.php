@@ -1,5 +1,5 @@
-<header class="sticky top-0 z-40 glass-nav">
-    <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4">
+<header class="sticky top-0 z-50 glass-nav" data-nav>
+    <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4 md:px-6 lg:px-8">
         <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold">
             <span class="relative grid h-9 w-9 place-items-center rounded-xl text-white"
                   style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">

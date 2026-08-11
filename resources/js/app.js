@@ -70,6 +70,22 @@ document.addEventListener('DOMContentLoaded', () => {
         navToggle.addEventListener('click', () => navMenu.classList.toggle('hidden'));
     }
 
+    /* Marketing nav: switch to opaque + shadow once the user scrolls past ~10px so
+       the semi-transparent glass strip never looks like a floating patch on top of
+       coloured sections below. */
+    const navEl = document.querySelector('[data-nav]');
+    if (navEl) {
+        const syncScrolled = () => {
+            if (window.scrollY > 10) {
+                navEl.setAttribute('data-scrolled', '1');
+            } else {
+                navEl.removeAttribute('data-scrolled');
+            }
+        };
+        syncScrolled();
+        window.addEventListener('scroll', syncScrolled, { passive: true });
+    }
+
     /* Reel carousel: [data-reel] scroll container + [data-reel-prev]/[data-reel-next]
        Also handles [data-reel-play] play buttons and [data-reel-filter] category tabs. */
     document.querySelectorAll('[data-reel]').forEach((reel) => {

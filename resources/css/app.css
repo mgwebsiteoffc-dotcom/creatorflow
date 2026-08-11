@@ -170,8 +170,15 @@ html, body {
 
     .glass-nav {
         background: rgba(255,255,255,.72);
-        border: 1px solid rgba(15,23,42,.06);
+        border-bottom: 1px solid rgba(15,23,42,.06);
         backdrop-filter: saturate(180%) blur(14px);
+        -webkit-backdrop-filter: saturate(180%) blur(14px);
+        transition: background .2s ease, box-shadow .2s ease;
+    }
+    /* When the page scrolls, JS toggles [data-scrolled] on the nav — becomes opaque + shadow */
+    .glass-nav[data-scrolled="1"] {
+        background: rgba(255,255,255,.94);
+        box-shadow: 0 6px 24px -12px rgba(15,23,42,.15);
     }
 }
 

@@ -60,9 +60,9 @@
                 <li><a href="{{ route('features') }}" class="hover:text-white">Platform features</a></li>
                 <li><a href="{{ route('register') }}" class="hover:text-white">Creators</a></li>
                 <li><a href="{{ route('resources') }}" class="hover:text-white">Knowledge base</a></li>
-                <li><a href="#" class="hover:text-white">Terms of use</a></li>
-                <li><a href="#" class="hover:text-white">Privacy policy</a></li>
-                <li><a href="#" class="hover:text-white">Refund policy</a></li>
+                <li><a href="{{ route('legal.terms') }}" class="hover:text-white">Terms of use</a></li>
+                <li><a href="{{ route('legal.privacy') }}" class="hover:text-white">Privacy policy</a></li>
+                <li><a href="{{ route('legal.refund') }}" class="hover:text-white">Refund policy</a></li>
                 <li><a href="{{ url('/sitemap.xml') }}" class="hover:text-white">Sitemap</a></li>
             </ul>
         </div>
@@ -120,6 +120,55 @@
                 <li><a href="{{ route('blog.index') }}" class="hover:text-white">Blog</a></li>
                 <li><a href="{{ route('shopify.install') }}" class="hover:text-white">Shopify app</a></li>
             </ul>
+        </div>
+    </div>
+
+    {{-- ============================ HORIZONTAL CITY + POLICY STRIP ============================ --}}
+    <div class="relative border-t border-white/10">
+        <div class="mx-auto max-w-6xl px-4 py-6 text-xs leading-relaxed text-slate-400">
+            @php
+                $cityLinks = [
+                    'Delhi'     => route('services.city', ['influencer-marketing-agency','delhi']),
+                    'Mumbai'    => route('services.city', ['influencer-marketing-agency','mumbai']),
+                    'Bangalore' => route('services.city', ['influencer-marketing-agency','bangalore']),
+                    'Hyderabad' => route('services.city', ['influencer-marketing-agency','hyderabad']),
+                    'Chennai'   => route('services.city', ['influencer-marketing-agency','chennai']),
+                    'Pune'      => route('services.city', ['influencer-marketing-agency','pune']),
+                    'Kolkata'   => route('services.city', ['influencer-marketing-agency','kolkata']),
+                    'Ahmedabad' => route('services.city', ['influencer-marketing-agency','ahmedabad']),
+                    'Jaipur'    => route('services.city', ['influencer-marketing-agency','jaipur']),
+                    'Gurugram'  => route('services.city', ['influencer-marketing-agency','gurugram']),
+                    'Noida'     => route('services.city', ['influencer-marketing-agency','india']),
+                    'Chandigarh'=> route('services.city', ['influencer-marketing-agency','india']),
+                    'Kochi'     => route('services.city', ['influencer-marketing-agency','india']),
+                    'Goa'       => route('services.city', ['influencer-marketing-agency','india']),
+                    'Lucknow'   => route('services.city', ['influencer-marketing-agency','india']),
+                    'Indore'    => route('services.city', ['influencer-marketing-agency','india']),
+                    'Surat'     => route('services.city', ['influencer-marketing-agency','india']),
+                    'Bhopal'    => route('services.city', ['influencer-marketing-agency','india']),
+                ];
+                $policyLinks = [
+                    'Terms of Use'       => route('legal.terms'),
+                    'Privacy Policy'     => route('legal.privacy'),
+                    'Refund Policy'      => route('legal.refund'),
+                    'Cookie Policy'      => route('legal.cookies'),
+                    'Shipping Policy'    => route('legal.shipping'),
+                    'Content Guidelines' => route('legal.content'),
+                    'Creator Agreement'  => route('legal.creator-agreement'),
+                    'Sitemap'            => url('/sitemap.xml'),
+                ];
+            @endphp
+
+            <p><span class="font-semibold uppercase tracking-widest text-slate-300">Influencer marketing in:</span>
+                @foreach($cityLinks as $name => $href)
+                    <a href="{{ $href }}" class="hover:text-white">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
+                @endforeach
+            </p>
+            <p class="mt-3"><span class="font-semibold uppercase tracking-widest text-slate-300">Policies:</span>
+                @foreach($policyLinks as $name => $href)
+                    <a href="{{ $href }}" class="hover:text-white">{{ $name }}</a>{{ ! $loop->last ? ',' : '' }}
+                @endforeach
+            </p>
         </div>
     </div>
 
