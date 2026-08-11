@@ -1,9 +1,9 @@
 <x-layouts.app :panel="'brand'" :title="$campaign->title">
-    <a href="{{ route('brand.campaigns.index') }}" class="text-sm text-slate-500">← Campaigns</a>
+    <a href="{{ route('brand.campaigns.index') }}" class="text-sm text-slate-500 hover:text-slate-800">← Campaigns</a>
     <div class="mt-2 flex flex-wrap items-start justify-between gap-3">
         <div>
-            <h1 class="text-2xl font-bold">{{ $campaign->title }}</h1>
-            <p class="text-sm text-slate-500">{{ $campaign->niche }} · <span class="capitalize">{{ $campaign->type }}</span></p>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">{{ $campaign->title }}</h1>
+            <p class="mt-1 text-sm text-slate-500">{{ $campaign->niche }} · <span class="capitalize">{{ $campaign->type }}</span></p>
         </div>
         @if(! $campaign->isLaunched())
             <form method="POST" action="{{ route('brand.campaigns.launch', $campaign) }}">
@@ -15,7 +15,7 @@
         @endif
     </div>
 
-    <div class="mt-5 grid grid-cols-2 gap-3 md:grid-cols-5">
+    <div class="mt-6 grid grid-cols-2 gap-4 md:grid-cols-5 lg:gap-5">
         <x-stat label="Invited" :value="$funnel['invited']" tone="slate"/>
         <x-stat label="Accepted" :value="$funnel['accepted']" tone="violet"/>
         <x-stat label="Shipped" :value="$funnel['shipped']" tone="sky"/>
@@ -23,7 +23,30 @@
         <x-stat label="Approved" :value="$funnel['approved']" tone="emerald"/>
     </div>
 
-    <div class="mt-6 grid gap-5 lg:grid-cols-3">
+    {{-- PENDING APPLICATIONS --}}
+    @if($pendingApplications->isNotEmpty())
+        <section class="mt-8 g-border p-1">
+            <div class="rounded-[calc(1.25rem-1px)] bg-white p-5 md:p-6">
+                <div class="flex items-center justify-between gap-3">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-900">
+                            {{ $pendingApplications->count() }} pending {{ Str::plural('application', $pendingApplications->count()) }}
+                        </h2>
+                        <p class="text-sm text-slate-500">Review and approve creators who applied to this campaign.</p>
+                    </div>
+                    <a href="{{ route('brand.applications.index') }}" class="btn-ghost !py-1.5 text-xs">All applications →</a>
+                </div>
+
+                <div class="mt-4 space-y-3">
+                    @foreach($pendingApplications->take(5) as $app)
+                        @include('brand.applications._row', ['app' => $app])
+                    @endforeach
+                </div>
+            </div>
+        </section>
+    @endif
+
+    <div class="mt-8 grid gap-5 lg:grid-cols-3">
         <div class="card p-5 lg:col-span-2">
             <h2 class="font-semibold">Brief</h2>
             <div class="prose prose-sm mt-2 max-w-none whitespace-pre-wrap text-slate-700">{{ $campaign->brief ?: 'No brief yet.' }}</div>
@@ -68,10 +91,10 @@
         </div>
     </div>
 
-    <h2 class="mt-8 font-semibold">Assignments</h2>
-    <div class="mt-3 space-y-2">
+    <h2 class="mt-10 text-lg font-bold">Assignments</h2>
+    <div class="mt-4 space-y-2">
         @forelse($campaign->assignments as $a)
-            <a href="{{ route('brand.assignments.show', $a) }}" class="card flex items-center gap-3 p-3">
+            <a href="{{ route('brand.assignments.show', $a) }}" class="card flex items-center gap-3 p-4 hover:border-violet-300">
                 <div class="grid h-10 w-10 place-items-center rounded-full bg-rose-100 font-bold text-rose-700">{{ strtoupper(substr($a->creator->display_name,0,1)) }}</div>
                 <div class="min-w-0 flex-1">
                     <p class="truncate text-sm font-medium">{{ $a->creator->display_name }}</p>

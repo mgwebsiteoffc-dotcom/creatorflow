@@ -75,7 +75,14 @@ class CampaignController extends Controller
             'matches.creator.nicheRows',
             'assignments.creator', 'assignments.order', 'assignments.submissions',
             'invitations.creator',
+            'applications.creator.socialAccounts',
+            'applications.creator.nicheRows',
         ]);
+
+        $pendingApplications = $campaign->applications
+            ->whereIn('status', ['submitted', 'shortlisted'])
+            ->sortByDesc('created_at')
+            ->values();
 
         $funnel = [
             'invited' => $campaign->invitations->count(),
@@ -85,7 +92,7 @@ class CampaignController extends Controller
             'approved' => $campaign->assignments->whereIn('status', ['approved', 'completed'])->count(),
         ];
 
-        return view('brand.campaigns.show', compact('campaign', 'funnel'));
+        return view('brand.campaigns.show', compact('campaign', 'funnel', 'pendingApplications'));
     }
 
     public function launch(Campaign $campaign, TenantContext $tenant, LaunchCampaign $launch)

@@ -80,6 +80,16 @@ class Creator extends Model
         return $this->hasMany(CampaignAssignment::class);
     }
 
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    public function invitations(): HasMany
+    {
+        return $this->hasMany(CampaignInvitation::class);
+    }
+
     public function payouts(): HasMany
     {
         return $this->hasMany(Payout::class);

@@ -19,6 +19,15 @@
         </a>
     @endif
 
+    @if(($stats['pending_applications'] ?? 0) > 0)
+        <a href="{{ route('brand.applications.index') }}"
+           class="mt-4 flex items-center gap-3 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-rose-50 p-4 text-sm text-amber-900 transition hover:border-amber-300 hover:shadow-sm">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-rose-500 text-white shadow-sm">📥</span>
+            <span class="flex-1"><strong>{{ $stats['pending_applications'] }} creator {{ Str::plural('application', $stats['pending_applications']) }}</strong> waiting for review.</span>
+            <span class="text-amber-600">Review →</span>
+        </a>
+    @endif
+
     <div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
         <x-stat label="Products" :value="$stats['products']" tone="sky"/>
         <x-stat label="Active campaigns" :value="$stats['active_campaigns']" tone="violet"/>

@@ -14,15 +14,17 @@ class DashboardController extends Controller
     {
         $workspace = $tenant->active();
 
+        $campaignIds = $workspace->campaigns()->pluck('id');
+
         $stats = [
             'products' => $workspace->products()->count(),
             'active_campaigns' => $workspace->campaigns()->active()->count(),
             'creators_reached' => $workspace->campaigns()->withCount('assignments')->get()->sum('assignments_count'),
             'attributed_revenue_cents' => (int) \App\Models\Attribution::where('workspace_id', $workspace->id)->sum('revenue_cents'),
-            'pending_content' => \App\Models\ContentSubmission::whereIn(
-                'campaign_id',
-                $workspace->campaigns()->pluck('id')
-            )->whereIn('status', ['submitted', 'in_review'])->count(),
+            'pending_content' => \App\Models\ContentSubmission::whereIn('campaign_id', $campaignIds)
+                ->whereIn('status', ['submitted', 'in_review'])->count(),
+            'pending_applications' => \App\Models\Application::whereIn('campaign_id', $campaignIds)
+                ->whereIn('status', ['submitted','shortlisted'])->count(),
             'unread_messages' => 0,
         ];
 

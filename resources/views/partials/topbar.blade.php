@@ -2,6 +2,7 @@
     $brandLinks = [
         ['route' => 'brand.dashboard', 'label' => 'Home'],
         ['route' => 'brand.campaigns.index', 'label' => 'Campaigns'],
+        ['route' => 'brand.applications.index', 'label' => 'Applications'],
         ['route' => 'brand.products.index', 'label' => 'Products'],
         ['route' => 'brand.creators.index', 'label' => 'Creators'],
         ['route' => 'brand.assignments.index', 'label' => 'Assignments'],
@@ -10,6 +11,7 @@
     $creatorLinks = [
         ['route' => 'creator.dashboard', 'label' => 'Home'],
         ['route' => 'creator.marketplace', 'label' => 'Marketplace'],
+        ['route' => 'creator.applications', 'label' => 'Applications'],
         ['route' => 'creator.assignments.index', 'label' => 'My Work'],
         ['route' => 'creator.earnings.index', 'label' => 'Earnings'],
         ['route' => 'creator.profile.show', 'label' => 'Profile'],

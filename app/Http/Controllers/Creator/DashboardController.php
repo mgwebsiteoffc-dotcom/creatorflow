@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Creator;
 
 use App\Http\Controllers\Controller;
-use App\Models\Campaign;
 use App\Models\CampaignInvitation;
 use Illuminate\Http\Request;
 
@@ -27,6 +26,17 @@ class DashboardController extends Controller
             ->take(8)
             ->get();
 
+        $recentApplications = $creator->applications()
+            ->with(['campaign.workspace'])
+            ->latest()
+            ->take(4)
+            ->get();
+
+        $applicationCounts = [
+            'total'   => $creator->applications()->count(),
+            'pending' => $creator->applications()->whereIn('status', ['submitted','shortlisted'])->count(),
+        ];
+
         $earningsCents = (int) $creator->payouts()->where('status', 'paid')->sum('net_cents');
         $pendingCents = (int) $creator->payouts()->where('status', 'pending')->sum('amount_cents');
 
@@ -34,6 +44,8 @@ class DashboardController extends Controller
             'creator',
             'invitations',
             'activeAssignments',
+            'recentApplications',
+            'applicationCounts',
             'earningsCents',
             'pendingCents',
         ));

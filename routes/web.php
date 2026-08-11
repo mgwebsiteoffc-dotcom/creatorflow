@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Brand\AnalyticsController;
+use App\Http\Controllers\Brand\ApplicationController as BrandApplicationController;
 use App\Http\Controllers\Brand\AssignmentController as BrandAssignmentController;
 use App\Http\Controllers\Brand\CampaignController;
 use App\Http\Controllers\Brand\CreatorMarketplaceController;
@@ -87,6 +88,9 @@ Route::middleware(['auth'])->prefix('creator')->name('creator.')->group(function
         Route::get('/marketplace/{campaign}', [MarketplaceController::class, 'show'])->name('marketplace.show');
         Route::post('/marketplace/{campaign}/apply', [MarketplaceController::class, 'apply'])->name('marketplace.apply');
 
+        Route::get('/applications', [MarketplaceController::class, 'applications'])->name('applications');
+        Route::post('/applications/{application}/withdraw', [MarketplaceController::class, 'withdrawApplication'])->name('applications.withdraw');
+
         Route::get('/invitations', [CreatorAssignmentController::class, 'invitations'])->name('invitations');
         Route::post('/invitations/{invitation}/accept', [CreatorAssignmentController::class, 'accept'])->name('invitations.accept');
         Route::post('/invitations/{invitation}/decline', [CreatorAssignmentController::class, 'decline'])->name('invitations.decline');
@@ -129,6 +133,11 @@ Route::middleware(['auth', 'workspace'])->prefix('brand')->name('brand.')->group
     Route::get('/campaigns/{campaign}', [CampaignController::class, 'show'])->name('campaigns.show');
     Route::post('/campaigns/{campaign}/launch', [CampaignController::class, 'launch'])->name('campaigns.launch');
     Route::get('/campaigns/{campaign}/matches', [CampaignController::class, 'matches'])->name('campaigns.matches');
+
+    Route::get('/applications',  [BrandApplicationController::class, 'index'])->name('applications.index');
+    Route::post('/applications/{application}/shortlist', [BrandApplicationController::class, 'shortlist'])->name('applications.shortlist');
+    Route::post('/applications/{application}/approve',   [BrandApplicationController::class, 'approve'])->name('applications.approve');
+    Route::post('/applications/{application}/reject',    [BrandApplicationController::class, 'reject'])->name('applications.reject');
 
     Route::get('/creators', [CreatorMarketplaceController::class, 'index'])->name('creators.index');
     Route::get('/creators/{creator}', [CreatorMarketplaceController::class, 'show'])->name('creators.show');
