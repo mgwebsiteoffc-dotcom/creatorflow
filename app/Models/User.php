@@ -34,6 +34,13 @@ class User extends Authenticatable
         ];
     }
 
+    protected $attributes = [
+        'system_role'        => 'user',
+        'account_status'     => 'active',
+        'suspension_reason'  => null,
+        'suspended_at'       => null,
+    ];
+
     public function isSuperAdmin(): bool { return $this->system_role === 'superadmin'; }
     public function isAdmin(): bool      { return in_array($this->system_role, ['admin','superadmin'], true); }
     public function isSuspended(): bool  { return $this->account_status === 'suspended'; }

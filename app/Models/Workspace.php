@@ -27,6 +27,29 @@ class Workspace extends Model
     protected $casts = [
         'settings' => 'array',
         'onboarding_completed_at' => 'datetime',
+        'suspended_at' => 'datetime',
+    ];
+
+    /**
+     * Default values so accessing a column that hasn't been migrated yet
+     * doesn't blow up in Laravel 11+ strict-mode. Also prevents
+     * MissingAttributeException when a query selects a partial set.
+     */
+    protected $attributes = [
+        'legal_name'         => null,
+        'contact_email'      => null,
+        'contact_phone'      => null,
+        'address_line1'      => null,
+        'address_line2'      => null,
+        'address_city'       => null,
+        'address_state'      => null,
+        'address_postal'     => null,
+        'tax_type'           => null,
+        'tax_id'             => null,
+        'billing_notes'      => null,
+        'account_status'     => 'active',
+        'suspension_reason'  => null,
+        'suspended_at'       => null,
     ];
 
     public function agency(): BelongsTo

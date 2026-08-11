@@ -47,6 +47,45 @@
         <x-stat label="Approved" :value="$funnel['approved']" tone="emerald"/>
     </div>
 
+    {{-- CAMPAIGN-WIDE STATS + ROAS --}}
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5">
+            <div class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Works completed</div>
+            <div class="mt-1 text-3xl font-black text-slate-900">{{ $campaignStats['completed_works'] }} <span class="text-base font-semibold text-slate-400">/ {{ $campaign->target_creators }}</span></div>
+            <div class="mt-3 h-2 rounded-full bg-slate-100">
+                <div class="h-2 rounded-full" style="width: {{ $campaign->target_creators > 0 ? min(100, ($campaignStats['completed_works'] / max($campaign->target_creators, 1)) * 100) : 0 }}%; background-image: linear-gradient(90deg,#10b981,#22d3ee);"></div>
+            </div>
+            <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+                <span>🎬 {{ $campaignStats['in_progress'] }} in progress</span>
+                <span>👀 {{ $campaignStats['needs_review'] }} needs review</span>
+            </div>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-5">
+            <div class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Applications</div>
+            <div class="mt-1 text-3xl font-black text-slate-900">{{ $campaignStats['applications_count'] }}</div>
+            <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+                <span class="text-emerald-600">✓ {{ $campaignStats['approved_applications'] }} approved</span>
+                <span class="text-rose-600">✕ {{ $campaignStats['rejected_applications'] }} rejected</span>
+                @if($campaignStats['days_running'] > 0)
+                    <span>📅 {{ $campaignStats['days_running'] }} days running</span>
+                @endif
+            </div>
+        </div>
+
+        <div class="rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 p-5 text-white shadow-md">
+            <div class="text-[11px] font-bold uppercase tracking-widest opacity-90">Attributed revenue</div>
+            <div class="mt-1 text-3xl font-black">{{ $currentWorkspace->formatMoney($campaignStats['attributed_revenue']) }}</div>
+            <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs opacity-90">
+                <span>🛒 {{ $campaignStats['attributed_orders'] }} orders</span>
+                <span>💸 spent {{ $currentWorkspace->formatMoney($campaignStats['total_cost']) }}</span>
+                @if($campaignStats['roas'])
+                    <span>📈 ROAS {{ $campaignStats['roas'] }}×</span>
+                @endif
+            </div>
+        </div>
+    </div>
+
     {{-- PENDING APPLICATIONS --}}
     @if($pendingApplications->isNotEmpty())
         <section class="mt-8 g-border p-1">
@@ -124,6 +163,30 @@
     <div class="mt-6">
         @include('partials.references-manager', ['campaign' => $campaign])
     </div>
+
+    {{-- ACTIVITY TIMELINE --}}
+    <section class="mt-10 rounded-2xl border border-slate-200 bg-white p-5 md:p-6">
+        <div class="flex items-center gap-2">
+            <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-slate-800 to-slate-950 text-white">⏱</div>
+            <h2 class="text-lg font-bold text-slate-900">Activity timeline</h2>
+            <span class="ml-auto text-xs text-slate-500">{{ $timeline->count() }} events</span>
+        </div>
+
+        <ol class="mt-6 relative border-s border-slate-200 ps-6">
+            @forelse($timeline as $ev)
+                <li class="mb-6 last:mb-0">
+                    <span class="absolute -start-3 grid h-6 w-6 place-items-center rounded-full border-2 border-white bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] text-white shadow-sm">{{ $ev['icon'] }}</span>
+                    <div class="flex flex-wrap items-baseline justify-between gap-2">
+                        <div class="text-sm font-semibold text-slate-900">{{ $ev['title'] }}</div>
+                        <time class="text-[11px] text-slate-400">{{ $ev['at']?->diffForHumans() ?? '' }}</time>
+                    </div>
+                    <div class="mt-0.5 text-xs text-slate-500">{{ $ev['body'] }}</div>
+                </li>
+            @empty
+                <li class="text-sm text-slate-500">No activity yet.</li>
+            @endforelse
+        </ol>
+    </section>
 
     <h2 class="mt-10 text-lg font-bold">Assignments</h2>
     <div class="mt-4 space-y-2">

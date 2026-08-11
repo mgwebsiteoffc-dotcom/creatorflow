@@ -16,9 +16,12 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Strict mode in dev surfaces N+1 queries and missing attributes during
-        // development, but lazy-loading is allowed in production.
-        Model::shouldBeStrict(! app()->isProduction());
+        // Strict mode in dev surfaces N+1 queries. We don't want it to throw
+        // when a model attribute hasn't been migrated yet or a select() left
+        // some columns off — those cases are handled with $attributes defaults
+        // on the models. Only lazy-loading violations stay strict.
+        Model::preventLazyLoading(! app()->isProduction());
+        Model::preventAccessingMissingAttributes(false);
         Model::handleLazyLoadingViolationUsing(function ($model, $relation) {
             if (app()->isProduction()) {
                 report(new \RuntimeException("Lazy loading [{$relation}] on [".get_class($model).']'));

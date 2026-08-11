@@ -38,6 +38,12 @@ class Creator extends Model
         'rate_post_cents' => 'integer',
         'rate_video_cents' => 'integer',
         'rate_story_cents' => 'integer',
+        'suspended_at' => 'datetime',
+    ];
+
+    protected $attributes = [
+        'suspension_reason' => null,
+        'suspended_at'      => null,
     ];
 
     public function user(): BelongsTo
