@@ -16,6 +16,7 @@ use App\Http\Controllers\Creator\EarningsController;
 use App\Http\Controllers\Creator\MarketplaceController;
 use App\Http\Controllers\Creator\OnboardingController as CreatorOnboardingController;
 use App\Http\Controllers\Creator\ProfileController;
+use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\Shopify\ShopifyInstallController;
 use App\Http\Controllers\Shopify\ShopifyWebhookController;
@@ -28,6 +29,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/', 'welcome')->name('home');
+
+Route::get('/features', [MarketingController::class, 'features'])->name('features');
+Route::get('/pricing',  [MarketingController::class, 'pricing'])->name('pricing');
+Route::get('/about',    [MarketingController::class, 'about'])->name('about');
+Route::get('/contact',  [MarketingController::class, 'contact'])->name('contact');
+
+Route::prefix('tools')->name('tools.')->group(function () {
+    Route::get('/',                    [MarketingController::class, 'tools'])->name('index');
+    Route::get('/roi-calculator',      [MarketingController::class, 'toolRoiCalculator'])->name('roi');
+    Route::get('/creator-rate-calculator', [MarketingController::class, 'toolRateCalculator'])->name('rate');
+    Route::get('/brief-generator',     [MarketingController::class, 'toolBriefGenerator'])->name('brief');
+});
+
+Route::get('/resources', [MarketingController::class, 'resources'])->name('resources');
+Route::get('/blog',      [MarketingController::class, 'blogIndex'])->name('blog.index');
+Route::get('/blog/{slug}', [MarketingController::class, 'blogShow'])->name('blog.show');
 
 // Shopify install + OAuth (also reachable while authenticated).
 Route::prefix('shopify')->name('shopify.')->group(function () {

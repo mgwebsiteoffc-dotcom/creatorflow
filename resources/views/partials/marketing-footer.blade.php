@@ -34,21 +34,21 @@
         <div>
             <h4 class="text-sm font-semibold text-white">Product</h4>
             <ul class="mt-4 space-y-2 text-sm">
-                <li><a href="#platform" class="hover:text-white">Platform</a></li>
-                <li><a href="#campaigns" class="hover:text-white">Campaign types</a></li>
-                <li><a href="#creators" class="hover:text-white">Creators</a></li>
-                <li><a href="#pricing" class="hover:text-white">Pricing</a></li>
+                <li><a href="{{ route('features') }}" class="hover:text-white">Features</a></li>
+                <li><a href="{{ route('pricing') }}" class="hover:text-white">Pricing</a></li>
+                <li><a href="{{ route('tools.index') }}" class="hover:text-white">Free tools</a></li>
                 <li><a href="{{ route('shopify.install') }}" class="hover:text-white">Shopify app</a></li>
+                <li><a href="{{ route('register') }}" class="hover:text-white">Start free</a></li>
             </ul>
         </div>
 
         <div>
             <h4 class="text-sm font-semibold text-white">Company</h4>
             <ul class="mt-4 space-y-2 text-sm">
-                <li><a href="#" class="hover:text-white">About</a></li>
-                <li><a href="#" class="hover:text-white">Blog</a></li>
-                <li><a href="#" class="hover:text-white">Careers</a></li>
-                <li><a href="#" class="hover:text-white">Contact</a></li>
+                <li><a href="{{ route('about') }}" class="hover:text-white">About</a></li>
+                <li><a href="{{ route('resources') }}" class="hover:text-white">Resources</a></li>
+                <li><a href="{{ route('blog.index') }}" class="hover:text-white">Blog</a></li>
+                <li><a href="{{ route('contact') }}" class="hover:text-white">Contact</a></li>
                 <li><a href="#" class="hover:text-white">Privacy · Terms</a></li>
             </ul>
         </div>
