@@ -17,7 +17,7 @@
     {{-- Sidebar --}}
     <aside class="sticky top-0 hidden h-screen w-60 shrink-0 flex-col gap-1 border-r border-slate-200 bg-slate-950 p-3 text-slate-200 md:flex">
         <a href="{{ route('admin.dashboard') }}" class="mb-3 flex items-center gap-2 rounded-xl bg-white/5 p-3">
-            <span class="grid h-8 w-8 place-items-center rounded-lg text-xs font-black text-white" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">CF</span>
+            <span class="grid h-8 w-8 place-items-center rounded-lg text-xs font-black text-white" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">CP</span>
             <div>
                 <div class="text-sm font-bold text-white">CreatorPlex</div>
                 <div class="text-[10px] uppercase tracking-widest text-slate-400">Admin</div>
@@ -62,14 +62,14 @@
         <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/85 backdrop-blur md:hidden">
             <div class="flex h-14 items-center justify-between px-4">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2 font-bold">
-                    <span class="grid h-8 w-8 place-items-center rounded-lg text-xs font-black text-white" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">CF</span>
+                    <span class="grid h-8 w-8 place-items-center rounded-lg text-xs font-black text-white" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">CP</span>
                     Admin
                 </a>
                 <a href="{{ url('/') }}" class="text-xs font-semibold text-slate-500">↩ Site</a>
             </div>
         </header>
 
-        <div class="mx-auto w-full max-w-6xl px-4 py-8 md:px-8 md:py-10">
+        <div class="mx-auto w-full max-w-7xl px-4 py-8 md:px-8 md:py-10">
             @if(session('status'))
                 <div class="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
                     <span>✓ {{ session('status') }}</span>

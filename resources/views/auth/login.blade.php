@@ -9,7 +9,7 @@
                     <div class="rounded-[calc(1.25rem-1px)] bg-white p-6 md:p-10">
                         <div class="mb-6 flex items-center gap-2 md:hidden">
                             <span class="grid h-9 w-9 place-items-center rounded-xl text-xs font-black text-white"
-                                  style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">CF</span>
+                                  style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">CP</span>
                             <span class="font-bold">CreatorPlex</span>
                         </div>
 

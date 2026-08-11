@@ -26,7 +26,7 @@
     <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4 md:px-6 lg:px-8">
         <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold">
             <span class="grid h-8 w-8 place-items-center rounded-xl text-xs font-black text-white shadow-sm"
-                  style="background-image: {{ $logoGrad }};">CF</span>
+                  style="background-image: {{ $logoGrad }};">CP</span>
             <span class="hidden text-slate-900 sm:block">CreatorPlex</span>
             <span class="badge-violet {{ $panel === 'creator' ? '!bg-rose-100 !text-rose-700' : '' }}">{{ ucfirst($panel) }}</span>
         </a>

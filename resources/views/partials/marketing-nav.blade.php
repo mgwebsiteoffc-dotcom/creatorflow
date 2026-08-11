@@ -3,7 +3,7 @@
         <a href="{{ url('/') }}" class="flex items-center gap-2 font-bold">
             <span class="relative grid h-9 w-9 place-items-center rounded-xl text-white"
                   style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">
-                <span class="text-sm font-black">CF</span>
+                <span class="text-sm font-black">CP</span>
                 <span class="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-cyan-400 ring-2 ring-white"></span>
             </span>
             <span class="text-slate-900">CreatorPlex</span>
