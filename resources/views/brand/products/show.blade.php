@@ -1,5 +1,18 @@
 <x-layouts.app panel="brand" :title="$product->title">
-    <a href="{{ route('brand.products.index') }}" class="text-sm text-slate-500">← Products</a>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+        <a href="{{ route('brand.products.index') }}" class="text-sm text-slate-500">← Products</a>
+        <div class="flex items-center gap-2">
+            <a href="{{ route('brand.products.edit', $product) }}" class="btn-secondary">
+                <x-icon name="edit" class="h-4 w-4" /> Edit
+            </a>
+            <form method="POST" action="{{ route('brand.products.destroy', $product) }}" data-confirm="Delete {{ $product->title }}? This can't be undone.">
+                @csrf @method('DELETE')
+                <button class="btn-danger" title="Delete product">
+                    <x-icon name="trash" class="h-4 w-4" /> Delete
+                </button>
+            </form>
+        </div>
+    </div>
     <div class="mt-2 grid gap-5 md:grid-cols-3">
         <div class="card md:col-span-2 overflow-hidden">
             <div class="aspect-video bg-slate-100">

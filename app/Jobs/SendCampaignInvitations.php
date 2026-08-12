@@ -45,16 +45,17 @@ class SendCampaignInvitations implements ShouldQueue
 
             $message = $this->draftMessage($ai, $campaign, $creator);
 
-            CampaignInvitation::create([
-                'campaign_id' => $campaign->id,
-                'creator_id' => $creator->id,
+            $invitation = CampaignInvitation::create([
+                'uuid'                => (string) \Illuminate\Support\Str::uuid(),
+                'campaign_id'         => $campaign->id,
+                'creator_id'          => $creator->id,
                 'campaign_product_id' => $this->pickProductForCreator($campaign, $creator)?->id,
-                'channel' => 'in_app',
-                'message' => $message,
-                'ai_variant' => 'default',
-                'status' => 'sent',
-                'sent_at' => now(),
-                'expires_at' => now()->addDays(7),
+                'channel'             => 'in_app',
+                'message'             => $message,
+                'ai_variant'          => 'default',
+                'status'              => 'sent',
+                'sent_at'             => now(),
+                'expires_at'          => now()->addDays(7),
             ]);
 
             $match->update(['status' => 'invited', 'invited_at' => now()]);
@@ -66,7 +67,8 @@ class SendCampaignInvitations implements ShouldQueue
                 'brand_name'     => $campaign->workspace->name,
                 'campaign_title' => $campaign->title,
                 'message'        => \Illuminate\Support\Str::limit((string) $message, 240),
-                'link'           => url('/creator/invitations'),
+                // Magic link — auto-logs in the creator if the email matches.
+                'link'           => route('invite.open', ['uuid' => $invitation->uuid]),
             ]);
 
             $invited++;

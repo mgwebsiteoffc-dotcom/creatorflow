@@ -48,6 +48,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 
+// Magic-link handler for creator invitation emails (deep-links into the
+// invitations screen, auto-logs in returning creators).
+Route::get('/i/{uuid}', [\App\Http\Controllers\InvitationLinkController::class, 'open'])
+    ->name('invite.open')
+    ->where('uuid', '[0-9a-f\-]{36}');
+
 Route::get('/features', [MarketingController::class, 'features'])->name('features');
 Route::get('/pricing',  [MarketingController::class, 'pricing'])->name('pricing');
 Route::get('/about',    [MarketingController::class, 'about'])->name('about');
@@ -163,6 +169,12 @@ Route::middleware('auth')->group(function () {
 */
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', AdminDashboardController::class)->name('dashboard');
+
+    // CSV exports
+    Route::get('/exports/users',      [\App\Http\Controllers\Admin\ExportController::class, 'users'])->name('exports.users');
+    Route::get('/exports/creators',   [\App\Http\Controllers\Admin\ExportController::class, 'creators'])->name('exports.creators');
+    Route::get('/exports/workspaces', [\App\Http\Controllers\Admin\ExportController::class, 'workspaces'])->name('exports.workspaces');
+    Route::get('/exports/payouts',    [\App\Http\Controllers\Admin\ExportController::class, 'payouts'])->name('exports.payouts');
 
     Route::get('/users',   [AdminUserController::class, 'index'])->name('users.index');
     Route::get('/users/{user}',            [AdminUserController::class, 'show'])->name('users.show');
@@ -328,6 +340,9 @@ Route::middleware(['auth', 'workspace'])->prefix('brand')->name('brand.')->group
     Route::get('/products/import', [CsvImportController::class, 'create'])->name('products.import');
     Route::post('/products/import', [CsvImportController::class, 'store'])->name('products.import.store');
     Route::resource('products', ProductController::class)->except(['edit', 'update', 'destroy']);
+    Route::get('/products/{product}/edit',   [ProductController::class, 'edit'])->name('products.edit');
+    Route::patch('/products/{product}',      [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}',     [ProductController::class, 'destroy'])->name('products.destroy');
 
     Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
     Route::get('/campaigns/create', [CampaignController::class, 'create'])->name('campaigns.create');

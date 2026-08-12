@@ -5,8 +5,11 @@
             <p class="mt-1 text-sm text-slate-500">Every payment in, every invoice out, every payout to creators — system-wide.</p>
         </div>
         <div class="flex flex-wrap gap-2">
-            <a href="{{ route('admin.escrow.index') }}" class="btn-secondary !py-2 text-sm">Escrow</a>
-            <a href="{{ route('admin.settings') }}" class="btn-secondary !py-2 text-sm">Fee settings</a>
+            <a href="{{ route('admin.exports.payouts') }}" class="btn-secondary">
+                <x-icon name="download" class="h-4 w-4" /> Export payouts CSV
+            </a>
+            <a href="{{ route('admin.escrow.index') }}" class="btn-secondary">Escrow</a>
+            <a href="{{ route('admin.settings') }}" class="btn-secondary">Fee settings</a>
         </div>
     </div>
 

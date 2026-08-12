@@ -4,6 +4,9 @@
             <h1 class="text-3xl font-black tracking-tight text-slate-900">Users</h1>
             <p class="mt-1 text-sm text-slate-500">Manage accounts, promote admins, and ban abusive users.</p>
         </div>
+        <a href="{{ route('admin.exports.users') }}" class="btn-secondary">
+            <x-icon name="download" class="h-4 w-4" /> Export CSV
+        </a>
     </div>
 
     <form method="GET" class="mt-6 grid gap-2 sm:grid-cols-[1fr_160px_160px_160px_auto] sm:items-center">

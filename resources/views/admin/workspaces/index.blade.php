@@ -4,6 +4,9 @@
             <h1 class="text-3xl font-black tracking-tight text-slate-900">Brand workspaces</h1>
             <p class="mt-1 text-sm text-slate-500">Suspend brands that violate the terms.</p>
         </div>
+        <a href="{{ route('admin.exports.workspaces') }}" class="btn-secondary">
+            <x-icon name="download" class="h-4 w-4" /> Export CSV
+        </a>
     </div>
 
     <form method="GET" class="mt-6 grid gap-2 sm:grid-cols-[1fr_180px_160px_auto] sm:items-center">
