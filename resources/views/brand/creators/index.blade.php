@@ -10,7 +10,9 @@
     </div>
 
     {{-- ============================ FILTER BAR ============================ --}}
-    <form method="GET" class="card mt-5 p-4">
+    <form method="GET" class="card mt-5 p-4"
+          data-skeleton-target="#creators-list"
+          data-skeleton-slot="#creators-list-skeleton">
         {{-- Row 1: primary controls — always visible --}}
         <div class="grid gap-2 md:grid-cols-12">
             {{-- Search --}}
@@ -152,15 +154,19 @@
     @endif
 
     {{-- ============================ CREATOR CARDS ============================ --}}
-    <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div id="creators-list" class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 transition-opacity">
         @forelse($creators as $creator)
             @include('brand.creators._card', ['creator' => $creator, 'activeCampaigns' => $activeCampaigns])
         @empty
             <x-empty-state title="No creators match" icon="creators" class="sm:col-span-2 lg:col-span-3">
                 Try widening your filters — remove a city, add more tiers, or lower the follower range.
+                <x-slot:action><a href="{{ route('brand.creators.index') }}" class="btn-primary">Reset filters</a></x-slot:action>
             </x-empty-state>
         @endforelse
     </div>
 
-    <div class="mt-6">{{ $creators->links() }}</div>
+    {{-- Skeleton overlay shown while pagination / filter submit is in flight --}}
+    <x-skeleton-card id="creators-list-skeleton" class="mt-5 hidden" :count="6" />
+
+    <div class="mt-6" data-skeleton-container="#creators-list">{{ $creators->links() }}</div>
 </x-layouts.app>

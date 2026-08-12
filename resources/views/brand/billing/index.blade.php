@@ -6,9 +6,14 @@
             <h1 class="text-3xl font-black tracking-tight text-slate-900">Billing</h1>
             <p class="mt-1 text-sm text-slate-500">Payments, invoices, and receipts — all in one place.</p>
         </div>
-        <div class="text-right">
-            <div class="text-xs uppercase tracking-widest text-slate-500">Currency</div>
-            <div class="text-lg font-bold">{{ $sym }} · {{ $workspace->currency }}</div>
+        <div class="flex flex-wrap items-center gap-2">
+            <a href="{{ route('brand.escrow.top-up') }}" class="btn-gradient !py-2 !text-xs">
+                <x-icon name="plus" class="h-4 w-4" /> Add funds to escrow
+            </a>
+            <div class="hidden text-right sm:block">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Currency</div>
+                <div class="text-sm font-bold">{{ $sym }} · {{ $workspace->currency }}</div>
+            </div>
         </div>
     </div>
 
@@ -103,7 +108,18 @@
                                     </x-badge>
                                 </td>
                                 <td class="p-3 text-right">
-                                    @if($p->receipt_url)<a class="text-xs font-semibold text-violet-700 hover:text-violet-900" href="{{ $p->receipt_url }}" target="_blank">View ↗</a>@else — @endif
+                                    <div class="inline-flex items-center gap-2">
+                                        @if($p->status === 'succeeded')
+                                            <a href="{{ route('brand.billing.invoice', $p) }}" target="_blank"
+                                               class="inline-flex items-center gap-1 text-xs font-semibold text-violet-700 hover:text-violet-900" title="Open tax invoice">
+                                                <x-icon name="download" class="h-3.5 w-3.5" /> Tax invoice
+                                            </a>
+                                        @endif
+                                        @if($p->receipt_url)
+                                            <a class="text-xs font-semibold text-slate-500 hover:text-slate-900" href="{{ $p->receipt_url }}" target="_blank">Receipt ↗</a>
+                                        @endif
+                                        @if($p->status !== 'succeeded' && ! $p->receipt_url) — @endif
+                                    </div>
                                 </td>
                             </tr>
                         @empty

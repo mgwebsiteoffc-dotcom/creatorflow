@@ -524,4 +524,28 @@ document.addEventListener('DOMContentLoaded', () => {
             render();
         });
     });
+
+    /* Skeleton overlay for slow filter/paginate submissions.
+       Any <form data-skeleton-target="#id"> that submits will hide the target
+       element and reveal its sibling with data-skeleton-slot for the trip. */
+    document.querySelectorAll('form[data-skeleton-target]').forEach(form => {
+        form.addEventListener('submit', () => {
+            const target = document.querySelector(form.dataset.skeletonTarget);
+            const slot   = document.querySelector(form.dataset.skeletonSlot || (form.dataset.skeletonTarget + '-skeleton'));
+            if (target) target.classList.add('opacity-40', 'pointer-events-none');
+            if (slot)   slot.classList.remove('hidden');
+        });
+    });
+    // Same treatment for pagination links (they're plain <a> so hook globally)
+    document.querySelectorAll('[data-skeleton-container]').forEach(container => {
+        container.querySelectorAll('a[href]').forEach(a => {
+            if (a.href.includes('#')) return;
+            a.addEventListener('click', () => {
+                const target = document.querySelector(container.dataset.skeletonContainer);
+                const slot   = document.querySelector(container.dataset.skeletonContainer + '-skeleton');
+                if (target) target.classList.add('opacity-40', 'pointer-events-none');
+                if (slot)   slot.classList.remove('hidden');
+            });
+        });
+    });
 });

@@ -573,6 +573,29 @@ body.guest-bg .bg-slate-50  { background-color: rgba(248,250,252,.55) !important
         box-shadow: 0 8px 18px -10px rgba(219,39,119,.5);
     }
 
+    /* Skeleton block for loading states.
+       Usage: <div class="skeleton h-4 w-24"></div>
+       Also works on inline text: <span class="skeleton skeleton-text">Loading…</span> */
+    .skeleton {
+        display: block;
+        border-radius: 0.5rem;
+        background: linear-gradient(90deg, #f1f5f9 0%, #e2e8f0 50%, #f1f5f9 100%);
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.4s ease-in-out infinite;
+    }
+    .skeleton-text {
+        display: inline-block;
+        color: transparent !important;
+        border-radius: 0.25rem;
+    }
+    @keyframes skeleton-shimmer {
+        0%   { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .skeleton { animation: none; background: #e2e8f0; }
+    }
+
     /* Auto-width chip for short labels (gender, age brackets, language codes).
        Sits in a flex-wrap row and never gets clipped. */
     .mini-chip {

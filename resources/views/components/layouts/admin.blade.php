@@ -107,5 +107,9 @@
     </main>
 </div>
 
+@auth
+    @include('partials.command-palette')
+@endauth
+
 </body>
 </html>

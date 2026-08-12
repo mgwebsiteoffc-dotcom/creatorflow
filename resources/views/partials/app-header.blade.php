@@ -28,8 +28,23 @@
             </a>
         </div>
 
-        {{-- Right: bell · messages · workspace name · sign-out --}}
+        {{-- Right: search · bell · messages · workspace · sign-out --}}
         <div class="flex items-center gap-1.5">
+            {{-- Command palette trigger (Cmd-K) --}}
+            <button type="button"
+                    onclick="window.CommandPalette?.open()"
+                    class="hidden items-center gap-2 rounded-lg border border-slate-200 bg-white/70 px-2.5 py-1.5 text-xs text-slate-500 hover:border-slate-300 hover:text-slate-700 md:inline-flex"
+                    title="Search (⌘K)">
+                <x-icon name="search" class="h-4 w-4" />
+                <span>Search…</span>
+                <kbd class="rounded border border-slate-200 bg-slate-50 px-1 text-[10px] font-semibold text-slate-400">⌘K</kbd>
+            </button>
+            <button type="button"
+                    onclick="window.CommandPalette?.open()"
+                    class="btn-ghost !p-2 md:hidden" title="Search (⌘K)">
+                <x-icon name="search" class="h-5 w-5" />
+            </button>
+
             {{-- Notifications bell --}}
             <div class="relative" data-notif-wrap>
                 <button type="button" data-notif-toggle class="btn-ghost relative !p-2" title="Notifications">

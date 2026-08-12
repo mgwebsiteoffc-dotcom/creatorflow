@@ -32,6 +32,7 @@
         @empty
             <x-empty-state title="No applications in this bucket" icon="applications">
                 Creators discover your campaigns from the marketplace. Once you launch, applications start rolling in here.
+                <x-slot:action><a href="{{ route('brand.creators.index') }}" class="btn-primary">Invite creators directly</a></x-slot:action>
             </x-empty-state>
         @endforelse
     </div>

@@ -48,6 +48,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 
+// Cmd-K / Ctrl-K global search (returns JSON — used by the palette).
+Route::get('/search/palette', [\App\Http\Controllers\SearchController::class, 'query'])
+    ->middleware('auth')
+    ->name('search.palette');
+
 // Magic-link handler for creator invitation emails (deep-links into the
 // invitations screen, auto-logs in returning creators).
 Route::get('/i/{uuid}', [\App\Http\Controllers\InvitationLinkController::class, 'open'])
@@ -184,6 +189,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/users/{user}/remove-admin', [AdminUserController::class, 'removeAdmin'])->name('users.removeAdmin');
 
     Route::get('/creators',  [AdminCreatorController::class, 'index'])->name('creators.index');
+    Route::post('/creators/bulk', [AdminCreatorController::class, 'bulk'])->name('creators.bulk');
     Route::get('/creators/import', [AdminCreatorController::class, 'importForm'])->name('creators.import');
     Route::post('/creators/import', [AdminCreatorController::class, 'importStore'])->name('creators.import.store');
     Route::get('/creators/{creator}',            [AdminCreatorController::class, 'show'])->name('creators.show');
@@ -364,6 +370,15 @@ Route::middleware(['auth', 'workspace'])->prefix('brand')->name('brand.')->group
 
     Route::get('/billing',            [BrandBillingController::class, 'index'])->name('billing.index');
     Route::post('/billing/payments',  [BrandBillingController::class, 'storePayment'])->name('billing.payments.store');
+
+    // Tax invoice — India GST compliant, print-to-PDF from browser
+    Route::get('/billing/invoice/{payment}', [\App\Http\Controllers\Brand\InvoiceController::class, 'show'])->name('billing.invoice');
+
+    // Escrow top-up (Razorpay checkout)
+    Route::get('/billing/top-up',                 [\App\Http\Controllers\Brand\EscrowTopUpController::class, 'show'])->name('escrow.top-up');
+    Route::post('/billing/top-up',                [\App\Http\Controllers\Brand\EscrowTopUpController::class, 'create'])->name('escrow.top-up.create');
+    Route::post('/billing/top-up/confirm',        [\App\Http\Controllers\Brand\EscrowTopUpController::class, 'confirm'])->name('escrow.top-up.confirm');
+    Route::post('/billing/top-up/manual',         [\App\Http\Controllers\Brand\EscrowTopUpController::class, 'manual'])->name('escrow.top-up.manual');
 
     Route::get('/applications',  [BrandApplicationController::class, 'index'])->name('applications.index');
     Route::post('/applications/{application}/shortlist', [BrandApplicationController::class, 'shortlist'])->name('applications.shortlist');

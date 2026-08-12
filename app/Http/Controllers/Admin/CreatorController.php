@@ -74,6 +74,76 @@ class CreatorController extends Controller
         return back()->with('status', "{$creator->display_name} has been reinstated.");
     }
 
+    /**
+     * Bulk action on a set of creator IDs — approve / suspend / delete / tag.
+     * All operations are guarded by "no-op if same-state" so accidental
+     * double-clicks are safe.
+     */
+    public function bulk(Request $request)
+    {
+        $data = $request->validate([
+            'action'       => ['required', 'in:approve,suspend,delete,tag_verified,tag_pending'],
+            'creator_ids'  => ['required', 'array', 'min:1'],
+            'creator_ids.*'=> ['integer'],
+            'reason'       => ['nullable', 'string', 'max:190'],
+        ]);
+
+        $ids = array_values(array_unique(array_map('intval', $data['creator_ids'])));
+        $count = 0;
+
+        switch ($data['action']) {
+            case 'approve':
+                $count = Creator::whereIn('id', $ids)->update([
+                    'status'            => 'active',
+                    'suspension_reason' => null,
+                    'suspended_at'      => null,
+                ]);
+                $msg = "Approved {$count} creator(s).";
+                break;
+
+            case 'suspend':
+                $count = Creator::whereIn('id', $ids)->update([
+                    'status'            => 'suspended',
+                    'suspension_reason' => $data['reason'] ?? 'Bulk action by admin',
+                    'suspended_at'      => now(),
+                ]);
+                $msg = "Suspended {$count} creator(s).";
+                break;
+
+            case 'tag_verified':
+                // No 'is_verified' column yet — 'active' is the current
+                // marker for a vetted creator. Once migration adds the
+                // column this becomes a real toggle.
+                $count = Creator::whereIn('id', $ids)->update(['status' => 'active']);
+                $msg = "Marked {$count} creator(s) as verified (active).";
+                break;
+
+            case 'tag_pending':
+                $count = Creator::whereIn('id', $ids)->update(['status' => 'pending']);
+                $msg = "Moved {$count} creator(s) back to pending review.";
+                break;
+
+            case 'delete':
+                // Soft-guard: refuse if any of the selected creators have an
+                // active or completed assignment — they're historical records now.
+                $blocked = Creator::whereIn('id', $ids)
+                    ->has('assignments')
+                    ->pluck('display_name')
+                    ->take(3)
+                    ->all();
+                if (! empty($blocked)) {
+                    return back()->with('error',
+                        'Cannot delete: '.implode(', ', $blocked).' have historical assignments. Suspend instead.'
+                    );
+                }
+                $count = Creator::whereIn('id', $ids)->delete();
+                $msg = "Deleted {$count} creator(s).";
+                break;
+        }
+
+        return back()->with('status', $msg ?? "Applied to {$count} creator(s).");
+    }
+
     public function importForm()
     {
         return view('admin.creators.import');

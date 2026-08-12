@@ -7,7 +7,7 @@
         <a href="{{ route('brand.campaigns.create') }}" class="btn-primary !py-2 text-sm">+ New campaign</a>
     </div>
 
-    <div class="mt-8 space-y-3">
+    <div id="campaigns-list" class="mt-8 space-y-3 transition-opacity">
         @forelse($campaigns as $campaign)
             @include('brand.campaigns._card', ['campaign' => $campaign])
         @empty
@@ -18,5 +18,7 @@
         @endforelse
     </div>
 
-    <div class="mt-8">{{ $campaigns->links() }}</div>
+    <x-skeleton-card id="campaigns-list-skeleton" class="mt-8 hidden !grid-cols-1" :count="4" />
+
+    <div class="mt-8" data-skeleton-container="#campaigns-list">{{ $campaigns->links() }}</div>
 </x-layouts.app>

@@ -27,6 +27,7 @@
         @empty
             <x-empty-state title="No assignments" icon="assignments">
                 Launch a campaign to start assigning creators to products.
+                <x-slot:action><a href="{{ route('brand.campaigns.create') }}" class="btn-primary">Create campaign</a></x-slot:action>
             </x-empty-state>
         @endforelse
     </div>

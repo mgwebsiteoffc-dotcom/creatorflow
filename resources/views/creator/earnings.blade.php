@@ -35,6 +35,7 @@
         @empty
             <x-empty-state title="No payouts yet" icon="file-text">
                 Approved content turns into payouts automatically.
+                <x-slot:action><a href="{{ route('creator.marketplace') }}" class="btn-primary">Find campaigns</a></x-slot:action>
             </x-empty-state>
         @endforelse
     </div>

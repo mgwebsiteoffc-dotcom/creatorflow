@@ -11,7 +11,8 @@
             @include('creator._invitation', ['inv' => $inv])
         @empty
             <x-empty-state title="No pending invitations" icon="invitations">
-                <a href="{{ route('creator.marketplace') }}" class="font-medium text-rose-600">Browse the marketplace →</a>
+                When a brand invites you, it lands here. In the meantime, apply to open campaigns yourself.
+                <x-slot:action><a href="{{ route('creator.marketplace') }}" class="btn-primary">Browse marketplace</a></x-slot:action>
             </x-empty-state>
         @endforelse
     </div>

@@ -143,7 +143,13 @@
                 <p class="px-3 pb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-400">{{ $group['label'] }}</p>
                 <div class="space-y-0.5">
                     @foreach($group['items'] as $item)
-                        @php $active = $isActive($item['route']); @endphp
+                        @php
+                            $active = $isActive($item['route']);
+                            $badge  = null;
+                            if ($item['route'] === 'notifications.index' && ($unreadCount ?? 0) > 0) {
+                                $badge = ((int) $unreadCount) > 9 ? '9+' : (string) $unreadCount;
+                            }
+                        @endphp
                         <a href="{{ route($item['route']) }}"
                            class="group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition
                                   {{ $active
@@ -152,8 +158,11 @@
                             <x-icon :name="$item['icon']"
                                     class="h-[18px] w-[18px] shrink-0 {{ $active ? 'text-white' : 'text-slate-500 group-hover:text-slate-900' }}" />
                             <span class="min-w-0 flex-1 truncate">{{ $item['label'] }}</span>
-                            @if($active)
-                                                            @endif
+                            @if($badge)
+                                <span class="inline-flex h-4 min-w-4 shrink-0 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">{{ $badge }}</span>
+                            @elseif($active)
+                                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-r from-violet-400 to-pink-400"></span>
+                            @endif
                         </a>
                     @endforeach
                 </div>

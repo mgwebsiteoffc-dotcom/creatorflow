@@ -27,6 +27,7 @@
         @empty
             <x-empty-state title="Nothing here yet" icon="file-text">
                 Accepted campaigns and your deliverables show up here.
+                <x-slot:action><a href="{{ route('creator.marketplace') }}" class="btn-primary">Browse marketplace</a></x-slot:action>
             </x-empty-state>
         @endforelse
     </div>

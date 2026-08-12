@@ -137,6 +137,9 @@
             window.addEventListener('load', () =>navigator.serviceWorker.register('/sw.js').catch(() => {}));
         }
     </script>
+    @auth
+        @include('partials.command-palette')
+    @endauth
     @include('partials.pwa-install')
     @include('partials.analytics-body')
 </body>

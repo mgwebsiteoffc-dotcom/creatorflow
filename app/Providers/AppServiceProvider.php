@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('partials.topbar', NotificationComposer::class);
+        View::composer('partials.app-header', NotificationComposer::class);
+        View::composer('partials.sidebar',    NotificationComposer::class);
         View::composer('welcome', HomepageComposer::class);
 
         // Use Tailwind pagination markup + our own view for a branded look.
