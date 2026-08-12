@@ -146,11 +146,11 @@
                         <div class="grid gap-4 sm:grid-cols-2">
                             <div>
                                 <label class="label">UGC rate (in cents)</label>
-                                <input class="input" type="number" min="0" name="rate_ugc_cents" placeholder="e.g. 15000 = $150" value="{{ old('rate_ugc_cents') }}">
+                                <input class="input" type="number" min="0" name="rate_ugc_cents" placeholder="e.g. 500000 = ₹5,000" value="{{ old('rate_ugc_cents') }}">
                             </div>
                             <div>
                                 <label class="label">Video rate (in cents)</label>
-                                <input class="input" type="number" min="0" name="rate_video_cents" placeholder="e.g. 30000 = $300" value="{{ old('rate_video_cents') }}">
+                                <input class="input" type="number" min="0" name="rate_video_cents" placeholder="e.g. 2500000 = ₹25,000" value="{{ old('rate_video_cents') }}">
                             </div>
                         </div>
 

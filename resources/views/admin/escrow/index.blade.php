@@ -30,10 +30,10 @@
                 <div class="flex items-center gap-3 rounded-xl border border-slate-100 p-3">
                     <div class="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white">$</div>
                     <div class="min-w-0 flex-1">
-                        <p class="truncate text-sm font-semibold text-slate-900">${{ number_format($p->net_cents/100, 2) }} → {{ $p->creator?->display_name ?? 'creator' }}</p>
+                        <p class="truncate text-sm font-semibold text-slate-900">₹{{ number_format($p->net_cents/100, 2, '.', ',') }} → {{ $p->creator?->display_name ?? 'creator' }}</p>
                         <p class="text-xs text-slate-500">Assignment #{{ $p->assignment_id }} · created {{ $p->created_at->diffForHumans() }}</p>
                     </div>
-                    <form method="POST" action="{{ route('admin.escrow.release', $p) }}" data-confirm="Release ${{ number_format($p->net_cents/100, 2) }} to creator?">@csrf
+                    <form method="POST" action="{{ route('admin.escrow.release', $p) }}" data-confirm="Release ₹{{ number_format($p->net_cents/100, 2, '.', ',') }} to creator?">@csrf
                         <button class="btn-primary !py-1.5 text-xs">Release now</button>
                     </form>
                 </div>
@@ -77,7 +77,7 @@
                     <tr>
                         <td class="p-3 text-xs text-slate-500">{{ $t->created_at->format('M j, H:i') }}</td>
                         <td class="p-3"><x-badge :tone="match($t->kind){'hold'=>'amber','release'=>'green','refund'=>'rose','fee'=>'violet','markup'=>'sky',default=>'slate'}">{{ $t->kind }}</x-badge></td>
-                        <td class="p-3 font-semibold">${{ number_format($t->amount_cents/100, 2) }}</td>
+                        <td class="p-3 font-semibold">₹{{ number_format($t->amount_cents/100, 2, '.', ',') }}</td>
                         <td class="p-3 text-slate-600">{{ $t->workspace?->name ?? '—' }}</td>
                         <td class="p-3 text-slate-600">{{ $t->creator?->display_name ?? '—' }}</td>
                         <td class="p-3 text-xs text-slate-500">{{ $t->note }}</td>

@@ -29,23 +29,23 @@
     <div class="mt-8 grid gap-4 md:grid-cols-3 lg:grid-cols-5">
         <div class="card p-5">
             <p class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Revenue collected</p>
-            <p class="mt-2 text-3xl font-black text-emerald-600">${{ number_format($totals['inflow']/100, 0) }}</p>
+            <p class="mt-2 text-3xl font-black text-emerald-600">₹{{ number_format($totals['inflow']/100, 0, '.', ',') }}</p>
         </div>
         <div class="card p-5">
             <p class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Refunded</p>
-            <p class="mt-2 text-3xl font-black text-rose-600">${{ number_format($totals['refunded']/100, 0) }}</p>
+            <p class="mt-2 text-3xl font-black text-rose-600">₹{{ number_format($totals['refunded']/100, 0, '.', ',') }}</p>
         </div>
         <div class="card p-5">
             <p class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Pending</p>
-            <p class="mt-2 text-3xl font-black text-amber-600">${{ number_format($totals['pending']/100, 0) }}</p>
+            <p class="mt-2 text-3xl font-black text-amber-600">₹{{ number_format($totals['pending']/100, 0, '.', ',') }}</p>
         </div>
         <div class="card p-5">
             <p class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Paid to creators</p>
-            <p class="mt-2 text-3xl font-black text-slate-900">${{ number_format($payoutTotals['paid']/100, 0) }}</p>
+            <p class="mt-2 text-3xl font-black text-slate-900">₹{{ number_format($payoutTotals['paid']/100, 0, '.', ',') }}</p>
         </div>
         <div class="card p-5">
             <p class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Pending payouts</p>
-            <p class="mt-2 text-3xl font-black text-slate-900">${{ number_format($payoutTotals['pending']/100, 0) }}</p>
+            <p class="mt-2 text-3xl font-black text-slate-900">₹{{ number_format($payoutTotals['pending']/100, 0, '.', ',') }}</p>
         </div>
     </div>
 
@@ -118,7 +118,7 @@
                                 <div class="text-[11px] text-slate-500">{{ $p->workspace?->name ?? '—' }} · {{ $p->created_at->diffForHumans() }}</div>
                             </div>
                             <div class="text-right">
-                                <div class="font-mono font-bold text-slate-900">${{ number_format($p->net_cents/100, 2) }}</div>
+                                <div class="font-mono font-bold text-slate-900">₹{{ number_format($p->net_cents/100, 2, '.', ',') }}</div>
                                 <x-badge :tone="$p->status === 'paid' ? 'green' : ($p->status === 'pending' ? 'amber' : 'slate')">{{ $p->status }}</x-badge>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                                 <div class="text-[11px] text-slate-500">{{ $inv->provider }} · {{ optional($inv->paid_at ?: $inv->due_at)->format('M j, Y') ?? '—' }}</div>
                             </div>
                             <div class="text-right">
-                                <div class="font-mono font-bold text-slate-900">${{ number_format($inv->amount_cents/100, 2) }}</div>
+                                <div class="font-mono font-bold text-slate-900">₹{{ number_format($inv->amount_cents/100, 2, '.', ',') }}</div>
                                 <x-badge :tone="$inv->status === 'paid' ? 'green' : 'amber'">{{ $inv->status }}</x-badge>
                             </div>
                         </div>

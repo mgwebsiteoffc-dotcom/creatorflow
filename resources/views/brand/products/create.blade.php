@@ -69,7 +69,7 @@
                 </div>
                 <div>
                     <label class="label">Price (in cents) <span class="text-rose-500">*</span></label>
-                    <input class="input" type="number" name="price_cents" min="0" required value="{{ old('price_cents') }}" placeholder="2999 = $29.99">
+                    <input class="input" type="number" name="price_cents" min="0" required value="{{ old('price_cents') }}" placeholder="129900 = ₹1,299.00">
                 </div>
                 <div>
                     <label class="label">Inventory qty <span class="text-rose-500">*</span></label>

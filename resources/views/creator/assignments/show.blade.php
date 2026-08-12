@@ -270,7 +270,7 @@
             @if($assignment->payout)
                 <div class="overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 p-5 text-white shadow-lg md:p-6">
                     <div class="text-xs font-bold uppercase tracking-widest opacity-90">Payout</div>
-                    <div class="mt-1 text-4xl font-black">${{ number_format($assignment->payout->net_cents/100,2) }}</div>
+                    <div class="mt-1 text-4xl font-black">₹{{ number_format($assignment->payout->net_cents/100, 2, '.', ',') }}</div>
                     <div class="mt-1 text-xs opacity-90">{{ $assignment->payout->status }} · released after approval</div>
                 </div>
             @endif

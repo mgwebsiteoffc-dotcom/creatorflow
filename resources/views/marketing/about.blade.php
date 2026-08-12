@@ -11,7 +11,7 @@
             @foreach([
                 ['100K+', 'Verified creators'],
                 ['1,000+', 'Active brands'],
-                ['$46M+', 'GMV attributed'],
+                ['₹384Cr+', 'GMV attributed'],
                 ['4.9★', 'Avg rating'],
             ] as $stat)
                 <div class="reveal card p-6 text-center">

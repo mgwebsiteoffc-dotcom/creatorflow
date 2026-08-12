@@ -21,7 +21,7 @@
                         <div class="grid h-10 w-10 place-items-center rounded-lg bg-slate-100">📦</div>
                         <div class="min-w-0 flex-1">
                             <p class="truncate text-sm font-medium">{{ $cp->product->title }}</p>
-                            <p class="text-xs text-slate-500">${{ number_format(($cp->variant->price_cents ?? $cp->product->priceCents())/100,2) }} · {{ $cp->target_creators }} creators</p>
+                            <p class="text-xs text-slate-500">₹{{ number_format(($cp->variant->price_cents ?? $cp->product->priceCents())/100, 2, '.', ',') }} · {{ $cp->target_creators }} creators</p>
                         </div>
                     </div>
                 @endforeach

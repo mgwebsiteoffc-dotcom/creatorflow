@@ -4,7 +4,7 @@
         '@context' => 'https://schema.org',
         '@type'    => 'FAQPage',
         'mainEntity' => [
-            ['@type' => 'Question', 'name' => 'Is there really a free plan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. 5 campaigns per month, unlimited creators, AI briefs — all included at $0. No card required.']],
+            ['@type' => 'Question', 'name' => 'Is there really a free plan?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. 5 campaigns per month, unlimited creators, AI briefs — all included at ₹0. No card required.']],
             ['@type' => 'Question', 'name' => 'Do you take a cut from creators?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Never. Creators keep 100% of paid deals and all product value from barter.']],
             ['@type' => 'Question', 'name' => 'Can I cancel anytime?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Yes. Downgrade or cancel from your dashboard with one click. No lock-in.']],
             ['@type' => 'Question', 'name' => 'Do I need a Shopify store?', 'acceptedAnswer' => ['@type' => 'Answer', 'text' => 'Nope. CSV, WooCommerce, Amazon, or manual works too. Shopify just adds real-time order/inventory sync.']],
@@ -31,7 +31,7 @@
             <div class="card p-8">
                 <h3 class="text-sm font-bold uppercase tracking-widest text-slate-500">Free</h3>
                 <div class="mt-2 flex items-baseline gap-1">
-                    <span class="text-5xl font-black text-slate-900">$0</span>
+                    <span class="text-5xl font-black text-slate-900">₹0</span>
                     <span class="text-slate-500">/mo</span>
                 </div>
                 <p class="mt-2 text-sm text-slate-500">For teams testing creator marketing.</p>
@@ -52,7 +52,7 @@
                         <span class="badge badge-violet">Most popular</span>
                     </div>
                     <div class="mt-2 flex items-baseline gap-1">
-                        <span class="text-5xl font-black text-slate-900">$149</span>
+                        <span class="text-5xl font-black text-slate-900">₹2,499</span>
                         <span class="text-slate-500">/mo</span>
                     </div>
                     <p class="mt-2 text-sm text-slate-500">For DTC brands scaling seeding and UGC.</p>
@@ -69,7 +69,7 @@
             <div class="card p-8">
                 <h3 class="text-sm font-bold uppercase tracking-widest text-slate-500">Scale</h3>
                 <div class="mt-2 flex items-baseline gap-1">
-                    <span class="text-5xl font-black text-slate-900">$499</span>
+                    <span class="text-5xl font-black text-slate-900">₹12,999</span>
                     <span class="text-slate-500">/mo</span>
                 </div>
                 <p class="mt-2 text-sm text-slate-500">For agencies and 8-figure DTC teams.</p>
@@ -124,7 +124,7 @@
         </div>
         <div class="reveal mt-10 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white">
             @foreach([
-                ['Is there really a free plan?', 'Yes. 5 campaigns per month, unlimited creators, AI briefs — all included at $0. No card required.'],
+                ['Is there really a free plan?', 'Yes. 5 campaigns per month, unlimited creators, AI briefs — all included at ₹0. No card required.'],
                 ['Do you take a cut from creators?', 'Never. Creators keep 100% of paid deals and all product value from barter.'],
                 ['Can I cancel anytime?', 'Yes. Downgrade or cancel from your dashboard with one click. No lock-in.'],
                 ['Do I need a Shopify store?', 'Nope. CSV, WooCommerce, Amazon, or manual works too. Shopify just adds real-time order/inventory sync.'],

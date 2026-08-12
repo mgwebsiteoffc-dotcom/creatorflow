@@ -92,11 +92,11 @@
             <div class="mt-2 space-y-2 text-sm">
                 <div class="flex justify-between rounded-xl bg-emerald-50 p-3">
                     <span class="text-emerald-700">Paid</span>
-                    <span class="font-black text-emerald-800">${{ number_format($stats['earnings_paid']/100, 2) }}</span>
+                    <span class="font-black text-emerald-800">₹{{ number_format($stats['earnings_paid']/100, 2, '.', ',') }}</span>
                 </div>
                 <div class="flex justify-between rounded-xl bg-amber-50 p-3">
                     <span class="text-amber-700">Pending</span>
-                    <span class="font-black text-amber-800">${{ number_format($stats['earnings_pending']/100, 2) }}</span>
+                    <span class="font-black text-amber-800">₹{{ number_format($stats['earnings_pending']/100, 2, '.', ',') }}</span>
                 </div>
             </div>
         </section>
@@ -163,7 +163,7 @@
                             <tr>
                                 <td class="p-3 text-xs text-slate-500">{{ optional($p->paid_at ?: $p->created_at)->format('M j, Y') }}</td>
                                 <td class="p-3 text-slate-800">#{{ $p->assignment_id }}</td>
-                                <td class="p-3 text-right font-mono font-semibold text-slate-900">${{ number_format($p->net_cents/100, 2) }}</td>
+                                <td class="p-3 text-right font-mono font-semibold text-slate-900">₹{{ number_format($p->net_cents/100, 2, '.', ',') }}</td>
                                 <td class="p-3 text-right"><x-badge :tone="$p->status === 'paid' ? 'green' : ($p->status === 'pending' ? 'amber' : 'slate')">{{ $p->status }}</x-badge></td>
                             </tr>
                         @endforeach

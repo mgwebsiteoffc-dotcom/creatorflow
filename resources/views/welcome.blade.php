@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="rounded-lg bg-white p-2">
                                     <div class="text-xs text-slate-400">GMV</div>
-                                    <div class="text-sm font-bold text-emerald-600">$126K</div>
+                                    <div class="text-sm font-bold text-emerald-600">₹1.05Cr</div>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +186,7 @@
                     <div class="absolute -left-6 top-6 hidden animate-pulse rounded-2xl bg-white p-3 shadow-lg ring-1 ring-slate-100 md:block">
                         <div class="flex items-center gap-2 text-xs">
                             <span class="grid h-6 w-6 place-items-center rounded-lg bg-emerald-100 text-emerald-700">$</span>
-                            <span class="font-semibold text-slate-800">+$1,240 attributed</span>
+                            <span class="font-semibold text-slate-800">+₹1,03,200 attributed</span>
                         </div>
                     </div>
                     <div class="absolute -right-4 bottom-8 hidden rounded-2xl bg-white p-3 shadow-lg ring-1 ring-slate-100 md:block">
@@ -309,7 +309,7 @@
                             <div class="mt-6 flex items-center gap-4 text-xs">
                                 <div><div class="text-2xl font-black">4.2M</div><div class="opacity-80">reach</div></div>
                                 <div><div class="text-2xl font-black">8.1%</div><div class="opacity-80">ER</div></div>
-                                <div><div class="text-2xl font-black">$126K</div><div class="opacity-80">GMV</div></div>
+                                <div><div class="text-2xl font-black">₹1.05Cr</div><div class="opacity-80">GMV</div></div>
                             </div>
                         </div>
                         <div class="col-span-2 row-span-3 rounded-2xl bg-slate-900 p-4 text-white shadow-lg">
@@ -333,7 +333,7 @@
                         </div>
                         <div class="col-span-4 row-span-3 overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-400 to-emerald-400 p-5 text-white shadow-lg">
                             <div class="text-xs uppercase tracking-widest opacity-80">Attribution</div>
-                            <div class="mt-2 text-2xl font-black leading-tight">$18.40 avg ROAS</div>
+                            <div class="mt-2 text-2xl font-black leading-tight">4.8× avg ROAS</div>
                             <div class="mt-6 flex items-end gap-1.5">
                                 @foreach([30,55,45,72,60,85,68,92,80] as $h)
                                     <div class="w-3 rounded-t bg-white/80" style="height: {{ $h }}px"></div>
@@ -388,7 +388,7 @@
                                 <div class="text-xs font-semibold text-slate-500">New campaign · step 2/4</div>
                                 <div class="mt-2 text-lg font-bold text-slate-900">Skincare · Product Review</div>
                                 <div class="mt-4 grid grid-cols-2 gap-3">
-                                    @foreach([['Niche', 'Beauty · Skincare'], ['Region', 'Tier 1 · IN'], ['Follower', '20K–150K'], ['Budget', '$8,000']] as $kv)
+                                    @foreach([['Niche', 'Beauty · Skincare'], ['Region', 'Tier 1 · IN'], ['Follower', '20K–150K'], ['Budget', '₹6,60,000']] as $kv)
                                         <div class="rounded-lg bg-white p-3">
                                             <div class="text-[11px] uppercase tracking-wider text-slate-400">{{ $kv[0] }}</div>
                                             <div class="text-sm font-semibold text-slate-900">{{ $kv[1] }}</div>
@@ -476,7 +476,7 @@
                                 </div>
                                 <div class="rounded-xl bg-gradient-to-br from-cyan-400 to-emerald-400 p-4 text-white">
                                     <div class="text-xs uppercase tracking-widest opacity-80">This month GMV</div>
-                                    <div class="mt-1 text-3xl font-black">$186K</div>
+                                    <div class="mt-1 text-3xl font-black">₹1.55Cr</div>
                                 </div>
                                 <div class="col-span-2 rounded-xl bg-slate-50 p-4">
                                     <div class="mb-3 flex items-center justify-between text-xs text-slate-500">

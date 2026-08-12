@@ -7,8 +7,8 @@
     </div>
 
     <div class="mt-6 grid grid-cols-2 gap-4">
-        <x-stat label="Available" :value="'$'.number_format($availableCents/100,2)" tone="emerald"/>
-        <x-stat label="Pending" :value="'$'.number_format($pendingCents/100,2)" tone="amber"/>
+        <x-stat label="Available" :value="'₹'.number_format($availableCents/100, 2, '.', ',')" tone="emerald"/>
+        <x-stat label="Pending" :value="'₹'.number_format($pendingCents/100, 2, '.', ',')" tone="amber"/>
     </div>
 
     @if($onboardingUrl)
@@ -28,7 +28,7 @@
                     <p class="text-xs text-slate-500">{{ $p->paid_at?->format('M j, Y') ?? 'Scheduled' }}</p>
                 </div>
                 <div class="text-right">
-                    <p class="font-semibold">${{ number_format($p->net_cents/100,2) }}</p>
+                    <p class="font-semibold">₹{{ number_format($p->net_cents/100, 2, '.', ',') }}</p>
                     <x-badge :tone="$p->status === 'paid' ? 'green' : 'amber'">{{ $p->status }}</x-badge>
                 </div>
             </div>

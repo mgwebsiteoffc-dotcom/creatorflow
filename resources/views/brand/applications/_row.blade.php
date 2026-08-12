@@ -34,7 +34,7 @@
                 @if($c->country)<span>📍 {{ $c->country }}</span>@endif
                 @if($totalFollowers > 0)<span>👥 {{ number_format($totalFollowers) }} followers</span>@endif
                 @if($c->engagement_rate)<span>💥 {{ $c->engagement_rate }}% ER</span>@endif
-                @if($app->proposed_fee_cents)<span>💰 asks ${{ number_format($app->proposed_fee_cents/100, 0) }}</span>@endif
+                @if($app->proposed_fee_cents)<span>💰 asks ₹{{ number_format($app->proposed_fee_cents/100, 0, '.', ',') }}</span>@endif
             </div>
 
             @if($c->nicheRows->isNotEmpty())

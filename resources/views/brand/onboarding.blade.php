@@ -90,7 +90,7 @@
                                 </div>
                                 <div>
                                     <label class="label">Price (in cents)</label>
-                                    <input class="input" type="number" min="0" name="price_cents" placeholder="4900 = $49" value="{{ old('price_cents') }}">
+                                    <input class="input" type="number" min="0" name="price_cents" placeholder="49900 = ₹499" value="{{ old('price_cents') }}">
                                 </div>
                                 <div>
                                     <label class="label">Inventory</label>
@@ -196,7 +196,7 @@
                             <div>
                                 <label class="label">Monthly campaign budget</label>
                                 <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                                    @foreach(['<$1K','$1K–$5K','$5K–$20K','$20K+'] as $band)
+                                    @foreach(['<₹1L','₹1L–₹5L','₹5L–₹20L','₹20L+'] as $band)
                                         <label class="cursor-pointer">
                                             <input type="radio" name="budget_band" value="{{ $band }}" class="sr-only" {{ $loop->index === 1 ? 'checked' : '' }}>
                                             <div class="pick-tile">{{ $band }}</div>

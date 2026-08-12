@@ -82,7 +82,7 @@
                         </div>
                         <h2 class="mt-3 text-2xl font-black leading-tight md:text-3xl">
                             42 campaigns launched today.
-                            $186K attributed this month.
+                            ₹1.5Cr attributed this month.
                         </h2>
                         <p class="mt-4 max-w-sm text-sm text-white/85">
                             Real-time creator matching, AI content review, and native Shopify sync — one place.
@@ -98,7 +98,7 @@
                                 <div class="text-[10px] uppercase tracking-wider opacity-80">Brands</div>
                             </div>
                             <div class="rounded-xl bg-white/10 p-3 backdrop-blur">
-                                <div class="text-lg font-black">$18.4</div>
+                                <div class="text-lg font-black">4.8×</div>
                                 <div class="text-[10px] uppercase tracking-wider opacity-80">Avg ROAS</div>
                             </div>
                         </div>
