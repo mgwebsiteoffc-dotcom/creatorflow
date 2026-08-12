@@ -33,8 +33,15 @@ class NotificationDispatcher
         $vars = array_merge($this->defaultVars(), $vars);
         $result = ['email' => null, 'whatsapp' => null, 'inapp' => null];
 
+        // Master kill-switches — an admin can turn off a whole channel globally
+        // without touching every per-event template.
+        $settings         = PlatformSetting::current();
+        $emailMasterOn    = (bool) ($settings->mail_enabled ?? true);
+        $inappMasterOn    = (bool) ($settings->inapp_enabled ?? true);
+        $whatsappMasterOn = (bool) ($settings->whatify_enabled ?? false); // whatify_enabled is the WhatsApp master
+
         // ─── In-app ───
-        if ($template->inapp_enabled && ! empty($recipient['type']) && ! empty($recipient['id'])) {
+        if ($inappMasterOn && $template->inapp_enabled && ! empty($recipient['type']) && ! empty($recipient['id'])) {
             try {
                 if (SchemaCheck::has('notifications')) {
                     AppNotification::safeCreate([
@@ -57,7 +64,7 @@ class NotificationDispatcher
         }
 
         // ─── Email ───
-        if ($template->email_enabled && ! empty($recipient['email'])) {
+        if ($emailMasterOn && $template->email_enabled && ! empty($recipient['email'])) {
             $subject = $this->interpolate($template->email_subject ?: $template->label, $vars);
             $body    = $this->interpolate($template->email_body ?: '', $vars);
             $html    = $this->wrapHtml($subject, $body, $vars['link'] ?? null);
@@ -66,7 +73,8 @@ class NotificationDispatcher
         }
 
         // ─── WhatsApp (Whatify) ───
-        if ($template->whatsapp_enabled && ! empty($recipient['phone']) && $this->whatify->isEnabled()) {
+        // whatify->isEnabled() already checks whatify_enabled + api key.
+        if ($whatsappMasterOn && $template->whatsapp_enabled && ! empty($recipient['phone']) && $this->whatify->isEnabled()) {
             $tpl = $template->whatsapp_template_name;
             if ($tpl) {
                 // Template mode — interpolate each placeholder as a body param.

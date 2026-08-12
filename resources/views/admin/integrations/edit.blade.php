@@ -14,6 +14,54 @@
         </div>
     @endif
 
+    {{-- ═════════════════════════ MASTER SWITCHES ═════════════════════════ --}}
+    <section class="mt-6 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-950 p-5 text-white">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-white/60">🎛 Master switches</p>
+                <h2 class="mt-1 text-lg font-black">Global on/off for outbound channels</h2>
+                <p class="mt-1 text-xs text-white/70">These override every per-template toggle. Turn a channel off here and <strong>nothing</strong> sends on that channel, even if individual templates are enabled.</p>
+            </div>
+        </div>
+        <form method="POST" action="{{ route('admin.integrations.mail.update') }}" class="mt-5 grid gap-3 sm:grid-cols-3">
+            @csrf
+            {{-- Preserve current driver + creds when only toggling master switches --}}
+            <input type="hidden" name="mail_driver"       value="{{ $settings->mail_driver ?: 'log' }}">
+            <input type="hidden" name="mail_from_address" value="{{ $settings->mail_from_address }}">
+            <input type="hidden" name="mail_from_name"    value="{{ $settings->mail_from_name }}">
+            <input type="hidden" name="mail_reply_to"     value="{{ $settings->mail_reply_to }}">
+
+            <label class="flex cursor-pointer items-start gap-3 rounded-xl border {{ ($settings->mail_enabled ?? true) ? 'border-emerald-400/60 bg-emerald-500/15' : 'border-white/10 bg-white/5' }} p-4 transition hover:bg-white/10">
+                <input type="hidden" name="mail_enabled" value="0">
+                <input type="checkbox" name="mail_enabled" value="1" @checked($settings->mail_enabled ?? true) class="mt-1 h-5 w-5 rounded">
+                <div>
+                    <p class="flex items-center gap-2 text-sm font-black">📧 Email <span class="rounded-full px-2 py-0.5 text-[9px] {{ ($settings->mail_enabled ?? true) ? 'bg-emerald-400 text-emerald-950' : 'bg-white/20 text-white/70' }}">{{ ($settings->mail_enabled ?? true) ? 'ON' : 'OFF' }}</span></p>
+                    <p class="mt-0.5 text-[11px] text-white/60">Kill switch for every outbound email. Per-template checkboxes are ignored when this is off.</p>
+                </div>
+            </label>
+
+            <label class="flex cursor-pointer items-start gap-3 rounded-xl border {{ ($settings->whatify_enabled ?? false) ? 'border-emerald-400/60 bg-emerald-500/15' : 'border-white/10 bg-white/5' }} p-4 transition hover:bg-white/10">
+                <p class="mt-1 text-sm font-black">💬 WhatsApp
+                    <span class="rounded-full px-2 py-0.5 text-[9px] ml-1 {{ ($settings->whatify_enabled ?? false) ? 'bg-emerald-400 text-emerald-950' : 'bg-white/20 text-white/70' }}">{{ ($settings->whatify_enabled ?? false) ? 'ON' : 'OFF' }}</span>
+                </p>
+                <a href="#whatify" class="ml-auto self-center text-[11px] font-semibold text-emerald-300 hover:text-white">Manage →</a>
+            </label>
+
+            <label class="flex cursor-pointer items-start gap-3 rounded-xl border {{ ($settings->inapp_enabled ?? true) ? 'border-emerald-400/60 bg-emerald-500/15' : 'border-white/10 bg-white/5' }} p-4 transition hover:bg-white/10">
+                <input type="hidden" name="inapp_enabled" value="0">
+                <input type="checkbox" name="inapp_enabled" value="1" @checked($settings->inapp_enabled ?? true) class="mt-1 h-5 w-5 rounded">
+                <div>
+                    <p class="flex items-center gap-2 text-sm font-black">🔔 In-app <span class="rounded-full px-2 py-0.5 text-[9px] {{ ($settings->inapp_enabled ?? true) ? 'bg-emerald-400 text-emerald-950' : 'bg-white/20 text-white/70' }}">{{ ($settings->inapp_enabled ?? true) ? 'ON' : 'OFF' }}</span></p>
+                    <p class="mt-0.5 text-[11px] text-white/60">Notification bell + /notifications inbox. Turn off for a maintenance quiet mode.</p>
+                </div>
+            </label>
+
+            <div class="sm:col-span-3 flex justify-end">
+                <button class="btn-gradient !py-2 !text-xs">Save master switches</button>
+            </div>
+        </form>
+    </section>
+
     {{-- Tab nav (anchor jump) --}}
     <div class="mt-6 flex flex-wrap gap-2 text-sm">
         <a href="#mail"      class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📧 Mail</a>

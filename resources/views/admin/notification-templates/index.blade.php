@@ -13,6 +13,19 @@
         </div>
     @endif
 
+    {{-- Global channel status pills (mirror of the master switches on Integrations) --}}
+    @php $s = \App\Models\PlatformSetting::current(); @endphp
+    <div class="mt-4 flex flex-wrap items-center gap-2 text-xs">
+        <span class="text-slate-500 font-semibold uppercase tracking-widest">Master switches:</span>
+        <span class="inline-flex items-center gap-1 rounded-full px-3 py-1 font-semibold {{ ($s->mail_enabled ?? true) ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">📧 Email {{ ($s->mail_enabled ?? true) ? 'ON' : 'OFF' }}</span>
+        <span class="inline-flex items-center gap-1 rounded-full px-3 py-1 font-semibold {{ ($s->whatify_enabled ?? false) ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500' }}">💬 WhatsApp {{ ($s->whatify_enabled ?? false) ? 'ON' : 'OFF' }}</span>
+        <span class="inline-flex items-center gap-1 rounded-full px-3 py-1 font-semibold {{ ($s->inapp_enabled ?? true) ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">🔔 In-app {{ ($s->inapp_enabled ?? true) ? 'ON' : 'OFF' }}</span>
+        <a href="{{ route('admin.integrations.edit') }}" class="text-violet-700 hover:underline">Change →</a>
+    </div>
+    @if(! ($s->mail_enabled ?? true) || ! ($s->inapp_enabled ?? true))
+        <p class="mt-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">⚠ A master switch is currently OFF — nothing will send on that channel even if templates below are enabled.</p>
+    @endif
+
     @foreach($templates ?? [] as $audience => $group)
         <section class="mt-8">
             <h2 class="text-lg font-black text-slate-900">

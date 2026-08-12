@@ -18,7 +18,7 @@ class PlatformSetting extends Model
         'ai_last_tested_at', 'ai_last_test_status',
         // Mail (transactional email)
         'mail_driver', 'mail_api_key', 'mail_from_address', 'mail_from_name', 'mail_reply_to',
-        'mail_last_tested_at', 'mail_last_test_status',
+        'mail_last_tested_at', 'mail_last_test_status', 'mail_enabled', 'inapp_enabled',
         // Analytics + verification scripts (all site-wide)
         'ga4_measurement_id', 'gtm_container_id', 'meta_pixel_id', 'linkedin_partner_id', 'hotjar_id',
         'google_site_verification', 'bing_site_verification',
@@ -56,6 +56,8 @@ class PlatformSetting extends Model
         'whatify_api_key'           => 'encrypted',
         'whatify_enabled'           => 'boolean',
         'whatify_last_tested_at'    => 'datetime',
+        'mail_enabled'              => 'boolean',
+        'inapp_enabled'             => 'boolean',
     ];
 
     /**
@@ -71,6 +73,8 @@ class PlatformSetting extends Model
         'ai_temperature'            => 0.40,
         'ai_last_tested_at'         => null,
         'ai_last_test_status'       => null,
+        'mail_enabled'              => true,
+        'inapp_enabled'             => true,
         'mail_driver'               => 'log',
         'mail_api_key'              => null,
         'mail_from_address'         => null,

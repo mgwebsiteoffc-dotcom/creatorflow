@@ -34,6 +34,8 @@ class IntegrationsController extends Controller
         $this->ensureMigrated();
 
         $data = $request->validate([
+            'mail_enabled'      => ['nullable', 'boolean'],
+            'inapp_enabled'     => ['nullable', 'boolean'],
             'mail_driver'       => ['required', 'in:log,resend,mailersend,smtp'],
             'mail_api_key'      => ['nullable', 'string', 'max:300'],
             'mail_from_address' => ['nullable', 'email'],
@@ -46,11 +48,15 @@ class IntegrationsController extends Controller
             unset($data['mail_api_key']);
         }
 
+        // Master toggles are booleans — normalise the hidden-then-checkbox form pattern.
+        $data['mail_enabled']  = (bool) $request->input('mail_enabled');
+        $data['inapp_enabled'] = (bool) $request->input('inapp_enabled');
+
         PlatformSetting::current()->update(array_filter($data, fn ($v) => $v !== null) + [
             'mail_last_test_status' => null,
         ]);
 
-        return back()->with('status', 'Mail settings saved.');
+        return back()->with('status', 'Mail + notification settings saved.');
     }
 
     public function testMail(Request $request, MailService $mail)
