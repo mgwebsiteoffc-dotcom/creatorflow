@@ -105,8 +105,8 @@
     {{-- ASSIGNMENTS --}}
     <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
         <h2 class="text-lg font-bold text-slate-900">🎬 Recent assignments</h2>
-        <div class="mt-4 overflow-hidden rounded-xl border border-slate-100">
-            <table class="w-full text-sm">
+        <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
+            <table class="w-full min-w-[640px] text-sm">
                 <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                     <tr><th class="p-3">When</th><th class="p-3">Campaign</th><th class="p-3">Brand</th><th class="p-3">Product</th><th class="p-3 text-right">Status</th></tr>
                 </thead>
@@ -153,8 +153,8 @@
     @if($payouts->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
             <h2 class="text-lg font-bold text-slate-900">💰 Payout history</h2>
-            <div class="mt-4 overflow-hidden rounded-xl border border-slate-100">
-                <table class="w-full text-sm">
+            <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
+                <table class="w-full min-w-[640px] text-sm">
                     <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                         <tr><th class="p-3">When</th><th class="p-3">Assignment</th><th class="p-3 text-right">Net</th><th class="p-3 text-right">Status</th></tr>
                     </thead>

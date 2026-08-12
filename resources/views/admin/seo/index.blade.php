@@ -49,7 +49,7 @@
             <h2 class="text-lg font-bold text-slate-900">All indexable URLs ({{ $rows->count() }})</h2>
             <span class="text-xs text-slate-500">Same set that appears in sitemap.xml</span>
         </div>
-        <table class="w-full text-sm">
+        <table class="w-full min-w-[640px] text-sm">
             <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                 <tr><th class="p-3">Group</th><th class="p-3">Title</th><th class="p-3">URL</th></tr>
             </thead>

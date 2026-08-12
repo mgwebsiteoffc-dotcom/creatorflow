@@ -84,7 +84,7 @@
         @include('partials.topbar', compact('panel', 'workspace', 'creator'))
     @endif
 
-    <div class="{{ $isGuest ? 'w-full' : 'mx-auto w-full max-w-6xl px-4 pb-28 pt-6 md:px-6 md:pb-16 md:pt-10 lg:px-8' }}">
+    <div class="{{ $isGuest ? 'w-full overflow-x-hidden' : 'mx-auto w-full max-w-6xl overflow-x-hidden px-4 pb-28 pt-6 md:px-6 md:pb-16 md:pt-10 lg:px-8' }}">
         @if(session('status'))
             <x-flash type="success">{{ session('status') }}</x-flash>
         @endif

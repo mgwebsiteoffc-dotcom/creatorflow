@@ -21,8 +21,8 @@
         <button class="btn-secondary">Filter</button>
     </form>
 
-    <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white">
-        <table class="w-full text-sm">
+    <div class="mt-6 overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+        <table class="w-full min-w-[640px] text-sm">
             <thead class="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                 <tr><th class="p-3">Creator</th><th class="p-3">Followers</th><th class="p-3">Status</th><th class="p-3">Assignments</th><th class="p-3 text-right">Actions</th></tr>
             </thead>

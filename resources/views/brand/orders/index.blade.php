@@ -76,8 +76,8 @@
     </form>
 
     {{-- Orders table --}}
-    <div class="mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-white">
-        <table class="w-full text-sm">
+    <div class="mt-4 overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+        <table class="w-full min-w-[640px] text-sm">
             <thead class="border-b border-slate-200 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                 <tr>
                     <th class="p-3">Order</th>

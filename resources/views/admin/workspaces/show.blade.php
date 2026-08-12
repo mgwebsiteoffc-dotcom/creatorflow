@@ -122,8 +122,8 @@
     {{-- CAMPAIGNS --}}
     <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
         <h2 class="text-lg font-bold text-slate-900">🚀 Recent campaigns</h2>
-        <div class="mt-4 overflow-hidden rounded-xl border border-slate-100">
-            <table class="w-full text-sm">
+        <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
+            <table class="w-full min-w-[640px] text-sm">
                 <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                     <tr><th class="p-3">Title</th><th class="p-3">Type</th><th class="p-3">Creators</th><th class="p-3">Products</th><th class="p-3 text-right">Status</th></tr>
                 </thead>
@@ -163,8 +163,8 @@
     @if($invoices->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
             <h2 class="text-lg font-bold text-slate-900">🧾 Invoices</h2>
-            <div class="mt-4 overflow-hidden rounded-xl border border-slate-100">
-                <table class="w-full text-sm">
+            <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
+                <table class="w-full min-w-[640px] text-sm">
                     <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                         <tr><th class="p-3">Provider</th><th class="p-3">Date</th><th class="p-3 text-right">Amount</th><th class="p-3 text-right">Status</th><th class="p-3 text-right">PDF</th></tr>
                     </thead>
@@ -188,8 +188,8 @@
     @if($payments->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
             <h2 class="text-lg font-bold text-slate-900">💳 Payment records</h2>
-            <div class="mt-4 overflow-hidden rounded-xl border border-slate-100">
-                <table class="w-full text-sm">
+            <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
+                <table class="w-full min-w-[640px] text-sm">
                     <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                         <tr><th class="p-3">When</th><th class="p-3">Kind</th><th class="p-3">Description</th><th class="p-3 text-right">Amount</th><th class="p-3 text-right">Status</th></tr>
                     </thead>

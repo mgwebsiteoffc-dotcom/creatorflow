@@ -60,8 +60,8 @@
                     @endforeach
                 </div>
             </div>
-            <div class="mt-4 overflow-hidden rounded-xl border border-slate-100">
-                <table class="w-full text-sm">
+            <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
+                <table class="w-full min-w-[640px] text-sm">
                     <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
                         <tr><th class="p-3">When</th><th class="p-3">Workspace</th><th class="p-3">Description</th><th class="p-3 text-right">Amount</th><th class="p-3 text-right">Status</th></tr>
                     </thead>

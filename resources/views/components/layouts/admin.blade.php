@@ -11,7 +11,7 @@
     <title>{{ $title ? $title.' · ' : '' }}Admin · CreatorPlex</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-slate-100 text-slate-900">
+<body class="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900">
 
 <div class="flex min-h-screen">
     {{-- Sidebar --}}
