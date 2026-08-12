@@ -14,7 +14,7 @@
                         </div>
 
                         <span class="chip">
-                            <span class="chip-dot"></span> Welcome back
+                            <span class="chip-dot"></span>Welcome back
                         </span>
                         <h1 class="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
                             Sign in to <span class="text-gradient">CreatorPlex</span>
@@ -37,7 +37,7 @@
                                 <input class="input" type="password" name="password" required autocomplete="current-password" placeholder="••••••••">
                             </div>
                             <label class="flex items-center gap-2 text-sm text-slate-600">
-                                <input type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-violet-600 focus:ring-violet-400"> Remember me for 30 days
+                                <input type="checkbox" name="remember" class="h-4 w-4 rounded border-slate-300 text-violet-600 focus:ring-violet-400">Remember me for 30 days
                             </label>
                             <button class="btn-gradient w-full">Sign in →</button>
                         </form>
@@ -64,7 +64,7 @@
                         </p>
 
                         <div class="mt-6 rounded-2xl border border-dashed border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
-                            <div class="flex items-center gap-2 font-semibold text-slate-700">🛡️ Platform admin (SaaS owner)</div>
+                            <div class="flex items-center gap-2 font-semibold text-slate-700">Platform admin (SaaS owner)</div>
                             <p class="mt-1">Sign in with your admin email — after login you'll be redirected to <code class="rounded bg-white px-1 py-0.5">/admin</code>. Demo seed: <code class="rounded bg-white px-1 py-0.5">admin@creatorplex.test</code> · <code class="rounded bg-white px-1 py-0.5">password</code>.</p>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                     <div class="relative overflow-hidden rounded-3xl p-8 text-white"
                          style="background-image: linear-gradient(160deg,#4c1d95 0%,#7c3aed 35%,#db2777 75%,#f59e0b 110%);">
                         <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest opacity-80">
-                            <span class="h-1.5 w-1.5 rounded-full bg-white"></span> Live now
+                            <span class="h-1.5 w-1.5 rounded-full bg-white"></span>Live now
                         </div>
                         <h2 class="mt-3 text-2xl font-black leading-tight md:text-3xl">
                             42 campaigns launched today.
@@ -105,7 +105,7 @@
                     </div>
 
                     <figure class="reveal mt-5 rounded-2xl border border-slate-200 bg-white p-5">
-                        <div class="flex text-amber-500">★★★★★</div>
+                        <div class="flex text-amber-500"></div>
                         <blockquote class="mt-3 text-sm text-slate-700">
                             “We shipped 3 seeding campaigns in the first week. UGC quality was so good we're now using it in paid.”
                         </blockquote>

@@ -9,23 +9,23 @@
 
     @if(! empty($schemaMissing))
         <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm"><x-icon name="alert" class="h-5 w-5 text-white" /></span>
             <div class="flex-1"><p class="font-bold">homepage_items table not migrated yet.</p><p class="mt-1 text-xs text-amber-800">Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code>. Until then the homepage falls back to bundled defaults.</p></div>
         </div>
     @endif
 
     {{-- Section tabs (visual) --}}
     <div class="mt-6 flex flex-wrap gap-2">
-        <a href="#client_logo" class="tab-pill is-active">🏢 Client logos ({{ $sections['client_logo']->count() }})</a>
-        <a href="#sample_reel" class="tab-pill">🎬 Sample reels ({{ $sections['sample_reel']->count() }})</a>
-        <a href="#hero_image"  class="tab-pill">🖼 Hero images ({{ $sections['hero_image']->count() }})</a>
+        <a href="#client_logo" class="tab-pill is-active">Client logos ({{ $sections['client_logo']->count() }})</a>
+        <a href="#sample_reel" class="tab-pill">Sample reels ({{ $sections['sample_reel']->count() }})</a>
+        <a href="#hero_image" class="tab-pill">Hero images ({{ $sections['hero_image']->count() }})</a>
     </div>
 
-    {{-- ─────────── CLIENT LOGOS ─────────── --}}
+    {{--  CLIENT LOGOS  --}}
     <section id="client_logo" class="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
         <div class="flex items-start justify-between">
             <div>
-                <h2 class="text-lg font-bold text-slate-900">🏢 Client logos</h2>
+                <h2 class="text-lg font-bold text-slate-900">Client logos</h2>
                 <p class="text-xs text-slate-500">Marquee strip on the homepage and city / service pages.</p>
             </div>
         </div>
@@ -64,7 +64,7 @@
                         <div class="mt-2 text-center text-[11px] font-semibold text-slate-700">{{ $l->title }}</div>
                         <form method="POST" action="{{ route('admin.homepage.destroy', $l) }}" class="absolute right-2 top-2" data-confirm="Delete {{ $l->title }}?">
                             @csrf @method('DELETE')
-                            <button class="rounded-full bg-white/90 px-1.5 py-0.5 text-[10px] font-bold text-rose-600 shadow-sm hover:bg-rose-50">✕</button>
+                            <button class="rounded-full bg-white/90 px-1.5 py-0.5 text-[10px] font-bold text-rose-600 shadow-sm hover:bg-rose-50"></button>
                         </form>
                     </div>
                 @endforeach
@@ -72,11 +72,11 @@
         @endif
     </section>
 
-    {{-- ─────────── SAMPLE REELS ─────────── --}}
+    {{--  SAMPLE REELS  --}}
     <section id="sample_reel" class="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
         <div class="flex items-start justify-between">
             <div>
-                <h2 class="text-lg font-bold text-slate-900">🎬 Sample reels</h2>
+                <h2 class="text-lg font-bold text-slate-900">Sample reels</h2>
                 <p class="text-xs text-slate-500">Portrait cards on the "Turning ideas into viral drops" carousel. Filterable by category on the site.</p>
             </div>
         </div>
@@ -142,7 +142,7 @@
                             <div class="text-[11px] text-slate-500">{{ $r->subtitle }} · {{ $r->meta }}</div>
                             <form method="POST" action="{{ route('admin.homepage.destroy', $r) }}" class="mt-2" data-confirm="Delete this reel?">
                                 @csrf @method('DELETE')
-                                <button class="text-[11px] font-semibold text-rose-600 hover:text-rose-800">✕ Remove</button>
+                                <button class="text-[11px] font-semibold text-rose-600 hover:text-rose-800">Remove</button>
                             </form>
                         </div>
                     </div>
@@ -151,11 +151,11 @@
         @endif
     </section>
 
-    {{-- ─────────── HERO IMAGES ─────────── --}}
+    {{--  HERO IMAGES  --}}
     <section id="hero_image" class="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
         <div class="flex items-start justify-between">
             <div>
-                <h2 class="text-lg font-bold text-slate-900">🖼 Hero images</h2>
+                <h2 class="text-lg font-bold text-slate-900">Hero images</h2>
                 <p class="text-xs text-slate-500">Optional slideshow images for the hero mock. Falls back to the built-in campaign card when empty.</p>
             </div>
         </div>
@@ -185,7 +185,7 @@
                             <div class="text-sm font-semibold text-slate-800">{{ $h->title }}</div>
                             <form method="POST" action="{{ route('admin.homepage.destroy', $h) }}" class="mt-2" data-confirm="Delete?">
                                 @csrf @method('DELETE')
-                                <button class="text-[11px] font-semibold text-rose-600 hover:text-rose-800">✕ Remove</button>
+                                <button class="text-[11px] font-semibold text-rose-600 hover:text-rose-800">Remove</button>
                             </form>
                         </div>
                     </div>

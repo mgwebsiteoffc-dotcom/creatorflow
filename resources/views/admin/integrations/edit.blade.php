@@ -2,46 +2,46 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
             <p class="text-xs font-bold uppercase tracking-widest text-violet-600">Superadmin</p>
-            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">🔌 Integrations</h1>
+            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">Integrations</h1>
             <p class="mt-1 text-sm text-slate-500">Mail delivery, Razorpay payments, analytics scripts + verification tags — and roadmap feature flags. Secrets are encrypted at rest.</p>
         </div>
     </div>
 
     @if($schemaMissing || $columnsMissing)
         <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm"><x-icon name="alert" class="h-5 w-5 text-white" /></span>
             <div class="flex-1"><p class="font-bold">Migration required</p><p class="mt-1 text-xs">Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code>. Nothing on this page can be saved until you do.</p></div>
         </div>
     @endif
 
-    {{-- ═════════════════════════ MASTER SWITCHES ═════════════════════════ --}}
+    {{--  MASTER SWITCHES  --}}
     <section class="mt-6 rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-900 to-slate-950 p-5 text-white">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
-                <p class="text-[10px] font-bold uppercase tracking-widest text-white/60">🎛 Master switches</p>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-white/60">Master switches</p>
                 <h2 class="mt-1 text-lg font-black">Global on/off for outbound channels</h2>
-                <p class="mt-1 text-xs text-white/70">These override every per-template toggle. Turn a channel off here and <strong>nothing</strong> sends on that channel, even if individual templates are enabled.</p>
+                <p class="mt-1 text-xs text-white/70">These override every per-template toggle. Turn a channel off here and <strong>nothing</strong>sends on that channel, even if individual templates are enabled.</p>
             </div>
         </div>
         <form method="POST" action="{{ route('admin.integrations.mail.update') }}" class="mt-5 grid gap-3 sm:grid-cols-3">
             @csrf
             {{-- Preserve current driver + creds when only toggling master switches --}}
-            <input type="hidden" name="mail_driver"       value="{{ $settings->mail_driver ?: 'log' }}">
+            <input type="hidden" name="mail_driver" value="{{ $settings->mail_driver ?: 'log' }}">
             <input type="hidden" name="mail_from_address" value="{{ $settings->mail_from_address }}">
-            <input type="hidden" name="mail_from_name"    value="{{ $settings->mail_from_name }}">
-            <input type="hidden" name="mail_reply_to"     value="{{ $settings->mail_reply_to }}">
+            <input type="hidden" name="mail_from_name" value="{{ $settings->mail_from_name }}">
+            <input type="hidden" name="mail_reply_to" value="{{ $settings->mail_reply_to }}">
 
             <label class="flex cursor-pointer items-start gap-3 rounded-xl border {{ ($settings->mail_enabled ?? true) ? 'border-emerald-400/60 bg-emerald-500/15' : 'border-white/10 bg-white/5' }} p-4 transition hover:bg-white/10">
                 <input type="hidden" name="mail_enabled" value="0">
                 <input type="checkbox" name="mail_enabled" value="1" @checked($settings->mail_enabled ?? true) class="mt-1 h-5 w-5 rounded">
                 <div>
-                    <p class="flex items-center gap-2 text-sm font-black">📧 Email <span class="rounded-full px-2 py-0.5 text-[9px] {{ ($settings->mail_enabled ?? true) ? 'bg-emerald-400 text-emerald-950' : 'bg-white/20 text-white/70' }}">{{ ($settings->mail_enabled ?? true) ? 'ON' : 'OFF' }}</span></p>
+                    <p class="flex items-center gap-2 text-sm font-black">Email <span class="rounded-full px-2 py-0.5 text-[9px] {{ ($settings->mail_enabled ?? true) ? 'bg-emerald-400 text-emerald-950' : 'bg-white/20 text-white/70' }}">{{ ($settings->mail_enabled ?? true) ? 'ON' : 'OFF' }}</span></p>
                     <p class="mt-0.5 text-[11px] text-white/60">Kill switch for every outbound email. Per-template checkboxes are ignored when this is off.</p>
                 </div>
             </label>
 
             <label class="flex cursor-pointer items-start gap-3 rounded-xl border {{ ($settings->whatify_enabled ?? false) ? 'border-emerald-400/60 bg-emerald-500/15' : 'border-white/10 bg-white/5' }} p-4 transition hover:bg-white/10">
-                <p class="mt-1 text-sm font-black">💬 WhatsApp
+                <p class="mt-1 text-sm font-black">WhatsApp
                     <span class="rounded-full px-2 py-0.5 text-[9px] ml-1 {{ ($settings->whatify_enabled ?? false) ? 'bg-emerald-400 text-emerald-950' : 'bg-white/20 text-white/70' }}">{{ ($settings->whatify_enabled ?? false) ? 'ON' : 'OFF' }}</span>
                 </p>
                 <a href="#whatify" class="ml-auto self-center text-[11px] font-semibold text-emerald-300 hover:text-white">Manage →</a>
@@ -51,7 +51,7 @@
                 <input type="hidden" name="inapp_enabled" value="0">
                 <input type="checkbox" name="inapp_enabled" value="1" @checked($settings->inapp_enabled ?? true) class="mt-1 h-5 w-5 rounded">
                 <div>
-                    <p class="flex items-center gap-2 text-sm font-black">🔔 In-app <span class="rounded-full px-2 py-0.5 text-[9px] {{ ($settings->inapp_enabled ?? true) ? 'bg-emerald-400 text-emerald-950' : 'bg-white/20 text-white/70' }}">{{ ($settings->inapp_enabled ?? true) ? 'ON' : 'OFF' }}</span></p>
+                    <p class="flex items-center gap-2 text-sm font-black">In-app <span class="rounded-full px-2 py-0.5 text-[9px] {{ ($settings->inapp_enabled ?? true) ? 'bg-emerald-400 text-emerald-950' : 'bg-white/20 text-white/70' }}">{{ ($settings->inapp_enabled ?? true) ? 'ON' : 'OFF' }}</span></p>
                     <p class="mt-0.5 text-[11px] text-white/60">Notification bell + /notifications inbox. Turn off for a maintenance quiet mode.</p>
                 </div>
             </label>
@@ -64,28 +64,28 @@
 
     {{-- Tab nav (anchor jump) --}}
     <div class="mt-6 flex flex-wrap gap-2 text-sm">
-        <a href="#mail"      class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📧 Mail</a>
-        <a href="#payments"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💳 Payments</a>
-        <a href="#analytics" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📊 Analytics &amp; SEO</a>
-        <a href="#push"       class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🔔 Push (VAPID)</a>
-        <a href="#whatify"    class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💬 WhatsApp (Whatify)</a>
-        <a href="#razorpayx"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💸 Payouts (RazorpayX)</a>
-        <a href="#instagram"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📸 Instagram</a>
-        <a href="#sentry"     class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🛠 Monitoring (Sentry)</a>
-        <a href="{{ route('admin.notification-templates.index') }}" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📧 Notification templates →</a>
-        <a href="#features"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🚦 Feature flags</a>
+        <a href="#mail" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Mail</a>
+        <a href="#payments" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Payments</a>
+        <a href="#analytics" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Analytics &amp; SEO</a>
+        <a href="#push" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Push (VAPID)</a>
+        <a href="#whatify" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">WhatsApp (Whatify)</a>
+        <a href="#razorpayx" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Payouts (RazorpayX)</a>
+        <a href="#instagram" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Instagram</a>
+        <a href="#sentry" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Monitoring (Sentry)</a>
+        <a href="{{ route('admin.notification-templates.index') }}" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Notification templates →</a>
+        <a href="#features" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">Feature flags</a>
     </div>
 
-    {{-- ═════════════════════════ MAIL ═════════════════════════ --}}
+    {{--  MAIL  --}}
     <section id="mail" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
-                <h2 class="text-xl font-black text-slate-900">📧 Transactional email</h2>
+                <h2 class="text-xl font-black text-slate-900">Transactional email</h2>
                 <p class="mt-1 text-xs text-slate-500">Powers creator invitations, brand alerts, order-shipped emails, weekly digests.</p>
             </div>
             @if($settings->mail_last_test_status)
                 <span class="rounded-full px-3 py-1 text-xs font-semibold {{ str_starts_with($settings->mail_last_test_status, 'ok') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">
-                    {{ str_starts_with($settings->mail_last_test_status, 'ok') ? '✓ Working' : '✗ Error' }} · {{ $settings->mail_last_tested_at?->diffForHumans() }}
+                    {{ str_starts_with($settings->mail_last_test_status, 'ok') ? ' Working' : ' Error' }} · {{ $settings->mail_last_tested_at?->diffForHumans() }}
                 </span>
             @endif
         </div>
@@ -95,10 +95,10 @@
             <div>
                 <label class="label">Driver</label>
                 <select class="input" name="mail_driver">
-                    <option value="log"        @selected($settings->mail_driver === 'log')>Log · writes to storage/logs (safe default)</option>
-                    <option value="resend"     @selected($settings->mail_driver === 'resend')>Resend · resend.com</option>
+                    <option value="log" @selected($settings->mail_driver === 'log')>Log · writes to storage/logs (safe default)</option>
+                    <option value="resend" @selected($settings->mail_driver === 'resend')>Resend · resend.com</option>
                     <option value="mailersend" @selected($settings->mail_driver === 'mailersend')>MailerSend · mailersend.com</option>
-                    <option value="smtp"       @selected($settings->mail_driver === 'smtp')>SMTP · configure via .env</option>
+                    <option value="smtp" @selected($settings->mail_driver === 'smtp')>SMTP · configure via .env</option>
                 </select>
             </div>
             <div>
@@ -133,16 +133,16 @@
         </div>
     </section>
 
-    {{-- ═════════════════════════ PAYMENTS ═════════════════════════ --}}
+    {{--  PAYMENTS  --}}
     <section id="payments" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
-                <h2 class="text-xl font-black text-slate-900">💳 Razorpay (Indian payments)</h2>
+                <h2 class="text-xl font-black text-slate-900">Razorpay (Indian payments)</h2>
                 <p class="mt-1 text-xs text-slate-500">Collect subscription + top-up payments in ₹. UPI, cards, netbanking, wallets — all in one flow.</p>
             </div>
             @if($settings->razorpay_last_test_status)
                 <span class="rounded-full px-3 py-1 text-xs font-semibold {{ str_starts_with($settings->razorpay_last_test_status, 'ok') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">
-                    {{ str_starts_with($settings->razorpay_last_test_status, 'ok') ? '✓ Connected' : '✗ Error' }} · {{ $settings->razorpay_last_tested_at?->diffForHumans() }}
+                    {{ str_starts_with($settings->razorpay_last_test_status, 'ok') ? ' Connected' : ' Error' }} · {{ $settings->razorpay_last_tested_at?->diffForHumans() }}
                 </span>
             @endif
         </div>
@@ -183,10 +183,10 @@
         </form>
     </section>
 
-    {{-- ═════════════════════════ ANALYTICS ═════════════════════════ --}}
+    {{--  ANALYTICS  --}}
     <section id="analytics" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div>
-            <h2 class="text-xl font-black text-slate-900">📊 Analytics + SEO verification</h2>
+            <h2 class="text-xl font-black text-slate-900">Analytics + SEO verification</h2>
             <p class="mt-1 text-xs text-slate-500">Site-wide scripts injected on every marketing + app page. Paste your IDs — no code changes required.</p>
         </div>
 
@@ -217,7 +217,7 @@
             <div>
                 <label class="label">Google Search Console verification token</label>
                 <input class="input font-mono" name="google_site_verification" value="{{ old('google_site_verification', $settings->google_site_verification) }}" placeholder="abc123…">
-                <p class="mt-1 text-xs text-slate-500">The value inside <code>content="…"</code> of the HTML tag Google gives you.</p>
+                <p class="mt-1 text-xs text-slate-500">The value inside <code>content="…"</code>of the HTML tag Google gives you.</p>
             </div>
             <div>
                 <label class="label">Bing Webmaster verification token</label>
@@ -245,10 +245,10 @@
         </form>
     </section>
 
-    {{-- ═════════════════════════ PUSH (VAPID) ═════════════════════════ --}}
+    {{--  PUSH (VAPID)  --}}
     <section id="push" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div>
-            <h2 class="text-xl font-black text-slate-900">🔔 Push notifications (VAPID)</h2>
+            <h2 class="text-xl font-black text-slate-900">Push notifications (VAPID)</h2>
             <p class="mt-1 text-xs text-slate-500">Paste your VAPID keys. Users see an "Enable push" button on the notifications page once these are set.</p>
         </div>
 
@@ -258,7 +258,7 @@
                 <p class="font-bold text-slate-800">Generate keys once</p>
                 <p class="mt-1">On any machine with Node installed run:</p>
                 <p class="mt-1 font-mono break-all rounded bg-white px-2 py-1">npx web-push generate-vapid-keys</p>
-                <p class="mt-2">Copy the <strong>public key</strong> and <strong>private key</strong> into the fields below. The subject is a mailto/https URL Chrome uses to contact you if the push service has questions.</p>
+                <p class="mt-2">Copy the <strong>public key</strong>and <strong>private key</strong>into the fields below. The subject is a mailto/https URL Chrome uses to contact you if the push service has questions.</p>
             </div>
             <div>
                 <label class="label">Public key</label>
@@ -277,16 +277,16 @@
         </form>
     </section>
 
-    {{-- ═════════════════════════ WHATIFY (WhatsApp) ═════════════════════════ --}}
+    {{--  WHATIFY (WhatsApp)  --}}
     <section id="whatify" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
-                <h2 class="text-xl font-black text-slate-900">💬 WhatsApp (Whatify BSP)</h2>
+                <h2 class="text-xl font-black text-slate-900">WhatsApp (Whatify BSP)</h2>
                 <p class="mt-1 text-xs text-slate-500">Send creator invites, order updates + payout alerts on WhatsApp. Uses <a href="https://whatify.docs.buildwithfern.com/whatify-external-api-v-1/introduction" target="_blank" class="text-violet-700 hover:underline">Whatify External API</a>.</p>
             </div>
             @if($settings->whatify_last_test_status)
                 <span class="rounded-full px-3 py-1 text-xs font-semibold {{ str_starts_with($settings->whatify_last_test_status, 'ok') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">
-                    {{ str_starts_with($settings->whatify_last_test_status, 'ok') ? '✓ Reachable' : '✗ Error' }} · {{ $settings->whatify_last_tested_at?->diffForHumans() }}
+                    {{ str_starts_with($settings->whatify_last_test_status, 'ok') ? ' Reachable' : ' Error' }} · {{ $settings->whatify_last_tested_at?->diffForHumans() }}
                 </span>
             @endif
         </div>
@@ -320,8 +320,8 @@
             <div class="md:col-span-2 rounded-xl border border-slate-100 bg-slate-50 p-4 text-xs text-slate-600">
                 <p class="font-bold text-slate-800">Whatsapp template rules</p>
                 <ul class="mt-1 list-disc space-y-1 pl-5">
-                    <li>Approved <strong>templates</strong> can be sent any time. Create + approve them inside your Whatify dashboard first.</li>
-                    <li>Free-form <strong>messages</strong> only work in the 24-hour customer-service window after the user last replied.</li>
+                    <li>Approved <strong>templates</strong>can be sent any time. Create + approve them inside your Whatify dashboard first.</li>
+                    <li>Free-form <strong>messages</strong>only work in the 24-hour customer-service window after the user last replied.</li>
                     <li>CreatorPlex uses templates for every automated event — map template name + params in <a href="{{ route('admin.notification-templates.index') }}" class="text-violet-700 hover:underline">Notification templates</a>.</li>
                 </ul>
             </div>
@@ -332,16 +332,16 @@
         </form>
     </section>
 
-    {{-- ═════════════════════════ RAZORPAYX (payouts) ═════════════════════════ --}}
+    {{--  RAZORPAYX (payouts)  --}}
     <section id="razorpayx" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div class="flex flex-wrap items-start justify-between gap-4">
             <div>
-                <h2 class="text-xl font-black text-slate-900">💸 RazorpayX — creator payouts</h2>
+                <h2 class="text-xl font-black text-slate-900">RazorpayX — creator payouts</h2>
                 <p class="mt-1 text-xs text-slate-500">Uses your same Razorpay API keys (from the Payments section above) + a RazorpayX virtual account number. Money leaves that VA to creator UPI / bank when brands approve content.</p>
             </div>
             @if($settings->razorpayx_last_test_status)
                 <span class="rounded-full px-3 py-1 text-xs font-semibold {{ str_starts_with($settings->razorpayx_last_test_status ?? '', 'ok') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">
-                    {{ str_starts_with($settings->razorpayx_last_test_status ?? '', 'ok') ? '✓ Reachable' : '✗ Error' }} · {{ $settings->razorpayx_last_tested_at?->diffForHumans() }}
+                    {{ str_starts_with($settings->razorpayx_last_test_status ?? '', 'ok') ? ' Reachable' : ' Error' }} · {{ $settings->razorpayx_last_tested_at?->diffForHumans() }}
                 </span>
             @endif
         </div>
@@ -373,10 +373,10 @@
         </form>
     </section>
 
-    {{-- ═════════════════════════ INSTAGRAM GRAPH ═════════════════════════ --}}
+    {{--  INSTAGRAM GRAPH  --}}
     <section id="instagram" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div>
-            <h2 class="text-xl font-black text-slate-900">📸 Instagram Graph API</h2>
+            <h2 class="text-xl font-black text-slate-900">Instagram Graph API</h2>
             <p class="mt-1 text-xs text-slate-500">When on, creators can connect their IG Business account and we auto-sync verified follower count + real engagement rate every 24h (no more self-reported numbers).</p>
         </div>
         <form method="POST" action="{{ route('admin.integrations.instagram.update') }}" class="mt-5 grid gap-4 md:grid-cols-2">
@@ -408,10 +408,10 @@
         </form>
     </section>
 
-    {{-- ═════════════════════════ SENTRY MONITORING ═════════════════════════ --}}
+    {{--  SENTRY MONITORING  --}}
     <section id="sentry" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div>
-            <h2 class="text-xl font-black text-slate-900">🛠 Production monitoring (Sentry)</h2>
+            <h2 class="text-xl font-black text-slate-900">Production monitoring (Sentry)</h2>
             <p class="mt-1 text-xs text-slate-500">Paste a Sentry DSN — every unhandled exception in every controller / job / command auto-reports with a stacktrace. Zero-dependency (no composer package needed).</p>
         </div>
         <form method="POST" action="{{ route('admin.integrations.sentry.update') }}" class="mt-5 grid gap-4 md:grid-cols-2">
@@ -437,10 +437,10 @@
         </form>
     </section>
 
-    {{-- ═════════════════════════ FEATURE FLAGS ═════════════════════════ --}}
+    {{--  FEATURE FLAGS  --}}
     <section id="features" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
         <div>
-            <h2 class="text-xl font-black text-slate-900">🚦 Roadmap feature flags</h2>
+            <h2 class="text-xl font-black text-slate-900">Roadmap feature flags</h2>
             <p class="mt-1 text-xs text-slate-500">Turn upcoming features on/off. Some require additional setup (see notes).</p>
         </div>
 
@@ -448,15 +448,15 @@
             @csrf
             @php
                 $flagLabels = [
-                    'contract_esign'       => ['⚡ Contract e-signature',        'Enables HelloSign / DocuSign flow on contracts.'],
-                    'referrals'            => ['🎁 Refer-a-brand + creator affiliate program', 'Adds referral codes + payout tracking.'],
-                    'ab_testing'           => ['🧪 A/B testing on landing pages', 'Experiment framework for hero + CTA variants.'],
-                    'push_notifications'   => ['🔔 PWA push notifications',       'Requires VAPID keys and service worker.'],
-                    'fraud_scan'           => ['🛡️ Automated fraud/bot detection', 'Scheduled AiRun computes creator fraud_risk nightly.'],
-                    'auto_content_review'  => ['🤖 AI content review automation',   'Auto-score submitted UGC against brand brief.'],
-                    'agency_mode'          => ['🏢 Agency accounts',                'Multi-brand hierarchy under one agency.'],
-                    'public_creator_pages' => ['🌟 Public creator portfolios',      'SEO-friendly /creator/{slug} pages.'],
-                    'case_study_cms'       => ['📚 Admin-managed case studies',     'Public case study library at /case-studies.'],
+                    'contract_esign' => [' Contract e-signature', 'Enables HelloSign / DocuSign flow on contracts.'],
+                    'referrals' => [' Refer-a-brand + creator affiliate program', 'Adds referral codes + payout tracking.'],
+                    'ab_testing' => [' A/B testing on landing pages', 'Experiment framework for hero + CTA variants.'],
+                    'push_notifications' => [' PWA push notifications', 'Requires VAPID keys and service worker.'],
+                    'fraud_scan' => [' Automated fraud/bot detection', 'Scheduled AiRun computes creator fraud_risk nightly.'],
+                    'auto_content_review' => [' AI content review automation', 'Auto-score submitted UGC against brand brief.'],
+                    'agency_mode' => [' Agency accounts', 'Multi-brand hierarchy under one agency.'],
+                    'public_creator_pages' => [' Public creator portfolios', 'SEO-friendly /creator/{slug} pages.'],
+                    'case_study_cms' => [' Admin-managed case studies', 'Public case study library at /case-studies.'],
                 ];
             @endphp
             @foreach($flagLabels as $key => [$label, $desc])

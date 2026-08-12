@@ -7,10 +7,10 @@
         <div class="flex flex-wrap items-center gap-2">
             <button id="push-toggle" data-push-status="unknown"
                     class="btn-secondary !py-2 text-sm hidden items-center gap-1.5">
-                <span data-push-icon>🔔</span>
+                <x-icon name="bell" class="h-4 w-4" data-push-icon />
                 <span data-push-label>Enable push</span>
             </button>
-            @if($notifications->total() > 0)
+            @if($notifications->total() >0)
                 <form method="POST" action="{{ route('notifications.readAll') }}">
                     @csrf
                     <button class="btn-secondary !py-2 text-sm">Mark all read</button>
@@ -22,11 +22,11 @@
     {{-- Push subscription toggle — hides itself if browser doesn't support or admin hasn't set VAPID keys --}}
     <script>
     (function() {
-        const btn      = document.getElementById('push-toggle');
-        const iconEl   = btn.querySelector('[data-push-icon]');
-        const labelEl  = btn.querySelector('[data-push-label]');
+        const btn = document.getElementById('push-toggle');
+        const iconEl = btn.querySelector('[data-push-icon]');
+        const labelEl = btn.querySelector('[data-push-label]');
         const csrfMeta = document.querySelector('meta[name="csrf-token"]');
-        const csrf     = csrfMeta ? csrfMeta.content : '';
+        const csrf = csrfMeta ? csrfMeta.content : '';
 
         if (!('serviceWorker' in navigator) || !('PushManager' in window) || !window.Notification) return;
 
@@ -43,10 +43,10 @@
             btn.dataset.pushStatus = state;
             btn.classList.remove('hidden');
             btn.classList.add('inline-flex');
-            if (state === 'subscribed') { iconEl.textContent = '🔔'; labelEl.textContent = 'Push notifications on · Turn off'; }
-            else if (state === 'blocked') { iconEl.textContent = '🚫'; labelEl.textContent = 'Push blocked — enable in browser settings'; btn.disabled = true; }
+            if (state === 'subscribed') { labelEl.textContent = 'Push notifications on · Turn off'; }
+            else if (state === 'blocked') { labelEl.textContent = 'Push blocked — enable in browser settings'; btn.disabled = true; }
             else if (state === 'unsupported') { btn.classList.add('hidden'); }
-            else { iconEl.textContent = '🔔'; labelEl.textContent = 'Enable push'; }
+            else { labelEl.textContent = 'Enable push'; }
         }
 
         async function subscribe(reg, publicKey) {
@@ -77,7 +77,7 @@
 
         (async () => {
             try {
-                const keyRes = await fetch('{{ route('push.vapidKey') }}').then(r => r.json());
+                const keyRes = await fetch('{{ route('push.vapidKey') }}').then(r =>r.json());
                 if (!keyRes.enabled || !keyRes.publicKey) return; // Admin hasn't configured VAPID → hide button
 
                 const reg = await navigator.serviceWorker.ready;
@@ -105,11 +105,17 @@
             <a href="{{ route('notifications.open', $n) }}"
                class="flex items-start gap-3 rounded-2xl border p-4 transition
                       {{ $n->read_at ? 'border-slate-200 bg-white hover:border-slate-300' : 'border-violet-200 bg-violet-50/40 hover:border-violet-300' }}">
-                <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-lg
+                @php
+                    $iconName = str_contains($n->type, 'approved') ? 'check-circle'
+                              : (str_contains($n->type, 'content')  ? 'video'
+                              : (str_contains($n->type, 'payout')   ? 'rupee'
+                              : 'bell'));
+                @endphp
+                <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl
                             {{ str_starts_with($n->type, 'content.approved') ? 'bg-emerald-100 text-emerald-700' :
                                (str_starts_with($n->type, 'content.') ? 'bg-amber-100 text-amber-700' :
                                'bg-violet-100 text-violet-700') }}">
-                    {{ str_contains($n->type, 'approved') ? '✅' : (str_contains($n->type, 'content') ? '🎬' : '🔔') }}
+                    <x-icon :name="$iconName" class="h-5 w-5" />
                 </div>
                 <div class="min-w-0 flex-1">
                     <div class="flex items-center gap-2">
@@ -124,7 +130,7 @@
                 <svg class="h-4 w-4 shrink-0 text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg>
             </a>
         @empty
-            <x-empty-state title="You're all caught up" icon="🎉">
+            <x-empty-state title="You're all caught up" icon="check-circle">
                 Nothing to review right now. New submissions, approvals, applications and payouts will show up here.
             </x-empty-state>
         @endforelse

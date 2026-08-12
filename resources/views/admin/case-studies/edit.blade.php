@@ -43,15 +43,15 @@
             </section>
 
             <section class="rounded-2xl border border-slate-200 bg-white p-6">
-                <h2 class="text-lg font-black text-slate-900">📈 Metrics</h2>
+                <h2 class="text-lg font-black text-slate-900">Metrics</h2>
                 <p class="mt-1 text-xs text-slate-500">Up to 6 hero metrics — rendered as a coloured KPI band.</p>
                 <div class="mt-4 space-y-2">
                     @php $metrics = old('metric_label') ? array_map(null, (array) old('metric_label'), (array) old('metric_value'), (array) old('metric_tone')) : ($study->metrics ?? []); @endphp
                     @for($i = 0; $i < 6; $i++)
                         @php $m = $metrics[$i] ?? null; @endphp
                         <div class="grid gap-2 md:grid-cols-[1fr_1fr_160px]">
-                            <input class="input" name="metric_label[]"  value="{{ is_array($m) ? ($m['label'] ?? '') : '' }}" placeholder="Label · e.g. ROAS">
-                            <input class="input" name="metric_value[]"  value="{{ is_array($m) ? ($m['value'] ?? '') : '' }}" placeholder="Value · e.g. 4.2×">
+                            <input class="input" name="metric_label[]" value="{{ is_array($m) ? ($m['label'] ?? '') : '' }}" placeholder="Label · e.g. ROAS">
+                            <input class="input" name="metric_value[]" value="{{ is_array($m) ? ($m['value'] ?? '') : '' }}" placeholder="Value · e.g. 4.2×">
                             <select class="input" name="metric_tone[]">
                                 @foreach(['violet','emerald','amber','rose','sky','slate'] as $t)
                                     <option value="{{ $t }}" @selected(is_array($m) && ($m['tone'] ?? '') === $t)>{{ ucfirst($t) }}</option>
@@ -63,7 +63,7 @@
             </section>
 
             <section class="rounded-2xl border border-slate-200 bg-white p-6">
-                <h2 class="text-lg font-black text-slate-900">💬 Pull quote</h2>
+                <h2 class="text-lg font-black text-slate-900">Pull quote</h2>
                 <div class="mt-4 grid gap-3">
                     <textarea class="input min-h-24" name="quote" placeholder="What the founder / marketer said">{{ old('quote', $study->quote) }}</textarea>
                     <div class="grid gap-3 md:grid-cols-2">
@@ -81,7 +81,7 @@
                 <div class="mt-4 space-y-3 text-sm">
                     <label class="flex items-center gap-2">
                         <input type="hidden" name="featured" value="0">
-                        <input type="checkbox" name="featured" value="1" @checked($study->featured) class="rounded"> Feature on hub
+                        <input type="checkbox" name="featured" value="1" @checked($study->featured) class="rounded">Feature on hub
                     </label>
                     <div>
                         <label class="label">Position</label>

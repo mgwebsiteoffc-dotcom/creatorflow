@@ -22,7 +22,7 @@
                     @if($product->images->first())
                         <img src="{{ $product->images->first()->path }}" class="h-full w-full object-cover" alt="">
                     @else
-                        <div class="grid h-full place-items-center text-3xl">📦</div>
+                        <div class="grid h-full place-items-center text-3xl"></div>
                     @endif
                 </div>
                 <div class="p-3">
@@ -31,7 +31,7 @@
                         <span>{{ $currentWorkspace->formatMoney((int) $product->priceCents()) }}</span>
                         <span>{{ $product->inventoryTotal() }} in stock</span>
                     </div>
-                    @if($product->hero_score > 70)
+                    @if($product->hero_score >70)
                         <span class="badge-amber mt-2">Hero {{ $product->hero_score }}</span>
                     @endif
                     @if($product->channel)
@@ -40,7 +40,7 @@
                 </div>
             </a>
         @empty
-            <x-empty-state title="No products" icon="📦" class="col-span-full">
+            <x-empty-state title="No products" icon="products" class="col-span-full">
                 Connect Shopify, import a CSV or add a product manually.
                 <x-slot:action><a href="{{ route('brand.onboarding') }}" class="btn-primary">Add products</a></x-slot:action>
             </x-empty-state>

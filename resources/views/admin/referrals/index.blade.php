@@ -2,7 +2,7 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
             <p class="text-xs font-bold uppercase tracking-widest text-violet-600">Superadmin · Growth</p>
-            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">🎁 Referrals &amp; affiliates</h1>
+            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">Referrals &amp; affiliates</h1>
             <p class="mt-1 text-sm text-slate-500">Create codes for creators (creator affiliate) and brands (refer-a-brand). Track signups + conversions + commission.</p>
         </div>
     </div>
@@ -56,7 +56,7 @@
                         <td class="p-3 font-mono font-bold text-slate-900">{{ $c->code }}</td>
                         <td class="p-3 text-xs"><span class="rounded-full bg-slate-100 px-2 py-0.5 capitalize">{{ str_replace('_',' ', $c->kind) }}</span></td>
                         <td class="p-3 text-xs text-slate-500">{{ ucfirst($c->owner_type) }} #{{ $c->owner_id }}</td>
-                        <td class="p-3 text-xs">{{ $c->commission_rate }}%{{ $c->commission_fixed_cents > 0 ? ' + ₹'.number_format($c->commission_fixed_cents/100, 2, '.', ',') : '' }}</td>
+                        <td class="p-3 text-xs">{{ $c->commission_rate }}%{{ $c->commission_fixed_cents >0 ? ' + ₹'.number_format($c->commission_fixed_cents/100, 2, '.', ',') : '' }}</td>
                         <td class="p-3 font-mono">{{ number_format($c->signup_count) }}</td>
                         <td class="p-3 font-mono">{{ number_format($c->conversion_count) }}</td>
                         <td class="p-3"><x-badge :tone="$c->status === 'active' ? 'green' : 'slate'">{{ $c->status }}</x-badge></td>

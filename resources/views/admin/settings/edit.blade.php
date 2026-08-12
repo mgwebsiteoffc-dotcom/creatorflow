@@ -2,13 +2,13 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
             <h1 class="text-3xl font-black tracking-tight text-slate-900">Platform settings</h1>
-            <p class="mt-1 text-sm text-slate-500">Fees, markup, escrow hold, signup rules. For AI provider + keys, see <a href="{{ route('admin.ai.edit') }}" class="text-violet-700 hover:underline">🤖 AI settings</a>.</p>
+            <p class="mt-1 text-sm text-slate-500">Fees, markup, escrow hold, signup rules. For AI provider + keys, see <a href="{{ route('admin.ai.edit') }}" class="text-violet-700 hover:underline">AI settings</a>.</p>
         </div>
     </div>
 
     @if(! empty($schemaMissing))
         <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm"><x-icon name="alert" class="h-5 w-5 text-white" /></span>
             <div class="flex-1"><p class="font-bold">platform_settings table not migrated yet.</p><p class="mt-1 text-xs text-amber-800">Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code>. Values below are defaults and can't be saved yet.</p></div>
         </div>
     @endif

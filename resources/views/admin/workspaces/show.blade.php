@@ -105,7 +105,7 @@
 
     {{-- TEAM --}}
     <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-        <h2 class="text-lg font-bold text-slate-900">👥 Team ({{ $workspace->users->count() }})</h2>
+        <h2 class="text-lg font-bold text-slate-900">Team ({{ $workspace->users->count() }})</h2>
         <div class="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3">
             @foreach($workspace->users as $u)
                 <a href="{{ route('admin.users.show', $u) }}" class="flex items-center gap-3 rounded-xl border border-slate-100 p-3 hover:border-violet-300">
@@ -121,7 +121,7 @@
 
     {{-- CAMPAIGNS --}}
     <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-        <h2 class="text-lg font-bold text-slate-900">🚀 Recent campaigns</h2>
+        <h2 class="text-lg font-bold text-slate-900">Recent campaigns</h2>
         <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
             <table class="w-full min-w-[640px] text-sm">
                 <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
@@ -147,7 +147,7 @@
     {{-- PRODUCTS --}}
     @if($products->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-bold text-slate-900">📦 Products</h2>
+            <h2 class="text-lg font-bold text-slate-900">Products</h2>
             <div class="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 @foreach($products as $p)
                     <div class="rounded-xl border border-slate-100 p-3">
@@ -162,7 +162,7 @@
     {{-- INVOICES --}}
     @if($invoices->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-bold text-slate-900">🧾 Invoices</h2>
+            <h2 class="text-lg font-bold text-slate-900">Invoices</h2>
             <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
                 <table class="w-full min-w-[640px] text-sm">
                     <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
@@ -187,7 +187,7 @@
     {{-- MANUAL PAYMENT RECORDS --}}
     @if($payments->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-bold text-slate-900">💳 Payment records</h2>
+            <h2 class="text-lg font-bold text-slate-900">Payment records</h2>
             <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
                 <table class="w-full min-w-[640px] text-sm">
                     <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">

@@ -10,7 +10,7 @@
             @if($agency->owner)
                 <p class="mt-1 text-sm text-slate-500">Owner: <a href="{{ route('admin.users.show', $agency->owner) }}" class="text-violet-700 hover:underline">{{ $agency->owner->name }}</a> · {{ $agency->owner->email }}</p>
             @else
-                <p class="mt-1 text-sm text-amber-600">⚠ No owner assigned</p>
+                <p class="mt-1 text-sm text-amber-600">No owner assigned</p>
             @endif
         </div>
         <form method="POST" action="{{ route('admin.agencies.destroy', $agency) }}" data-confirm="Delete agency {{ $agency->name }}?">
@@ -22,7 +22,7 @@
     {{-- KPIs --}}
     @php
         $totalCampaigns = $agency->workspaces->sum(fn ($w) => $w->campaigns()->count());
-        $totalUsers     = $agency->workspaces->sum(fn ($w) => $w->users->count());
+        $totalUsers = $agency->workspaces->sum(fn ($w) => $w->users->count());
     @endphp
     <div class="mt-6 grid gap-4 sm:grid-cols-3">
         <div class="rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 p-5 text-white shadow-lg">
@@ -41,7 +41,7 @@
 
     <div class="mt-8 grid gap-6 lg:grid-cols-3">
         <section class="lg:col-span-2 rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-black text-slate-900">🏢 Brands in this agency</h2>
+            <h2 class="text-lg font-black text-slate-900">Brands in this agency</h2>
             <div class="mt-4 space-y-2">
                 @forelse($agency->workspaces as $w)
                     <div class="flex items-center gap-3 rounded-xl border border-slate-100 p-3">

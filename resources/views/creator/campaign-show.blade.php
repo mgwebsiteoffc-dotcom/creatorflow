@@ -18,7 +18,7 @@
             <div class="mt-3 space-y-2">
                 @foreach($campaign->products as $cp)
                     <div class="flex items-center gap-3 rounded-xl border border-slate-100 p-3">
-                        <div class="grid h-10 w-10 place-items-center rounded-lg bg-slate-100">📦</div>
+                        <div class="grid h-10 w-10 place-items-center rounded-lg bg-slate-100"></div>
                         <div class="min-w-0 flex-1">
                             <p class="truncate text-sm font-medium">{{ $cp->product->title }}</p>
                             <p class="text-xs text-slate-500">₹{{ number_format(($cp->variant->price_cents ?? $cp->product->priceCents())/100, 2, '.', ',') }} · {{ $cp->target_creators }} creators</p>
@@ -34,7 +34,7 @@
         @if($existingApplication)
             @php
                 $tone = match($existingApplication->status) { 'submitted' => 'amber', 'shortlisted' => 'sky', 'approved' => 'green', 'rejected' => 'rose', default => 'slate' };
-                $label = match($existingApplication->status) { 'submitted' => 'Pending review', 'shortlisted' => 'Shortlisted', 'approved' => 'Approved 🎉', 'rejected' => 'Not selected', 'withdrawn' => 'Withdrawn', default => ucfirst($existingApplication->status) };
+                $label = match($existingApplication->status) { 'submitted' => 'Pending review', 'shortlisted' => 'Shortlisted', 'approved' => 'Approved ', 'rejected' => 'Not selected', 'withdrawn' => 'Withdrawn', default =>ucfirst($existingApplication->status) };
             @endphp
             <div class="g-border p-1">
                 <div class="rounded-[calc(1.25rem-1px)] bg-white p-6">
@@ -53,7 +53,7 @@
 
                     @if($existingApplication->status === 'approved')
                         <p class="mt-4 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-800">
-                            🎉 The brand approved you! Head to <a href="{{ route('creator.invitations') }}" class="font-semibold underline">Invitations</a> to accept and start work.
+                             The brand approved you! Head to <a href="{{ route('creator.invitations') }}" class="font-semibold underline">Invitations</a>to accept and start work.
                         </p>
                     @elseif(in_array($existingApplication->status, ['submitted','shortlisted']))
                         <form method="POST" action="{{ route('creator.applications.withdraw', $existingApplication) }}"

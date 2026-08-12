@@ -5,10 +5,10 @@
             <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">Store connections</h1>
             <p class="mt-1 text-sm text-slate-500">Connect Shopify to auto-sync products + inventory and auto-ship barter orders. Fully manual works too.</p>
         </div>
-        <a href="{{ route('shopify.install') }}" class="btn-gradient !py-2 text-sm">🛍 Connect Shopify</a>
+        <a href="{{ route('shopify.install') }}" class="btn-gradient !py-2 text-sm">Connect Shopify</a>
     </div>
 
-    {{-- ── Inventory snapshot ────────────────────────────────────────── --}}
+    {{--  Inventory snapshot  --}}
     <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-500 via-purple-500 to-pink-500 p-5 text-white shadow-lg">
             <p class="text-[10px] font-bold uppercase tracking-widest opacity-90">Products</p>
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    {{-- ── Connected channels ─────────────────────────────────────────── --}}
+    {{--  Connected channels  --}}
     <div class="mt-8">
         <h2 class="text-lg font-black text-slate-900">Your channels</h2>
         <div class="mt-4 space-y-3">
@@ -41,7 +41,7 @@
                     <div class="flex flex-wrap items-start justify-between gap-4">
                         <div class="flex items-center gap-4">
                             <div class="grid h-14 w-14 place-items-center rounded-xl {{ $channel->type === 'shopify' ? 'bg-gradient-to-br from-emerald-400 to-teal-500' : 'bg-gradient-to-br from-slate-500 to-slate-700' }} text-2xl text-white shadow-sm">
-                                {{ $channel->type === 'shopify' ? '🛍' : '🧾' }}
+                                {{ $channel->type === 'shopify' ? '' : '' }}
                             </div>
                             <div>
                                 <div class="flex items-center gap-2">
@@ -66,17 +66,17 @@
                                     @csrf
                                     <input type="hidden" name="type" value="products">
                                     <input type="hidden" name="mode" value="incremental">
-                                    <button class="btn-secondary !py-2 !text-xs">🔄 Sync products</button>
+                                    <button class="btn-secondary !py-2 !text-xs">Sync products</button>
                                 </form>
                                 <form method="POST" action="{{ route('brand.channels.sync', $channel) }}">
                                     @csrf
                                     <input type="hidden" name="type" value="inventory">
-                                    <button class="btn-secondary !py-2 !text-xs">📦 Sync inventory</button>
+                                    <button class="btn-secondary !py-2 !text-xs">Sync inventory</button>
                                 </form>
                                 <form method="POST" action="{{ route('brand.channels.sync', $channel) }}">
                                     @csrf
                                     <input type="hidden" name="type" value="orders">
-                                    <button class="btn-secondary !py-2 !text-xs">🧾 Sync orders</button>
+                                    <button class="btn-secondary !py-2 !text-xs">Sync orders</button>
                                 </form>
                                 <form method="POST" action="{{ route('brand.channels.sync', $channel) }}">
                                     @csrf
@@ -97,15 +97,15 @@
                     @if($channel->type === 'shopify' && $channel->status === 'active')
                         <div class="mt-4 grid gap-3 md:grid-cols-3 text-xs text-slate-600">
                             <div class="rounded-xl border border-slate-100 bg-slate-50 p-3">
-                                <p class="font-bold text-slate-800">🛒 Product sync</p>
+                                <p class="font-bold text-slate-800">Product sync</p>
                                 <p class="mt-1">New + updated products flow in every 15 min. Fire "Sync products" to pull immediately.</p>
                             </div>
                             <div class="rounded-xl border border-slate-100 bg-slate-50 p-3">
-                                <p class="font-bold text-slate-800">📦 Inventory sync</p>
+                                <p class="font-bold text-slate-800">Inventory sync</p>
                                 <p class="mt-1">Stock levels sync every 30 min so we never seed a creator for out-of-stock SKUs.</p>
                             </div>
                             <div class="rounded-xl border border-slate-100 bg-slate-50 p-3">
-                                <p class="font-bold text-slate-800">🎁 Auto barter orders</p>
+                                <p class="font-bold text-slate-800">Auto barter orders</p>
                                 <p class="mt-1">When a creator accepts, we auto-create a Shopify draft order with 100 % discount → shipped as normal.</p>
                             </div>
                         </div>
@@ -113,7 +113,7 @@
                 </div>
             @empty
                 <div class="rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-8 text-center">
-                    <div class="mx-auto grid h-14 w-14 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-2xl text-white shadow-sm">🛍</div>
+                    <div class="mx-auto grid h-14 w-14 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-2xl text-white shadow-sm"></div>
                     <h3 class="mt-3 text-lg font-black text-slate-900">No stores connected yet</h3>
                     <p class="mt-2 max-w-md mx-auto text-sm text-slate-500">Connect Shopify to auto-sync products + inventory, generate creator discount codes, and auto-ship barter orders.</p>
                     <a href="{{ route('shopify.install') }}" class="btn-gradient mt-5 !py-2 text-sm">Connect Shopify →</a>
@@ -122,7 +122,7 @@
         </div>
     </div>
 
-    {{-- ── Recent sync activity ───────────────────────────────────────── --}}
+    {{--  Recent sync activity  --}}
     @if($recentSyncs->isNotEmpty())
         <section class="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
             <h2 class="text-lg font-black text-slate-900">Recent sync activity</h2>

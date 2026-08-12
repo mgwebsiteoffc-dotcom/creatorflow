@@ -7,13 +7,13 @@
 
     @if($suggestion)
         <div class="mb-6 rounded-2xl border border-violet-200 bg-violet-50 p-4">
-            <div class="flex items-center gap-2 font-semibold text-violet-800"><span>✨</span> AI suggestion: {{ $suggestion['title'] }}</div>
+            <div class="flex items-center gap-2 font-semibold text-violet-800"><span></span>AI suggestion: {{ $suggestion['title'] }}</div>
             <p class="mt-1 text-sm text-violet-700">{{ $suggestion['summary'] }}</p>
         </div>
     @endif
 
     @if($products->isEmpty())
-        <x-empty-state title="Add products first" icon="📦">
+        <x-empty-state title="Add products first" icon="products">
             You need products before creating a campaign.
             <x-slot:action><a href="{{ route('brand.onboarding') }}" class="btn-primary">Add products</a></x-slot:action>
         </x-empty-state>
@@ -43,23 +43,21 @@
                     <div class="flex items-center justify-between">
                         <label class="label !mb-0">Brief <span class="ml-1 text-xs font-normal text-slate-400">(supports **bold**, *italic*, lists, links)</span></label>
                         <div class="flex gap-1 rounded-lg border border-slate-200 bg-white p-0.5 text-xs">
-                            <button type="button" data-md-mode="write"   class="tab-pill !py-1 !px-2.5 !text-xs is-active">Write</button>
+                            <button type="button" data-md-mode="write" class="tab-pill !py-1 !px-2.5 !text-xs is-active">Write</button>
                             <button type="button" data-md-mode="preview" class="tab-pill !py-1 !px-2.5 !text-xs">Preview</button>
                         </div>
                     </div>
 
                     {{-- Toolbar --}}
                     <div class="mt-2 flex flex-wrap items-center gap-1 rounded-t-xl border border-b-0 border-slate-200 bg-slate-50 p-1.5 text-xs" data-md-toolbar>
-                        <button type="button" data-md="h2"  title="Heading"   class="rounded px-2 py-1 font-bold text-slate-700 hover:bg-white">H</button>
-                        <button type="button" data-md="b"   title="Bold"      class="rounded px-2 py-1 font-bold text-slate-700 hover:bg-white">B</button>
-                        <button type="button" data-md="i"   title="Italic"    class="rounded px-2 py-1 italic text-slate-700 hover:bg-white">I</button>
-                        <span class="mx-1 h-4 w-px bg-slate-300"></span>
-                        <button type="button" data-md="ul"  title="Bullet list" class="rounded px-2 py-1 text-slate-700 hover:bg-white">• List</button>
-                        <button type="button" data-md="ol"  title="Numbered list" class="rounded px-2 py-1 text-slate-700 hover:bg-white">1. List</button>
-                        <span class="mx-1 h-4 w-px bg-slate-300"></span>
-                        <button type="button" data-md="quote" title="Quote"  class="rounded px-2 py-1 text-slate-700 hover:bg-white">❝</button>
-                        <button type="button" data-md="link"  title="Link"   class="rounded px-2 py-1 text-slate-700 hover:bg-white">🔗</button>
-                        <button type="button" data-md="code"  title="Code"   class="rounded px-2 py-1 font-mono text-slate-700 hover:bg-white">{`}</button>
+                        <button type="button" data-md="h2" title="Heading" class="rounded px-2 py-1 font-bold text-slate-700 hover:bg-white">H</button>
+                        <button type="button" data-md="b" title="Bold" class="rounded px-2 py-1 font-bold text-slate-700 hover:bg-white">B</button>
+                        <button type="button" data-md="i" title="Italic" class="rounded px-2 py-1 italic text-slate-700 hover:bg-white">I</button>
+                                                <button type="button" data-md="ul" title="Bullet list" class="rounded px-2 py-1 text-slate-700 hover:bg-white">• List</button>
+                        <button type="button" data-md="ol" title="Numbered list" class="rounded px-2 py-1 text-slate-700 hover:bg-white">1. List</button>
+                                                <button type="button" data-md="quote" title="Quote" class="rounded px-2 py-1 text-slate-700 hover:bg-white"></button>
+                        <button type="button" data-md="link" title="Link" class="rounded px-2 py-1 text-slate-700 hover:bg-white"></button>
+                        <button type="button" data-md="code" title="Code" class="rounded px-2 py-1 font-mono text-slate-700 hover:bg-white">{`}</button>
                     </div>
 
                     <textarea data-md-textarea class="input !rounded-t-none min-h-56" name="brief"
@@ -68,13 +66,13 @@
                     <div data-md-preview class="hidden mt-2 min-h-56 rounded-xl border border-slate-200 bg-white p-4"></div>
                 </div>
 
-                {{-- ────────────── Audience targeting (invitations use this) ────────────── --}}
+                {{--  Audience targeting (invitations use this)  --}}
                 @php
-                    $cityOpts   = \App\Support\CreatorTaxonomy::cityOptions();
-                    $tierOpts   = \App\Support\CreatorTaxonomy::tiers();
+                    $cityOpts = \App\Support\CreatorTaxonomy::cityOptions();
+                    $tierOpts = \App\Support\CreatorTaxonomy::tiers();
                     $genderOpts = \App\Support\CreatorTaxonomy::genders();
-                    $ageOpts    = \App\Support\CreatorTaxonomy::ageRanges();
-                    $langOpts   = \App\Support\CreatorTaxonomy::languages();
+                    $ageOpts = \App\Support\CreatorTaxonomy::ageRanges();
+                    $langOpts = \App\Support\CreatorTaxonomy::languages();
                 @endphp
                 <div class="pt-2">
                     <h3 class="flex items-center gap-2 font-semibold text-slate-900">
@@ -108,7 +106,7 @@
                                 Follower tiers
                             </label>
                             <div class="flex gap-3 text-xs">
-                                <button type="button" data-multi-toggle="aud-tiers" data-action="all"  class="font-semibold text-violet-600 hover:text-violet-800">All</button>
+                                <button type="button" data-multi-toggle="aud-tiers" data-action="all" class="font-semibold text-violet-600 hover:text-violet-800">All</button>
                                 <button type="button" data-multi-toggle="aud-tiers" data-action="none" class="text-slate-500 hover:text-slate-800">Clear</button>
                             </div>
                         </div>
@@ -214,7 +212,7 @@
                             <p class="mt-0.5 text-xs text-slate-500">Pick the products to seed and how many creators should receive each. We invite ~3× based on a 30% acceptance rate.</p>
                         </div>
                         <div class="text-xs text-slate-500">
-                            <span data-product-count-selected>0</span> selected · <span>{{ count($products) }} total</span>
+                            <span data-product-count-selected>0</span>selected · <span>{{ count($products) }} total</span>
                         </div>
                     </div>
 
@@ -244,7 +242,7 @@
                                         <p class="truncate text-sm font-medium text-slate-900">{{ $product->title }}</p>
                                         <p class="truncate text-xs text-slate-500">
                                             {{ $currentWorkspace->formatMoney((int) $product->priceCents()) }} · {{ $product->inventoryTotal() }} in stock
-                                            @if($product->hero_score > 70) · <span class="badge-amber">Hero {{ $product->hero_score }}</span>@endif
+                                            @if($product->hero_score >70) · <span class="badge-amber">Hero {{ $product->hero_score }}</span>@endif
                                         </p>
                                     </div>
                                     <div class="flex items-center gap-1.5">
@@ -264,10 +262,10 @@
                 <script>
                     (function () {
                         // Live filter of the products list + running "selected" counter.
-                        const search  = document.querySelector('[data-product-search]');
-                        const list    = document.querySelector('[data-product-list]');
-                        const empty   = document.querySelector('[data-product-empty]');
-                        const rows    = list ? list.querySelectorAll('[data-product-row]') : [];
+                        const search = document.querySelector('[data-product-search]');
+                        const list = document.querySelector('[data-product-list]');
+                        const empty = document.querySelector('[data-product-empty]');
+                        const rows = list ? list.querySelectorAll('[data-product-row]') : [];
                         const counter = document.querySelector('[data-product-count-selected]');
                         if (! list) return;
 
@@ -279,7 +277,7 @@
                                 r.style.display = match ? '' : 'none';
                                 if (match) visible++;
                             });
-                            if (empty) empty.classList.toggle('hidden', visible > 0);
+                            if (empty) empty.classList.toggle('hidden', visible >0);
                         };
                         const updateCounter = () => {
                             if (! counter) return;
@@ -287,7 +285,7 @@
                         };
 
                         search?.addEventListener('input', filter);
-                        rows.forEach(r => r.querySelector('input.product-toggle')?.addEventListener('change', updateCounter));
+                        rows.forEach(r =>r.querySelector('input.product-toggle')?.addEventListener('change', updateCounter));
                         updateCounter();
                     })();
                 </script>
@@ -340,7 +338,7 @@
                     const group = document.querySelector(`[data-multi-group="${btn.dataset.multiToggle}"]`);
                     if (!group) return;
                     const checked = btn.dataset.action === 'all';
-                    group.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = checked);
+                    group.querySelectorAll('input[type="checkbox"]').forEach(cb =>cb.checked = checked);
                 });
             });
         </script>

@@ -1,4 +1,4 @@
-@props(['title' => null])
+@props(['title' =>null])
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,32 +27,32 @@
 
         @php
             $items = [
-                ['route' => 'admin.dashboard',      'label' => 'Dashboard',   'icon' => 'dashboard'],
-                ['route' => 'admin.users.index',    'label' => 'Users',       'icon' => 'users'],
-                ['route' => 'admin.creators.index', 'label' => 'Creators',    'icon' => 'creators'],
+                ['route' => 'admin.dashboard', 'label' => 'Dashboard', 'icon' => 'dashboard'],
+                ['route' => 'admin.users.index', 'label' => 'Users', 'icon' => 'users'],
+                ['route' => 'admin.creators.index', 'label' => 'Creators', 'icon' => 'creators'],
                 ['route' => 'admin.workspaces.index','label' => 'Workspaces', 'icon' => 'workspaces'],
                 ...(\App\Models\PlatformSetting::feature('agency_mode') ? [
                     ['route' => 'admin.agencies.index', 'label' => 'Agencies', 'icon' => 'agencies'],
                 ] : []),
-                ['route' => 'admin.leads.index',    'label' => 'Leads',       'icon' => 'leads'],
-                ['route' => 'admin.billing.index',  'label' => 'Billing',     'icon' => 'billing'],
-                ['route' => 'admin.escrow.index',   'label' => 'Escrow',      'icon' => 'escrow'],
-                ['route' => 'admin.homepage',       'label' => 'Homepage',    'icon' => 'homepage'],
-                ['route' => 'admin.blog.index',     'label' => 'Blog',        'icon' => 'blog'],
+                ['route' => 'admin.leads.index', 'label' => 'Leads', 'icon' => 'leads'],
+                ['route' => 'admin.billing.index', 'label' => 'Billing', 'icon' => 'billing'],
+                ['route' => 'admin.escrow.index', 'label' => 'Escrow', 'icon' => 'escrow'],
+                ['route' => 'admin.homepage', 'label' => 'Homepage', 'icon' => 'homepage'],
+                ['route' => 'admin.blog.index', 'label' => 'Blog', 'icon' => 'blog'],
                 ...(\App\Models\PlatformSetting::feature('case_study_cms') ? [
                     ['route' => 'admin.case-studies.index', 'label' => 'Case studies', 'icon' => 'case-studies'],
                 ] : []),
-                ['route' => 'admin.seo',            'label' => 'SEO',         'icon' => 'seo'],
+                ['route' => 'admin.seo', 'label' => 'SEO', 'icon' => 'seo'],
                 ...(\App\Models\PlatformSetting::feature('ab_testing') ? [
                     ['route' => 'admin.ab.index', 'label' => 'A/B tests', 'icon' => 'ab-test'],
                 ] : []),
                 ...(\App\Models\PlatformSetting::feature('referrals') ? [
                     ['route' => 'admin.referrals.index', 'label' => 'Referrals', 'icon' => 'referrals'],
                 ] : []),
-                ['route' => 'admin.ai.edit',           'label' => 'AI keys',      'icon' => 'ai'],
-                ['route' => 'admin.integrations.edit',         'label' => 'Integrations',  'icon' => 'integrations'],
-                ['route' => 'admin.notification-templates.index','label' => 'Templates',    'icon' => 'templates'],
-                ['route' => 'admin.settings',                  'label' => 'Settings',       'icon' => 'settings'],
+                ['route' => 'admin.ai.edit', 'label' => 'AI keys', 'icon' => 'ai'],
+                ['route' => 'admin.integrations.edit', 'label' => 'Integrations', 'icon' => 'integrations'],
+                ['route' => 'admin.notification-templates.index','label' => 'Templates', 'icon' => 'templates'],
+                ['route' => 'admin.settings', 'label' => 'Settings', 'icon' => 'settings'],
             ];
         @endphp
         @foreach($items as $it)
@@ -90,7 +90,7 @@
         <div class="mx-auto w-full max-w-7xl px-4 py-8 md:px-8 md:py-10">
             @if(session('status'))
                 <div class="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-                    <span>✓ {{ session('status') }}</span>
+                    <span> {{ session('status') }}</span>
                 </div>
             @endif
             @if(session('error'))

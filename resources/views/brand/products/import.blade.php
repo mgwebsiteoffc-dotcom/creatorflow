@@ -21,7 +21,7 @@
                     <li><code class="rounded bg-slate-100 px-1.5 py-0.5 text-xs">{{ $h }}</code></li>
                 @endforeach
             </ul>
-            <p class="mt-3 text-xs text-slate-500">Only <code>title</code> and <code>price</code> are required.</p>
+            <p class="mt-3 text-xs text-slate-500">Only <code>title</code>and <code>price</code>are required.</p>
         </div>
     </div>
 </x-layouts.app>

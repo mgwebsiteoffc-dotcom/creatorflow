@@ -31,10 +31,10 @@
             </div>
 
             <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
-                @if($c->country)<span>📍 {{ $c->country }}</span>@endif
-                @if($totalFollowers > 0)<span>👥 {{ number_format($totalFollowers) }} followers</span>@endif
-                @if($c->engagement_rate)<span>💥 {{ $c->engagement_rate }}% ER</span>@endif
-                @if($app->proposed_fee_cents)<span>💰 asks ₹{{ number_format($app->proposed_fee_cents/100, 0, '.', ',') }}</span>@endif
+                @if($c->country)<span> {{ $c->country }}</span>@endif
+                @if($totalFollowers >0)<span> {{ number_format($totalFollowers) }} followers</span>@endif
+                @if($c->engagement_rate)<span> {{ $c->engagement_rate }}% ER</span>@endif
+                @if($app->proposed_fee_cents)<span>asks ₹{{ number_format($app->proposed_fee_cents/100, 0, '.', ',') }}</span>@endif
             </div>
 
             @if($c->nicheRows->isNotEmpty())
@@ -56,12 +56,12 @@
             @if(in_array($app->status, ['submitted','shortlisted']))
                 <form method="POST" action="{{ route('brand.applications.approve', $app) }}">
                     @csrf
-                    <button class="btn-primary w-full !py-1.5 text-xs">✓ Approve</button>
+                    <button class="btn-primary w-full !py-1.5 text-xs">Approve</button>
                 </form>
                 @if($app->status !== 'shortlisted')
                     <form method="POST" action="{{ route('brand.applications.shortlist', $app) }}">
                         @csrf
-                        <button class="btn-secondary w-full !py-1.5 text-xs">★ Shortlist</button>
+                        <button class="btn-secondary w-full !py-1.5 text-xs">Shortlist</button>
                     </form>
                 @endif
                 <form method="POST" action="{{ route('brand.applications.reject', $app) }}"
@@ -71,7 +71,7 @@
                 </form>
             @elseif($app->status === 'approved')
                 <div class="rounded-xl bg-emerald-50 p-3 text-center text-xs font-semibold text-emerald-700">
-                    ✓ Invited creator
+                     Invited creator
                 </div>
             @endif
             <a href="{{ route('brand.creators.show', $c) }}" class="btn-ghost w-full !py-1.5 text-xs">View profile</a>

@@ -1,4 +1,4 @@
-@props(['ref', 'canDelete' => false, 'campaign' => null])
+@props(['ref', 'canDelete' =>false, 'campaign' =>null])
 @php
     $url = $ref->displayUrl();
 @endphp
@@ -9,8 +9,7 @@
         </a>
     @elseif($ref->isVideo() && $url)
         <a href="{{ $url }}" target="_blank" class="grid h-14 w-14 shrink-0 place-items-center rounded-lg bg-slate-900 text-white">
-            <span class="text-lg">▶</span>
-        </a>
+            </a>
     @else
         <div class="grid h-14 w-14 shrink-0 place-items-center rounded-lg bg-slate-100 text-2xl">
             {{ $ref->icon() }}
@@ -43,7 +42,7 @@
                           data-confirm="Remove this reference?">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="rounded-lg border border-transparent px-2 py-1 text-xs font-semibold text-rose-600 hover:border-rose-200 hover:bg-rose-50">✕</button>
+                        <button type="submit" class="rounded-lg border border-transparent px-2 py-1 text-xs font-semibold text-rose-600 hover:border-rose-200 hover:bg-rose-50"></button>
                     </form>
                 @endif
             </div>

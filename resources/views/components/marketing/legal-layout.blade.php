@@ -1,4 +1,4 @@
-@props(['title', 'updated' => null, 'metaDescription' => null])
+@props(['title', 'updated' =>null, 'metaDescription' =>null])
 <x-layouts.app panel="guest" :title="$title" :metaDescription="$metaDescription">
     <section class="relative overflow-hidden">
         <div class="aurora"></div>

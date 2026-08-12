@@ -6,7 +6,7 @@
                 @if($product->images->first())
                     <img src="{{ $product->images->first()->path }}" class="h-full w-full object-cover">
                 @else
-                    <div class="grid h-full place-items-center text-5xl">📦</div>
+                    <div class="grid h-full place-items-center text-5xl"></div>
                 @endif
             </div>
             <div class="p-5">
@@ -14,7 +14,7 @@
                 <p class="mt-1 text-slate-600">{{ $product->description }}</p>
                 <div class="mt-4 flex flex-wrap gap-2">
                     <x-badge tone="violet">{{ $product->niche ?: 'No niche yet' }}</x-badge>
-                    @if($product->hero_score > 70)<x-badge tone="amber">Hero {{ $product->hero_score }}</x-badge>@endif
+                    @if($product->hero_score >70)<x-badge tone="amber">Hero {{ $product->hero_score }}</x-badge>@endif
                     <x-badge tone="slate">{{ $product->product_type ?: 'Uncategorized' }}</x-badge>
                     @if($product->channel)<x-badge tone="sky">{{ $product->channel->type }}</x-badge>@endif
                 </div>
@@ -43,7 +43,7 @@
             </div>
             @if($product->ai_analysis)
                 <div class="rounded-xl bg-violet-50 p-3 text-sm text-violet-800">
-                    <p class="font-semibold">✨ AI analysis</p>
+                    <p class="font-semibold">AI analysis</p>
                     <p>Suitability: {{ $product->ai_analysis['suitability'] ?? '—' }}</p>
                 </div>
             @endif

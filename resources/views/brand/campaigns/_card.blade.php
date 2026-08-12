@@ -7,7 +7,7 @@
         'affiliate' => 'from-cyan-500 to-blue-500',
         default => 'from-slate-600 to-slate-800',
     };
-    $icon = match($campaign->type) { 'barter' => '🎁', 'paid' => '💸', 'affiliate' => '🔗', default => '🚀' };
+    $icon = match($campaign->type) { 'barter' => '', 'paid' => '', 'affiliate' => '', default => '' };
 @endphp
 <a href="{{ route('brand.campaigns.show', $campaign) }}"
    class="card flex items-center gap-4 p-5 transition hover:-translate-y-0.5 hover:border-violet-300 hover:shadow-md">

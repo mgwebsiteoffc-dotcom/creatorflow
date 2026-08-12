@@ -45,8 +45,8 @@
                     <button type="button" data-md="i" class="rounded px-2 py-1 italic hover:bg-white">I</button>
                     <button type="button" data-md="ul" class="rounded px-2 py-1 hover:bg-white">• List</button>
                     <button type="button" data-md="ol" class="rounded px-2 py-1 hover:bg-white">1. List</button>
-                    <button type="button" data-md="quote" class="rounded px-2 py-1 hover:bg-white">❝</button>
-                    <button type="button" data-md="link" class="rounded px-2 py-1 hover:bg-white">🔗</button>
+                    <button type="button" data-md="quote" class="rounded px-2 py-1 hover:bg-white"></button>
+                    <button type="button" data-md="link" class="rounded px-2 py-1 hover:bg-white"></button>
                     <button type="button" data-md="code" class="rounded px-2 py-1 font-mono hover:bg-white">{`}</button>
                 </div>
                 <textarea data-md-textarea class="input !rounded-t-none min-h-96 font-mono text-sm" name="body" required>{{ old('body', $post->body) }}</textarea>

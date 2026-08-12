@@ -1,4 +1,4 @@
-@props(['label', 'value', 'hint' => null, 'tone' => 'slate'])
+@props(['label', 'value', 'hint' =>null, 'tone' => 'slate'])
 @php
     $tones = [
         'violet' => 'from-violet-500 to-indigo-600',

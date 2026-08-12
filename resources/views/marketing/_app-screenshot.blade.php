@@ -6,10 +6,7 @@
     {{-- Browser chrome --}}
     <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_30px_80px_-30px_rgba(15,23,42,.25)]">
         <div class="flex items-center gap-2 border-b border-slate-100 bg-slate-50 px-3 py-2">
-            <span class="h-2.5 w-2.5 rounded-full bg-rose-400"></span>
-            <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
-            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-            <span class="ml-3 flex-1 truncate rounded-md bg-white px-2 py-0.5 text-[10px] text-slate-500 ring-1 ring-slate-200">app.creatorplex.io/brand</span>
+                                                <span class="ml-3 flex-1 truncate rounded-md bg-white px-2 py-0.5 text-[10px] text-slate-500 ring-1 ring-slate-200">app.creatorplex.io/brand</span>
         </div>
 
         {{-- ─────────── VARIANT 0 · Campaign management ─────────── --}}

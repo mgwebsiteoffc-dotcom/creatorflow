@@ -7,21 +7,20 @@
         </div>
         <div class="flex flex-wrap items-center gap-2">
             <a href="{{ route('brand.channels.index') }}" class="btn-secondary !py-2 text-sm">
-                {{ $shopifyConnected ? '✓ Shopify connected' : 'Connect Shopify' }} →
+                {{ $shopifyConnected ? ' Shopify connected' : 'Connect Shopify' }} →
             </a>
             <a href="{{ route('brand.orders.create') }}" class="btn-gradient !py-2 text-sm">
-                🎁 Create manual order
+                 Create manual order
             </a>
         </div>
     </div>
 
     @unless($hasAnyRemoteChannel)
         <div class="mt-6 flex items-start gap-3 rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 to-pink-50 p-4 text-sm text-slate-700">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white shadow-sm">🎁</span>
-            <div class="flex-1">
+                        <div class="flex-1">
                 <p class="font-bold text-slate-900">No Shopify store connected — that's OK.</p>
                 <p class="mt-1 text-xs text-slate-600">
-                    Ship products to creators manually using the <strong>Create manual order</strong> button above. Add tracking once you dispatch and the creator will get a WhatsApp + email update.
+                    Ship products to creators manually using the <strong>Create manual order</strong>button above. Add tracking once you dispatch and the creator will get a WhatsApp + email update.
                     Prefer auto-fulfillment? <a class="font-semibold text-violet-700 underline" href="{{ route('brand.channels.index') }}">Connect Shopify →</a>
                 </p>
             </div>
@@ -52,7 +51,7 @@
     @if($needsFulfillment->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-amber-200 bg-amber-50/50 p-5 md:p-6">
             <div class="flex items-center gap-2">
-                <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+                <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm"><x-icon name="alert" class="h-5 w-5 text-white" /></span>
                 <div>
                     <h2 class="text-lg font-black text-slate-900">{{ $needsFulfillment->count() }} creators waiting on their order</h2>
                     <p class="text-xs text-slate-500">These creators accepted your invitation but no order has been created yet.</p>
@@ -77,7 +76,7 @@
                         </div>
                         <form method="POST" action="{{ route('brand.orders.createFromAssignment', $a) }}">
                             @csrf
-                            <button class="btn-primary !py-2 !text-xs">🎁 Create order</button>
+                            <button class="btn-primary !py-2 !text-xs">Create order</button>
                         </form>
                     </div>
                 @endforeach
@@ -129,7 +128,7 @@
                         <td class="p-3 text-sm text-slate-600">
                             @if($o->items->isNotEmpty())
                                 {{ $o->items->first()->title }}
-                                @if($o->items->count() > 1) <span class="text-xs text-slate-400">+{{ $o->items->count() - 1 }} more</span>@endif
+                                @if($o->items->count() >1) <span class="text-xs text-slate-400">+{{ $o->items->count() - 1 }} more</span>@endif
                             @else — @endif
                         </td>
                         <td class="p-3 text-xs">
@@ -148,8 +147,8 @@
                 @empty
                     <tr>
                         <td colspan="6" class="p-8 text-center">
-                            <p class="text-4xl">📦</p>
-                            <p class="mt-3 text-sm text-slate-500">No orders yet. Once creators accept your campaign, their orders will appear here.</p>
+                            <div class="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-slate-100 text-slate-500"><x-icon name="orders" class="h-6 w-6" /></div>
+                            <p class="text-sm text-slate-500">No orders yet. Once creators accept your campaign, their orders will appear here.</p>
                             <a href="{{ route('brand.campaigns.index') }}" class="btn-secondary mt-4 !py-2 text-xs">View campaigns →</a>
                         </td>
                     </tr>

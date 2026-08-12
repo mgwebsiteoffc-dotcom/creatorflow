@@ -2,7 +2,7 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
             <p class="text-xs font-bold uppercase tracking-widest text-violet-600">Content · Case studies</p>
-            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">📚 Case studies</h1>
+            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">Case studies</h1>
             <p class="mt-1 text-sm text-slate-500">Long-form brand success stories rendered at /case-studies. Requires the "Admin-managed case studies" flag to be on (currently @if(\App\Models\PlatformSetting::feature('case_study_cms'))<span class="badge-green">enabled</span>@else<span class="badge-rose">disabled</span>@endif).</p>
         </div>
         <a href="{{ route('admin.case-studies.create') }}" class="btn-gradient !py-2 text-sm">+ New case study</a>

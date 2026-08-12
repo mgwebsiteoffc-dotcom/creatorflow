@@ -1,7 +1,7 @@
 <x-layouts.app panel="creator" title="Creator home">
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
-            <h1 class="text-3xl font-black tracking-tight text-slate-900">Hi, {{ explode(' ', $creator->display_name)[0] }} 👋</h1>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">Hi, {{ explode(' ', $creator->display_name)[0] }} </h1>
             <p class="mt-1 text-sm text-slate-500">{{ $creator->open_to_work ? 'You are open to new campaigns' : 'You are currently unavailable' }}</p>
         </div>
         <a href="{{ route('creator.marketplace') }}" class="btn-primary !py-2 text-sm">Browse marketplace →</a>
@@ -32,10 +32,10 @@
             @foreach($recentApplications as $app)
                 @php
                     $tone = match($app->status) { 'submitted' => 'amber', 'shortlisted' => 'sky', 'approved' => 'green', 'rejected' => 'rose', default => 'slate' };
-                    $label = match($app->status) { 'submitted' => 'Pending', 'shortlisted' => 'Shortlisted', 'approved' => 'Approved 🎉', 'rejected' => 'Not selected', default => ucfirst($app->status) };
+                    $label = match($app->status) { 'submitted' => 'Pending', 'shortlisted' => 'Shortlisted', 'approved' => 'Approved ', 'rejected' => 'Not selected', default =>ucfirst($app->status) };
                 @endphp
                 <a href="{{ route('creator.marketplace.show', $app->campaign) }}" class="card flex items-center gap-3 p-4 hover:border-violet-300">
-                    <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white">🎁</div>
+                    <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white"></div>
                     <div class="min-w-0 flex-1">
                         <p class="truncate text-sm font-semibold">{{ $app->campaign->title }}</p>
                         <p class="truncate text-xs text-slate-500">{{ $app->campaign->workspace->name ?? '' }} · applied {{ $app->created_at->diffForHumans() }}</p>
@@ -51,7 +51,7 @@
         @forelse($activeAssignments as $a)
             <a href="{{ route('creator.assignments.show', $a) }}" class="card flex items-center gap-3 p-4 hover:border-violet-300">
                 <div class="grid h-11 w-11 place-items-center rounded-xl bg-violet-100 text-lg">
-                    {{ match($a->status) { 'order_created' => '📦', 'shipped','delivered' => '🚚', 'in_progress' => '🎬', 'submitted' => '⏳', default => '•' } }}
+                    {{ match($a->status) { 'order_created' => '', 'shipped','delivered' => '', 'in_progress' => '', 'submitted' => '', default => '•' } }}
                 </div>
                 <div class="min-w-0 flex-1">
                     <p class="truncate text-sm font-semibold">{{ $a->campaign->title }}</p>
@@ -60,7 +60,7 @@
                 @if($a->content_due_date)<span class="text-xs text-slate-400">due {{ $a->content_due_date->format('M j') }}</span>@endif
             </a>
         @empty
-            <x-empty-state title="No active campaigns" icon="🎬">
+            <x-empty-state title="No active campaigns" icon="campaigns">
                 Browse the marketplace to find your next collaboration.
                 <x-slot:action><a href="{{ route('creator.marketplace') }}" class="btn-primary">Browse marketplace</a></x-slot:action>
             </x-empty-state>

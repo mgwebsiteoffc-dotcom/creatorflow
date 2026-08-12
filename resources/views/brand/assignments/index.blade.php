@@ -25,7 +25,7 @@
                 </x-badge>
             </a>
         @empty
-            <x-empty-state title="No assignments" icon="📋">
+            <x-empty-state title="No assignments" icon="assignments">
                 Launch a campaign to start assigning creators to products.
             </x-empty-state>
         @endforelse

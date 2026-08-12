@@ -33,7 +33,7 @@
                 </div>
             </div>
         @empty
-            <x-empty-state title="No payouts yet" icon="💸">
+            <x-empty-state title="No payouts yet" icon="file-text">
                 Approved content turns into payouts automatically.
             </x-empty-state>
         @endforelse

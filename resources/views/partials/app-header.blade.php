@@ -34,8 +34,8 @@
             <div class="relative" data-notif-wrap>
                 <button type="button" data-notif-toggle class="btn-ghost relative !p-2" title="Notifications">
                     <x-icon name="bell" class="h-5 w-5" />
-                    @if(($unreadCount ?? 0) > 0)
-                        <span class="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">{{ min(9, $unreadCount) }}{{ $unreadCount > 9 ? '+' : '' }}</span>
+                    @if(($unreadCount ?? 0) >0)
+                        <span class="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">{{ min(9, $unreadCount) }}{{ $unreadCount >9 ? '+' : '' }}</span>
                     @endif
                 </button>
                 <div data-notif-panel class="absolute right-0 top-full z-50 mt-2 hidden w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
@@ -50,7 +50,12 @@
                         @forelse(($recentNotifications ?? []) as $n)
                             <a href="{{ route('notifications.open', $n) }}"
                                class="flex items-start gap-2 border-b border-slate-100 px-4 py-3 last:border-0 {{ $n->read_at ? '' : 'bg-violet-50/40' }} hover:bg-slate-50">
-                                <span class="mt-0.5 text-lg">{{ str_contains($n->type, 'approved') ? '✅' : (str_contains($n->type, 'content') ? '🎬' : '🔔') }}</span>
+                                @php
+                                    $nIcon = str_contains($n->type, 'approved') ? 'check-circle'
+                                          : (str_contains($n->type, 'content')  ? 'video'
+                                          : 'bell');
+                                @endphp
+                                <x-icon :name="$nIcon" class="mt-0.5 h-4 w-4 text-slate-500" />
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate text-sm font-semibold text-slate-900">{{ $n->data['title'] ?? '' }}</p>
                                     @if($n->data['body'] ?? null)<p class="line-clamp-2 text-xs text-slate-500">{{ $n->data['body'] }}</p>@endif
@@ -59,7 +64,7 @@
                                 @if(! $n->read_at)<span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-violet-600"></span>@endif
                             </a>
                         @empty
-                            <div class="px-4 py-8 text-center text-xs text-slate-500">You're all caught up 🎉</div>
+                            <div class="px-4 py-8 text-center text-xs text-slate-500">You're all caught up </div>
                         @endforelse
                     </div>
                 </div>
@@ -82,11 +87,11 @@
     (function () {
         const sidebar = document.querySelector('[data-sidebar]');
         if (! sidebar) return;
-        const openBtn  = document.querySelector('[data-sidebar-open]');
+        const openBtn = document.querySelector('[data-sidebar-open]');
         const closeBtn = document.querySelector('[data-sidebar-close]');
         const backdrop = document.querySelector('[data-sidebar-backdrop]');
 
-        const open  = () => {
+        const open = () => {
             sidebar.classList.remove('hidden');
             sidebar.classList.add('flex');
             backdrop?.classList.remove('hidden');
@@ -105,7 +110,7 @@
         backdrop?.addEventListener('click', close);
 
         // Close drawer when a nav link is tapped on mobile
-        sidebar.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', () => {
+        sidebar.querySelectorAll('a[href]').forEach(a =>a.addEventListener('click', () => {
             if (window.innerWidth < 768) close();
         }));
     })();

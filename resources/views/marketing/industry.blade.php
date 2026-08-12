@@ -64,10 +64,7 @@
                         <div class="rounded-[calc(1.25rem-1px)] bg-white p-5">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
-                                    <span class="h-2.5 w-2.5 rounded-full bg-rose-400"></span>
-                                    <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
-                                    <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-                                </div>
+                                                                                                                                            </div>
                                 <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-700">● LIVE</span>
                             </div>
                             <div class="mt-4 rounded-2xl p-5 text-white shadow-inner"
@@ -123,8 +120,7 @@
                     <div class="marquee-track">
                         @foreach(array_merge($item['brands'], $item['brands']) as $b)
                             <div class="flex shrink-0 items-center gap-2 text-xl font-black tracking-tight text-slate-400">
-                                <span class="h-5 w-5 rounded-md" style="background-image: linear-gradient(135deg, {{ $item['accent'] ?? '#7c3aed' }}, #ec4899);"></span>
-                                {{ $b }}
+                                                                {{ $b }}
                             </div>
                         @endforeach
                     </div>

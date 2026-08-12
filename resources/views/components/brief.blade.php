@@ -1,4 +1,4 @@
-@props(['markdown' => '', 'compact' => false])
+@props(['markdown' => '', 'compact' =>false])
 @php
     $html = \App\Support\BriefMarkdown::render($markdown);
 @endphp

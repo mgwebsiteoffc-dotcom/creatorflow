@@ -1,7 +1,7 @@
 <x-layouts.app panel="creator" title="Complete your creator profile">
     <div class="mx-auto max-w-4xl">
         <div class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-rose-600">
-            <span class="chip-dot" style="background:#f43f5e; box-shadow: 0 0 0 4px rgba(244,63,94,.15);"></span> Creator onboarding
+            <span class="chip-dot" style="background:#f43f5e; box-shadow: 0 0 0 4px rgba(244,63,94,.15);"></span>Creator onboarding
         </div>
         <h1 class="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
             Let's build your <span class="text-gradient">creator profile</span>
@@ -97,22 +97,19 @@
 
                         <div class="space-y-3">
                             <div class="flex items-center gap-3 rounded-xl border border-slate-200 p-3">
-                                <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-pink-500 to-orange-500 text-white">◎</span>
-                                <div class="flex-1">
+                                                                <div class="flex-1">
                                     <div class="text-sm font-semibold text-slate-900">Instagram</div>
                                     <input class="input mt-1" name="instagram_handle" placeholder="@handle" value="{{ old('instagram_handle') }}">
                                 </div>
                             </div>
                             <div class="flex items-center gap-3 rounded-xl border border-slate-200 p-3">
-                                <span class="grid h-10 w-10 place-items-center rounded-xl bg-slate-900 text-white">♪</span>
-                                <div class="flex-1">
+                                                                <div class="flex-1">
                                     <div class="text-sm font-semibold text-slate-900">TikTok</div>
                                     <input class="input mt-1" name="tiktok_handle" placeholder="@handle" value="{{ old('tiktok_handle') }}">
                                 </div>
                             </div>
                             <div class="flex items-center gap-3 rounded-xl border border-slate-200 p-3">
-                                <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-red-500 to-rose-600 text-white">▶</span>
-                                <div class="flex-1">
+                                                                <div class="flex-1">
                                     <div class="text-sm font-semibold text-slate-900">YouTube</div>
                                     <input class="input mt-1" name="youtube_handle" placeholder="@handle" value="{{ old('youtube_handle') }}">
                                 </div>
@@ -158,14 +155,14 @@
                             <label class="flex items-center gap-3 rounded-xl border border-slate-200 p-4">
                                 <input type="checkbox" name="accepts_barter" value="1" class="h-5 w-5 rounded border-slate-300 text-violet-600 focus:ring-violet-400" checked>
                                 <div>
-                                    <div class="text-sm font-bold text-slate-900">🎁 Open to barter</div>
+                                    <div class="text-sm font-bold text-slate-900">Open to barter</div>
                                     <div class="text-xs text-slate-500">Trade content for free products</div>
                                 </div>
                             </label>
                             <label class="flex items-center gap-3 rounded-xl border border-slate-200 p-4">
                                 <input type="checkbox" name="accepts_paid" value="1" class="h-5 w-5 rounded border-slate-300 text-violet-600 focus:ring-violet-400" checked>
                                 <div>
-                                    <div class="text-sm font-bold text-slate-900">💰 Open to paid</div>
+                                    <div class="text-sm font-bold text-slate-900">Open to paid</div>
                                     <div class="text-xs text-slate-500">Get paid per deliverable</div>
                                 </div>
                             </label>
@@ -178,7 +175,7 @@
 
                         <div class="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6">
                             <button type="button" data-prev class="btn-ghost">← Back</button>
-                            <button type="submit" class="btn-gradient">🚀 Publish profile</button>
+                            <button type="submit" class="btn-gradient">Publish profile</button>
                         </div>
                     </div>
                 </div>

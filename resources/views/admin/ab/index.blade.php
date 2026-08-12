@@ -2,8 +2,8 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
             <p class="text-xs font-bold uppercase tracking-widest text-violet-600">Superadmin · Growth</p>
-            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">🧪 A/B experiments</h1>
-            <p class="mt-1 text-sm text-slate-500">Test hero copy, CTAs, pricing framing. Use <code class="rounded bg-slate-100 px-1.5">\App\Support\AbTest::variant('slug')</code> in any Blade view.</p>
+            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">A/B experiments</h1>
+            <p class="mt-1 text-sm text-slate-500">Test hero copy, CTAs, pricing framing. Use <code class="rounded bg-slate-100 px-1.5">\App\Support\AbTest::variant('slug')</code>in any Blade view.</p>
         </div>
         <a href="{{ route('admin.ab.create') }}" class="btn-gradient !py-2 text-sm">+ New experiment</a>
     </div>
@@ -33,7 +33,7 @@
                         </td>
                         <td class="p-3 font-mono">{{ number_format($imp) }}</td>
                         <td class="p-3 font-mono">{{ number_format($conv) }}
-                            @if($imp > 0)<span class="ml-1 text-[11px] text-slate-500">({{ number_format($conv / $imp * 100, 1) }}%)</span>@endif
+                            @if($imp >0)<span class="ml-1 text-[11px] text-slate-500">({{ number_format($conv / $imp * 100, 1) }}%)</span>@endif
                         </td>
                         <td class="p-3">
                             <x-badge :tone="$e->status === 'running' ? 'green' : ($e->status === 'concluded' ? 'sky' : 'slate')">{{ $e->status }}</x-badge>

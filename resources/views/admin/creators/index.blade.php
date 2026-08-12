@@ -4,7 +4,7 @@
             <h1 class="text-3xl font-black tracking-tight text-slate-900">Creators</h1>
             <p class="mt-1 text-sm text-slate-500">Verify, ban, and bulk-import creators.</p>
         </div>
-        <a href="{{ route('admin.creators.import') }}" class="btn-primary !py-2 text-sm">📥 Bulk import (CSV)</a>
+        <a href="{{ route('admin.creators.import') }}" class="btn-primary !py-2 text-sm">Bulk import (CSV)</a>
     </div>
 
     <form method="GET" class="mt-6 grid gap-2 sm:grid-cols-[1fr_180px_160px_auto] sm:items-center">

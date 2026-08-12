@@ -17,7 +17,7 @@
         <div class="space-y-5 lg:col-span-2">
             <div class="card p-5">
                 <div class="flex items-center justify-between">
-                    <h2 class="font-semibold">🎁 Product &amp; order</h2>
+                    <h2 class="font-semibold">Product &amp; order</h2>
                     @if($assignment->order)
                         <a href="{{ route('brand.orders.show', $assignment->order) }}" class="text-xs font-semibold text-violet-700 hover:underline">Manage shipping →</a>
                     @endif
@@ -39,7 +39,7 @@
                     </p>
                 @else
                     <div class="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
-                        <p class="font-semibold">🎁 Order not created yet</p>
+                        <p class="font-semibold">Order not created yet</p>
                         <p class="mt-1">Once ready, we'll create a Shopify draft order (100 % discount) and you can ship the product.</p>
                         <form method="POST" action="{{ route('brand.orders.createFromAssignment', $assignment) }}" class="mt-2">
                             @csrf
@@ -51,7 +51,7 @@
                 {{-- Creator shipping address --}}
                 @if($assignment->creator->preferences?->shipping_address)
                     <div class="mt-4 rounded-xl border border-slate-100 bg-slate-50 p-3 text-xs">
-                        <p class="font-bold uppercase tracking-widest text-slate-500">📍 Ship to</p>
+                        <p class="font-bold uppercase tracking-widest text-slate-500">Ship to</p>
                         <address class="mt-1 not-italic text-slate-700">
                             @foreach($assignment->creator->preferences->shipping_address as $line)
                                 @if($line){{ $line }}<br>@endif
@@ -106,7 +106,7 @@
         <div class="space-y-5">
         <div class="card p-5">
             <div class="flex items-center gap-2">
-                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white">📋</div>
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white"></div>
                 <h2 class="text-lg font-bold text-slate-900">Brief</h2>
             </div>
             <div class="mt-3">
@@ -117,13 +117,13 @@
         @if(($assignment->campaign->references ?? collect())->isNotEmpty())
             <div class="card p-5">
                 <div class="flex items-center gap-2">
-                    <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 text-white">📎</div>
+                    <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 text-white"></div>
                     <h2 class="text-lg font-bold text-slate-900">References</h2>
                     <span class="ml-auto text-xs font-semibold text-slate-500">{{ $assignment->campaign->references->count() }}</span>
                 </div>
                 <div class="mt-3 space-y-2">
                     @foreach($assignment->campaign->references as $ref)
-                        @include('partials.reference-tile', ['ref' => $ref, 'canDelete' => false])
+                        @include('partials.reference-tile', ['ref' => $ref, 'canDelete' =>false])
                     @endforeach
                 </div>
                 <a href="{{ route('brand.campaigns.show', $assignment->campaign) }}#references" class="mt-3 inline-block text-xs font-semibold text-violet-700 hover:text-violet-900">Manage references →</a>

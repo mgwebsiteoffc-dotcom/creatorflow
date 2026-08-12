@@ -16,10 +16,10 @@
             {{-- Email --}}
             <section class="rounded-2xl border border-slate-200 bg-white p-6">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-black text-slate-900">📧 Email</h2>
+                    <h2 class="text-lg font-black text-slate-900">Email</h2>
                     <label class="inline-flex items-center gap-2 text-xs font-semibold">
                         <input type="hidden" name="email_enabled" value="0">
-                        <input type="checkbox" name="email_enabled" value="1" @checked($tpl->email_enabled) class="rounded"> Send email
+                        <input type="checkbox" name="email_enabled" value="1" @checked($tpl->email_enabled) class="rounded">Send email
                     </label>
                 </div>
                 <div class="mt-4 grid gap-3">
@@ -34,10 +34,10 @@
             {{-- WhatsApp --}}
             <section class="rounded-2xl border border-slate-200 bg-white p-6">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-black text-slate-900">💬 WhatsApp (Whatify)</h2>
+                    <h2 class="text-lg font-black text-slate-900">WhatsApp (Whatify)</h2>
                     <label class="inline-flex items-center gap-2 text-xs font-semibold">
                         <input type="hidden" name="whatsapp_enabled" value="0">
-                        <input type="checkbox" name="whatsapp_enabled" value="1" @checked($tpl->whatsapp_enabled) class="rounded"> Send WhatsApp
+                        <input type="checkbox" name="whatsapp_enabled" value="1" @checked($tpl->whatsapp_enabled) class="rounded">Send WhatsApp
                     </label>
                 </div>
                 <div class="mt-4 grid gap-3">
@@ -49,7 +49,7 @@
                     <div>
                         <label class="label">Body placeholders <span class="text-xs font-normal text-slate-400">— comma separated, in template order</span></label>
                         <input class="input font-mono" name="whatsapp_body_params" value="{{ collect((array) $tpl->whatsapp_body_params)->implode(', ') }}" placeholder="@{{creator_name}}, @{{campaign_title}}, @{{brand_name}}">
-                        <p class="mt-1 text-xs text-slate-500">Each param maps to <code>@{{1}} @{{2}} @{{3}}</code> in Whatify's approved template.</p>
+                        <p class="mt-1 text-xs text-slate-500">Each param maps to <code>@{{1}} @{{2}} @{{3}}</code>in Whatify's approved template.</p>
                     </div>
                 </div>
             </section>
@@ -57,10 +57,10 @@
             {{-- In-app --}}
             <section class="rounded-2xl border border-slate-200 bg-white p-6">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-black text-slate-900">🔔 In-app</h2>
+                    <h2 class="text-lg font-black text-slate-900">In-app</h2>
                     <label class="inline-flex items-center gap-2 text-xs font-semibold">
                         <input type="hidden" name="inapp_enabled" value="0">
-                        <input type="checkbox" name="inapp_enabled" value="1" @checked($tpl->inapp_enabled) class="rounded"> Create notification row
+                        <input type="checkbox" name="inapp_enabled" value="1" @checked($tpl->inapp_enabled) class="rounded">Create notification row
                     </label>
                 </div>
                 <p class="mt-2 text-xs text-slate-500">Shows up in the recipient's notification bell + /notifications inbox. Uses the email subject + first 200 chars of body.</p>
@@ -90,7 +90,7 @@
     </form>
 
     <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-        <h2 class="text-lg font-black text-slate-900">✉️ Send a test</h2>
+        <h2 class="text-lg font-black text-slate-900">Send a test</h2>
         <form method="POST" action="{{ route('admin.notification-templates.test', $tpl) }}" class="mt-3 grid gap-3 md:grid-cols-3">
             @csrf
             <div><label class="label">Test email</label><input class="input" type="email" name="to_email" placeholder="you@brand.com"></div>

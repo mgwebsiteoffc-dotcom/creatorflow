@@ -13,19 +13,19 @@
     </div>
 
     <div class="mt-6 flex flex-wrap gap-2">
-        <a href="{{ route('brand.settings.profile') }}" class="tab-pill">🏢 Profile</a>
-        <a href="{{ route('brand.settings.team') }}"    class="tab-pill">👥 Team</a>
-        <a href="{{ route('brand.billing.index') }}"    class="tab-pill is-active">💳 Billing</a>
+        <a href="{{ route('brand.settings.profile') }}" class="tab-pill">Profile</a>
+        <a href="{{ route('brand.settings.team') }}" class="tab-pill">Team</a>
+        <a href="{{ route('brand.billing.index') }}" class="tab-pill is-active">Billing</a>
     </div>
 
     @if(! empty($schemaMissing))
         <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm"><x-icon name="alert" class="h-5 w-5 text-white" /></span>
             <div class="flex-1">
                 <p class="font-bold">Billing schema hasn't been migrated yet.</p>
                 <p class="mt-1 text-xs text-amber-800">Run
                     <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code>
-                    from the project root to create the <code class="rounded bg-white/70 px-1.5 py-0.5">payment_records</code> table.
+                    from the project root to create the <code class="rounded bg-white/70 px-1.5 py-0.5">payment_records</code>table.
                     Until then, this page shows an empty state and the "Record a payment" form is disabled.
                 </p>
             </div>
@@ -35,9 +35,9 @@
     {{-- Totals --}}
     <div class="mt-8 grid gap-4 md:grid-cols-4">
         <x-stat label="Paid this month" :value="$workspace->formatMoney($totals['paid_this_month'])" tone="violet"/>
-        <x-stat label="Lifetime spend"  :value="$workspace->formatMoney($totals['paid_lifetime'])"   tone="emerald"/>
-        <x-stat label="Refunded"        :value="$workspace->formatMoney($totals['refunded'])"        tone="rose"/>
-        <x-stat label="Pending"         :value="$workspace->formatMoney($totals['pending'])"         tone="amber"/>
+        <x-stat label="Lifetime spend" :value="$workspace->formatMoney($totals['paid_lifetime'])" tone="emerald"/>
+        <x-stat label="Refunded" :value="$workspace->formatMoney($totals['refunded'])" tone="rose"/>
+        <x-stat label="Pending" :value="$workspace->formatMoney($totals['pending'])" tone="amber"/>
     </div>
 
     {{-- Plan card --}}

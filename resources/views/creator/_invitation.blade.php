@@ -1,7 +1,7 @@
 @props(['inv'])
 <div class="card p-4">
     <div class="flex items-start gap-3">
-        <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 text-white">🎁</div>
+        <div class="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-rose-500 to-pink-500 text-white"></div>
         <div class="min-w-0 flex-1">
             <p class="text-sm font-semibold">{{ $inv->campaign->title }}</p>
             <p class="text-xs text-slate-500">{{ $inv->campaign->workspace->name }} · <span class="capitalize">{{ $inv->campaign->type }}</span></p>

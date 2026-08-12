@@ -1,5 +1,5 @@
 @props(['crumbs' => []])
-@if(count($crumbs) > 1)
+@if(count($crumbs) >1)
     <nav aria-label="Breadcrumb" class="text-xs text-slate-500">
         <ol class="flex flex-wrap items-center gap-1.5">
             @foreach($crumbs as $c)

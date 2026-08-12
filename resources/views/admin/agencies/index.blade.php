@@ -2,7 +2,7 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
             <p class="text-xs font-bold uppercase tracking-widest text-violet-600">Superadmin</p>
-            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">🏢 Agencies</h1>
+            <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">Agencies</h1>
             <p class="mt-1 text-sm text-slate-500">Group multiple brand workspaces under one agency. Agency owners can see spend + creators across all of their brands.</p>
         </div>
         <a href="{{ route('admin.agencies.create') }}" class="btn-gradient !py-2 text-sm">+ New agency</a>

@@ -1,4 +1,4 @@
-@props(['creator', 'activeCampaigns' => collect()])
+@props(['creator', 'activeCampaigns' =>collect()])
 @php
     $tier = $creator->currentTier();
     $tierMeta = $tier ? (\App\Support\CreatorTaxonomy::tiers()[$tier] ?? null) : null;

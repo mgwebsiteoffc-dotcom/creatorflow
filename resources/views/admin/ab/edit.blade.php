@@ -27,7 +27,7 @@
                 <h2 class="text-lg font-black text-slate-900">Variants</h2>
                 <p class="mt-1 text-xs text-slate-500">Weights must sum to 100. Blade helper returns an array with <code>key</code>, <code>label</code>, <code>copy</code>.</p>
                 <div class="mt-4 space-y-2">
-                    @php $variants = old('variant_keys') ? array_map(null, (array) old('variant_keys'), (array) old('variant_weights'), (array) old('variant_labels'), (array) old('variant_copy')) : ($exp->variants ?? [['key' => 'A', 'weight' => 50], ['key' => 'B', 'weight' => 50]]); @endphp
+                    @php $variants = old('variant_keys') ? array_map(null, (array) old('variant_keys'), (array) old('variant_weights'), (array) old('variant_labels'), (array) old('variant_copy')) : ($exp->variants ?? [['key' => 'A', 'weight' =>50], ['key' => 'B', 'weight' =>50]]); @endphp
                     @foreach($variants as $i => $v)
                         <div class="grid gap-2 md:grid-cols-[80px_100px_1fr_1fr]">
                             <input class="input font-mono" name="variant_keys[]"    value="{{ is_array($v) ? ($v['key'] ?? '') : ($v[0] ?? '') }}" placeholder="A">

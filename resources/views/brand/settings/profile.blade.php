@@ -5,16 +5,16 @@
             <p class="mt-1 text-sm text-slate-500">Everything creators, invoices, and receipts see about your brand.</p>
         </div>
         <div class="flex flex-wrap gap-2">
-            <a href="{{ route('brand.billing.index') }}" class="btn-secondary !py-2 text-sm">💳 Billing</a>
-            <a href="{{ route('brand.settings.team') }}" class="btn-secondary !py-2 text-sm">👥 Team</a>
+            <a href="{{ route('brand.billing.index') }}" class="btn-secondary !py-2 text-sm">Billing</a>
+            <a href="{{ route('brand.settings.team') }}" class="btn-secondary !py-2 text-sm">Team</a>
         </div>
     </div>
 
     {{-- Section tabs (visual) --}}
     <div class="mt-6 flex flex-wrap gap-2">
-        <a href="{{ route('brand.settings.profile') }}" class="tab-pill is-active">🏢 Profile</a>
-        <a href="{{ route('brand.settings.team') }}"    class="tab-pill">👥 Team</a>
-        <a href="{{ route('brand.billing.index') }}"    class="tab-pill">💳 Billing</a>
+        <a href="{{ route('brand.settings.profile') }}" class="tab-pill is-active">Profile</a>
+        <a href="{{ route('brand.settings.team') }}" class="tab-pill">Team</a>
+        <a href="{{ route('brand.billing.index') }}" class="tab-pill">Billing</a>
     </div>
 
     <form method="POST" action="{{ route('brand.settings.profile.update') }}" enctype="multipart/form-data"
@@ -109,10 +109,10 @@
                         <label class="label">Tax type</label>
                         <select class="input" name="tax_type">
                             @php $tt = old('tax_type', $workspace->tax_type ?: 'none'); @endphp
-                            <option value="none"  @selected($tt==='none')>None</option>
+                            <option value="none" @selected($tt==='none')>None</option>
                             <option value="gstin" @selected($tt==='gstin')>GSTIN (India)</option>
-                            <option value="vat"   @selected($tt==='vat')>VAT (EU/UK)</option>
-                            <option value="ein"   @selected($tt==='ein')>EIN (US)</option>
+                            <option value="vat" @selected($tt==='vat')>VAT (EU/UK)</option>
+                            <option value="ein" @selected($tt==='ein')>EIN (US)</option>
                         </select>
                     </div>
                     <div class="sm:col-span-2">

@@ -10,11 +10,11 @@
     {{-- Status tabs --}}
     @php
         $tabs = [
-            'all'         => ['label' => 'All',         'tone' => 'slate'],
-            'submitted'   => ['label' => 'Pending',     'tone' => 'amber'],
+            'all' => ['label' => 'All', 'tone' => 'slate'],
+            'submitted' => ['label' => 'Pending', 'tone' => 'amber'],
             'shortlisted' => ['label' => 'Shortlisted', 'tone' => 'sky'],
-            'approved'    => ['label' => 'Approved',    'tone' => 'green'],
-            'rejected'    => ['label' => 'Rejected',    'tone' => 'rose'],
+            'approved' => ['label' => 'Approved', 'tone' => 'green'],
+            'rejected' => ['label' => 'Rejected', 'tone' => 'rose'],
         ];
         $active = request('status', 'all');
     @endphp
@@ -42,15 +42,15 @@
                 $badgeLabel = match($app->status) {
                     'submitted' => 'Pending review',
                     'shortlisted' => 'Shortlisted',
-                    'approved' => 'Approved 🎉',
+                    'approved' => 'Approved ',
                     'rejected' => 'Not selected',
                     'withdrawn' => 'Withdrawn',
-                    default => ucfirst($app->status),
+                    default =>ucfirst($app->status),
                 };
             @endphp
             <div class="card p-5">
                 <div class="flex items-start gap-4">
-                    <div class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 text-lg text-white">🎁</div>
+                    <div class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 text-lg text-white"></div>
                     <div class="min-w-0 flex-1">
                         <div class="flex flex-wrap items-center gap-2">
                             <a href="{{ route('creator.marketplace.show', $app->campaign) }}" class="font-bold text-slate-900 hover:text-violet-700">{{ $app->campaign->title }}</a>
@@ -68,7 +68,7 @@
                         @endif
                         @if($app->status === 'approved')
                             <p class="mt-3 text-sm text-emerald-700">
-                                ✓ The brand approved you — check your <a href="{{ route('creator.invitations') }}" class="font-semibold underline">Invitations</a> to accept and start.
+                                 The brand approved you — check your <a href="{{ route('creator.invitations') }}" class="font-semibold underline">Invitations</a>to accept and start.
                             </p>
                         @endif
                     </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
         @empty
-            <x-empty-state title="No applications yet" icon="📝">
+            <x-empty-state title="No applications yet" icon="applications">
                 Browse open campaigns and apply — brands respond in ~48h.
                 <x-slot:action><a href="{{ route('creator.marketplace') }}" class="btn-primary">Browse marketplace</a></x-slot:action>
             </x-empty-state>

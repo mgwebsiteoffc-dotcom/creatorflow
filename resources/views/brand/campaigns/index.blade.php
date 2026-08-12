@@ -11,7 +11,7 @@
         @forelse($campaigns as $campaign)
             @include('brand.campaigns._card', ['campaign' => $campaign])
         @empty
-            <x-empty-state title="No campaigns yet" icon="🚀">
+            <x-empty-state title="No campaigns yet" icon="campaigns">
                 AI can draft your first campaign from your products in seconds.
                 <x-slot:action><a href="{{ route('brand.campaigns.create') }}" class="btn-primary">Create campaign</a></x-slot:action>
             </x-empty-state>

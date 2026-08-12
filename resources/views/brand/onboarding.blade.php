@@ -1,7 +1,7 @@
 <x-layouts.app panel="brand" title="Get started">
     <div class="mx-auto max-w-4xl">
         <div class="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-violet-700">
-            <span class="chip-dot"></span> Brand onboarding
+            <span class="chip-dot"></span>Brand onboarding
         </div>
         <h1 class="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
             Let's get you <span class="text-gradient">campaign-ready</span>
@@ -32,20 +32,20 @@
                         <div class="grid gap-4 md:grid-cols-3">
                             {{-- Shopify --}}
                             <div class="card card-hover flex flex-col p-5">
-                                <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-lg text-white">🛍️</div>
+                                <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-lg text-white"></div>
                                 <h3 class="mt-3 font-bold text-slate-900">Connect Shopify</h3>
                                 <p class="mt-1 text-xs text-slate-500">Auto-sync products, inventory, images, and orders in real time.</p>
                                 <form method="POST" action="{{ route('brand.onboarding.shopify') }}" class="mt-4">
                                     @csrf
                                     <button class="btn-primary w-full" {{ $shopifyConnected ? 'disabled' : '' }}>
-                                        {{ $shopifyConnected ? '✓ Connected' : 'Install app' }}
+                                        {{ $shopifyConnected ? ' Connected' : 'Install app' }}
                                     </button>
                                 </form>
                             </div>
 
                             {{-- CSV --}}
                             <div class="card card-hover flex flex-col p-5">
-                                <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 text-lg text-white">📄</div>
+                                <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-indigo-500 text-lg text-white"></div>
                                 <h3 class="mt-3 font-bold text-slate-900">Upload CSV</h3>
                                 <p class="mt-1 text-xs text-slate-500">From WooCommerce, Amazon, or a spreadsheet. We map the columns.</p>
                                 <a href="{{ route('brand.products.import') }}" class="btn-secondary mt-4 w-full">Import CSV</a>
@@ -53,7 +53,7 @@
 
                             {{-- Manual --}}
                             <div class="card card-hover flex flex-col p-5">
-                                <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 text-lg text-white">➕</div>
+                                <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 text-lg text-white"></div>
                                 <h3 class="mt-3 font-bold text-slate-900">Add manually</h3>
                                 <p class="mt-1 text-xs text-slate-500">Quick single-product setup — perfect for launches.</p>
                                 <button type="button" data-next class="btn-secondary mt-4 w-full">Add a product →</button>
@@ -116,9 +116,9 @@
 
                         <div class="grid gap-4 md:grid-cols-3">
                             @foreach([
-                                ['🧠', 'Niche detection', 'Cluster products into buyer intents & niches.'],
-                                ['⭐', 'Hero products', 'Rank the top 5 candidates for seeding.'],
-                                ['🎯', 'Creator match', 'Score 100K+ creators against your catalog.'],
+                                ['', 'Niche detection', 'Cluster products into buyer intents & niches.'],
+                                ['', 'Hero products', 'Rank the top 5 candidates for seeding.'],
+                                ['', 'Creator match', 'Score 100K+ creators against your catalog.'],
                             ] as $step)
                                 <div class="card p-4">
                                     <div class="text-xl">{{ $step[0] }}</div>
@@ -128,7 +128,7 @@
                             @endforeach
                         </div>
 
-                        @if($productsCount > 0)
+                        @if($productsCount >0)
                             <form method="POST" action="{{ route('brand.onboarding.analyze') }}" class="mt-6">
                                 @csrf
                                 <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-violet-50 to-cyan-50 p-5">
@@ -136,7 +136,7 @@
                                         <div class="text-sm font-bold text-slate-900">{{ $productsCount }} products ready</div>
                                         <div class="text-xs text-slate-500">Runs in about 20 seconds.</div>
                                     </div>
-                                    <button class="btn-gradient">✨ Run AI analysis</button>
+                                    <button class="btn-gradient">Run AI analysis</button>
                                 </div>
                             </form>
                         @else
@@ -165,9 +165,9 @@
                                 <label class="label">What outcome matters most?</label>
                                 <div class="grid gap-3 sm:grid-cols-3">
                                     @foreach([
-                                        ['awareness', '📣', 'Awareness', 'Reach + impressions'],
-                                        ['ugc', '🎬', 'UGC volume', 'Content library for ads'],
-                                        ['sales', '💰', 'Sales', 'Direct attributed revenue'],
+                                        ['awareness', '', 'Awareness', 'Reach + impressions'],
+                                        ['ugc', '', 'UGC volume', 'Content library for ads'],
+                                        ['sales', '', 'Sales', 'Direct attributed revenue'],
                                     ] as $goal)
                                         <label class="cursor-pointer">
                                             <input type="radio" name="primary_goal" value="{{ $goal[0] }}" class="sr-only" {{ $loop->first ? 'checked' : '' }}>

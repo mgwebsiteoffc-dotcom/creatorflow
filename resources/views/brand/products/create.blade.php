@@ -19,7 +19,7 @@
                     <input id="img-input" type="file" name="images[]" accept="image/*" multiple class="absolute inset-0 h-full w-full cursor-pointer opacity-0">
                     <div class="pointer-events-none">
                         <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl text-2xl text-white shadow-lg"
-                             style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);">📷</div>
+                             style="background-image: linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b);"></div>
                         <div class="mt-4 text-base font-bold text-slate-900">Drop images here or click to browse</div>
                         <div class="mt-1 text-xs text-slate-500">PNG · JPG · WEBP · up to 5 MB each · first image becomes primary</div>
                         <div class="mt-4 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-white px-3 py-1.5 text-xs font-semibold text-violet-700 shadow-sm">
@@ -113,10 +113,10 @@
             };
             input.addEventListener('change', render);
 
-            ['dragover','dragenter'].forEach(evt => drop.addEventListener(evt, e => {
+            ['dragover','dragenter'].forEach(evt =>drop.addEventListener(evt, e => {
                 e.preventDefault(); drop.classList.add('border-violet-500','bg-violet-50');
             }));
-            ['dragleave','drop'].forEach(evt => drop.addEventListener(evt, e => {
+            ['dragleave','drop'].forEach(evt =>drop.addEventListener(evt, e => {
                 e.preventDefault(); drop.classList.remove('border-violet-500','bg-violet-50');
             }));
             drop.addEventListener('drop', (e) => {

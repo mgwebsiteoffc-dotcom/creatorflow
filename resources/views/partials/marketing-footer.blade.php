@@ -9,7 +9,7 @@
                 <h3 class="text-lg font-black text-white">CreatorPlex Weekly</h3>
                 <p class="text-xs text-slate-400">One 5-minute read every Friday. Playbooks, benchmarks, viral drops.</p>
             </div>
-            <form onsubmit="event.preventDefault(); alert('Subscribed ✓')" class="flex w-full max-w-md gap-2 md:w-auto">
+            <form onsubmit="event.preventDefault(); alert('Subscribed ')" class="flex w-full max-w-md gap-2 md:w-auto">
                 <input type="email" required placeholder="you@brand.com" class="input flex-1 !bg-white/95 !text-slate-900">
                 <button class="btn-gradient">Subscribe →</button>
             </form>
@@ -115,27 +115,27 @@
             @php
                 // Cities we actually have city landing pages for (SeoData::cities).
                 $footerCityMap = [
-                    'delhi'     => 'Delhi',
-                    'mumbai'    => 'Mumbai',
+                    'delhi' => 'Delhi',
+                    'mumbai' => 'Mumbai',
                     'bangalore' => 'Bangalore',
                     'hyderabad' => 'Hyderabad',
-                    'chennai'   => 'Chennai',
-                    'pune'      => 'Pune',
-                    'kolkata'   => 'Kolkata',
+                    'chennai' => 'Chennai',
+                    'pune' => 'Pune',
+                    'kolkata' => 'Kolkata',
                     'ahmedabad' => 'Ahmedabad',
-                    'jaipur'    => 'Jaipur',
-                    'gurugram'  => 'Gurugram',
-                    'india'     => 'Pan-India',
+                    'jaipur' => 'Jaipur',
+                    'gurugram' => 'Gurugram',
+                    'india' => 'Pan-India',
                 ];
                 $policyLinks = [
-                    'Terms of Use'       => route('legal.terms'),
-                    'Privacy Policy'     => route('legal.privacy'),
-                    'Refund Policy'      => route('legal.refund'),
-                    'Cookie Policy'      => route('legal.cookies'),
-                    'Shipping Policy'    => route('legal.shipping'),
-                    'Content Guidelines' => route('legal.content'),
-                    'Creator Agreement'  => route('legal.creator-agreement'),
-                    'Sitemap'            => url('/sitemap.xml'),
+                    'Terms of Use' =>route('legal.terms'),
+                    'Privacy Policy' =>route('legal.privacy'),
+                    'Refund Policy' =>route('legal.refund'),
+                    'Cookie Policy' =>route('legal.cookies'),
+                    'Shipping Policy' =>route('legal.shipping'),
+                    'Content Guidelines' =>route('legal.content'),
+                    'Creator Agreement' =>route('legal.creator-agreement'),
+                    'Sitemap' =>url('/sitemap.xml'),
                 ];
             @endphp
 
@@ -179,11 +179,11 @@
             <span>© {{ date('Y') }} CreatorPlex. Built for creators &amp; brands.</span>
             <span class="flex items-center gap-4">
                 <span class="flex items-center gap-2">
-                    <span class="inline-flex h-2 w-2 rounded-full bg-emerald-400"></span> All systems operational
+                    <span class="inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>All systems operational
                 </span>
                 @auth
                     @if(auth()->user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}" class="rounded-full border border-white/10 px-2.5 py-1 font-semibold text-slate-300 hover:bg-white/10 hover:text-white">🛡️ Admin</a>
+                        <a href="{{ route('admin.dashboard') }}" class="rounded-full border border-white/10 px-2.5 py-1 font-semibold text-slate-300 hover:bg-white/10 hover:text-white">Admin</a>
                     @endif
                 @endauth
             </span>

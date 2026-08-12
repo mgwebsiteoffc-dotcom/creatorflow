@@ -135,8 +135,7 @@
                 <div class="marquee-track">
                     @foreach(['Glow & Co.','Roving Mode','Samsara','Fable Street','Luxotica','Perfume+','Evereve','Nicobar','Glow & Co.','Roving Mode','Samsara','Fable Street'] as $brand)
                         <div class="flex shrink-0 items-center gap-2 text-xl font-black tracking-tight text-slate-400">
-                            <span class="h-5 w-5 rounded-md" style="background-image: linear-gradient(135deg, {{ $service['accent'] }}, #ec4899);"></span>
-                            {{ $brand }}
+                                                        {{ $brand }}
                         </div>
                     @endforeach
                 </div>

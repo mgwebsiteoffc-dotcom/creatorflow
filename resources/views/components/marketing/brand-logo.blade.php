@@ -1,4 +1,4 @@
-@props(['name', 'url' => null, 'link' => null, 'size' => 'md'])
+@props(['name', 'url' =>null, 'link' =>null, 'size' => 'md'])
 @php
     // Deterministic gradient per brand — same colours every time.
     $palettes = [
@@ -19,14 +19,14 @@
 
     $seed = abs(crc32($name));
     $palette = $palettes[$seed % count($palettes)];
-    $shape   = $shapes[($seed >> 3) % count($shapes)];
+    $shape   = $shapes[($seed >>3) % count($shapes)];
     $rot     = ($seed % 24) - 12; // small tilt for personality
 
     // Extract 1–2 letter initials from the brand name.
     $initial = collect(preg_split('/\s+/', trim($name)))
         ->filter()
         ->take(2)
-        ->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))
+        ->map(fn ($w) =>mb_strtoupper(mb_substr($w, 0, 1)))
         ->implode('');
     if ($initial === '') $initial = 'CF';
 

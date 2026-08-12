@@ -7,9 +7,9 @@
     </div>
 
     <div class="mt-6 flex flex-wrap gap-2">
-        <a href="{{ route('brand.settings.profile') }}" class="tab-pill">🏢 Profile</a>
-        <a href="{{ route('brand.settings.team') }}"    class="tab-pill is-active">👥 Team</a>
-        <a href="{{ route('brand.billing.index') }}"    class="tab-pill">💳 Billing</a>
+        <a href="{{ route('brand.settings.profile') }}" class="tab-pill">Profile</a>
+        <a href="{{ route('brand.settings.team') }}" class="tab-pill is-active">Team</a>
+        <a href="{{ route('brand.billing.index') }}" class="tab-pill">Billing</a>
     </div>
 
     <div class="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white">
@@ -37,5 +37,5 @@
         </table>
     </div>
 
-    <p class="mt-4 text-xs text-slate-500">Team invitations open on <strong>Growth</strong> and <strong>Scale</strong> plans.</p>
+    <p class="mt-4 text-xs text-slate-500">Team invitations open on <strong>Growth</strong>and <strong>Scale</strong>plans.</p>
 </x-layouts.app>

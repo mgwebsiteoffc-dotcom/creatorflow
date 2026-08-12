@@ -19,9 +19,9 @@
 
     <div class="mt-5 grid gap-4 sm:grid-cols-2">
         @forelse($campaigns as $c)
-            @include('creator._campaign-card', ['c' => $c, 'applied' => in_array($c->id, $appliedIds ?? [])])
+            @include('creator._campaign-card', ['c' => $c, 'applied' =>in_array($c->id, $appliedIds ?? [])])
         @empty
-            <x-empty-state title="No campaigns right now" icon="🔍" class="sm:col-span-2">
+            <x-empty-state title="No campaigns right now" icon="campaigns" class="sm:col-span-2">
                 New campaigns are posted daily. Check back soon or make sure your profile is complete.
             </x-empty-state>
         @endforelse

@@ -11,7 +11,7 @@
                 <p class="text-sm font-black text-slate-900">Install CreatorPlex</p>
                 <p class="mt-0.5 text-xs text-slate-500" data-pwa-body>Faster than the browser. Home-screen icon + offline access.</p>
                 <div class="mt-3 flex flex-wrap items-center gap-2">
-                    <button id="pwa-install-cta" class="btn-primary !py-1.5 !text-xs">📲 Install</button>
+                    <button id="pwa-install-cta" class="btn-primary !py-1.5 !text-xs">Install</button>
                     <button id="pwa-install-later" class="btn-ghost !py-1.5 !text-xs">Later</button>
                 </div>
             </div>
@@ -24,15 +24,15 @@
 
 <script>
 (function() {
-    const sheet    = document.getElementById('pwa-install-sheet');
-    const cta      = document.getElementById('pwa-install-cta');
-    const later    = document.getElementById('pwa-install-later');
-    const close    = document.getElementById('pwa-install-close');
-    const body     = sheet.querySelector('[data-pwa-body]');
-    const KEY      = 'pwa_install_snoozed_until';
-    let deferred   = null;
+    const sheet = document.getElementById('pwa-install-sheet');
+    const cta = document.getElementById('pwa-install-cta');
+    const later = document.getElementById('pwa-install-later');
+    const close = document.getElementById('pwa-install-close');
+    const body = sheet.querySelector('[data-pwa-body]');
+    const KEY = 'pwa_install_snoozed_until';
+    let deferred = null;
 
-    const isStandalone = () => matchMedia('(display-mode: standalone)').matches
+    const isStandalone = () =>matchMedia('(display-mode: standalone)').matches
         || window.navigator.standalone === true;
 
     const isIOSSafari = () => {
@@ -44,13 +44,13 @@
         const until = Number(localStorage.getItem(KEY) || 0);
         return until && Date.now() < until;
     };
-    const snooze = (days) => localStorage.setItem(KEY, String(Date.now() + days*86400000));
+    const snooze = (days) =>localStorage.setItem(KEY, String(Date.now() + days*86400000));
 
     const show = () => {
         if (isStandalone() || snoozed()) return;
         sheet.classList.remove('hidden');
     };
-    const hide = () => sheet.classList.add('hidden');
+    const hide = () =>sheet.classList.add('hidden');
 
     // Chrome / Edge / Samsung → intercepts the browser's own bar.
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -63,7 +63,7 @@
     // iOS Safari has no beforeinstallprompt — show the "tap Share → Add to Home Screen" hint.
     if (isIOSSafari() && !isStandalone() && !snoozed()) {
         cta.style.display = 'none';
-        body.innerHTML = 'Tap the <strong>Share</strong> icon in Safari, then choose <strong>Add to Home Screen</strong>.';
+        body.innerHTML = 'Tap the <strong>Share</strong>icon in Safari, then choose <strong>Add to Home Screen</strong>.';
         setTimeout(show, 6000);
     }
 

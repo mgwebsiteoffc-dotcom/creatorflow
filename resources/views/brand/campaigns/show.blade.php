@@ -9,7 +9,7 @@
             @if(! $campaign->isLaunched())
                 <form method="POST" action="{{ route('brand.campaigns.launch', $campaign) }}">
                     @csrf
-                    <button class="btn-primary">🚀 Launch campaign</button>
+                    <button class="btn-primary">Launch campaign</button>
                 </form>
             @else
                 <x-badge tone="green">Launched {{ $campaign->launched_at?->diffForHumans() }}</x-badge>
@@ -17,23 +17,23 @@
 
             @if(in_array($campaign->status, ['inviting','active']))
                 <form method="POST" action="{{ route('brand.campaigns.pause', $campaign) }}">@csrf
-                    <button class="btn-secondary !py-2 !text-xs">⏸ Pause</button>
+                    <button class="btn-secondary !py-2 !text-xs"> Pause</button>
                 </form>
             @endif
             @if($campaign->status === 'paused')
                 <form method="POST" action="{{ route('brand.campaigns.resume', $campaign) }}">@csrf
-                    <button class="btn-secondary !py-2 !text-xs">▶ Resume</button>
+                    <button class="btn-secondary !py-2 !text-xs"> Resume</button>
                 </form>
             @endif
             @if(in_array($campaign->status, ['inviting','active','paused']))
                 <form method="POST" action="{{ route('brand.campaigns.end', $campaign) }}" data-confirm="Mark this campaign as completed?">@csrf
-                    <button class="btn-secondary !py-2 !text-xs">🏁 End campaign</button>
+                    <button class="btn-secondary !py-2 !text-xs">End campaign</button>
                 </form>
             @endif
             @if($campaign->status !== 'cancelled' && $campaign->status !== 'completed')
                 <form method="POST" action="{{ route('brand.campaigns.cancel', $campaign) }}"
                       data-confirm="Cancel this campaign? Pending invitations will be expired.">@csrf
-                    <button class="btn-ghost !py-2 !text-xs !text-rose-600 hover:!bg-rose-50">✕ Cancel</button>
+                    <button class="btn-ghost !py-2 !text-xs !text-rose-600 hover:!bg-rose-50">Cancel</button>
                 </form>
             @endif
         </div>
@@ -53,11 +53,11 @@
             <div class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Works completed</div>
             <div class="mt-1 text-3xl font-black text-slate-900">{{ $campaignStats['completed_works'] }} <span class="text-base font-semibold text-slate-400">/ {{ $campaign->target_creators }}</span></div>
             <div class="mt-3 h-2 rounded-full bg-slate-100">
-                <div class="h-2 rounded-full" style="width: {{ $campaign->target_creators > 0 ? min(100, ($campaignStats['completed_works'] / max($campaign->target_creators, 1)) * 100) : 0 }}%; background-image: linear-gradient(90deg,#10b981,#22d3ee);"></div>
+                <div class="h-2 rounded-full" style="width: {{ $campaign->target_creators >0 ? min(100, ($campaignStats['completed_works'] / max($campaign->target_creators, 1)) * 100) : 0 }}%; background-image: linear-gradient(90deg,#10b981,#22d3ee);"></div>
             </div>
             <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
-                <span>🎬 {{ $campaignStats['in_progress'] }} in progress</span>
-                <span>👀 {{ $campaignStats['needs_review'] }} needs review</span>
+                <span> {{ $campaignStats['in_progress'] }} in progress</span>
+                <span> {{ $campaignStats['needs_review'] }} needs review</span>
             </div>
         </div>
 
@@ -65,10 +65,10 @@
             <div class="text-[11px] font-bold uppercase tracking-widest text-slate-500">Applications</div>
             <div class="mt-1 text-3xl font-black text-slate-900">{{ $campaignStats['applications_count'] }}</div>
             <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
-                <span class="text-emerald-600">✓ {{ $campaignStats['approved_applications'] }} approved</span>
-                <span class="text-rose-600">✕ {{ $campaignStats['rejected_applications'] }} rejected</span>
-                @if($campaignStats['days_running'] > 0)
-                    <span>📅 {{ $campaignStats['days_running'] }} days running</span>
+                <span class="text-emerald-600"> {{ $campaignStats['approved_applications'] }} approved</span>
+                <span class="text-rose-600"> {{ $campaignStats['rejected_applications'] }} rejected</span>
+                @if($campaignStats['days_running'] >0)
+                    <span> {{ $campaignStats['days_running'] }} days running</span>
                 @endif
             </div>
         </div>
@@ -77,10 +77,10 @@
             <div class="text-[11px] font-bold uppercase tracking-widest opacity-90">Attributed revenue</div>
             <div class="mt-1 text-3xl font-black">{{ $currentWorkspace->formatMoney($campaignStats['attributed_revenue']) }}</div>
             <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs opacity-90">
-                <span>🛒 {{ $campaignStats['attributed_orders'] }} orders</span>
-                <span>💸 spent {{ $currentWorkspace->formatMoney($campaignStats['total_cost']) }}</span>
+                <span> {{ $campaignStats['attributed_orders'] }} orders</span>
+                <span>spent {{ $currentWorkspace->formatMoney($campaignStats['total_cost']) }}</span>
                 @if($campaignStats['roas'])
-                    <span>📈 ROAS {{ $campaignStats['roas'] }}×</span>
+                    <span>ROAS {{ $campaignStats['roas'] }}×</span>
                 @endif
             </div>
         </div>
@@ -112,7 +112,7 @@
     <div class="mt-8 grid gap-5 lg:grid-cols-3">
         <div class="card p-5 lg:col-span-2">
             <div class="flex items-center gap-2">
-                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white">📋</div>
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white"></div>
                 <h2 class="text-lg font-bold text-slate-900">Brief</h2>
             </div>
             <div class="mt-4">
@@ -164,7 +164,7 @@
     @if(!empty($audienceSummary))
         <section class="mt-6 rounded-2xl border border-violet-100 bg-gradient-to-br from-violet-50 to-pink-50 p-5">
             <div class="flex items-center gap-2">
-                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white">🎯</div>
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white"></div>
                 <div>
                     <h2 class="text-lg font-bold text-slate-900">Who we're inviting</h2>
                     <p class="text-xs text-slate-500">Invitations only go to creators matching every criteria below.</p>
@@ -186,7 +186,7 @@
     {{-- ACTIVITY TIMELINE --}}
     <section class="mt-10 rounded-2xl border border-slate-200 bg-white p-5 md:p-6">
         <div class="flex items-center gap-2">
-            <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-slate-800 to-slate-950 text-white">⏱</div>
+            <div class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-slate-800 to-slate-950 text-white"></div>
             <h2 class="text-lg font-bold text-slate-900">Activity timeline</h2>
             <span class="ml-auto text-xs text-slate-500">{{ $timeline->count() }} events</span>
         </div>

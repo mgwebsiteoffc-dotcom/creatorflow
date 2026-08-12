@@ -84,7 +84,7 @@
     <div class="mt-8 grid gap-6 lg:grid-cols-2">
         {{-- WORKSPACES --}}
         <section class="rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-bold text-slate-900">🏢 Workspaces</h2>
+            <h2 class="text-lg font-bold text-slate-900">Workspaces</h2>
             <div class="mt-4 space-y-2">
                 @forelse($user->workspaces as $w)
                     <a href="{{ route('admin.workspaces.show', $w) }}" class="flex items-center justify-between rounded-xl border border-slate-100 p-3 hover:border-violet-300">
@@ -102,7 +102,7 @@
 
         {{-- CREATOR PROFILE --}}
         <section class="rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-bold text-slate-900">🎬 Creator profile</h2>
+            <h2 class="text-lg font-bold text-slate-900">Creator profile</h2>
             @if($user->creator)
                 <a href="{{ route('admin.creators.show', $user->creator) }}" class="mt-4 flex items-center justify-between rounded-xl border border-slate-100 p-3 hover:border-violet-300">
                     <div>
@@ -119,11 +119,11 @@
 
     {{-- RECENT ACTIVITY --}}
     <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-        <h2 class="text-lg font-bold text-slate-900">🔔 Recent notifications</h2>
+        <h2 class="text-lg font-bold text-slate-900">Recent notifications</h2>
         <div class="mt-4 space-y-2">
             @forelse($notifications as $n)
                 <div class="flex items-start gap-3 rounded-xl border border-slate-100 p-3 text-sm">
-                    <span class="text-lg">{{ str_contains($n->type, 'approved') ? '✅' : (str_contains($n->type, 'content') ? '🎬' : '🔔') }}</span>
+                    <span class="text-lg">{{ str_contains($n->type, 'approved') ? '' : (str_contains($n->type, 'content') ? '' : '') }}</span>
                     <div class="min-w-0 flex-1">
                         <div class="font-semibold text-slate-900">{{ $n->data['title'] ?? $n->type }}</div>
                         @if($n->data['body'] ?? null)<div class="text-xs text-slate-500">{{ $n->data['body'] }}</div>@endif
@@ -140,7 +140,7 @@
     {{-- PAYMENTS RECORDED BY THIS USER --}}
     @if($paymentRecords->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-bold text-slate-900">💳 Payments recorded by this user</h2>
+            <h2 class="text-lg font-bold text-slate-900">Payments recorded by this user</h2>
             <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
                 <table class="w-full min-w-[640px] text-sm">
                     <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">

@@ -10,7 +10,7 @@
         @forelse($invitations as $inv)
             @include('creator._invitation', ['inv' => $inv])
         @empty
-            <x-empty-state title="No pending invitations" icon="📭">
+            <x-empty-state title="No pending invitations" icon="invitations">
                 <a href="{{ route('creator.marketplace') }}" class="font-medium text-rose-600">Browse the marketplace →</a>
             </x-empty-state>
         @endforelse

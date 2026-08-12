@@ -1,9 +1,9 @@
 <x-layouts.app panel="creator" title="Payout details">
     <a href="{{ route('creator.profile.show') }}" class="text-sm text-slate-500">← Profile</a>
     <div class="mt-2 flex items-center gap-2">
-        <h1 class="text-2xl font-black tracking-tight">💰 Payout details</h1>
+        <h1 class="text-2xl font-black tracking-tight">Payout details</h1>
         @if($creator->razorpayx_fund_account_id)
-            <span class="badge-green">✓ Ready to receive</span>
+            <span class="badge-green">Ready to receive</span>
         @endif
     </div>
     <p class="mt-1 text-sm text-slate-500">Money from brand-approved content is sent to your <strong>UPI</strong> (instant, free) or <strong>bank account</strong> (via IMPS/NEFT) after the escrow hold window.</p>
@@ -16,12 +16,12 @@
         <div class="grid gap-3 md:grid-cols-2">
             <label class="cursor-pointer rounded-2xl border-2 p-4 has-[:checked]:border-violet-500 has-[:checked]:bg-violet-50">
                 <input type="radio" name="payout_method" value="upi" @checked($creator->payout_method === 'upi' || ! $creator->payout_method) class="sr-only">
-                <p class="font-black">⚡ UPI <span class="ml-2 text-xs font-normal text-emerald-600">Instant · Free</span></p>
+                <p class="font-black">UPI <span class="ml-2 text-xs font-normal text-emerald-600">Instant · Free</span></p>
                 <p class="mt-1 text-xs text-slate-500">Money arrives within seconds. Works with GPay, PhonePe, Paytm, BHIM, any UPI VPA.</p>
             </label>
             <label class="cursor-pointer rounded-2xl border-2 p-4 has-[:checked]:border-violet-500 has-[:checked]:bg-violet-50">
                 <input type="radio" name="payout_method" value="bank" @checked($creator->payout_method === 'bank') class="sr-only">
-                <p class="font-black">🏦 Bank account</p>
+                <p class="font-black">Bank account</p>
                 <p class="mt-1 text-xs text-slate-500">IMPS / NEFT to any Indian bank. Arrives in minutes to a few hours.</p>
             </label>
         </div>
@@ -67,12 +67,12 @@
 
         <div class="flex justify-end gap-2">
             <a href="{{ route('creator.profile.show') }}" class="btn-ghost">Cancel</a>
-            <button class="btn-gradient">💾 Save payout details</button>
+            <button class="btn-gradient">Save payout details</button>
         </div>
     </form>
 
     <div class="mt-6 rounded-2xl border border-emerald-100 bg-emerald-50 p-4 text-xs text-emerald-900">
-        <p class="font-bold">🔒 How we keep your money safe</p>
+        <p class="font-bold">How we keep your money safe</p>
         <p class="mt-1">All bank/UPI details are encrypted at rest. CreatorPlex uses <strong>RazorpayX</strong> (RBI-regulated) to move funds — we never touch or hold your money, it goes brand → RazorpayX → you.</p>
     </div>
 </x-layouts.app>

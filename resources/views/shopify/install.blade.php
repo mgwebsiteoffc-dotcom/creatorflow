@@ -10,19 +10,19 @@
         <div class="mx-auto max-w-5xl px-4 pb-20 pt-16 md:pt-24">
             <div class="grid gap-10 md:grid-cols-2 md:items-center">
                 <div class="reveal">
-                    <span class="chip"><span class="chip-dot"></span> Shopify app · Free to start</span>
+                    <span class="chip"><span class="chip-dot"></span>Shopify app · Free to start</span>
                     <h1 class="mt-4 text-4xl font-black tracking-tight text-slate-900 sm:text-5xl">
-                        Connect your <span class="text-gradient">Shopify store</span> to CreatorPlex
+                        Connect your <span class="text-gradient">Shopify store</span>to CreatorPlex
                     </h1>
                     <p class="mt-4 text-lg text-slate-600">
                         Sync products, seed creators in bulk, and attribute revenue — all inside one dashboard. Setup takes under 60 seconds.
                     </p>
 
                     <ul class="mt-6 space-y-3 text-sm">
-                        <li class="flex items-start gap-2"><span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white">✓</span> Auto-sync every product + variant + inventory</li>
-                        <li class="flex items-start gap-2"><span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white">✓</span> Unique discount codes per creator</li>
-                        <li class="flex items-start gap-2"><span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white">✓</span> Attribute every ₹ to the creator who drove it</li>
-                        <li class="flex items-start gap-2"><span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white">✓</span> Auto-create orders for barter (seeding) campaigns</li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white"></span>Auto-sync every product + variant + inventory</li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white"></span>Unique discount codes per creator</li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white"></span>Attribute every ₹ to the creator who drove it</li>
+                        <li class="flex items-start gap-2"><span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-gradient-to-br from-violet-500 to-pink-500 text-[11px] font-black text-white"></span>Auto-create orders for barter (seeding) campaigns</li>
                     </ul>
                 </div>
 

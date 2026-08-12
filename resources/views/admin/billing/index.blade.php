@@ -5,18 +5,18 @@
             <p class="mt-1 text-sm text-slate-500">Every payment in, every invoice out, every payout to creators — system-wide.</p>
         </div>
         <div class="flex flex-wrap gap-2">
-            <a href="{{ route('admin.escrow.index') }}" class="btn-secondary !py-2 text-sm">🔒 Escrow</a>
-            <a href="{{ route('admin.settings') }}"    class="btn-secondary !py-2 text-sm">⚙️ Fee settings</a>
+            <a href="{{ route('admin.escrow.index') }}" class="btn-secondary !py-2 text-sm">Escrow</a>
+            <a href="{{ route('admin.settings') }}" class="btn-secondary !py-2 text-sm">Fee settings</a>
         </div>
     </div>
 
     @if(! $hasPayments || ! $hasInvoices)
         <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm"><x-icon name="alert" class="h-5 w-5 text-white" /></span>
             <div class="flex-1">
                 <p class="font-bold">Some billing tables are missing.</p>
                 <p class="mt-1 text-xs text-amber-800">
-                    Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code> to enable
+                    Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code>to enable
                     @if(! $hasPayments) <code class="rounded bg-white/70 px-1 py-0.5">payment_records</code>@endif
                     @if(! $hasPayments && ! $hasInvoices) and @endif
                     @if(! $hasInvoices) <code class="rounded bg-white/70 px-1 py-0.5">invoices</code>@endif.

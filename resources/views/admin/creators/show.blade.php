@@ -13,7 +13,7 @@
                         <h1 class="text-2xl font-black tracking-tight text-slate-900">{{ $creator->display_name }}</h1>
                         <p class="text-sm text-slate-500">
                             {{ $creator->email ?: 'no email' }}
-                            @if($creator->city || $creator->country) · 📍 {{ trim($creator->city.', '.$creator->country, ', ') }} @endif
+                            @if($creator->city || $creator->country) · {{ trim($creator->city.', '.$creator->country, ', ') }} @endif
                         </p>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
 
     {{-- ASSIGNMENTS --}}
     <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-        <h2 class="text-lg font-bold text-slate-900">🎬 Recent assignments</h2>
+        <h2 class="text-lg font-bold text-slate-900">Recent assignments</h2>
         <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
             <table class="w-full min-w-[640px] text-sm">
                 <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">
@@ -134,7 +134,7 @@
     {{-- APPLICATIONS --}}
     @if($applications->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-bold text-slate-900">📝 Applications</h2>
+            <h2 class="text-lg font-bold text-slate-900">Applications</h2>
             <div class="mt-4 space-y-2">
                 @foreach($applications as $app)
                     <div class="flex items-center justify-between rounded-xl border border-slate-100 p-3">
@@ -152,7 +152,7 @@
     {{-- PAYOUTS --}}
     @if($payouts->isNotEmpty())
         <section class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
-            <h2 class="text-lg font-bold text-slate-900">💰 Payout history</h2>
+            <h2 class="text-lg font-bold text-slate-900">Payout history</h2>
             <div class="mt-4 overflow-x-auto rounded-xl border border-slate-100">
                 <table class="w-full min-w-[640px] text-sm">
                     <thead class="border-b border-slate-100 bg-slate-50 text-left text-xs uppercase tracking-widest text-slate-500">

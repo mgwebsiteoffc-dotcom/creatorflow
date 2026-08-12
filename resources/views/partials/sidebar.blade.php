@@ -153,8 +153,7 @@
                                     class="h-[18px] w-[18px] shrink-0 {{ $active ? 'text-white' : 'text-slate-500 group-hover:text-slate-900' }}" />
                             <span class="min-w-0 flex-1 truncate">{{ $item['label'] }}</span>
                             @if($active)
-                                <span class="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-violet-400 to-pink-400"></span>
-                            @endif
+                                                            @endif
                         </a>
                     @endforeach
                 </div>
@@ -168,17 +167,17 @@
             @if(auth()->user()->isAdmin())
                 <a href="{{ route('admin.dashboard') }}"
                    class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-50">
-                    <x-icon name="admin" class="h-[18px] w-[18px]" /> Admin panel
+                    <x-icon name="admin" class="h-[18px] w-[18px]" />Admin panel
                 </a>
             @endif
         @endauth
         <a href="{{ url('/') }}" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs text-slate-500 hover:bg-slate-50 hover:text-slate-900">
-            <x-icon name="external" class="h-[18px] w-[18px]" /> Back to site
+            <x-icon name="external" class="h-[18px] w-[18px]" />Back to site
         </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full text-left flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs text-slate-500 hover:bg-slate-50 hover:text-rose-600">
-                <x-icon name="logout" class="h-[18px] w-[18px]" /> Sign out
+                <x-icon name="logout" class="h-[18px] w-[18px]" />Sign out
             </button>
         </form>
     </div>

@@ -8,7 +8,7 @@
             <form method="POST" action="{{ route('admin.creators.import.store') }}" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 <div class="rounded-2xl border-2 border-dashed border-violet-300 bg-gradient-to-br from-violet-50 to-pink-50 p-8 text-center">
-                    <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl text-xl text-white shadow-lg" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);">📥</div>
+                    <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl text-xl text-white shadow-lg" style="background-image: linear-gradient(135deg,#7c3aed,#ec4899);"></div>
                     <p class="mt-4 text-sm font-bold text-slate-900">Choose a CSV file</p>
                     <p class="mt-1 text-xs text-slate-500">First row must be a header. Max 5 MB.</p>
                     <input type="file" name="file" accept=".csv,text/csv" required class="mx-auto mt-4 block w-full max-w-xs text-xs">

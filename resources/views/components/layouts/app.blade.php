@@ -1,9 +1,9 @@
 @props([
     'panel' => 'brand', // brand | creator | guest
-    'title' => null,
-    'metaDescription' => null,
-    'canonical' => null,
-    'ogImage' => null,
+    'title' =>null,
+    'metaDescription' =>null,
+    'canonical' =>null,
+    'ogImage' =>null,
 ])
 @php
     // Guest pages get a soft playful gradient (violet → pink → amber wash) so
@@ -54,12 +54,7 @@
         {{-- Global playful background: soft aurora blobs + subtle grid + drifting SVG shapes.
              Fixed so it stays in view as you scroll. Everything is pointer-events-none. --}}
         <div class="guest-bg-layer" aria-hidden="true">
-            <span class="blob blob-1"></span>
-            <span class="blob blob-2"></span>
-            <span class="blob blob-3"></span>
-            <span class="blob blob-4"></span>
-
-            <svg class="floater floater-a" viewBox="0 0 60 60" fill="none">
+                                                            <svg class="floater floater-a" viewBox="0 0 60 60" fill="none">
                 <defs><linearGradient id="fla" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
                 <circle cx="30" cy="30" r="24" stroke="url(#fla)" stroke-width="2" opacity=".55"/>
                 <circle cx="30" cy="30" r="10" fill="url(#fla)" opacity=".18"/>
@@ -139,7 +134,7 @@
 
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+            window.addEventListener('load', () =>navigator.serviceWorker.register('/sw.js').catch(() => {}));
         }
     </script>
     @include('partials.pwa-install')

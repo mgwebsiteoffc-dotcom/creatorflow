@@ -2,20 +2,20 @@
     // Core 5 shown as top-nav pills; everything else in a "More" dropdown so the
     // topbar never wraps to a second line no matter the viewport width.
     $brandLinks = [
-        ['route' => 'brand.dashboard',          'label' => 'Home'],
-        ['route' => 'brand.campaigns.index',    'label' => 'Campaigns'],
-        ['route' => 'brand.creators.index',     'label' => 'Creators'],
-        ['route' => 'brand.orders.index',       'label' => 'Orders'],
-        ['route' => 'brand.analytics',          'label' => 'Analytics'],
+        ['route' => 'brand.dashboard', 'label' => 'Home'],
+        ['route' => 'brand.campaigns.index', 'label' => 'Campaigns'],
+        ['route' => 'brand.creators.index', 'label' => 'Creators'],
+        ['route' => 'brand.orders.index', 'label' => 'Orders'],
+        ['route' => 'brand.analytics', 'label' => 'Analytics'],
     ];
     $brandMoreLinks = [
-        ['route' => 'brand.applications.index', 'label' => 'Applications', 'icon' => '📥'],
-        ['route' => 'brand.products.index',     'label' => 'Products',     'icon' => '📦'],
-        ['route' => 'brand.channels.index',     'label' => 'Channels',     'icon' => '🛍'],
-        ['route' => 'brand.billing.index',      'label' => 'Billing',      'icon' => '💳'],
-        ['route' => 'brand.settings.profile',   'label' => 'Settings',     'icon' => '⚙️'],
-        ['route' => 'brand.settings.team',      'label' => 'Team',         'icon' => '👥'],
-        ['route' => 'notifications.index',      'label' => 'Notifications','icon' => '🔔'],
+        ['route' => 'brand.applications.index', 'label' => 'Applications', 'icon' => ''],
+        ['route' => 'brand.products.index', 'label' => 'Products', 'icon' => ''],
+        ['route' => 'brand.channels.index', 'label' => 'Channels', 'icon' => ''],
+        ['route' => 'brand.billing.index', 'label' => 'Billing', 'icon' => ''],
+        ['route' => 'brand.settings.profile', 'label' => 'Settings', 'icon' => ''],
+        ['route' => 'brand.settings.team', 'label' => 'Team', 'icon' => ''],
+        ['route' => 'notifications.index', 'label' => 'Notifications','icon' => ''],
     ];
     $creatorLinks = [
         ['route' => 'creator.dashboard', 'label' => 'Home'],
@@ -71,7 +71,7 @@
                     (function(){
                         const wrap = document.querySelector('[data-more-wrap]');
                         if (!wrap) return;
-                        const btn  = wrap.querySelector('[data-more-toggle]');
+                        const btn = wrap.querySelector('[data-more-toggle]');
                         const panel= wrap.querySelector('[data-more-panel]');
                         btn.addEventListener('click', e => { e.stopPropagation(); panel.classList.toggle('hidden'); });
                         document.addEventListener('click', e => { if (!wrap.contains(e.target)) panel.classList.add('hidden'); });
@@ -87,8 +87,8 @@
             <div class="relative" data-notif-wrap>
                 <button type="button" data-notif-toggle class="btn-ghost relative !p-2" title="Notifications">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0"/></svg>
-                    @if(($unreadCount ?? 0) > 0)
-                        <span class="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">{{ min(9, $unreadCount) }}{{ $unreadCount > 9 ? '+' : '' }}</span>
+                    @if(($unreadCount ?? 0) >0)
+                        <span class="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">{{ min(9, $unreadCount) }}{{ $unreadCount >9 ? '+' : '' }}</span>
                     @endif
                 </button>
                 <div data-notif-panel class="absolute right-0 top-full z-50 mt-2 hidden w-80 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
@@ -104,7 +104,7 @@
                             <a href="{{ route('notifications.open', $n) }}"
                                class="flex items-start gap-2 border-b border-slate-100 px-4 py-3 last:border-0
                                       {{ $n->read_at ? '' : 'bg-violet-50/40' }} hover:bg-slate-50">
-                                <span class="mt-0.5 text-lg">{{ str_contains($n->type, 'approved') ? '✅' : (str_contains($n->type, 'content') ? '🎬' : '🔔') }}</span>
+                                <span class="mt-0.5 text-lg">{{ str_contains($n->type, 'approved') ? '' : (str_contains($n->type, 'content') ? '' : '') }}</span>
                                 <div class="min-w-0 flex-1">
                                     <p class="truncate text-sm font-semibold text-slate-900">{{ $n->data['title'] ?? '' }}</p>
                                     @if($n->data['body'] ?? null)<p class="line-clamp-2 text-xs text-slate-500">{{ $n->data['body'] }}</p>@endif
@@ -113,7 +113,7 @@
                                 @if(! $n->read_at)<span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-violet-600"></span>@endif
                             </a>
                         @empty
-                            <div class="px-4 py-8 text-center text-xs text-slate-500">You're all caught up 🎉</div>
+                            <div class="px-4 py-8 text-center text-xs text-slate-500">You're all caught up </div>
                         @endforelse
                     </div>
                 </div>
@@ -132,7 +132,7 @@
             @endif
             @auth
                 @if(auth()->user()->isAdmin())
-                    <a href="{{ route('admin.dashboard') }}" class="btn-secondary !py-1.5 !text-xs" title="Admin panel">🛡️ Admin</a>
+                    <a href="{{ route('admin.dashboard') }}" class="btn-secondary !py-1.5 !text-xs" title="Admin panel">Admin</a>
                 @endif
             @endauth
             <form method="POST" action="{{ route('logout') }}">

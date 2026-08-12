@@ -1,20 +1,20 @@
 <x-layouts.admin title="AI settings">
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
-            <h1 class="text-3xl font-black tracking-tight text-slate-900">🤖 AI settings</h1>
+            <h1 class="text-3xl font-black tracking-tight text-slate-900">AI settings</h1>
             <p class="mt-1 text-sm text-slate-500">Manage the AI provider used for briefs, creator matching, content review and outreach.</p>
         </div>
     </div>
 
     @if($schemaMissing)
         <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm"><x-icon name="alert" class="h-5 w-5 text-white" /></span>
             <div class="flex-1"><p class="font-bold">platform_settings table not migrated yet.</p><p class="mt-1 text-xs">Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code>. Settings can't be saved yet.</p></div>
         </div>
     @elseif($columnsMissing)
         <div class="mt-6 flex items-start gap-3 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm">⚠</span>
-            <div class="flex-1"><p class="font-bold">AI columns need migration.</p><p class="mt-1 text-xs">Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code> to add ai_driver, ai_openai_key, ai_openai_model, etc.</p></div>
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-sm"><x-icon name="alert" class="h-5 w-5 text-white" /></span>
+            <div class="flex-1"><p class="font-bold">AI columns need migration.</p><p class="mt-1 text-xs">Run <code class="rounded bg-white/70 px-1.5 py-0.5">php artisan migrate</code>to add ai_driver, ai_openai_key, ai_openai_model, etc.</p></div>
         </div>
     @endif
 
@@ -22,7 +22,7 @@
     <div class="mt-6 grid gap-4 lg:grid-cols-3">
         <div class="lg:col-span-2 rounded-2xl border border-slate-200 bg-gradient-to-br from-violet-500/5 to-pink-500/5 p-6">
             <div class="flex items-center gap-3">
-                <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-lg text-white shadow-sm">✨</div>
+                <div class="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-lg text-white shadow-sm"></div>
                 <div class="flex-1">
                     <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Current AI provider</p>
                     <p class="mt-0.5 text-lg font-bold text-slate-900">
@@ -37,7 +37,7 @@
                 </div>
                 @if($settings->ai_last_test_status)
                     <span class="rounded-full px-3 py-1 text-xs font-semibold {{ str_starts_with($settings->ai_last_test_status, 'ok') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">
-                        {{ str_starts_with($settings->ai_last_test_status, 'ok') ? '✓ Connected' : '✗ Error' }}
+                        {{ str_starts_with($settings->ai_last_test_status, 'ok') ? ' Connected' : ' Error' }}
                         @if($settings->ai_last_tested_at)
                             · {{ $settings->ai_last_tested_at->diffForHumans() }}
                         @endif
@@ -143,14 +143,14 @@
         <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6">
             <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">What uses AI</h2>
             <ul class="mt-4 space-y-3 text-sm text-slate-700">
-                <li class="flex items-start gap-2"><span>📝</span><div><p class="font-semibold">Campaign brief generator</p><p class="text-xs text-slate-500">Public /tools/brief-generator page.</p></div></li>
-                <li class="flex items-start gap-2"><span>💬</span><div><p class="font-semibold">Creator outreach messages</p><p class="text-xs text-slate-500">Auto-drafted per invitation.</p></div></li>
-                <li class="flex items-start gap-2"><span>🎯</span><div><p class="font-semibold">Semantic creator ↔ campaign matching</p><p class="text-xs text-slate-500">Embeddings power the "why matched" reasons.</p></div></li>
-                <li class="flex items-start gap-2"><span>✅</span><div><p class="font-semibold">Content review scoring</p><p class="text-xs text-slate-500">Auto-flags briefs vs deliverable.</p></div></li>
-                <li class="flex items-start gap-2"><span>🛡️</span><div><p class="font-semibold">Fraud checks</p><p class="text-xs text-slate-500">Anomaly detection on creator profiles.</p></div></li>
+                <li class="flex items-start gap-2"><span></span><div><p class="font-semibold">Campaign brief generator</p><p class="text-xs text-slate-500">Public /tools/brief-generator page.</p></div></li>
+                <li class="flex items-start gap-2"><span></span><div><p class="font-semibold">Creator outreach messages</p><p class="text-xs text-slate-500">Auto-drafted per invitation.</p></div></li>
+                <li class="flex items-start gap-2"><span></span><div><p class="font-semibold">Semantic creator ↔ campaign matching</p><p class="text-xs text-slate-500">Embeddings power the "why matched" reasons.</p></div></li>
+                <li class="flex items-start gap-2"><span></span><div><p class="font-semibold">Content review scoring</p><p class="text-xs text-slate-500">Auto-flags briefs vs deliverable.</p></div></li>
+                <li class="flex items-start gap-2"><span></span><div><p class="font-semibold">Fraud checks</p><p class="text-xs text-slate-500">Anomaly detection on creator profiles.</p></div></li>
             </ul>
             <p class="mt-4 rounded-xl bg-amber-50 p-3 text-xs text-amber-800">
-                <strong>Cost note:</strong> On gpt-4o-mini a full campaign brief runs ~$0.001. A month of active use for a mid brand averages under $2.
+                <strong>Cost note:</strong>On gpt-4o-mini a full campaign brief runs ~$0.001. A month of active use for a mid brand averages under $2.
             </p>
         </div>
 

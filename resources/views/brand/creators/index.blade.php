@@ -2,7 +2,7 @@
     <div class="flex flex-wrap items-end justify-between gap-4">
         <div>
             <h1 class="text-3xl font-black tracking-tight text-slate-900">Creator marketplace</h1>
-            <p class="mt-1 text-sm text-slate-500">Search by <strong>city</strong> or <strong>tier</strong>, add audience filters, then invite to a campaign.</p>
+            <p class="mt-1 text-sm text-slate-500">Search by <strong>city</strong>or <strong>tier</strong>, add audience filters, then invite to a campaign.</p>
         </div>
         <div class="text-xs text-slate-500">
             <span class="inline-flex items-center gap-1"><span class="h-2 w-2 rounded-full bg-emerald-500"></span> {{ number_format($creators->total()) }} match</span>
@@ -16,11 +16,11 @@
             <div class="inline-flex rounded-xl border border-slate-200 bg-slate-50 p-1 text-sm">
                 <label class="cursor-pointer">
                     <input type="radio" name="mode" value="city" class="peer sr-only" @checked($mode === 'city')>
-                    <span class="block rounded-lg px-4 py-1.5 peer-checked:bg-white peer-checked:shadow peer-checked:text-violet-700 text-slate-500">📍 City</span>
+                    <span class="block rounded-lg px-4 py-1.5 peer-checked:bg-white peer-checked:shadow peer-checked:text-violet-700 text-slate-500">City</span>
                 </label>
                 <label class="cursor-pointer">
                     <input type="radio" name="mode" value="tier" class="peer sr-only" @checked($mode === 'tier')>
-                    <span class="block rounded-lg px-4 py-1.5 peer-checked:bg-white peer-checked:shadow peer-checked:text-violet-700 text-slate-500">⭐ Tier</span>
+                    <span class="block rounded-lg px-4 py-1.5 peer-checked:bg-white peer-checked:shadow peer-checked:text-violet-700 text-slate-500"> Tier</span>
                 </label>
             </div>
 
@@ -87,7 +87,7 @@
             <div class="mb-2 flex items-center justify-between">
                 <label class="label !mb-0">Follower tiers</label>
                 <div class="flex gap-2 text-xs">
-                    <button type="button" data-multi-toggle="tiers" data-action="all"  class="text-violet-600 hover:underline">Select all</button>
+                    <button type="button" data-multi-toggle="tiers" data-action="all" class="text-violet-600 hover:underline">Select all</button>
                     <button type="button" data-multi-toggle="tiers" data-action="none" class="text-slate-500 hover:underline">Clear</button>
                 </div>
             </div>
@@ -176,10 +176,10 @@
 
             <div class="mt-4 flex flex-wrap items-center gap-4 text-sm">
                 <label class="flex items-center gap-2">
-                    <input type="checkbox" name="barter" value="1" @checked(request('barter'))> Accepts barter
+                    <input type="checkbox" name="barter" value="1" @checked(request('barter'))>Accepts barter
                 </label>
                 <label class="flex items-center gap-2">
-                    <input type="checkbox" name="paid" value="1" @checked(request('paid'))> Accepts paid
+                    <input type="checkbox" name="paid" value="1" @checked(request('paid'))>Accepts paid
                 </label>
             </div>
         </details>
@@ -188,10 +188,10 @@
     {{-- Active filter chips --}}
     @php
         $activeChips = [];
-        foreach ($cities as $c)    { $activeChips[] = ['label' => '📍 '.($cityOptions[$c] ?? $c), 'key' => 'cities', 'value' => $c]; }
-        foreach ($tiers as $t)     { $activeChips[] = ['label' => '⭐ '.($tierOptions[$t]['label'] ?? $t), 'key' => 'tiers', 'value' => $t]; }
-        foreach ($genders as $g)   { $activeChips[] = ['label' => ($genderOpts[$g] ?? $g), 'key' => 'genders', 'value' => $g]; }
-        foreach ($ages as $a)      { $activeChips[] = ['label' => 'Age '.$a, 'key' => 'ages', 'value' => $a]; }
+        foreach ($cities as $c) { $activeChips[] = ['label' => ' '.($cityOptions[$c] ?? $c), 'key' => 'cities', 'value' => $c]; }
+        foreach ($tiers as $t) { $activeChips[] = ['label' => ' '.($tierOptions[$t]['label'] ?? $t), 'key' => 'tiers', 'value' => $t]; }
+        foreach ($genders as $g) { $activeChips[] = ['label' => ($genderOpts[$g] ?? $g), 'key' => 'genders', 'value' => $g]; }
+        foreach ($ages as $a) { $activeChips[] = ['label' => 'Age '.$a, 'key' => 'ages', 'value' => $a]; }
         foreach ($languages as $l) { $activeChips[] = ['label' => ($langOpts[$l] ?? $l), 'key' => 'languages', 'value' => $l]; }
     @endphp
     @if(count($activeChips))
@@ -209,7 +209,7 @@
         @forelse($creators as $creator)
             @include('brand.creators._card', ['creator' => $creator, 'activeCampaigns' => $activeCampaigns])
         @empty
-            <x-empty-state title="No creators match" icon="🎬" class="sm:col-span-2 lg:col-span-3">
+            <x-empty-state title="No creators match" icon="creators" class="sm:col-span-2 lg:col-span-3">
                 Try widening your filters — remove a city or add more tiers.
             </x-empty-state>
         @endforelse

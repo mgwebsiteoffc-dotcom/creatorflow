@@ -1,9 +1,9 @@
 @php
     $user = auth()->user();
     $isCreator = $user && $user->creator && (int) $user->creator->id === (int) $contract->creator_id;
-    $isBrand   = $user && $user->workspaces->contains('id', $contract->workspace_id);
+    $isBrand = $user && $user->workspaces->contains('id', $contract->workspace_id);
     $canSignCreator = $isCreator && ! $contract->signed_by_creator_at && \App\Models\PlatformSetting::feature('contract_esign');
-    $canSignBrand   = $isBrand && $contract->signed_by_creator_at && ! $contract->signed_by_brand_at && \App\Models\PlatformSetting::feature('contract_esign');
+    $canSignBrand = $isBrand && $contract->signed_by_creator_at && ! $contract->signed_by_brand_at && \App\Models\PlatformSetting::feature('contract_esign');
     $panel = $isCreator ? 'creator' : ($isBrand ? 'brand' : 'guest');
 @endphp
 <x-layouts.app :panel="$panel" :title="'Contract — '.$contract->title">
@@ -17,7 +17,7 @@
                 @if($contract->expires_at) · expires {{ $contract->expires_at->diffForHumans() }} @endif
             </p>
         </div>
-        @if($contract->fee_cents > 0)
+        @if($contract->fee_cents >0)
             <div class="rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 px-5 py-3 text-white shadow-lg">
                 <p class="text-[10px] font-bold uppercase tracking-widest opacity-90">Fee</p>
                 <p class="text-2xl font-black">₹{{ number_format($contract->fee_cents / 100, 2, '.', ',') }}</p>
@@ -61,7 +61,7 @@
         <aside class="space-y-6">
             @if($canSignCreator || $canSignBrand)
                 <section class="rounded-2xl border border-violet-200 bg-violet-50/40 p-6">
-                    <h2 class="text-lg font-black text-slate-900">{{ $canSignCreator ? '✍️ Sign as creator' : '✍️ Countersign as brand' }}</h2>
+                    <h2 class="text-lg font-black text-slate-900">{{ $canSignCreator ? ' Sign as creator' : ' Countersign as brand' }}</h2>
                     <form method="POST" action="{{ $canSignCreator ? route('contracts.sign', $contract) : route('contracts.countersign', $contract) }}" class="mt-4 space-y-3" data-esign>
                         @csrf
                         <div>
@@ -87,7 +87,7 @@
 
             @if(! \App\Models\PlatformSetting::feature('contract_esign'))
                 <section class="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-xs text-amber-900">
-                    <p class="font-bold">📴 E-signature is currently disabled by the admin.</p>
+                    <p class="font-bold">E-signature is currently disabled by the admin.</p>
                     <p class="mt-1">Admins can enable it in <em>Integrations → Feature flags → Contract e-signature</em>.</p>
                 </section>
             @endif
@@ -104,7 +104,7 @@
             let drawing = false;
             let paths = [];
             let current = [];
-            const rect = () => canvas.getBoundingClientRect();
+            const rect = () =>canvas.getBoundingClientRect();
             const pos = (e) => {
                 const r = rect();
                 const t = e.touches ? e.touches[0] : e;
@@ -115,13 +115,13 @@
             resize();
             new ResizeObserver(resize).observe(canvas);
             const start = (e) => { drawing = true; current = [pos(e)]; e.preventDefault(); };
-            const move  = (e) => { if (!drawing) return; const p = pos(e); const [px, py] = current[current.length - 1]; ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(p[0], p[1]); ctx.stroke(); current.push(p); e.preventDefault(); };
-            const end   = () => { if (!drawing) return; drawing = false; paths.push(current); syncSvg(); };
+            const move = (e) => { if (!drawing) return; const p = pos(e); const [px, py] = current[current.length - 1]; ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(p[0], p[1]); ctx.stroke(); current.push(p); e.preventDefault(); };
+            const end = () => { if (!drawing) return; drawing = false; paths.push(current); syncSvg(); };
             const syncSvg = () => {
                 let d = '';
                 for (const path of paths) {
                     if (!path.length) continue;
-                    d += 'M' + path.map(p => p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
+                    d += 'M' + path.map(p =>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L');
                 }
                 hidden.value = d ? `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${canvas.width} ${canvas.height}"><path d="${d}" stroke="#0f172a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>` : '';
             };

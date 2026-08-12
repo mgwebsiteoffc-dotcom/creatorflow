@@ -2,7 +2,7 @@
     <a href="{{ route('brand.orders.index') }}" class="text-sm text-slate-500">← Orders</a>
     <div class="mt-1 flex items-end justify-between gap-4">
         <div>
-            <p class="text-xs font-bold uppercase tracking-widest text-violet-600">🎁 Gifting / seeding</p>
+            <p class="text-xs font-bold uppercase tracking-widest text-violet-600">Gifting / seeding</p>
             <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">Create manual order</h1>
             <p class="mt-1 text-sm text-slate-500">Ship a product to a creator without going through Shopify — record it here and add tracking when you dispatch.</p>
         </div>

@@ -27,9 +27,9 @@
             <div><label class="label">Story (₹)</label><input class="input" type="number" step="0.01" min="0" name="rate_story" value="{{ number_format(($creator->rate_story_cents ?? 0)/100, 2, '.', '') }}"></div>
         </div>
         <div class="flex gap-6 text-sm">
-            <label class="flex items-center gap-2"><input type="checkbox" name="accepts_barter" value="1" @checked($creator->accepts_barter)> Open to barter</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="accepts_paid" value="1" @checked($creator->accepts_paid)> Open to paid</label>
-            <label class="flex items-center gap-2"><input type="checkbox" name="open_to_work" value="1" @checked($creator->open_to_work)> Open to work</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="accepts_barter" value="1" @checked($creator->accepts_barter)>Open to barter</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="accepts_paid" value="1" @checked($creator->accepts_paid)>Open to paid</label>
+            <label class="flex items-center gap-2"><input type="checkbox" name="open_to_work" value="1" @checked($creator->open_to_work)>Open to work</label>
         </div>
         <button class="btn-primary">Save changes</button>
     </form>

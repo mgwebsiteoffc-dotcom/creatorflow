@@ -50,8 +50,7 @@
         <div class="mx-auto grid max-w-6xl gap-10 px-4 pb-16 pt-16 md:grid-cols-12 md:gap-12 md:pt-24">
             <div class="md:col-span-7">
                 <span class="chip reveal">
-                    <span class="chip-dot"></span>
-                    AI + Shopify + Web · One backend
+                                        AI + Shopify + Web · One backend
                 </span>
 
                 <h1 class="reveal mt-5 text-4xl font-black leading-[1.05] tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
@@ -117,10 +116,7 @@
                         {{-- Fake campaign card --}}
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-2">
-                                <span class="h-2.5 w-2.5 rounded-full bg-rose-400"></span>
-                                <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
-                                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-                            </div>
+                                                                                                                            </div>
                             <span class="text-xs font-medium text-slate-400">campaign · live</span>
                         </div>
 
@@ -325,8 +321,7 @@
                         <div class="col-span-2 row-span-3 rounded-2xl bg-white p-4 shadow-lg ring-1 ring-slate-100">
                             <div class="flex -space-x-2">
                                 @foreach(['#f472b6','#a78bfa','#22d3ee','#f59e0b','#34d399'] as $c)
-                                    <span class="h-8 w-8 rounded-full ring-2 ring-white" style="background:{{ $c }}"></span>
-                                @endforeach
+                                                                    @endforeach
                             </div>
                             <div class="mt-3 text-xs font-semibold text-slate-500">Creator pool</div>
                             <div class="text-xl font-black text-slate-900">1,283 matched</div>
@@ -555,8 +550,7 @@
                             {{-- Live "NOW PLAYING" pill (only when a real video is attached) --}}
                             @if(! empty($r['video_url']))
                                 <span class="pointer-events-none absolute left-3 bottom-24 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur">
-                                    <span class="grid h-1.5 w-1.5 place-items-center rounded-full bg-emerald-400" style="box-shadow: 0 0 0 3px rgba(52,211,153,.35);"></span>
-                                    Now playing
+                                                                        Now playing
                                 </span>
                             @endif
 

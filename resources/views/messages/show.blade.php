@@ -29,7 +29,7 @@
             @endforeach
             @if($messages->isEmpty())
                 <div class="grid h-full place-items-center text-center text-sm text-slate-400">
-                    <div><p class="text-3xl">💬</p><p class="mt-2">Say hi to kick off the conversation.</p></div>
+                    <div><p class="text-3xl"></p><p class="mt-2">Say hi to kick off the conversation.</p></div>
                 </div>
             @endif
         </div>
@@ -45,15 +45,15 @@
 
     <script>
     (function() {
-        const thread    = document.querySelector('[data-thread]');
-        const form      = document.querySelector('[data-msg-form]');
-        const input     = form.querySelector('input[name="body"]');
-        const status    = document.querySelector('[data-online-status]');
-        const livePill  = document.querySelector('[data-live-pill]');
-        const meId      = @json(auth()->user()->creator?->id ?? auth()->id());
-        const meType    = @json(auth()->user()->creator ? 'creator' : 'user');
-        let latestId    = Number(thread.dataset.latest || 0);
-        let polling     = false;
+        const thread = document.querySelector('[data-thread]');
+        const form = document.querySelector('[data-msg-form]');
+        const input = form.querySelector('input[name="body"]');
+        const status = document.querySelector('[data-online-status]');
+        const livePill = document.querySelector('[data-live-pill]');
+        const meId = @json(auth()->user()->creator?->id ?? auth()->id());
+        const meType = @json(auth()->user()->creator ? 'creator' : 'user');
+        let latestId = Number(thread.dataset.latest || 0);
+        let polling = false;
 
         const scrollBottom = () => { thread.scrollTop = thread.scrollHeight; };
         scrollBottom();
@@ -63,14 +63,14 @@
             const wrap = document.createElement('div');
             wrap.className = 'flex ' + (m.mine ? 'justify-end' : 'justify-start');
             wrap.dataset.msgId = m.id;
-            const meClasses  = 'bg-gradient-to-br from-violet-600 to-pink-500 text-white';
+            const meClasses = 'bg-gradient-to-br from-violet-600 to-pink-500 text-white';
             const themClasses= 'bg-slate-100 text-slate-800';
             wrap.innerHTML = `
                 <div class="max-w-[80%] rounded-2xl px-3.5 py-2 text-sm shadow-sm ${m.mine ? meClasses : themClasses}">
                     <div class="whitespace-pre-wrap break-words"></div>
                     <div class="mt-0.5 text-[10px] ${m.mine ? 'text-white/70' : 'text-slate-500'}">${m.time}</div>
                 </div>`;
-            wrap.querySelector('div > div').textContent = m.body;
+            wrap.querySelector('div >div').textContent = m.body;
             return wrap;
         };
 
@@ -136,7 +136,7 @@
                 optimistic.remove();
             } catch (e) {
                 optimistic.style.opacity = '1';
-                optimistic.querySelector('div > div').textContent = body + ' ⚠︎ failed — tap to retry';
+                optimistic.querySelector('div >div').textContent = body + ' ︎ failed — tap to retry';
                 optimistic.style.cursor = 'pointer';
                 optimistic.addEventListener('click', () => { optimistic.remove(); input.value = body; form.requestSubmit(); }, { once: true });
             }
