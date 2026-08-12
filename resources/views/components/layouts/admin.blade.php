@@ -43,6 +43,12 @@
                     ['route' => 'admin.case-studies.index', 'label' => 'Case studies', 'icon' => '📚'],
                 ] : []),
                 ['route' => 'admin.seo',            'label' => 'SEO',         'icon' => '🔍'],
+                ...(\App\Models\PlatformSetting::feature('ab_testing') ? [
+                    ['route' => 'admin.ab.index', 'label' => 'A/B tests', 'icon' => '🧪'],
+                ] : []),
+                ...(\App\Models\PlatformSetting::feature('referrals') ? [
+                    ['route' => 'admin.referrals.index', 'label' => 'Referrals', 'icon' => '🎁'],
+                ] : []),
                 ['route' => 'admin.ai.edit',           'label' => 'AI keys',      'icon' => '🤖'],
                 ['route' => 'admin.integrations.edit', 'label' => 'Integrations', 'icon' => '🔌'],
                 ['route' => 'admin.settings',          'label' => 'Settings',     'icon' => '⚙️'],

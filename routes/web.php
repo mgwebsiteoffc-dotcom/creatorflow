@@ -71,6 +71,13 @@ Route::get('/resources/item/{slug}',       [MarketingController::class, 'resourc
 Route::get('/blog',      [MarketingController::class, 'blogIndex'])->name('blog.index');
 Route::get('/blog/{slug}', [MarketingController::class, 'blogShow'])->name('blog.show');
 
+// Contracts — public view + creator sign + brand countersign (feature-flagged inside controller)
+Route::middleware('auth')->group(function () {
+    Route::get('/contracts/{contract}',              [\App\Http\Controllers\ContractController::class, 'show'])->name('contracts.show');
+    Route::post('/contracts/{contract}/sign',        [\App\Http\Controllers\ContractController::class, 'signAsCreator'])->name('contracts.sign');
+    Route::post('/contracts/{contract}/countersign', [\App\Http\Controllers\ContractController::class, 'countersignAsBrand'])->name('contracts.countersign');
+});
+
 // Case studies — public CMS (feature-flagged)
 Route::get('/case-studies',        [\App\Http\Controllers\CaseStudyController::class, 'index'])->name('case-studies.index');
 Route::get('/case-studies/{slug}', [\App\Http\Controllers\CaseStudyController::class, 'show'])->name('case-studies.show');
@@ -192,6 +199,20 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Case studies CRUD (admin content)
     Route::resource('case-studies', \App\Http\Controllers\Admin\CaseStudyController::class)->except(['show']);
+
+    // A/B experiments (feature-flagged)
+    Route::get('/ab',                [\App\Http\Controllers\Admin\AbTestController::class, 'index'])->name('ab.index');
+    Route::get('/ab/create',         [\App\Http\Controllers\Admin\AbTestController::class, 'create'])->name('ab.create');
+    Route::post('/ab',               [\App\Http\Controllers\Admin\AbTestController::class, 'store'])->name('ab.store');
+    Route::get('/ab/{ab}/edit',      [\App\Http\Controllers\Admin\AbTestController::class, 'edit'])->name('ab.edit');
+    Route::patch('/ab/{ab}',         [\App\Http\Controllers\Admin\AbTestController::class, 'update'])->name('ab.update');
+    Route::delete('/ab/{ab}',        [\App\Http\Controllers\Admin\AbTestController::class, 'destroy'])->name('ab.destroy');
+
+    // Referrals / affiliates (feature-flagged)
+    Route::get('/referrals',                     [\App\Http\Controllers\Admin\ReferralController::class, 'index'])->name('referrals.index');
+    Route::post('/referrals',                    [\App\Http\Controllers\Admin\ReferralController::class, 'store'])->name('referrals.store');
+    Route::patch('/referrals/{code}/toggle',     [\App\Http\Controllers\Admin\ReferralController::class, 'toggle'])->name('referrals.toggle');
+    Route::delete('/referrals/{code}',           [\App\Http\Controllers\Admin\ReferralController::class, 'destroy'])->name('referrals.destroy');
 
     // Agencies (feature-flagged in admin.integrations)
     Route::get('/agencies',                        [\App\Http\Controllers\Admin\AgencyController::class, 'index'])->name('agencies.index');
