@@ -81,27 +81,55 @@
 
     @if($isGuest)
         @include('partials.marketing-nav')
+
+        <div class="w-full" style="overflow-x: clip;">
+            @if(session('status'))
+                <x-flash type="success">{{ session('status') }}</x-flash>
+            @endif
+            @if(session('error'))
+                <x-flash type="error">{{ session('error') }}</x-flash>
+            @endif
+            @if($errors->any())
+                <x-flash type="error">
+                    <ul class="list-disc pl-4">
+                        @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+                    </ul>
+                </x-flash>
+            @endif
+
+            {{ $slot }}
+        </div>
     @else
-        @include('partials.topbar', compact('panel', 'workspace', 'creator'))
+        {{-- App panels (brand / creator) get a grouped sidebar + slim header --}}
+        <div class="flex min-h-screen">
+            {{-- Sidebar drawer backdrop (mobile only) --}}
+            <div data-sidebar-backdrop class="fixed inset-0 z-30 hidden bg-slate-900/60 backdrop-blur-sm md:hidden"></div>
+
+            @include('partials.sidebar', ['panel' => $panel, 'workspace' => $workspace, 'creator' => $creator])
+
+            <main class="flex min-w-0 flex-1 flex-col">
+                @include('partials.app-header', ['panel' => $panel, 'workspace' => $workspace])
+
+                <div class="mx-auto w-full max-w-6xl flex-1 px-4 pb-28 pt-6 md:px-6 md:pb-12 md:pt-8 lg:px-8" style="overflow-x: clip;">
+                    @if(session('status'))
+                        <x-flash type="success">{{ session('status') }}</x-flash>
+                    @endif
+                    @if(session('error'))
+                        <x-flash type="error">{{ session('error') }}</x-flash>
+                    @endif
+                    @if($errors->any())
+                        <x-flash type="error">
+                            <ul class="list-disc pl-4">
+                                @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+                            </ul>
+                        </x-flash>
+                    @endif
+
+                    {{ $slot }}
+                </div>
+            </main>
+        </div>
     @endif
-
-    <div class="{{ $isGuest ? 'w-full' : 'mx-auto w-full max-w-6xl px-4 pb-28 pt-6 md:px-6 md:pb-16 md:pt-10 lg:px-8' }}" style="overflow-x: clip;">
-        @if(session('status'))
-            <x-flash type="success">{{ session('status') }}</x-flash>
-        @endif
-        @if(session('error'))
-            <x-flash type="error">{{ session('error') }}</x-flash>
-        @endif
-        @if($errors->any())
-            <x-flash type="error">
-                <ul class="list-disc pl-4">
-                    @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
-                </ul>
-            </x-flash>
-        @endif
-
-        {{ $slot }}
-    </div>
 
     @if($isGuest)
         @include('partials.marketing-footer')
