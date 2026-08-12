@@ -71,7 +71,7 @@ class BillingController extends Controller
             'description'  => ['nullable', 'string', 'max:190'],
             'reference'    => ['nullable', 'string', 'max:190'],
             'kind'         => ['required', 'in:subscription,campaign,top_up,refund,adjustment'],
-            'amount_cents' => ['required', 'integer', 'min:1'],
+            'amount'       => ['required', 'numeric', 'min:0.01'],
             'method'       => ['nullable', 'in:card,upi,bank,manual'],
             'paid_at'      => ['nullable', 'date'],
             'receipt_url'  => ['nullable', 'url', 'max:500'],
@@ -79,8 +79,12 @@ class BillingController extends Controller
 
         $workspace = $tenant->active();
 
+        $amountCents = (int) round(((float) $data['amount']) * 100);
+        unset($data['amount']);
+
         PaymentRecord::create($data + [
             'workspace_id' => $workspace->id,
+            'amount_cents' => $amountCents,
             'currency'     => $workspace->currency,
             'direction'    => $data['kind'] === 'refund' ? 'inflow' : 'outflow',
             'status'       => 'succeeded',

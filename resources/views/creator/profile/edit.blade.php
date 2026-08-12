@@ -21,10 +21,10 @@
             </div>
         </div>
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div><label class="label">UGC $</label><input class="input" type="number" name="rate_ugc_cents" value="{{ $creator->rate_ugc_cents }}"></div>
-            <div><label class="label">Video $</label><input class="input" type="number" name="rate_video_cents" value="{{ $creator->rate_video_cents }}"></div>
-            <div><label class="label">Post $</label><input class="input" type="number" name="rate_post_cents" value="{{ $creator->rate_post_cents }}"></div>
-            <div><label class="label">Story $</label><input class="input" type="number" name="rate_story_cents" value="{{ $creator->rate_story_cents }}"></div>
+            <div><label class="label">UGC (₹)</label><input class="input" type="number" step="0.01" min="0" name="rate_ugc" value="{{ number_format(($creator->rate_ugc_cents ?? 0)/100, 2, '.', '') }}"></div>
+            <div><label class="label">Video (₹)</label><input class="input" type="number" step="0.01" min="0" name="rate_video" value="{{ number_format(($creator->rate_video_cents ?? 0)/100, 2, '.', '') }}"></div>
+            <div><label class="label">Post (₹)</label><input class="input" type="number" step="0.01" min="0" name="rate_post" value="{{ number_format(($creator->rate_post_cents ?? 0)/100, 2, '.', '') }}"></div>
+            <div><label class="label">Story (₹)</label><input class="input" type="number" step="0.01" min="0" name="rate_story" value="{{ number_format(($creator->rate_story_cents ?? 0)/100, 2, '.', '') }}"></div>
         </div>
         <div class="flex gap-6 text-sm">
             <label class="flex items-center gap-2"><input type="checkbox" name="accepts_barter" value="1" @checked($creator->accepts_barter)> Open to barter</label>

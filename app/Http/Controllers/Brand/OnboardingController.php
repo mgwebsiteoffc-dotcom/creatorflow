@@ -34,7 +34,7 @@ class OnboardingController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'product_type' => ['nullable', 'string', 'max:190'],
-            'price_cents' => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'numeric', 'min:0'],
             'inventory_qty' => ['required', 'integer', 'min:0'],
         ]);
 
@@ -60,7 +60,7 @@ class OnboardingController extends Controller
         $product->variants()->create([
             'title' => 'Default',
             'sku' => Str::upper(Str::random(8)),
-            'price_cents' => $data['price_cents'],
+            'price_cents' => (int) round(((float) $data['price']) * 100),
             'inventory_qty' => $data['inventory_qty'],
             'currency' => $workspace->currency,
         ]);

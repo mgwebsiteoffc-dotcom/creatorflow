@@ -152,8 +152,8 @@
                         </div>
                     </div>
                     <div>
-                        <label class="label">Amount (in cents · {{ $workspace->currency }})</label>
-                        <input class="input" type="number" name="amount_cents" min="1" required placeholder="15000 = {{ $workspace->formatMoney(15000) }}">
+                        <label class="label">Amount (₹)</label>
+                        <input class="input" type="number" step="0.01" name="amount" min="0.01" required placeholder="e.g. 1500.00">
                     </div>
                     <div>
                         <label class="label">Reference (optional)</label>

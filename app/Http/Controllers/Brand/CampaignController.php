@@ -42,6 +42,7 @@ class CampaignController extends Controller
             'brief' => ['nullable', 'string'],
             'budget_total_cents' => ['nullable', 'integer', 'min:0'],
             'creator_fee_cents' => ['nullable', 'integer', 'min:0'],
+            'creator_fee'       => ['nullable', 'numeric', 'min:0'],
             'commission_rate' => ['nullable', 'numeric', 'min:0', 'max:100'],
             'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
@@ -70,6 +71,14 @@ class CampaignController extends Controller
             'audience.audience_gender'    => ['nullable', 'in:female,male'],
             'audience.audience_min_pct'   => ['nullable', 'integer', 'min:0', 'max:100'],
         ]);
+
+        // Convert rupee-input to cents when the newer field is present.
+        if (array_key_exists('creator_fee', $data)) {
+            if ($data['creator_fee'] !== null && $data['creator_fee'] !== '') {
+                $data['creator_fee_cents'] = (int) round(((float) $data['creator_fee']) * 100);
+            }
+            unset($data['creator_fee']);
+        }
 
         // Clean empty arrays so we can store a nullable JSON blob.
         $audience = collect($data['audience'] ?? [])

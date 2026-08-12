@@ -32,11 +32,15 @@ class ReferralController extends Controller
             'code'       => ['nullable', 'string', 'max:40', 'regex:/^[A-Z0-9\-]+$/'],
             'label'      => ['nullable', 'string', 'max:190'],
             'kind'       => ['required', 'in:brand_referral,creator_affiliate,partner'],
-            'commission_rate'        => ['nullable', 'numeric', 'min:0', 'max:100'],
-            'commission_fixed_cents' => ['nullable', 'integer', 'min:0'],
+            'commission_rate'  => ['nullable', 'numeric', 'min:0', 'max:100'],
+            'commission_fixed' => ['nullable', 'numeric', 'min:0'],
         ]);
         $data['uuid'] = (string) Str::uuid();
         $data['code'] = $data['code'] ?: strtoupper(Str::random(8));
+        $data['commission_fixed_cents'] = isset($data['commission_fixed'])
+            ? (int) round(((float) $data['commission_fixed']) * 100)
+            : 0;
+        unset($data['commission_fixed']);
         ReferralCode::create($data);
         return back()->with('status', "Code {$data['code']} created.");
     }

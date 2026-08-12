@@ -38,7 +38,7 @@
             <div><label class="label">Owner ID</label><input class="input" name="owner_id" type="number" required></div>
             <div><label class="label">Code (blank = auto)</label><input class="input font-mono uppercase" name="code" placeholder="RIYA10"></div>
             <div><label class="label">Commission %</label><input class="input" name="commission_rate" type="number" step="0.1" value="20"></div>
-            <div><label class="label">Fixed ₹ (cents)</label><input class="input" name="commission_fixed_cents" type="number" value="0"></div>
+            <div><label class="label">Fixed bonus (₹)</label><input class="input" name="commission_fixed" type="number" step="0.01" min="0" value="0" placeholder="e.g. 500.00"></div>
             <div class="md:col-span-6"><label class="label">Label (optional)</label><input class="input" name="label"></div>
             <div class="md:col-span-6 flex justify-end"><button class="btn-primary">Create code</button></div>
         </form>
@@ -56,7 +56,7 @@
                         <td class="p-3 font-mono font-bold text-slate-900">{{ $c->code }}</td>
                         <td class="p-3 text-xs"><span class="rounded-full bg-slate-100 px-2 py-0.5 capitalize">{{ str_replace('_',' ', $c->kind) }}</span></td>
                         <td class="p-3 text-xs text-slate-500">{{ ucfirst($c->owner_type) }} #{{ $c->owner_id }}</td>
-                        <td class="p-3 text-xs">{{ $c->commission_rate }}%{{ $c->commission_fixed_cents > 0 ? ' + ₹'.($c->commission_fixed_cents/100) : '' }}</td>
+                        <td class="p-3 text-xs">{{ $c->commission_rate }}%{{ $c->commission_fixed_cents > 0 ? ' + ₹'.number_format($c->commission_fixed_cents/100, 2, '.', ',') : '' }}</td>
                         <td class="p-3 font-mono">{{ number_format($c->signup_count) }}</td>
                         <td class="p-3 font-mono">{{ number_format($c->conversion_count) }}</td>
                         <td class="p-3"><x-badge :tone="$c->status === 'active' ? 'green' : 'slate'">{{ $c->status }}</x-badge></td>

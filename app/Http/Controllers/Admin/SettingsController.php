@@ -39,12 +39,16 @@ class SettingsController extends Controller
             'paid_platform_fee_rate'   => ['required', 'numeric', 'min:0', 'max:1'],
             'barter_platform_fee_rate' => ['required', 'numeric', 'min:0', 'max:1'],
             'processing_markup_rate'   => ['required', 'numeric', 'min:0', 'max:1'],
-            'processing_markup_fixed_cents' => ['required', 'integer', 'min:0'],
+            'processing_markup_fixed'  => ['required', 'numeric', 'min:0'],
             'escrow_hold_days'         => ['required', 'integer', 'min:0', 'max:60'],
-            'minimum_payout_cents'     => ['required', 'integer', 'min:0'],
+            'minimum_payout'           => ['required', 'numeric', 'min:0'],
             'require_creator_verification' => ['nullable', 'boolean'],
             'allow_public_signup'      => ['nullable', 'boolean'],
         ]);
+
+        $data['processing_markup_fixed_cents'] = (int) round(((float) $data['processing_markup_fixed']) * 100);
+        $data['minimum_payout_cents'] = (int) round(((float) $data['minimum_payout']) * 100);
+        unset($data['processing_markup_fixed'], $data['minimum_payout']);
 
         $settings = PlatformSetting::current();
         $settings->update($data + [

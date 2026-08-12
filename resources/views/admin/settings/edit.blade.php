@@ -32,8 +32,8 @@
                     <input class="input" type="number" step="0.0001" min="0" max="1" name="processing_markup_rate" value="{{ old('processing_markup_rate', $settings->processing_markup_rate) }}">
                 </div>
                 <div>
-                    <label class="label">Processing markup (fixed cents)</label>
-                    <input class="input" type="number" min="0" name="processing_markup_fixed_cents" value="{{ old('processing_markup_fixed_cents', $settings->processing_markup_fixed_cents) }}">
+                    <label class="label">Processing markup (fixed ₹)</label>
+                    <input class="input" type="number" step="0.01" min="0" name="processing_markup_fixed" value="{{ old('processing_markup_fixed', number_format(($settings->processing_markup_fixed_cents ?? 0)/100, 2, '.', '')) }}" placeholder="e.g. 0.30">
                 </div>
             </div>
         </div>
@@ -46,8 +46,8 @@
                     <input class="input" type="number" min="0" max="60" name="escrow_hold_days" value="{{ old('escrow_hold_days', $settings->escrow_hold_days) }}">
                 </div>
                 <div>
-                    <label class="label">Minimum payout (cents)</label>
-                    <input class="input" type="number" min="0" name="minimum_payout_cents" value="{{ old('minimum_payout_cents', $settings->minimum_payout_cents) }}">
+                    <label class="label">Minimum payout (₹)</label>
+                    <input class="input" type="number" step="0.01" min="0" name="minimum_payout" value="{{ old('minimum_payout', number_format(($settings->minimum_payout_cents ?? 0)/100, 2, '.', '')) }}" placeholder="e.g. 100.00">
                 </div>
             </div>
 

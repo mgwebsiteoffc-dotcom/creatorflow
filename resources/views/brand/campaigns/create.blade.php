@@ -226,8 +226,8 @@
             <div class="card h-fit space-y-4 p-5">
                 <h3 class="font-semibold">Budget &amp; timeline</h3>
                 <div>
-                    <label class="label">Creator fee per post (cents)</label>
-                    <input class="input" type="number" name="creator_fee_cents" value="0">
+                    <label class="label">Creator fee per post (₹)</label>
+                    <input class="input" type="number" step="0.01" min="0" name="creator_fee" value="0.00" placeholder="e.g. 2500.00">
                     <p class="mt-1 text-xs text-slate-500">0 for pure barter.</p>
                 </div>
                 <div>

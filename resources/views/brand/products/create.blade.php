@@ -68,8 +68,8 @@
                     <input class="input" name="sku" value="{{ old('sku') }}" placeholder="AUTO">
                 </div>
                 <div>
-                    <label class="label">Price (in cents) <span class="text-rose-500">*</span></label>
-                    <input class="input" type="number" name="price_cents" min="0" required value="{{ old('price_cents') }}" placeholder="129900 = ₹1,299.00">
+                    <label class="label">Price (₹) <span class="text-rose-500">*</span></label>
+                    <input class="input" type="number" step="0.01" name="price" min="0" required value="{{ old('price') }}" placeholder="e.g. 1299.00">
                 </div>
                 <div>
                     <label class="label">Inventory qty <span class="text-rose-500">*</span></label>

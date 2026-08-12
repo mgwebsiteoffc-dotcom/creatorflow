@@ -48,7 +48,7 @@ class MarketplaceController extends Controller
 
         $data = $request->validate([
             'cover_note' => ['nullable', 'string', 'max:2000'],
-            'proposed_fee_cents' => ['nullable', 'integer', 'min:0'],
+            'proposed_fee' => ['nullable', 'numeric', 'min:0'],
         ]);
 
         if ($campaign->applications()->where('creator_id', $creator->id)->exists()) {
@@ -60,7 +60,7 @@ class MarketplaceController extends Controller
             'campaign_id' => $campaign->id,
             'creator_id' => $creator->id,
             'cover_note' => $data['cover_note'] ?? null,
-            'proposed_fee_cents' => $data['proposed_fee_cents'] ?? null,
+            'proposed_fee_cents' => isset($data['proposed_fee']) ? (int) round(((float) $data['proposed_fee']) * 100) : null,
             'status' => 'submitted',
         ]);
 

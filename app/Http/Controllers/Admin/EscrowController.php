@@ -49,23 +49,24 @@ class EscrowController extends Controller
     {
         $data = $request->validate([
             'assignment_id' => ['required', 'exists:campaign_assignments,id'],
-            'amount_cents'  => ['required', 'integer', 'min:1'],
+            'amount'        => ['required', 'numeric', 'min:0.01'],
             'note'          => ['nullable', 'string', 'max:500'],
         ]);
         $assignment = CampaignAssignment::findOrFail($data['assignment_id']);
+        $amountCents = (int) round(((float) $data['amount']) * 100);
 
         EscrowTransaction::create([
             'workspace_id'  => $assignment->campaign->workspace_id,
             'creator_id'    => $assignment->creator_id,
             'assignment_id' => $assignment->id,
             'kind'          => 'hold',
-            'amount_cents'  => $data['amount_cents'],
+            'amount_cents'  => $amountCents,
             'currency'      => $assignment->campaign->budget_currency,
             'note'          => $data['note'] ?? 'Manual hold',
             'performed_by'  => $request->user()->id,
         ]);
 
-        return back()->with('status', "Held $".number_format($data['amount_cents']/100, 2)." in escrow.");
+        return back()->with('status', "Held ₹".number_format($amountCents/100, 2, '.', ',')." in escrow.");
     }
 
     public function release(Payout $payout, Request $request)
@@ -84,24 +85,25 @@ class EscrowController extends Controller
             'performed_by'  => $request->user()->id,
         ]);
 
-        return back()->with('status', "Released $".number_format($payout->net_cents/100, 2)." to creator.");
+        return back()->with('status', "Released ₹".number_format($payout->net_cents/100, 2, '.', ',')." to creator.");
     }
 
     public function refund(Request $request)
     {
         $data = $request->validate([
             'assignment_id' => ['required', 'exists:campaign_assignments,id'],
-            'amount_cents'  => ['required', 'integer', 'min:1'],
+            'amount'        => ['required', 'numeric', 'min:0.01'],
             'note'          => ['nullable', 'string', 'max:500'],
         ]);
         $assignment = CampaignAssignment::findOrFail($data['assignment_id']);
+        $amountCents = (int) round(((float) $data['amount']) * 100);
 
         EscrowTransaction::create([
             'workspace_id'  => $assignment->campaign->workspace_id,
             'creator_id'    => $assignment->creator_id,
             'assignment_id' => $assignment->id,
             'kind'          => 'refund',
-            'amount_cents'  => $data['amount_cents'],
+            'amount_cents'  => $amountCents,
             'currency'      => $assignment->campaign->budget_currency,
             'note'          => $data['note'] ?? 'Refund to brand',
             'performed_by'  => $request->user()->id,

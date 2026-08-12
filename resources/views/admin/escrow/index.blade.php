@@ -14,10 +14,10 @@
     @endif
 
     <div class="mt-8 grid gap-4 md:grid-cols-4">
-        <x-stat label="Currently held" :value="'$'.number_format($totals['held']/100, 2)" tone="amber"/>
-        <x-stat label="Released" :value="'$'.number_format($totals['released']/100, 2)" tone="emerald"/>
-        <x-stat label="Refunded" :value="'$'.number_format($totals['refunded']/100, 2)" tone="rose"/>
-        <x-stat label="Fees collected" :value="'$'.number_format($totals['fees']/100, 2)" tone="violet"/>
+        <x-stat label="Currently held" :value="'₹'.number_format($totals['held']/100, 2, '.', ',')" tone="amber"/>
+        <x-stat label="Released" :value="'₹'.number_format($totals['released']/100, 2, '.', ',')" tone="emerald"/>
+        <x-stat label="Refunded" :value="'₹'.number_format($totals['refunded']/100, 2, '.', ',')" tone="rose"/>
+        <x-stat label="Fees collected" :value="'₹'.number_format($totals['fees']/100, 2, '.', ',')" tone="violet"/>
     </div>
 
     <div class="mt-8 rounded-2xl border border-slate-200 bg-white p-6">
@@ -28,7 +28,7 @@
         <div class="mt-4 space-y-2">
             @forelse($pendingPayouts as $p)
                 <div class="flex items-center gap-3 rounded-xl border border-slate-100 p-3">
-                    <div class="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white">$</div>
+                    <div class="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 text-white">₹</div>
                     <div class="min-w-0 flex-1">
                         <p class="truncate text-sm font-semibold text-slate-900">₹{{ number_format($p->net_cents/100, 2, '.', ',') }} → {{ $p->creator?->display_name ?? 'creator' }}</p>
                         <p class="text-xs text-slate-500">Assignment #{{ $p->assignment_id }} · created {{ $p->created_at->diffForHumans() }}</p>
@@ -49,7 +49,7 @@
             <form method="POST" action="{{ route('admin.escrow.hold') }}" class="mt-3 space-y-3">
                 @csrf
                 <div><label class="label">Assignment ID</label><input class="input" name="assignment_id" type="number" required></div>
-                <div><label class="label">Amount (cents)</label><input class="input" name="amount_cents" type="number" min="1" required></div>
+                <div><label class="label">Amount (₹)</label><input class="input" name="amount" type="number" step="0.01" min="0.01" required placeholder="e.g. 5000.00"></div>
                 <div><label class="label">Note</label><input class="input" name="note" placeholder="Reason for hold"></div>
                 <button class="btn-primary w-full">Record hold</button>
             </form>
@@ -59,7 +59,7 @@
             <form method="POST" action="{{ route('admin.escrow.refund') }}" class="mt-3 space-y-3">
                 @csrf
                 <div><label class="label">Assignment ID</label><input class="input" name="assignment_id" type="number" required></div>
-                <div><label class="label">Amount (cents)</label><input class="input" name="amount_cents" type="number" min="1" required></div>
+                <div><label class="label">Amount (₹)</label><input class="input" name="amount" type="number" step="0.01" min="0.01" required placeholder="e.g. 5000.00"></div>
                 <div><label class="label">Note</label><input class="input" name="note" placeholder="Reason for refund"></div>
                 <button class="btn-danger w-full">Refund</button>
             </form>

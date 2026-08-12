@@ -75,8 +75,8 @@
                         <textarea class="input min-h-28" name="cover_note" placeholder="Why are you a great fit? Link a similar post if you have one."></textarea>
                     </div>
                     <div>
-                        <label class="label">Your proposed fee (in cents — leave 0 for barter)</label>
-                        <input class="input max-w-xs" type="number" name="proposed_fee_cents" min="0" placeholder="0">
+                        <label class="label">Your proposed fee (₹ — leave 0 for barter)</label>
+                        <input class="input max-w-xs" type="number" step="0.01" name="proposed_fee" min="0" placeholder="0.00">
                     </div>
                     <button class="btn-primary">Send application</button>
                 </form>

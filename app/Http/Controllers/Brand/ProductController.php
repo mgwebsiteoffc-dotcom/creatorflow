@@ -37,7 +37,7 @@ class ProductController extends Controller
             'product_type' => ['nullable', 'string', 'max:190'],
             'niche' => ['nullable', 'string', 'max:190'],
             'vendor' => ['nullable', 'string', 'max:190'],
-            'price_cents' => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'numeric', 'min:0'],
             'inventory_qty' => ['required', 'integer', 'min:0'],
             'sku' => ['nullable', 'string', 'max:190'],
             'images'   => ['nullable', 'array', 'max:6'],
@@ -68,7 +68,7 @@ class ProductController extends Controller
         $product->variants()->create([
             'sku' => $data['sku'] ?? Str::upper(Str::random(8)),
             'title' => 'Default',
-            'price_cents' => $data['price_cents'],
+            'price_cents' => (int) round(((float) $data['price']) * 100),
             'inventory_qty' => $data['inventory_qty'],
             'currency' => $workspace->currency,
         ]);

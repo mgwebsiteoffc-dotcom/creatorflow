@@ -89,8 +89,8 @@
                                     <input class="input" name="product_type" placeholder="Skincare" value="{{ old('product_type') }}">
                                 </div>
                                 <div>
-                                    <label class="label">Price (in cents)</label>
-                                    <input class="input" type="number" min="0" name="price_cents" placeholder="49900 = ₹499" value="{{ old('price_cents') }}">
+                                    <label class="label">Price (₹)</label>
+                                    <input class="input" type="number" step="0.01" min="0" name="price" placeholder="e.g. 499.00" value="{{ old('price') }}">
                                 </div>
                                 <div>
                                     <label class="label">Inventory</label>
