@@ -23,6 +23,10 @@ class Creator extends Model
         'audience_female_pct', 'audience_male_pct', 'audience_top_age',
         'performance_score', 'fraud_risk', 'stripe_connect_id',
         'payout_method_status', 'ai_summary', 'metadata',
+        // Payout details (RazorpayX)
+        'payout_method', 'upi_vpa',
+        'bank_account_holder_name', 'bank_account_number', 'bank_ifsc',
+        'pan_number', 'razorpayx_contact_id', 'razorpayx_fund_account_id',
     ];
 
     protected $casts = [
@@ -53,6 +57,14 @@ class Creator extends Model
         'audience_female_pct'  => null,
         'audience_male_pct'    => null,
         'audience_top_age'     => null,
+        'payout_method'        => 'upi',
+        'upi_vpa'              => null,
+        'bank_account_holder_name' => null,
+        'bank_account_number'  => null,
+        'bank_ifsc'            => null,
+        'pan_number'           => null,
+        'razorpayx_contact_id' => null,
+        'razorpayx_fund_account_id' => null,
     ];
 
     public function user(): BelongsTo

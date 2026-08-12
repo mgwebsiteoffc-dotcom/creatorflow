@@ -57,8 +57,21 @@ class ReleasePayout
             'status' => 'approved',
         ]);
 
-        // Trigger the Stripe Connect transfer when credentials are configured.
-        $this->stripe->transferPayout($payout);
+        // Send the actual money — RazorpayX for India, Stripe Connect fallback.
+        try {
+            $razorpayx = app(\App\Support\RazorpayXService::class);
+            if ($razorpayx->isEnabled()) {
+                $razorpayx->sendPayout($payout);
+            } else {
+                $this->stripe->transferPayout($payout);
+            }
+        } catch (\Throwable $e) {
+            report($e);
+            $payout->update([
+                'status'         => 'failed',
+                'failure_reason' => \Illuminate\Support\Str::limit($e->getMessage(), 200),
+            ]);
+        }
 
         // Fire creator payout notification (email + WhatsApp).
         \App\Support\NotifyEvent::fire('creator.payout.released', $assignment->creator, [

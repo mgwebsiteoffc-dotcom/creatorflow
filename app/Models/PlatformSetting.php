@@ -33,6 +33,13 @@ class PlatformSetting extends Model
         // Whatify (WhatsApp)
         'whatify_enabled', 'whatify_api_key', 'whatify_base_url', 'whatify_account_id',
         'whatify_from_number', 'whatify_last_tested_at', 'whatify_last_test_status',
+        // RazorpayX (outgoing payouts)
+        'razorpayx_enabled', 'razorpayx_account_number', 'razorpayx_mode',
+        'razorpayx_last_tested_at', 'razorpayx_last_test_status',
+        // Instagram Graph API
+        'instagram_app_id', 'instagram_app_secret', 'instagram_enabled',
+        // Sentry monitoring
+        'sentry_dsn', 'sentry_environment', 'sentry_traces_sample',
     ];
 
     protected $casts = [
@@ -58,6 +65,12 @@ class PlatformSetting extends Model
         'whatify_last_tested_at'    => 'datetime',
         'mail_enabled'              => 'boolean',
         'inapp_enabled'             => 'boolean',
+        'razorpayx_enabled'         => 'boolean',
+        'razorpayx_last_tested_at'  => 'datetime',
+        'instagram_enabled'         => 'boolean',
+        'instagram_app_secret'      => 'encrypted',
+        'sentry_dsn'                => 'encrypted',
+        'sentry_traces_sample'      => 'float',
     ];
 
     /**
@@ -108,6 +121,17 @@ class PlatformSetting extends Model
         'whatify_from_number'       => null,
         'whatify_last_tested_at'    => null,
         'whatify_last_test_status'  => null,
+        'razorpayx_enabled'         => false,
+        'razorpayx_account_number'  => null,
+        'razorpayx_mode'            => 'IMPS',
+        'razorpayx_last_tested_at'  => null,
+        'razorpayx_last_test_status'=> null,
+        'instagram_app_id'          => null,
+        'instagram_app_secret'      => null,
+        'instagram_enabled'         => false,
+        'sentry_dsn'                => null,
+        'sentry_environment'        => 'production',
+        'sentry_traces_sample'      => 0.20,
     ];
 
     public function maskedWhatifyKey(): string { return $this->mask($this->whatify_api_key); }

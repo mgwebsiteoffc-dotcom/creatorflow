@@ -151,6 +151,90 @@ class IntegrationsController extends Controller
         }
     }
 
+    /* ─────────────────────────── RAZORPAYX (payouts) ─────────────────────────── */
+
+    public function updateRazorpayX(Request $request)
+    {
+        $this->ensureMigrated();
+        $data = $request->validate([
+            'razorpayx_enabled'        => ['nullable', 'boolean'],
+            'razorpayx_account_number' => ['nullable', 'string', 'max:40'],
+            'razorpayx_mode'           => ['nullable', 'in:IMPS,NEFT,RTGS,UPI'],
+        ]);
+        PlatformSetting::current()->update([
+            'razorpayx_enabled'        => (bool) $request->input('razorpayx_enabled'),
+            'razorpayx_account_number' => $data['razorpayx_account_number'] ?? null,
+            'razorpayx_mode'           => $data['razorpayx_mode'] ?? 'IMPS',
+            'razorpayx_last_test_status' => null,
+        ]);
+        return back()->with('status', 'RazorpayX (payouts) saved.');
+    }
+
+    public function testRazorpayX(\App\Support\RazorpayXService $rx)
+    {
+        $ping = $rx->ping();
+        PlatformSetting::current()->update([
+            'razorpayx_last_tested_at'   => now(),
+            'razorpayx_last_test_status' => $ping['ok'] ? 'ok' : 'error',
+        ]);
+        return back()->with(
+            $ping['ok'] ? 'status' : 'error',
+            $ping['ok'] ? '✓ RazorpayX reachable (HTTP '.$ping['status'].')' : '❌ '.($ping['error'] ?? 'HTTP '.$ping['status'])
+        );
+    }
+
+    /* ─────────────────────────── INSTAGRAM GRAPH ─────────────────────────── */
+
+    public function updateInstagram(Request $request)
+    {
+        $this->ensureMigrated();
+        $data = $request->validate([
+            'instagram_enabled'    => ['nullable', 'boolean'],
+            'instagram_app_id'     => ['nullable', 'string', 'max:40'],
+            'instagram_app_secret' => ['nullable', 'string', 'max:200'],
+        ]);
+        if (empty($data['instagram_app_secret']) || str_contains((string) $data['instagram_app_secret'], '•')) {
+            unset($data['instagram_app_secret']);
+        }
+        PlatformSetting::current()->update(array_filter($data, fn ($v) => $v !== null) + [
+            'instagram_enabled' => (bool) $request->input('instagram_enabled'),
+        ]);
+        return back()->with('status', 'Instagram Graph API settings saved.');
+    }
+
+    /* ─────────────────────────── SENTRY ─────────────────────────── */
+
+    public function updateSentry(Request $request)
+    {
+        $this->ensureMigrated();
+        $data = $request->validate([
+            'sentry_dsn'           => ['nullable', 'string', 'max:400'],
+            'sentry_environment'   => ['nullable', 'string', 'max:20'],
+            'sentry_traces_sample' => ['nullable', 'numeric', 'min:0', 'max:1'],
+        ]);
+        if (empty($data['sentry_dsn']) || str_contains((string) $data['sentry_dsn'], '•')) {
+            unset($data['sentry_dsn']);
+        }
+        PlatformSetting::current()->update($data);
+        return back()->with('status', 'Sentry monitoring settings saved.');
+    }
+
+    public function testSentry()
+    {
+        try {
+            $eventId = \App\Support\SentryReporter::captureException(
+                new \RuntimeException('CreatorPlex test event — you can ignore this in Sentry.'),
+                ['test' => 'true'],
+                ['triggered_by' => auth()->user()?->email ?? 'admin']
+            );
+            return back()->with($eventId ? 'status' : 'error',
+                $eventId ? '✓ Test event sent. Check Sentry issue stream — event id '.$eventId : '❌ No Sentry DSN saved yet.'
+            );
+        } catch (\Throwable $e) {
+            return back()->with('error', '❌ '.$e->getMessage());
+        }
+    }
+
     /* ─────────────────────────── WHATIFY (WhatsApp) ─────────────────────────── */
 
     public function updateWhatify(Request $request)

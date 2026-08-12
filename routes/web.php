@@ -233,6 +233,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/integrations/vapid',               [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateVapid'])->name('integrations.vapid.update');
     Route::post('/integrations/whatify',              [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateWhatify'])->name('integrations.whatify.update');
     Route::post('/integrations/whatify/test',         [\App\Http\Controllers\Admin\IntegrationsController::class, 'testWhatify'])->name('integrations.whatify.test');
+    Route::post('/integrations/razorpayx',            [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateRazorpayX'])->name('integrations.razorpayx.update');
+    Route::post('/integrations/razorpayx/test',       [\App\Http\Controllers\Admin\IntegrationsController::class, 'testRazorpayX'])->name('integrations.razorpayx.test');
+    Route::post('/integrations/instagram',            [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateInstagram'])->name('integrations.instagram.update');
+    Route::post('/integrations/sentry',                [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateSentry'])->name('integrations.sentry.update');
+    Route::post('/integrations/sentry/test',           [\App\Http\Controllers\Admin\IntegrationsController::class, 'testSentry'])->name('integrations.sentry.test');
     Route::post('/integrations/features',             [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateFeatures'])->name('integrations.features.update');
 
     // Notification templates (per-event email + whatsapp + in-app)
@@ -294,6 +299,14 @@ Route::middleware(['auth'])->prefix('creator')->name('creator.')->group(function
         Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+        // Payout details (RazorpayX-backed UPI / bank)
+        Route::get('/profile/payout',   [\App\Http\Controllers\Creator\PayoutSettingsController::class, 'edit'])->name('payout.edit');
+        Route::patch('/profile/payout', [\App\Http\Controllers\Creator\PayoutSettingsController::class, 'update'])->name('payout.update');
+
+        // Instagram Graph API connect
+        Route::get('/instagram/connect',  [\App\Http\Controllers\Creator\InstagramConnectController::class, 'connect'])->name('instagram.connect');
+        Route::get('/instagram/callback', [\App\Http\Controllers\Creator\InstagramConnectController::class, 'callback'])->name('instagram.callback');
         Route::post('/profile/social', [ProfileController::class, 'attachSocial'])->name('profile.social');
     });
 });

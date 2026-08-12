@@ -67,8 +67,11 @@
         <a href="#mail"      class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📧 Mail</a>
         <a href="#payments"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💳 Payments</a>
         <a href="#analytics" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📊 Analytics &amp; SEO</a>
-        <a href="#push"      class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🔔 Push (VAPID)</a>
-        <a href="#whatify"   class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💬 WhatsApp (Whatify)</a>
+        <a href="#push"       class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🔔 Push (VAPID)</a>
+        <a href="#whatify"    class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💬 WhatsApp (Whatify)</a>
+        <a href="#razorpayx"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💸 Payouts (RazorpayX)</a>
+        <a href="#instagram"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📸 Instagram</a>
+        <a href="#sentry"     class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🛠 Monitoring (Sentry)</a>
         <a href="{{ route('admin.notification-templates.index') }}" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📧 Notification templates →</a>
         <a href="#features"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🚦 Feature flags</a>
     </div>
@@ -325,6 +328,111 @@
             <div class="md:col-span-2 flex justify-end gap-2">
                 <form method="POST" action="{{ route('admin.integrations.whatify.test') }}">@csrf<button class="btn-secondary">Test connection</button></form>
                 <button class="btn-primary">Save WhatsApp settings</button>
+            </div>
+        </form>
+    </section>
+
+    {{-- ═════════════════════════ RAZORPAYX (payouts) ═════════════════════════ --}}
+    <section id="razorpayx" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+                <h2 class="text-xl font-black text-slate-900">💸 RazorpayX — creator payouts</h2>
+                <p class="mt-1 text-xs text-slate-500">Uses your same Razorpay API keys (from the Payments section above) + a RazorpayX virtual account number. Money leaves that VA to creator UPI / bank when brands approve content.</p>
+            </div>
+            @if($settings->razorpayx_last_test_status)
+                <span class="rounded-full px-3 py-1 text-xs font-semibold {{ str_starts_with($settings->razorpayx_last_test_status ?? '', 'ok') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">
+                    {{ str_starts_with($settings->razorpayx_last_test_status ?? '', 'ok') ? '✓ Reachable' : '✗ Error' }} · {{ $settings->razorpayx_last_tested_at?->diffForHumans() }}
+                </span>
+            @endif
+        </div>
+        <form method="POST" action="{{ route('admin.integrations.razorpayx.update') }}" class="mt-5 grid gap-4 md:grid-cols-2">
+            @csrf
+            <label class="md:col-span-2 flex items-start gap-3 rounded-xl border-2 p-4 {{ ($settings->razorpayx_enabled ?? false) ? 'border-emerald-300 bg-emerald-50/40' : 'border-slate-200' }}">
+                <input type="hidden" name="razorpayx_enabled" value="0">
+                <input type="checkbox" name="razorpayx_enabled" value="1" @checked($settings->razorpayx_enabled ?? false) class="mt-1 h-5 w-5 rounded">
+                <div><p class="font-black text-slate-900">Enable creator payouts via RazorpayX</p><p class="mt-0.5 text-xs text-slate-500">When on, ReleasePayout fires an actual UPI/IMPS transfer instead of stopping at 'pending'.</p></div>
+            </label>
+            <div>
+                <label class="label">Virtual account number</label>
+                <input class="input font-mono" name="razorpayx_account_number" value="{{ old('razorpayx_account_number', $settings->razorpayx_account_number) }}" placeholder="7878780080316316">
+                <p class="mt-1 text-xs text-slate-500">Copy from RazorpayX dashboard → Accounts.</p>
+            </div>
+            <div>
+                <label class="label">Default transfer mode</label>
+                <select class="input" name="razorpayx_mode">
+                    @foreach(['IMPS','NEFT','RTGS','UPI'] as $m)
+                        <option value="{{ $m }}" @selected(($settings->razorpayx_mode ?? 'IMPS') === $m)>{{ $m }}</option>
+                    @endforeach
+                </select>
+                <p class="mt-1 text-xs text-slate-500">UPI = instant + free. IMPS = instant + fee. NEFT/RTGS = slower + cheaper for big amounts.</p>
+            </div>
+            <div class="md:col-span-2 flex justify-end gap-2">
+                <form method="POST" action="{{ route('admin.integrations.razorpayx.test') }}" class="inline">@csrf<button class="btn-secondary">Test connection</button></form>
+                <button class="btn-primary">Save RazorpayX settings</button>
+            </div>
+        </form>
+    </section>
+
+    {{-- ═════════════════════════ INSTAGRAM GRAPH ═════════════════════════ --}}
+    <section id="instagram" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
+        <div>
+            <h2 class="text-xl font-black text-slate-900">📸 Instagram Graph API</h2>
+            <p class="mt-1 text-xs text-slate-500">When on, creators can connect their IG Business account and we auto-sync verified follower count + real engagement rate every 24h (no more self-reported numbers).</p>
+        </div>
+        <form method="POST" action="{{ route('admin.integrations.instagram.update') }}" class="mt-5 grid gap-4 md:grid-cols-2">
+            @csrf
+            <label class="md:col-span-2 flex items-start gap-3 rounded-xl border-2 p-4 {{ ($settings->instagram_enabled ?? false) ? 'border-emerald-300 bg-emerald-50/40' : 'border-slate-200' }}">
+                <input type="hidden" name="instagram_enabled" value="0">
+                <input type="checkbox" name="instagram_enabled" value="1" @checked($settings->instagram_enabled ?? false) class="mt-1 h-5 w-5 rounded">
+                <div><p class="font-black text-slate-900">Enable Instagram Graph integration</p><p class="mt-0.5 text-xs text-slate-500">Requires a Meta Business App with instagram_basic + pages_read_engagement + pages_show_list permissions.</p></div>
+            </label>
+            <div>
+                <label class="label">App ID</label>
+                <input class="input font-mono" name="instagram_app_id" value="{{ old('instagram_app_id', $settings->instagram_app_id) }}" placeholder="1234567890">
+            </div>
+            <div>
+                <label class="label">App Secret</label>
+                <input class="input font-mono" type="password" name="instagram_app_secret" autocomplete="off" placeholder="{{ $settings->instagram_app_secret ? '••••••••' : '' }}">
+                <p class="mt-1 text-xs text-slate-500">Encrypted at rest. Leave blank to keep existing.</p>
+            </div>
+            <div class="md:col-span-2 rounded-xl border border-slate-100 bg-slate-50 p-4 text-xs text-slate-600">
+                <p class="font-bold text-slate-800">Setup steps</p>
+                <ol class="mt-1 list-decimal space-y-1 pl-5">
+                    <li>Create a <a href="https://developers.facebook.com/apps" target="_blank" class="text-violet-700 hover:underline">Meta App</a> → Business type</li>
+                    <li>Add products: Instagram Graph API + Facebook Login for Business</li>
+                    <li>OAuth redirect URI: <code class="rounded bg-white px-1.5 py-0.5">{{ url('/creator/instagram/callback') }}</code></li>
+                    <li>Paste App ID + Secret above → creators see a "Connect Instagram" button on their profile</li>
+                </ol>
+            </div>
+            <div class="md:col-span-2 flex justify-end"><button class="btn-primary">Save Instagram settings</button></div>
+        </form>
+    </section>
+
+    {{-- ═════════════════════════ SENTRY MONITORING ═════════════════════════ --}}
+    <section id="sentry" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
+        <div>
+            <h2 class="text-xl font-black text-slate-900">🛠 Production monitoring (Sentry)</h2>
+            <p class="mt-1 text-xs text-slate-500">Paste a Sentry DSN — every unhandled exception in every controller / job / command auto-reports with a stacktrace. Zero-dependency (no composer package needed).</p>
+        </div>
+        <form method="POST" action="{{ route('admin.integrations.sentry.update') }}" class="mt-5 grid gap-4 md:grid-cols-2">
+            @csrf
+            <div class="md:col-span-2">
+                <label class="label">Sentry DSN</label>
+                <input class="input font-mono" type="password" name="sentry_dsn" autocomplete="off" placeholder="{{ $settings->sentry_dsn ? '••••••••' : 'https://xxx@o0.ingest.sentry.io/00000' }}">
+                <p class="mt-1 text-xs text-slate-500">Copy from Sentry → Project Settings → Client Keys. Encrypted at rest.</p>
+            </div>
+            <div>
+                <label class="label">Environment</label>
+                <input class="input" name="sentry_environment" value="{{ old('sentry_environment', $settings->sentry_environment ?: 'production') }}" placeholder="production / staging / dev">
+            </div>
+            <div>
+                <label class="label">Traces sample rate (0.0 – 1.0)</label>
+                <input class="input" type="number" step="0.05" min="0" max="1" name="sentry_traces_sample" value="{{ old('sentry_traces_sample', $settings->sentry_traces_sample ?: 0.2) }}">
+                <p class="mt-1 text-xs text-slate-500">0.2 = 20% of transactions traced.</p>
+            </div>
+            <div class="md:col-span-2 flex justify-end gap-2">
+                <form method="POST" action="{{ route('admin.integrations.sentry.test') }}" class="inline">@csrf<button class="btn-secondary">Send test event</button></form>
+                <button class="btn-primary">Save Sentry settings</button>
             </div>
         </form>
     </section>

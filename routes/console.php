@@ -30,6 +30,12 @@ Schedule::command('content:review --limit=25')
     ->name('content-auto-review')
     ->withoutOverlapping();
 
+// Daily Instagram profile refresh (only runs if instagram_enabled is on)
+Schedule::command('instagram:sync --limit=200')
+    ->dailyAt('05:00')
+    ->name('instagram-daily-sync')
+    ->withoutOverlapping();
+
 // Hourly inventory sync.
 Schedule::call(function () {
     Channel::where('status', 'active')

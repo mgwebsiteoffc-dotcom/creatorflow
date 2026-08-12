@@ -56,6 +56,25 @@ class RazorpayWebhookController extends Controller
             'amount'     => $payment['amount'] ?? null,
         ]);
 
+        // ─── RazorpayX payout status updates ───
+        $payoutEntity = data_get($data, 'payload.payout.entity', []);
+        if (str_starts_with($event, 'payout.') && ! empty($payoutEntity['id'])) {
+            $localPayout = \App\Models\Payout::where('external_id', $payoutEntity['id'])->first();
+            if ($localPayout) {
+                $localPayout->update([
+                    'external_status' => $payoutEntity['status'] ?? null,
+                    'status'          => match ($payoutEntity['status'] ?? '') {
+                        'processed'         => 'paid',
+                        'processing','queued','pending' => 'pending',
+                        'reversed','rejected','failed','cancelled' => 'failed',
+                        default             => $localPayout->status,
+                    },
+                    'failure_reason'  => $payoutEntity['failure_reason'] ?? null,
+                    'paid_at'         => ($payoutEntity['status'] ?? '') === 'processed' ? now() : $localPayout->paid_at,
+                ]);
+            }
+        }
+
         // Send receipt email + WhatsApp to the brand on successful capture.
         if (in_array($event, ['payment.captured', 'subscription.charged'], true) && ! empty($workspaceId)) {
             $ws = \App\Models\Workspace::find($workspaceId);

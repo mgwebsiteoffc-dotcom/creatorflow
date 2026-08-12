@@ -31,6 +31,17 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        // Global Sentry reporter — sends every unhandled exception if a DSN
+        // is set in Admin → Integrations → Monitoring.
+        $exceptions->reportable(function (\Throwable $e) {
+            try {
+                \App\Support\SentryReporter::captureException($e, [
+                    'url' => request()?->fullUrl(),
+                    'ip'  => request()?->ip(),
+                ]);
+            } catch (\Throwable) {}
+        });
+
         $exceptions->render(function (\Throwable $e, Request $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
                 return response()->json([

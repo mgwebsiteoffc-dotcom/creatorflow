@@ -6,6 +6,7 @@ use App\View\Composers\HomepageComposer;
 use App\View\Composers\NotificationComposer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,5 +37,14 @@ class AppServiceProvider extends ServiceProvider
         // Use Tailwind pagination markup + our own view for a branded look.
         Paginator::defaultView('pagination.creatorplex');
         Paginator::defaultSimpleView('pagination.creatorplex-simple');
+
+        // Blade sugar: @money(cents) and @moneyCompact(cents) — always resolves
+        // the current workspace currency, defaults to INR when none is set.
+        Blade::directive('money', function ($expr) {
+            return "<?php echo \\App\\Support\\Money::fmt($expr); ?>";
+        });
+        Blade::directive('moneyCompact', function ($expr) {
+            return "<?php echo \\App\\Support\\Money::fmtCompact($expr); ?>";
+        });
     }
 }
