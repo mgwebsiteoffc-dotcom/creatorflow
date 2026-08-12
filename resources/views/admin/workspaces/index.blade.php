@@ -6,13 +6,13 @@
         </div>
     </div>
 
-    <form method="GET" class="mt-6 flex flex-wrap gap-2">
-        <input class="input max-w-xs" name="q" value="{{ request('q') }}" placeholder="Search workspaces…">
-        <select class="input max-w-[160px]" name="status">
+    <form method="GET" class="mt-6 grid gap-2 sm:grid-cols-[1fr_180px_160px_auto] sm:items-center">
+        <input class="input" name="q" value="{{ request('q') }}" placeholder="Search workspaces…">
+        <select class="input" name="status">
             <option value="">All</option>
             <option value="suspended" @selected(request('status')==='suspended')>Suspended</option>
         </select>
-        <select class="input max-w-[120px]" name="per_page" onchange="this.form.submit()">
+        <select class="input" name="per_page" onchange="this.form.submit()">
             @foreach([25, 50, 100, 200] as $n)
                 <option value="{{ $n }}" @selected((int) request('per_page', 25) === $n)>{{ $n }} / page</option>
             @endforeach

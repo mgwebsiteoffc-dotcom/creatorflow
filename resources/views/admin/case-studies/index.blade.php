@@ -8,8 +8,8 @@
         <a href="{{ route('admin.case-studies.create') }}" class="btn-gradient !py-2 text-sm">+ New case study</a>
     </div>
 
-    <form method="GET" class="mt-6 flex flex-wrap gap-2">
-        <input class="input max-w-xs" name="q" value="{{ request('q') }}" placeholder="Search brand or headline…">
+    <form method="GET" class="mt-6 grid gap-2 sm:grid-cols-[1fr_auto] sm:items-center">
+        <input class="input" name="q" value="{{ request('q') }}" placeholder="Search brand or headline…">
         <button class="btn-secondary">Filter</button>
     </form>
 

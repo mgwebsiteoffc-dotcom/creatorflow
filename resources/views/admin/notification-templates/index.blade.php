@@ -3,7 +3,7 @@
         <div>
             <p class="text-xs font-bold uppercase tracking-widest text-violet-600">Superadmin · Messaging</p>
             <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">📧 Notification templates</h1>
-            <p class="mt-1 text-sm text-slate-500">Every process + transaction fires a template. Toggle email / WhatsApp / in-app per event. Placeholders like <code class="rounded bg-slate-100 px-1.5">{{ '{{creator_name}}' }}</code> get interpolated at send-time.</p>
+            <p class="mt-1 text-sm text-slate-500">Every process + transaction fires a template. Toggle email / WhatsApp / in-app per event. Placeholders like <code class="rounded bg-slate-100 px-1.5">@{{creator_name}}</code> get interpolated at send-time.</p>
         </div>
     </div>
 

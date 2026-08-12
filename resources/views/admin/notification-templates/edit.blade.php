@@ -25,7 +25,7 @@
                 <div class="mt-4 grid gap-3">
                     <div><label class="label">Subject</label><input class="input" name="email_subject" value="{{ old('email_subject', $tpl->email_subject) }}"></div>
                     <div>
-                        <label class="label">Body <span class="text-xs font-normal text-slate-400">— plain text, supports {{ '{{placeholders}}' }}</span></label>
+                        <label class="label">Body <span class="text-xs font-normal text-slate-400">— plain text, supports @{{placeholders}}</span></label>
                         <textarea class="input font-mono min-h-64" name="email_body">{{ old('email_body', $tpl->email_body) }}</textarea>
                     </div>
                 </div>
@@ -48,8 +48,8 @@
                     </div>
                     <div>
                         <label class="label">Body placeholders <span class="text-xs font-normal text-slate-400">— comma separated, in template order</span></label>
-                        <input class="input font-mono" name="whatsapp_body_params" value="{{ collect((array) $tpl->whatsapp_body_params)->implode(', ') }}" placeholder="{{'{{creator_name}}, {{campaign_title}}, {{brand_name}}'}}">
-                        <p class="mt-1 text-xs text-slate-500">Each param maps to <code>{{'{{1}} {{2}} {{3}}'}}</code> in Whatify's approved template.</p>
+                        <input class="input font-mono" name="whatsapp_body_params" value="{{ collect((array) $tpl->whatsapp_body_params)->implode(', ') }}" placeholder="@{{creator_name}}, @{{campaign_title}}, @{{brand_name}}">
+                        <p class="mt-1 text-xs text-slate-500">Each param maps to <code>@{{1}} @{{2}} @{{3}}</code> in Whatify's approved template.</p>
                     </div>
                 </div>
             </section>
@@ -82,7 +82,7 @@
                 <p class="mt-1">CreatorPlex passes these to the interpolator when this event fires:</p>
                 <div class="mt-2 flex flex-wrap gap-1 font-mono text-[11px]">
                     @foreach(['platform','app_url','link','creator_name','brand_name','campaign_title','product_title','tracking_number','tracking_company','amount','followers','engagement_rate','comment','message','support_email'] as $p)
-                        <span class="rounded bg-white px-1.5 py-0.5">{{ '{{'.$p.'}}' }}</span>
+                        <span class="rounded bg-white px-1.5 py-0.5">&#123;&#123;{{ $p }}&#125;&#125;</span>
                     @endforeach
                 </div>
             </section>
