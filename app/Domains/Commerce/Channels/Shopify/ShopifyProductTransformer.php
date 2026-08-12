@@ -25,7 +25,7 @@ class ShopifyProductTransformer
             'title' => $v['title'] ?? null,
             'price_cents' => $this->toCents($v['price'] ?? 0),
             'compare_at_cents' => isset($v['compare_at_price']) ? $this->toCents($v['compare_at_price']) : null,
-            'currency' => $payload['currency'] ?? 'USD',
+            'currency' => $payload['currency'] ?? 'INR',
             'inventory_qty' => (int) ($v['inventory_quantity'] ?? 0),
             'inventory_policy' => $v['inventory_policy'] ?? 'continue',
             'barcode' => $v['barcode'] ?? null,

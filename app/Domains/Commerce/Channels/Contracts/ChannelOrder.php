@@ -12,12 +12,12 @@ class ChannelOrder
         public string $orderNumber,
         public string $status,
         public int $totalCents,
-        public string $currency = 'USD',
+        public string $currency = 'INR',
         public ?string $trackingNumber = null,
         public array $raw = [],
     ) {}
 
-    public static function fake(int $totalCents = 0, string $currency = 'USD'): self
+    public static function fake(int $totalCents = 0, string $currency = 'INR'): self
     {
         $id = 'fake_'.bin2hex(random_bytes(6));
 

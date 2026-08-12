@@ -23,14 +23,16 @@ class NotificationTemplateController extends Controller
         foreach (NotificationTemplate::catalog() as $key => [$audience, $label, $desc, $subject, $body, $wa]) {
             NotificationTemplate::firstOrCreate(
                 ['event_key' => $key],
-                compact('audience', 'label', 'description') + [
-                    'description' => $desc,
-                    'email_enabled' => true,
-                    'email_subject' => $subject,
-                    'email_body' => $body,
-                    'whatsapp_enabled' => false,
+                [
+                    'audience'               => $audience,
+                    'label'                  => $label,
+                    'description'            => $desc,
+                    'email_enabled'          => true,
+                    'email_subject'          => $subject,
+                    'email_body'             => $body,
+                    'whatsapp_enabled'       => false,
                     'whatsapp_template_name' => $wa,
-                    'inapp_enabled' => true,
+                    'inapp_enabled'          => true,
                 ]
             );
         }

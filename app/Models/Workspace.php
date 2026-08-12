@@ -36,6 +36,8 @@ class Workspace extends Model
      * MissingAttributeException when a query selects a partial set.
      */
     protected $attributes = [
+        'currency'           => 'INR',
+        'country'            => 'IN',
         'legal_name'         => null,
         'contact_email'      => null,
         'contact_phone'      => null,
@@ -111,12 +113,12 @@ class Workspace extends Model
 
     public function currencySymbol(): string
     {
-        return static::symbolFor($this->currency ?: 'USD');
+        return static::symbolFor($this->currency ?: 'INR');
     }
 
     public function formatMoney(int $cents, ?string $currency = null): string
     {
-        $currency = strtoupper($currency ?: ($this->currency ?: 'USD'));
+        $currency = strtoupper($currency ?: ($this->currency ?: 'INR'));
         $amount = $cents / 100;
         $formatted = $currency === 'INR'
             ? number_format($amount, 2, '.', ',')
