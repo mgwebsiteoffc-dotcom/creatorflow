@@ -120,13 +120,13 @@ class PlatformSetting extends Model
     {
         $row = static::current();
         return array_merge([
-            'contract_esign'      => false, // #9 e-signature integration
-            'referrals'           => false, // #12 refer-a-brand / affiliate program
-            'ab_testing'          => false, // #11 landing-page A/B
-            'push_notifications'  => false, // #5 PWA push
-            'fraud_scan'          => false, // #8 scheduled AI fraud scan
-            'auto_content_review' => false, // #13 scheduled AI content review
-            'agency_mode'         => false, // #6 agency accounts UI
+            'contract_esign'      => true,  // #9 e-signature (built-in — safe to enable)
+            'referrals'           => true,  // #12 refer-a-brand / affiliate program
+            'ab_testing'          => false, // #11 landing-page A/B (needs opt-in — creates traffic split)
+            'push_notifications'  => false, // #5 PWA push (needs VAPID keys)
+            'fraud_scan'          => false, // #8 scheduled AI fraud scan (costs AI credits)
+            'auto_content_review' => false, // #13 scheduled AI content review (costs AI credits)
+            'agency_mode'         => true,  // #6 agency accounts UI
             'public_creator_pages'=> true,  // #10 /creator/{slug} public portfolio pages
             'case_study_cms'      => true,  // #7 admin-managed case studies
         ], (array) ($row->features_json ?? []));

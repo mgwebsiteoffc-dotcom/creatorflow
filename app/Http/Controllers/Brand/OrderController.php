@@ -153,10 +153,11 @@ class OrderController extends Controller
         // Best-effort: push tracking to Shopify if this order originated there.
         if ($order->channel && $order->channel->type === 'shopify' && ! empty($order->external_id) && ! empty($data['tracking_number'])) {
             try {
+                $apiVersion = data_get($order->channel->workspace->settings, 'api_version', '2025-01');
                 app(\App\Domains\Commerce\Channels\ChannelRegistry::class)
                     ->forModel($order->channel)
                     ->client($order->workspace)
-                    ->post("/admin/api/{$order->channel->workspace->settings['api_version'] ?? '2025-01'}/orders/{$order->external_id}/fulfillments.json", [
+                    ->post("/admin/api/{$apiVersion}/orders/{$order->external_id}/fulfillments.json", [
                         'fulfillment' => [
                             'tracking_number'  => $data['tracking_number'],
                             'tracking_company' => $data['tracking_company'] ?? null,

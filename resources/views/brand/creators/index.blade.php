@@ -33,22 +33,52 @@
             </div>
         </div>
 
-        {{-- City picker (multi) --}}
+        {{-- City picker (multi-select dropdown) --}}
         <div data-panel="city" class="{{ $mode === 'city' ? '' : 'hidden' }}">
-            <div class="mb-2 flex items-center justify-between">
-                <label class="label !mb-0">Cities <span class="ml-1 text-xs font-normal text-slate-400">— pick as many as you like</span></label>
-                <div class="flex gap-2 text-xs">
-                    <button type="button" data-multi-toggle="cities" data-action="all"  class="text-violet-600 hover:underline">Select all</button>
-                    <button type="button" data-multi-toggle="cities" data-action="none" class="text-slate-500 hover:underline">Clear</button>
+            <label class="label">Cities <span class="ml-1 text-xs font-normal text-slate-400">— search &amp; pick as many as you like</span></label>
+
+            <div class="relative" data-ms-wrap>
+                {{-- Trigger button + selected pills --}}
+                <button type="button" data-ms-trigger
+                        class="input flex min-h-[46px] w-full flex-wrap items-center gap-1.5 text-left">
+                    <span data-ms-empty class="text-slate-400 {{ count($cities) ? 'hidden' : '' }}">📍 Pick one or more cities…</span>
+                    @foreach($cities as $slug)
+                        @if(isset($cityOptions[$slug]))
+                            <span data-ms-pill="{{ $slug }}" class="inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-xs font-semibold text-violet-800">
+                                📍 {{ $cityOptions[$slug] }}
+                                <button type="button" data-ms-remove="{{ $slug }}" class="text-violet-500 hover:text-violet-900" aria-label="Remove">×</button>
+                            </span>
+                        @endif
+                    @endforeach
+                    <svg class="ml-auto h-4 w-4 shrink-0 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+
+                {{-- Panel (dropdown) --}}
+                <div data-ms-panel class="absolute left-0 right-0 top-full z-40 mt-2 hidden max-h-80 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl">
+                    <div class="border-b border-slate-100 p-2">
+                        <input data-ms-search type="search" class="input !py-2 text-sm" placeholder="Search city…" autocomplete="off">
+                    </div>
+                    <div class="flex items-center justify-between border-b border-slate-100 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-500">
+                        <span data-ms-count>{{ count($cities) }} selected</span>
+                        <div class="flex gap-2">
+                            <button type="button" data-ms-all class="text-violet-600 hover:underline">Select all</button>
+                            <button type="button" data-ms-clear class="text-slate-500 hover:underline">Clear</button>
+                        </div>
+                    </div>
+                    <div class="max-h-60 overflow-y-auto p-1" data-ms-list>
+                        @foreach($cityOptions as $slug => $label)
+                            <label data-ms-item="{{ strtolower($label) }}"
+                                   class="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-violet-50">
+                                <input type="checkbox" name="cities[]" value="{{ $slug }}"
+                                       data-ms-value="{{ $slug }}"
+                                       data-ms-label="{{ $label }}"
+                                       class="h-4 w-4 rounded border-slate-300 text-violet-600 focus:ring-violet-400"
+                                       @checked(in_array($slug, $cities))>
+                                <span>📍 {{ $label }}</span>
+                            </label>
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-            <div class="flex flex-wrap gap-2" data-multi-group="cities">
-                @foreach($cityOptions as $slug => $label)
-                    <label class="chip cursor-pointer">
-                        <input type="checkbox" name="cities[]" value="{{ $slug }}" class="peer sr-only" @checked(in_array($slug, $cities))>
-                        <span class="chip-body">📍 {{ $label }}</span>
-                    </label>
-                @endforeach
             </div>
         </div>
 
@@ -204,6 +234,76 @@
                 if (!group) return;
                 const checked = btn.dataset.action === 'all';
                 group.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = checked);
+            });
+        });
+
+        // Searchable multi-select dropdown (used for the cities picker).
+        document.querySelectorAll('[data-ms-wrap]').forEach(wrap => {
+            const trigger  = wrap.querySelector('[data-ms-trigger]');
+            const panel    = wrap.querySelector('[data-ms-panel]');
+            const search   = wrap.querySelector('[data-ms-search]');
+            const list     = wrap.querySelector('[data-ms-list]');
+            const empty    = wrap.querySelector('[data-ms-empty]');
+            const countEl  = wrap.querySelector('[data-ms-count]');
+            const items    = list.querySelectorAll('[data-ms-item]');
+            const checks   = list.querySelectorAll('input[type="checkbox"]');
+
+            const renderPills = () => {
+                // Remove pills for unchecked options
+                wrap.querySelectorAll('[data-ms-pill]').forEach(p => {
+                    const cb = list.querySelector(`input[data-ms-value="${p.dataset.msPill}"]`);
+                    if (!cb || !cb.checked) p.remove();
+                });
+                // Add pills for newly checked options
+                checks.forEach(cb => {
+                    if (!cb.checked) return;
+                    if (wrap.querySelector(`[data-ms-pill="${cb.dataset.msValue}"]`)) return;
+                    const pill = document.createElement('span');
+                    pill.dataset.msPill = cb.dataset.msValue;
+                    pill.className = 'inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-xs font-semibold text-violet-800';
+                    pill.innerHTML = `📍 ${cb.dataset.msLabel} <button type="button" data-ms-remove="${cb.dataset.msValue}" class="text-violet-500 hover:text-violet-900" aria-label="Remove">×</button>`;
+                    trigger.insertBefore(pill, empty);
+                });
+                const count = Array.from(checks).filter(c => c.checked).length;
+                if (empty) empty.classList.toggle('hidden', count > 0);
+                if (countEl) countEl.textContent = `${count} selected`;
+            };
+
+            trigger.addEventListener('click', (e) => {
+                if (e.target.closest('[data-ms-remove]')) return;
+                panel.classList.toggle('hidden');
+                if (!panel.classList.contains('hidden')) setTimeout(() => search?.focus(), 30);
+            });
+            document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) panel.classList.add('hidden'); });
+
+            wrap.addEventListener('click', (e) => {
+                const rm = e.target.closest('[data-ms-remove]');
+                if (!rm) return;
+                e.stopPropagation();
+                const cb = list.querySelector(`input[data-ms-value="${rm.dataset.msRemove}"]`);
+                if (cb) { cb.checked = false; renderPills(); }
+            });
+
+            checks.forEach(cb => cb.addEventListener('change', renderPills));
+
+            search?.addEventListener('input', () => {
+                const q = search.value.trim().toLowerCase();
+                items.forEach(item => {
+                    item.style.display = item.dataset.msItem.includes(q) ? '' : 'none';
+                });
+            });
+
+            wrap.querySelector('[data-ms-all]')?.addEventListener('click', () => {
+                items.forEach(item => {
+                    if (item.style.display === 'none') return;
+                    const cb = item.querySelector('input');
+                    if (cb) cb.checked = true;
+                });
+                renderPills();
+            });
+            wrap.querySelector('[data-ms-clear]')?.addEventListener('click', () => {
+                checks.forEach(cb => cb.checked = false);
+                renderPills();
             });
         });
     </script>

@@ -1,14 +1,21 @@
 @php
+    // Core 5 shown as top-nav pills; everything else in a "More" dropdown so the
+    // topbar never wraps to a second line no matter the viewport width.
     $brandLinks = [
-        ['route' => 'brand.dashboard', 'label' => 'Home'],
-        ['route' => 'brand.campaigns.index', 'label' => 'Campaigns'],
-        ['route' => 'brand.applications.index', 'label' => 'Applications'],
-        ['route' => 'brand.products.index', 'label' => 'Products'],
-        ['route' => 'brand.creators.index', 'label' => 'Creators'],
-        ['route' => 'brand.orders.index', 'label' => 'Orders'],
-        ['route' => 'brand.channels.index', 'label' => 'Channels'],
-        ['route' => 'brand.analytics', 'label' => 'Analytics'],
-        ['route' => 'brand.billing.index', 'label' => 'Billing'],
+        ['route' => 'brand.dashboard',          'label' => 'Home'],
+        ['route' => 'brand.campaigns.index',    'label' => 'Campaigns'],
+        ['route' => 'brand.creators.index',     'label' => 'Creators'],
+        ['route' => 'brand.orders.index',       'label' => 'Orders'],
+        ['route' => 'brand.analytics',          'label' => 'Analytics'],
+    ];
+    $brandMoreLinks = [
+        ['route' => 'brand.applications.index', 'label' => 'Applications', 'icon' => '📥'],
+        ['route' => 'brand.products.index',     'label' => 'Products',     'icon' => '📦'],
+        ['route' => 'brand.channels.index',     'label' => 'Channels',     'icon' => '🛍'],
+        ['route' => 'brand.billing.index',      'label' => 'Billing',      'icon' => '💳'],
+        ['route' => 'brand.settings.profile',   'label' => 'Settings',     'icon' => '⚙️'],
+        ['route' => 'brand.settings.team',      'label' => 'Team',         'icon' => '👥'],
+        ['route' => 'notifications.index',      'label' => 'Notifications','icon' => '🔔'],
     ];
     $creatorLinks = [
         ['route' => 'creator.dashboard', 'label' => 'Home'],
@@ -33,14 +40,44 @@
             <span class="badge-violet {{ $panel === 'creator' ? '!bg-rose-100 !text-rose-700' : '' }}">{{ ucfirst($panel) }}</span>
         </a>
 
-        <nav class="hidden items-center gap-1 md:flex">
+        <nav class="hidden min-w-0 flex-1 items-center gap-1 md:flex md:justify-center">
             @foreach($links as $link)
                 <a href="{{ route($link['route']) }}"
-                   class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100
+                   class="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100
                    {{ request()->routeIs(str_replace('index','*', $link['route'])) ? 'bg-slate-100 text-slate-900' : '' }}">
                     {{ $link['label'] }}
                 </a>
             @endforeach
+
+            @if($panel !== 'creator' && ! empty($brandMoreLinks ?? []))
+                {{-- "More" dropdown for the overflow items so the top row never wraps --}}
+                <div class="relative" data-more-wrap>
+                    <button type="button" data-more-toggle
+                            class="whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 flex items-center gap-1">
+                        More
+                        <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 9l6 6 6-6"/></svg>
+                    </button>
+                    <div data-more-panel class="absolute right-0 top-full z-40 mt-2 hidden w-56 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl">
+                        @foreach($brandMoreLinks as $link)
+                            <a href="{{ route($link['route']) }}"
+                               class="flex items-center gap-2 px-3 py-2 text-sm text-slate-700 hover:bg-violet-50 hover:text-violet-900
+                               {{ request()->routeIs(str_replace('index','*', $link['route'])) ? 'bg-violet-50 text-violet-800 font-semibold' : '' }}">
+                                <span class="text-base">{{ $link['icon'] }}</span> {{ $link['label'] }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+                <script>
+                    (function(){
+                        const wrap = document.querySelector('[data-more-wrap]');
+                        if (!wrap) return;
+                        const btn  = wrap.querySelector('[data-more-toggle]');
+                        const panel= wrap.querySelector('[data-more-panel]');
+                        btn.addEventListener('click', e => { e.stopPropagation(); panel.classList.toggle('hidden'); });
+                        document.addEventListener('click', e => { if (!wrap.contains(e.target)) panel.classList.add('hidden'); });
+                    })();
+                </script>
+            @endif
         </nav>
 
         <div class="flex items-center gap-2">
