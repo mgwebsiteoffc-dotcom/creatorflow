@@ -108,7 +108,8 @@ Route::prefix('shopify')->name('shopify.')->group(function () {
 });
 
 // Webhooks (no CSRF, HMAC verified in controller).
-Route::post('/webhooks/shopify', ShopifyWebhookController::class)->name('webhooks.shopify');
+Route::post('/webhooks/shopify',   ShopifyWebhookController::class)->name('webhooks.shopify');
+Route::post('/webhooks/razorpay', \App\Http\Controllers\RazorpayWebhookController::class)->name('webhooks.razorpay');
 
 /*
 |--------------------------------------------------------------------------
@@ -171,6 +172,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/ai',       [\App\Http\Controllers\Admin\AiSettingsController::class, 'edit'])->name('ai.edit');
     Route::post('/ai',      [\App\Http\Controllers\Admin\AiSettingsController::class, 'update'])->name('ai.update');
     Route::post('/ai/test', [\App\Http\Controllers\Admin\AiSettingsController::class, 'test'])->name('ai.test');
+
+    // Integrations — mail, payments (Razorpay), analytics/SEO scripts, feature flags.
+    Route::get('/integrations',                     [\App\Http\Controllers\Admin\IntegrationsController::class, 'edit'])->name('integrations.edit');
+    Route::post('/integrations/mail',               [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateMail'])->name('integrations.mail.update');
+    Route::post('/integrations/mail/test',          [\App\Http\Controllers\Admin\IntegrationsController::class, 'testMail'])->name('integrations.mail.test');
+    Route::post('/integrations/analytics',          [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateAnalytics'])->name('integrations.analytics.update');
+    Route::post('/integrations/razorpay',           [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateRazorpay'])->name('integrations.razorpay.update');
+    Route::post('/integrations/razorpay/test',      [\App\Http\Controllers\Admin\IntegrationsController::class, 'testRazorpay'])->name('integrations.razorpay.test');
+    Route::post('/integrations/features',           [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateFeatures'])->name('integrations.features.update');
 
     Route::get('/seo',       AdminSeoController::class)->name('seo');
 

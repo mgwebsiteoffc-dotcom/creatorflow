@@ -46,6 +46,7 @@
     <meta name="twitter:title" content="{{ $title ?: 'CreatorPlex' }}">
     <meta name="twitter:description" content="{{ $descText }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
 <body class="min-h-screen {{ $panelClass }} text-slate-900 antialiased">
 
@@ -84,7 +85,7 @@
         @include('partials.topbar', compact('panel', 'workspace', 'creator'))
     @endif
 
-    <div class="{{ $isGuest ? 'w-full overflow-x-hidden' : 'mx-auto w-full max-w-6xl overflow-x-hidden px-4 pb-28 pt-6 md:px-6 md:pb-16 md:pt-10 lg:px-8' }}">
+    <div class="{{ $isGuest ? 'w-full' : 'mx-auto w-full max-w-6xl px-4 pb-28 pt-6 md:px-6 md:pb-16 md:pt-10 lg:px-8' }}" style="overflow-x: clip;">
         @if(session('status'))
             <x-flash type="success">{{ session('status') }}</x-flash>
         @endif
@@ -113,5 +114,6 @@
             window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
         }
     </script>
+    @include('partials.analytics-body')
 </body>
 </html>

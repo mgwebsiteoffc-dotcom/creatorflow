@@ -10,8 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>{{ $title ? $title.' · ' : '' }}Admin · CreatorPlex</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('partials.analytics-head')
 </head>
-<body class="min-h-screen overflow-x-hidden bg-slate-100 text-slate-900">
+<body class="min-h-screen bg-slate-100 text-slate-900" style="overflow-x: clip;">
 
 <div class="flex min-h-screen">
     {{-- Sidebar --}}
@@ -36,8 +37,9 @@
                 ['route' => 'admin.homepage',       'label' => 'Homepage',    'icon' => '🏠'],
                 ['route' => 'admin.blog.index',     'label' => 'Blog',        'icon' => '📝'],
                 ['route' => 'admin.seo',            'label' => 'SEO',         'icon' => '🔍'],
-                ['route' => 'admin.ai.edit',        'label' => 'AI keys',     'icon' => '🤖'],
-                ['route' => 'admin.settings',       'label' => 'Settings',    'icon' => '⚙️'],
+                ['route' => 'admin.ai.edit',           'label' => 'AI keys',      'icon' => '🤖'],
+                ['route' => 'admin.integrations.edit', 'label' => 'Integrations', 'icon' => '🔌'],
+                ['route' => 'admin.settings',          'label' => 'Settings',     'icon' => '⚙️'],
             ];
         @endphp
         @foreach($items as $it)

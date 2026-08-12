@@ -145,6 +145,9 @@
                 <a href="{{ route('admin.ai.edit') }}" class="flex items-center justify-between rounded-xl bg-gradient-to-r from-violet-500/20 to-pink-500/20 px-4 py-3 text-sm font-semibold transition hover:from-violet-500/30 hover:to-pink-500/30">
                     <span>🤖 AI provider &amp; key</span><span class="text-slate-400">→</span>
                 </a>
+                <a href="{{ route('admin.integrations.edit') }}" class="flex items-center justify-between rounded-xl bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 px-4 py-3 text-sm font-semibold transition hover:from-emerald-500/30 hover:to-cyan-500/30">
+                    <span>🔌 Mail · Razorpay · Analytics</span><span class="text-slate-400">→</span>
+                </a>
                 <a href="{{ route('admin.seo') }}" class="flex items-center justify-between rounded-xl bg-white/5 px-4 py-3 text-sm font-semibold transition hover:bg-white/10">
                     <span>🔍 SEO dashboard</span><span class="text-slate-400">→</span>
                 </a>
