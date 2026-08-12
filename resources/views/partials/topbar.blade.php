@@ -5,6 +5,8 @@
         ['route' => 'brand.applications.index', 'label' => 'Applications'],
         ['route' => 'brand.products.index', 'label' => 'Products'],
         ['route' => 'brand.creators.index', 'label' => 'Creators'],
+        ['route' => 'brand.orders.index', 'label' => 'Orders'],
+        ['route' => 'brand.channels.index', 'label' => 'Channels'],
         ['route' => 'brand.analytics', 'label' => 'Analytics'],
         ['route' => 'brand.billing.index', 'label' => 'Billing'],
     ];

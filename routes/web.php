@@ -282,6 +282,18 @@ Route::middleware(['auth', 'workspace'])->prefix('brand')->name('brand.')->group
     Route::post('/content/{submission}/approve', [BrandAssignmentController::class, 'approveContent'])->name('content.approve');
     Route::post('/content/{submission}/changes', [BrandAssignmentController::class, 'requestChanges'])->name('content.changes');
 
+    // Commerce channels (Shopify + manual) — sync + disconnect
+    Route::get('/channels',                        [\App\Http\Controllers\Brand\ChannelController::class, 'index'])->name('channels.index');
+    Route::post('/channels/{channel}/sync',        [\App\Http\Controllers\Brand\ChannelController::class, 'sync'])->name('channels.sync');
+    Route::post('/channels/{channel}/disconnect',  [\App\Http\Controllers\Brand\ChannelController::class, 'disconnect'])->name('channels.disconnect');
+
+    // Barter / seeding order fulfillment
+    Route::get('/orders',                                           [\App\Http\Controllers\Brand\OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}',                                   [\App\Http\Controllers\Brand\OrderController::class, 'show'])->name('orders.show');
+    Route::patch('/orders/{order}/shipping',                        [\App\Http\Controllers\Brand\OrderController::class, 'updateShipping'])->name('orders.updateShipping');
+    Route::post('/orders/{order}/cancel',                           [\App\Http\Controllers\Brand\OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::post('/assignments/{assignment}/create-order',           [\App\Http\Controllers\Brand\OrderController::class, 'createFromAssignment'])->name('orders.createFromAssignment');
+
     Route::get('/analytics', [AnalyticsController::class, 'index'])->name('analytics');
 });
 

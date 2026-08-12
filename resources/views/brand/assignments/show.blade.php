@@ -16,14 +16,48 @@
     <div class="mt-5 grid gap-5 lg:grid-cols-3">
         <div class="space-y-5 lg:col-span-2">
             <div class="card p-5">
-                <h2 class="font-semibold">Product & order</h2>
+                <div class="flex items-center justify-between">
+                    <h2 class="font-semibold">🎁 Product &amp; order</h2>
+                    @if($assignment->order)
+                        <a href="{{ route('brand.orders.show', $assignment->order) }}" class="text-xs font-semibold text-violet-700 hover:underline">Manage shipping →</a>
+                    @endif
+                </div>
                 <p class="mt-2 text-sm"><span class="text-slate-500">Product:</span> {{ $assignment->campaignProduct->product->title ?? '—' }}</p>
                 <p class="text-sm"><span class="text-slate-500">Code:</span> <code class="rounded bg-slate-100 px-1.5 py-0.5">{{ $assignment->discount_code ?: '—' }}</code></p>
                 @if($assignment->order)
-                    <p class="text-sm"><span class="text-slate-500">Order:</span> {{ $assignment->order->order_number }} · {{ $assignment->order->status }}</p>
-                    <p class="text-sm"><span class="text-slate-500">Tracking:</span> {{ $assignment->order->tracking_number ?: 'Not shipped yet' }}</p>
+                    <p class="text-sm"><span class="text-slate-500">Order:</span>
+                        <a href="{{ route('brand.orders.show', $assignment->order) }}" class="font-mono text-violet-700 hover:underline">{{ $assignment->order->order_number }}</a>
+                        · <x-badge :tone="in_array($assignment->order->status, ['fulfilled','delivered']) ? 'green' : (in_array($assignment->order->status, ['cancelled','refunded']) ? 'rose' : 'amber')">{{ $assignment->order->status }}</x-badge>
+                    </p>
+                    <p class="text-sm"><span class="text-slate-500">Tracking:</span>
+                        @if($assignment->order->tracking_number)
+                            <span class="font-mono">{{ $assignment->order->tracking_number }}</span>
+                            @if($assignment->order->tracking_company)<span class="text-slate-500"> · {{ $assignment->order->tracking_company }}</span>@endif
+                        @else
+                            <span class="text-amber-600">Not shipped yet — <a href="{{ route('brand.orders.show', $assignment->order) }}" class="underline">add tracking</a></span>
+                        @endif
+                    </p>
                 @else
-                    <p class="mt-1 text-sm text-amber-600">Order is being created via the channel…</p>
+                    <div class="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
+                        <p class="font-semibold">🎁 Order not created yet</p>
+                        <p class="mt-1">Once ready, we'll create a Shopify draft order (100 % discount) and you can ship the product.</p>
+                        <form method="POST" action="{{ route('brand.orders.createFromAssignment', $assignment) }}" class="mt-2">
+                            @csrf
+                            <button class="btn-primary !py-1.5 !text-xs">Create order now</button>
+                        </form>
+                    </div>
+                @endif
+
+                {{-- Creator shipping address --}}
+                @if($assignment->creator->preferences?->shipping_address)
+                    <div class="mt-4 rounded-xl border border-slate-100 bg-slate-50 p-3 text-xs">
+                        <p class="font-bold uppercase tracking-widest text-slate-500">📍 Ship to</p>
+                        <address class="mt-1 not-italic text-slate-700">
+                            @foreach($assignment->creator->preferences->shipping_address as $line)
+                                @if($line){{ $line }}<br>@endif
+                            @endforeach
+                        </address>
+                    </div>
                 @endif
             </div>
 
