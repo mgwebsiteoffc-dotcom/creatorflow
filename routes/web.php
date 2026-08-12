@@ -71,6 +71,16 @@ Route::get('/resources/item/{slug}',       [MarketingController::class, 'resourc
 Route::get('/blog',      [MarketingController::class, 'blogIndex'])->name('blog.index');
 Route::get('/blog/{slug}', [MarketingController::class, 'blogShow'])->name('blog.show');
 
+// Case studies — public CMS (feature-flagged)
+Route::get('/case-studies',        [\App\Http\Controllers\CaseStudyController::class, 'index'])->name('case-studies.index');
+Route::get('/case-studies/{slug}', [\App\Http\Controllers\CaseStudyController::class, 'show'])->name('case-studies.show');
+
+// Public creator portfolios (feature-flagged, default on)
+Route::get('/creators',        [\App\Http\Controllers\CreatorPortfolioController::class, 'index'])->name('creators.index');
+Route::get('/creators/{slug}', [\App\Http\Controllers\CreatorPortfolioController::class, 'show'])
+    ->where('slug', '[a-z0-9\-]+')
+    ->name('creators.show');
+
 // Legal pages — real pages so footer links stop 404-ing.
 Route::prefix('legal')->name('legal.')->group(function () {
     Route::get('/terms',              [\App\Http\Controllers\LegalController::class, 'terms'])->name('terms');
@@ -179,6 +189,18 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/ai',       [\App\Http\Controllers\Admin\AiSettingsController::class, 'edit'])->name('ai.edit');
     Route::post('/ai',      [\App\Http\Controllers\Admin\AiSettingsController::class, 'update'])->name('ai.update');
     Route::post('/ai/test', [\App\Http\Controllers\Admin\AiSettingsController::class, 'test'])->name('ai.test');
+
+    // Case studies CRUD (admin content)
+    Route::resource('case-studies', \App\Http\Controllers\Admin\CaseStudyController::class)->except(['show']);
+
+    // Agencies (feature-flagged in admin.integrations)
+    Route::get('/agencies',                        [\App\Http\Controllers\Admin\AgencyController::class, 'index'])->name('agencies.index');
+    Route::get('/agencies/create',                 [\App\Http\Controllers\Admin\AgencyController::class, 'create'])->name('agencies.create');
+    Route::post('/agencies',                       [\App\Http\Controllers\Admin\AgencyController::class, 'store'])->name('agencies.store');
+    Route::get('/agencies/{agency}',               [\App\Http\Controllers\Admin\AgencyController::class, 'show'])->name('agencies.show');
+    Route::post('/agencies/{agency}/attach',       [\App\Http\Controllers\Admin\AgencyController::class, 'attachWorkspace'])->name('agencies.attachWorkspace');
+    Route::delete('/agencies/{agency}/detach/{workspace}', [\App\Http\Controllers\Admin\AgencyController::class, 'detachWorkspace'])->name('agencies.detachWorkspace');
+    Route::delete('/agencies/{agency}',            [\App\Http\Controllers\Admin\AgencyController::class, 'destroy'])->name('agencies.destroy');
 
     // Integrations — mail, payments (Razorpay), analytics/SEO scripts, feature flags.
     Route::get('/integrations',                     [\App\Http\Controllers\Admin\IntegrationsController::class, 'edit'])->name('integrations.edit');

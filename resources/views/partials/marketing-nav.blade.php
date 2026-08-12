@@ -14,6 +14,9 @@
             <a href="{{ route('services.index') }}" class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">Services</a>
             <a href="{{ route('pricing') }}"     class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">Pricing</a>
             <a href="{{ route('tools.index') }}" class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">Tools</a>
+            @if(\App\Models\PlatformSetting::feature('case_study_cms'))
+                <a href="{{ route('case-studies.index') }}" class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">Case studies</a>
+            @endif
             <a href="{{ route('resources') }}"   class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">Resources</a>
             <a href="{{ route('blog.index') }}"  class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">Blog</a>
             <a href="{{ route('about') }}"       class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100">About</a>

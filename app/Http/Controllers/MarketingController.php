@@ -277,6 +277,28 @@ class MarketingController extends Controller
             );
         }
 
+        if (\App\Support\SchemaCheck::has('case_studies') && \App\Models\PlatformSetting::feature('case_study_cms')) {
+            $urls->push(['loc' => route('case-studies.index'), 'priority' => '0.7']);
+            $urls = $urls->concat(
+                \App\Models\CaseStudy::published()->get()->map(fn ($cs) => [
+                    'loc' => route('case-studies.show', $cs->slug),
+                    'lastmod' => optional($cs->updated_at)->toAtomString(),
+                    'priority' => '0.75',
+                ])
+            );
+        }
+
+        if (\App\Models\PlatformSetting::feature('public_creator_pages')) {
+            $urls->push(['loc' => route('creators.index'), 'priority' => '0.6']);
+            $urls = $urls->concat(
+                \App\Models\Creator::active()->take(1000)->get(['slug','updated_at'])->map(fn ($c) => [
+                    'loc' => route('creators.show', $c->slug),
+                    'lastmod' => optional($c->updated_at)->toAtomString(),
+                    'priority' => '0.55',
+                ])
+            );
+        }
+
         $xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
         foreach ($urls as $u) {
             $xml .= '<url><loc>'.$u['loc'].'</loc>';
@@ -289,7 +311,8 @@ class MarketingController extends Controller
 
     public function robots()
     {
-        $txt = "User-agent: *\nAllow: /\nDisallow: /brand/\nDisallow: /creator/\nDisallow: /admin/\nDisallow: /messages/\nSitemap: ".url('/sitemap.xml')."\n";
+        // /creator/ (singular, the app panel) stays disallowed; /creators/ (public directory) is crawlable.
+        $txt = "User-agent: *\nAllow: /\nAllow: /creators/\nDisallow: /brand/\nDisallow: /creator/\nDisallow: /admin/\nDisallow: /messages/\nSitemap: ".url('/sitemap.xml')."\n";
         return Response::make($txt, 200, ['Content-Type' => 'text/plain']);
     }
 

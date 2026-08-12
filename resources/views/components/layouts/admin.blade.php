@@ -31,11 +31,17 @@
                 ['route' => 'admin.users.index',    'label' => 'Users',       'icon' => '👥'],
                 ['route' => 'admin.creators.index', 'label' => 'Creators',    'icon' => '🎬'],
                 ['route' => 'admin.workspaces.index','label' => 'Workspaces', 'icon' => '🏢'],
+                ...(\App\Models\PlatformSetting::feature('agency_mode') ? [
+                    ['route' => 'admin.agencies.index', 'label' => 'Agencies', 'icon' => '🏛️'],
+                ] : []),
                 ['route' => 'admin.leads.index',    'label' => 'Leads',       'icon' => '📥'],
                 ['route' => 'admin.billing.index',  'label' => 'Billing',     'icon' => '💳'],
                 ['route' => 'admin.escrow.index',   'label' => 'Escrow',      'icon' => '🔒'],
                 ['route' => 'admin.homepage',       'label' => 'Homepage',    'icon' => '🏠'],
                 ['route' => 'admin.blog.index',     'label' => 'Blog',        'icon' => '📝'],
+                ...(\App\Models\PlatformSetting::feature('case_study_cms') ? [
+                    ['route' => 'admin.case-studies.index', 'label' => 'Case studies', 'icon' => '📚'],
+                ] : []),
                 ['route' => 'admin.seo',            'label' => 'SEO',         'icon' => '🔍'],
                 ['route' => 'admin.ai.edit',           'label' => 'AI keys',      'icon' => '🤖'],
                 ['route' => 'admin.integrations.edit', 'label' => 'Integrations', 'icon' => '🔌'],

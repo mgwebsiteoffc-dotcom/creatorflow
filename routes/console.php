@@ -18,6 +18,18 @@ Schedule::call(function () {
         });
 })->dailyAt('03:15')->name('shopify-nightly-reconcile')->withoutOverlapping();
 
+// Nightly creator fraud/bot scan — only runs if the fraud_scan feature flag is on.
+Schedule::command('creators:scan-fraud --limit=100')
+    ->dailyAt('04:00')
+    ->name('creators-fraud-scan')
+    ->withoutOverlapping();
+
+// AI review of newly submitted UGC — every 15 min if the auto_content_review flag is on.
+Schedule::command('content:review --limit=25')
+    ->everyFifteenMinutes()
+    ->name('content-auto-review')
+    ->withoutOverlapping();
+
 // Hourly inventory sync.
 Schedule::call(function () {
     Channel::where('status', 'active')
