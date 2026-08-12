@@ -145,6 +145,25 @@ class IntegrationsController extends Controller
         }
     }
 
+    /* ─────────────────────────── VAPID (push) ─────────────────────────── */
+
+    public function updateVapid(Request $request)
+    {
+        $this->ensureMigrated();
+
+        $data = $request->validate([
+            'vapid_public_key'  => ['nullable', 'string', 'max:200'],
+            'vapid_private_key' => ['nullable', 'string', 'max:400'],
+            'vapid_subject'     => ['nullable', 'string', 'max:120'],
+        ]);
+        if (empty($data['vapid_private_key']) || str_contains((string) $data['vapid_private_key'], '•')) {
+            unset($data['vapid_private_key']);
+        }
+        PlatformSetting::current()->update(array_filter($data, fn ($v) => $v !== null));
+
+        return back()->with('status', 'VAPID keys saved. Users can now enable push notifications from the notifications page.');
+    }
+
     /* ─────────────────────────── FEATURE FLAGS ─────────────────────────── */
 
     public function updateFeatures(Request $request)

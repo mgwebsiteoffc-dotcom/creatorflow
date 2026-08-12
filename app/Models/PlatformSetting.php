@@ -28,6 +28,8 @@ class PlatformSetting extends Model
         'razorpay_last_tested_at', 'razorpay_last_test_status',
         // Feature toggles
         'features_json',
+        // PWA push (VAPID)
+        'vapid_public_key', 'vapid_private_key', 'vapid_subject',
     ];
 
     protected $casts = [
@@ -47,6 +49,7 @@ class PlatformSetting extends Model
         'mail_api_key'              => 'encrypted',
         'razorpay_key_secret'       => 'encrypted',
         'razorpay_webhook_secret'   => 'encrypted',
+        'vapid_private_key'         => 'encrypted',
     ];
 
     /**
@@ -85,6 +88,9 @@ class PlatformSetting extends Model
         'razorpay_last_tested_at'   => null,
         'razorpay_last_test_status' => null,
         'features_json'             => null,
+        'vapid_public_key'          => null,
+        'vapid_private_key'         => null,
+        'vapid_subject'             => null,
     ];
 
     /**

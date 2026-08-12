@@ -46,6 +46,54 @@ class MessageController extends Controller
         return view('messages.show', compact('thread', 'messages'));
     }
 
+    /**
+     * GET /messages/{thread}/poll?since={id} — returns JSON payload with any
+     * new messages since the given id. Powers the 15s live-refresh loop.
+     */
+    public function poll(MessageThread $thread, Request $request)
+    {
+        $participant = $this->participantFor($request);
+
+        abort_unless(
+            $thread->participants()
+                ->where('participant_type', $participant['type'])
+                ->where('participant_id', $participant['id'])
+                ->exists(),
+            403
+        );
+
+        $since = (int) $request->integer('since', 0);
+        $meId  = $participant['id'];
+        $meType = $participant['type'];
+
+        $messages = $thread->messages()
+            ->where('id', '>', $since)
+            ->orderBy('id')
+            ->take(50)
+            ->get()
+            ->map(fn ($m) => [
+                'id'         => $m->id,
+                'sender'     => $m->sender_type,
+                'sender_id'  => $m->sender_id,
+                'body'       => $m->body,
+                'time'       => $m->created_at->format('g:i A'),
+                'created_at' => $m->created_at->toISOString(),
+                'mine'       => $m->sender_type === $meType && (int) $m->sender_id === (int) $meId,
+            ]);
+
+        // Bump last_read_at while polling
+        $thread->participants()
+            ->where('participant_type', $meType)
+            ->where('participant_id', $meId)
+            ->update(['last_read_at' => now()]);
+
+        return response()->json([
+            'messages' => $messages->values(),
+            'latest'   => (int) ($messages->last()['id'] ?? $since),
+            'time'     => now()->toISOString(),
+        ]);
+    }
+
     public function store(MessageThread $thread, Request $request)
     {
         $data = $request->validate(['body' => ['required', 'string', 'max:4000']]);

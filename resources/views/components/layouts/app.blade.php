@@ -114,6 +114,7 @@
             window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
         }
     </script>
+    @include('partials.pwa-install')
     @include('partials.analytics-body')
 </body>
 </html>

@@ -19,6 +19,7 @@
         <a href="#mail"      class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📧 Mail</a>
         <a href="#payments"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💳 Payments</a>
         <a href="#analytics" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📊 Analytics &amp; SEO</a>
+        <a href="#push"      class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🔔 Push (VAPID)</a>
         <a href="#features"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🚦 Feature flags</a>
     </div>
 
@@ -188,6 +189,38 @@
             </div>
 
             <div class="md:col-span-2 flex justify-end"><button class="btn-primary">Save analytics + SEO</button></div>
+        </form>
+    </section>
+
+    {{-- ═════════════════════════ PUSH (VAPID) ═════════════════════════ --}}
+    <section id="push" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
+        <div>
+            <h2 class="text-xl font-black text-slate-900">🔔 Push notifications (VAPID)</h2>
+            <p class="mt-1 text-xs text-slate-500">Paste your VAPID keys. Users see an "Enable push" button on the notifications page once these are set.</p>
+        </div>
+
+        <form method="POST" action="{{ route('admin.integrations.vapid.update') }}" class="mt-5 grid gap-4 md:grid-cols-2">
+            @csrf
+            <div class="md:col-span-2 rounded-xl border border-slate-100 bg-slate-50 p-4 text-xs text-slate-600">
+                <p class="font-bold text-slate-800">Generate keys once</p>
+                <p class="mt-1">On any machine with Node installed run:</p>
+                <p class="mt-1 font-mono break-all rounded bg-white px-2 py-1">npx web-push generate-vapid-keys</p>
+                <p class="mt-2">Copy the <strong>public key</strong> and <strong>private key</strong> into the fields below. The subject is a mailto/https URL Chrome uses to contact you if the push service has questions.</p>
+            </div>
+            <div>
+                <label class="label">Public key</label>
+                <input class="input font-mono" name="vapid_public_key" value="{{ old('vapid_public_key', $settings->vapid_public_key) }}" placeholder="BEl62iUY…">
+            </div>
+            <div>
+                <label class="label">Private key</label>
+                <input class="input font-mono" type="password" name="vapid_private_key" autocomplete="off" placeholder="{{ $settings->vapid_private_key ? '••••••••••••' : '' }}">
+                <p class="mt-1 text-xs text-slate-500">Leave blank to keep existing.</p>
+            </div>
+            <div class="md:col-span-2">
+                <label class="label">Subject</label>
+                <input class="input" name="vapid_subject" value="{{ old('vapid_subject', $settings->vapid_subject ?: 'mailto:hello@creatorplex.in') }}" placeholder="mailto:you@example.com">
+            </div>
+            <div class="md:col-span-2 flex justify-end"><button class="btn-primary">Save VAPID keys</button></div>
         </form>
     </section>
 

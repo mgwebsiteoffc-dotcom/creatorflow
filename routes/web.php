@@ -111,6 +111,13 @@ Route::prefix('shopify')->name('shopify.')->group(function () {
 Route::post('/webhooks/shopify',   ShopifyWebhookController::class)->name('webhooks.shopify');
 Route::post('/webhooks/razorpay', \App\Http\Controllers\RazorpayWebhookController::class)->name('webhooks.razorpay');
 
+// PWA push notifications (auth optional so anonymous visitors can subscribe too).
+Route::get('/push/vapid-key',       [\App\Http\Controllers\PushController::class, 'vapidKey'])->name('push.vapidKey');
+Route::middleware('auth')->group(function () {
+    Route::post('/push/subscribe',   [\App\Http\Controllers\PushController::class, 'subscribe'])->name('push.subscribe');
+    Route::post('/push/unsubscribe', [\App\Http\Controllers\PushController::class, 'unsubscribe'])->name('push.unsubscribe');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest: auth
@@ -180,7 +187,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/integrations/analytics',          [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateAnalytics'])->name('integrations.analytics.update');
     Route::post('/integrations/razorpay',           [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateRazorpay'])->name('integrations.razorpay.update');
     Route::post('/integrations/razorpay/test',      [\App\Http\Controllers\Admin\IntegrationsController::class, 'testRazorpay'])->name('integrations.razorpay.test');
-    Route::post('/integrations/features',           [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateFeatures'])->name('integrations.features.update');
+    Route::post('/integrations/vapid',               [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateVapid'])->name('integrations.vapid.update');
+    Route::post('/integrations/features',            [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateFeatures'])->name('integrations.features.update');
 
     Route::get('/seo',       AdminSeoController::class)->name('seo');
 
@@ -316,6 +324,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::get('/messages/{thread}', [MessageController::class, 'show'])->name('messages.show');
     Route::post('/messages/{thread}', [MessageController::class, 'store'])->name('messages.store');
+    Route::get('/messages/{thread}/poll', [MessageController::class, 'poll'])->name('messages.poll'); // 15s live poll
     // Support both POST (form buttons) and GET (direct navigation from emails / notifications).
     Route::match(['GET', 'POST'], '/campaigns/{campaign}/chat/{creatorId}', [MessageController::class, 'startWithCreator'])->name('messages.start');
 });
