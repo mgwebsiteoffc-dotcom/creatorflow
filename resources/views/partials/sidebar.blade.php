@@ -9,93 +9,91 @@
             [
                 'label' => 'Overview',
                 'items' => [
-                    ['route' => 'creator.dashboard', 'label' => 'Home', 'icon' => '🏠'],
+                    ['route' => 'creator.dashboard', 'label' => 'Home', 'icon' => 'home'],
                 ],
             ],
             [
                 'label' => 'Discover',
                 'items' => [
-                    ['route' => 'creator.marketplace',  'label' => 'Marketplace',  'icon' => '🛍'],
-                    ['route' => 'creator.applications', 'label' => 'Applications', 'icon' => '📥'],
-                    ['route' => 'creator.invitations',  'label' => 'Invitations',  'icon' => '✉️'],
+                    ['route' => 'creator.marketplace',  'label' => 'Marketplace',  'icon' => 'marketplace'],
+                    ['route' => 'creator.applications', 'label' => 'Applications', 'icon' => 'applications'],
+                    ['route' => 'creator.invitations',  'label' => 'Invitations',  'icon' => 'invitations'],
                 ],
             ],
             [
                 'label' => 'Work',
                 'items' => [
-                    ['route' => 'creator.assignments.index', 'label' => 'My Work',   'icon' => '📋'],
-                    ['route' => 'creator.earnings.index',    'label' => 'Earnings',  'icon' => '💰'],
+                    ['route' => 'creator.assignments.index', 'label' => 'My Work',   'icon' => 'work'],
+                    ['route' => 'creator.earnings.index',    'label' => 'Earnings',  'icon' => 'earnings'],
                 ],
             ],
             [
                 'label' => 'Communication',
                 'items' => [
-                    ['route' => 'messages.index',       'label' => 'Messages',      'icon' => '💬'],
-                    ['route' => 'notifications.index',  'label' => 'Notifications', 'icon' => '🔔'],
+                    ['route' => 'messages.index',       'label' => 'Messages',      'icon' => 'messages'],
+                    ['route' => 'notifications.index',  'label' => 'Notifications', 'icon' => 'notifications'],
                 ],
             ],
             [
                 'label' => 'Profile',
                 'items' => [
-                    ['route' => 'creator.profile.show', 'label' => 'Public profile', 'icon' => '👤'],
-                    ['route' => 'creator.profile.edit', 'label' => 'Edit profile',   'icon' => '✏️'],
-                    ['route' => 'creator.payout.edit',  'label' => 'Payout',         'icon' => '🏦'],
+                    ['route' => 'creator.profile.show', 'label' => 'Public profile', 'icon' => 'profile'],
+                    ['route' => 'creator.profile.edit', 'label' => 'Edit profile',   'icon' => 'edit'],
+                    ['route' => 'creator.payout.edit',  'label' => 'Payout',         'icon' => 'payout'],
                 ],
             ],
         ];
         $logoGrad = 'linear-gradient(135deg,#f43f5e,#ec4899 60%,#f59e0b)';
         $panelLabel = 'Creator';
-        $badgeClass = '!bg-rose-100 !text-rose-700';
     } else {
         $groups = [
             [
                 'label' => 'Overview',
                 'items' => [
-                    ['route' => 'brand.dashboard', 'label' => 'Home', 'icon' => '🏠'],
+                    ['route' => 'brand.dashboard', 'label' => 'Home', 'icon' => 'home'],
                 ],
             ],
             [
                 'label' => 'Campaigns',
                 'items' => [
-                    ['route' => 'brand.campaigns.index',    'label' => 'Campaigns',    'icon' => '🚀'],
-                    ['route' => 'brand.applications.index', 'label' => 'Applications', 'icon' => '📥'],
-                    ['route' => 'brand.creators.index',     'label' => 'Creators',     'icon' => '🎬'],
-                    ['route' => 'brand.assignments.index',  'label' => 'Assignments',  'icon' => '📋'],
+                    ['route' => 'brand.campaigns.index',    'label' => 'Campaigns',    'icon' => 'campaigns'],
+                    ['route' => 'brand.applications.index', 'label' => 'Applications', 'icon' => 'applications'],
+                    ['route' => 'brand.creators.index',     'label' => 'Creators',     'icon' => 'creators'],
+                    ['route' => 'brand.assignments.index',  'label' => 'Assignments',  'icon' => 'assignments'],
                 ],
             ],
             [
                 'label' => 'Fulfillment',
                 'items' => [
-                    ['route' => 'brand.orders.index',    'label' => 'Orders',   'icon' => '📦'],
-                    ['route' => 'brand.products.index',  'label' => 'Products', 'icon' => '🎁'],
-                    ['route' => 'brand.channels.index',  'label' => 'Channels', 'icon' => '🛍'],
+                    ['route' => 'brand.orders.index',    'label' => 'Orders',   'icon' => 'orders'],
+                    ['route' => 'brand.products.index',  'label' => 'Products', 'icon' => 'products'],
+                    ['route' => 'brand.channels.index',  'label' => 'Channels', 'icon' => 'channels'],
                 ],
             ],
             [
                 'label' => 'Insights',
                 'items' => [
-                    ['route' => 'brand.analytics', 'label' => 'Analytics', 'icon' => '📊'],
+                    ['route' => 'brand.analytics', 'label' => 'Analytics', 'icon' => 'analytics'],
                 ],
             ],
             [
                 'label' => 'Communication',
                 'items' => [
-                    ['route' => 'messages.index',       'label' => 'Messages',      'icon' => '💬'],
-                    ['route' => 'notifications.index',  'label' => 'Notifications', 'icon' => '🔔'],
+                    ['route' => 'messages.index',       'label' => 'Messages',      'icon' => 'messages'],
+                    ['route' => 'notifications.index',  'label' => 'Notifications', 'icon' => 'notifications'],
                 ],
             ],
             [
                 'label' => 'Account',
                 'items' => [
-                    ['route' => 'brand.billing.index',     'label' => 'Billing',   'icon' => '💳'],
-                    ['route' => 'brand.settings.team',     'label' => 'Team',      'icon' => '👥'],
-                    ['route' => 'brand.settings.profile',  'label' => 'Settings',  'icon' => '⚙️'],
+                    ['route' => 'brand.billing.index',     'label' => 'Billing',   'icon' => 'billing'],
+                    ['route' => 'brand.settings.team',     'label' => 'Team',      'icon' => 'team'],
+                    ['route' => 'brand.settings.profile',  'label' => 'Settings',  'icon' => 'settings'],
                 ],
             ],
         ];
         $logoGrad = 'linear-gradient(135deg,#7c3aed,#ec4899 60%,#f59e0b)';
         $panelLabel = 'Brand';
-        $badgeClass = '';
     }
 
     /** True if the current request matches one of the item route names. */
@@ -121,7 +119,7 @@
             <div class="text-[10px] font-bold uppercase tracking-widest text-slate-400">{{ $panelLabel }}</div>
         </div>
         <button type="button" data-sidebar-close class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 md:hidden" aria-label="Close menu">
-            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M6 18L18 6"/></svg>
+            <x-icon name="close" class="h-5 w-5" />
         </button>
     </a>
 
@@ -147,14 +145,15 @@
                     @foreach($group['items'] as $item)
                         @php $active = $isActive($item['route']); @endphp
                         <a href="{{ route($item['route']) }}"
-                           class="group flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition
+                           class="group relative flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition
                                   {{ $active
-                                      ? 'bg-gradient-to-r from-violet-50 to-pink-50 text-violet-900'
+                                      ? 'bg-slate-900 text-white shadow-sm'
                                       : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                            <span class="grid h-6 w-6 place-items-center text-base {{ $active ? '' : 'opacity-80 group-hover:opacity-100' }}">{{ $item['icon'] }}</span>
+                            <x-icon :name="$item['icon']"
+                                    class="h-[18px] w-[18px] shrink-0 {{ $active ? 'text-white' : 'text-slate-500 group-hover:text-slate-900' }}" />
                             <span class="min-w-0 flex-1 truncate">{{ $item['label'] }}</span>
                             @if($active)
-                                <span class="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-violet-500 to-pink-500"></span>
+                                <span class="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-violet-400 to-pink-400"></span>
                             @endif
                         </a>
                     @endforeach
@@ -168,16 +167,18 @@
         @auth
             @if(auth()->user()->isAdmin())
                 <a href="{{ route('admin.dashboard') }}"
-                   class="flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-50">
-                    🛡️ Admin panel
+                   class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-violet-700 hover:bg-violet-50">
+                    <x-icon name="admin" class="h-[18px] w-[18px]" /> Admin panel
                 </a>
             @endif
         @endauth
-        <a href="{{ url('/') }}" class="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-slate-500 hover:bg-slate-50 hover:text-slate-900">↩ Back to site</a>
+        <a href="{{ url('/') }}" class="flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs text-slate-500 hover:bg-slate-50 hover:text-slate-900">
+            <x-icon name="external" class="h-[18px] w-[18px]" /> Back to site
+        </a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="w-full text-left flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-slate-500 hover:bg-slate-50 hover:text-rose-600">
-                <span>🚪</span> Sign out
+            <button type="submit" class="w-full text-left flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs text-slate-500 hover:bg-slate-50 hover:text-rose-600">
+                <x-icon name="logout" class="h-[18px] w-[18px]" /> Sign out
             </button>
         </form>
     </div>

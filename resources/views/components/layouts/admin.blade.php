@@ -27,39 +27,42 @@
 
         @php
             $items = [
-                ['route' => 'admin.dashboard',      'label' => 'Dashboard',   'icon' => '🏠'],
-                ['route' => 'admin.users.index',    'label' => 'Users',       'icon' => '👥'],
-                ['route' => 'admin.creators.index', 'label' => 'Creators',    'icon' => '🎬'],
-                ['route' => 'admin.workspaces.index','label' => 'Workspaces', 'icon' => '🏢'],
+                ['route' => 'admin.dashboard',      'label' => 'Dashboard',   'icon' => 'dashboard'],
+                ['route' => 'admin.users.index',    'label' => 'Users',       'icon' => 'users'],
+                ['route' => 'admin.creators.index', 'label' => 'Creators',    'icon' => 'creators'],
+                ['route' => 'admin.workspaces.index','label' => 'Workspaces', 'icon' => 'workspaces'],
                 ...(\App\Models\PlatformSetting::feature('agency_mode') ? [
-                    ['route' => 'admin.agencies.index', 'label' => 'Agencies', 'icon' => '🏛️'],
+                    ['route' => 'admin.agencies.index', 'label' => 'Agencies', 'icon' => 'agencies'],
                 ] : []),
-                ['route' => 'admin.leads.index',    'label' => 'Leads',       'icon' => '📥'],
-                ['route' => 'admin.billing.index',  'label' => 'Billing',     'icon' => '💳'],
-                ['route' => 'admin.escrow.index',   'label' => 'Escrow',      'icon' => '🔒'],
-                ['route' => 'admin.homepage',       'label' => 'Homepage',    'icon' => '🏠'],
-                ['route' => 'admin.blog.index',     'label' => 'Blog',        'icon' => '📝'],
+                ['route' => 'admin.leads.index',    'label' => 'Leads',       'icon' => 'leads'],
+                ['route' => 'admin.billing.index',  'label' => 'Billing',     'icon' => 'billing'],
+                ['route' => 'admin.escrow.index',   'label' => 'Escrow',      'icon' => 'escrow'],
+                ['route' => 'admin.homepage',       'label' => 'Homepage',    'icon' => 'homepage'],
+                ['route' => 'admin.blog.index',     'label' => 'Blog',        'icon' => 'blog'],
                 ...(\App\Models\PlatformSetting::feature('case_study_cms') ? [
-                    ['route' => 'admin.case-studies.index', 'label' => 'Case studies', 'icon' => '📚'],
+                    ['route' => 'admin.case-studies.index', 'label' => 'Case studies', 'icon' => 'case-studies'],
                 ] : []),
-                ['route' => 'admin.seo',            'label' => 'SEO',         'icon' => '🔍'],
+                ['route' => 'admin.seo',            'label' => 'SEO',         'icon' => 'seo'],
                 ...(\App\Models\PlatformSetting::feature('ab_testing') ? [
-                    ['route' => 'admin.ab.index', 'label' => 'A/B tests', 'icon' => '🧪'],
+                    ['route' => 'admin.ab.index', 'label' => 'A/B tests', 'icon' => 'ab-test'],
                 ] : []),
                 ...(\App\Models\PlatformSetting::feature('referrals') ? [
-                    ['route' => 'admin.referrals.index', 'label' => 'Referrals', 'icon' => '🎁'],
+                    ['route' => 'admin.referrals.index', 'label' => 'Referrals', 'icon' => 'referrals'],
                 ] : []),
-                ['route' => 'admin.ai.edit',           'label' => 'AI keys',      'icon' => '🤖'],
-                ['route' => 'admin.integrations.edit',         'label' => 'Integrations',  'icon' => '🔌'],
-                ['route' => 'admin.notification-templates.index','label' => 'Templates',    'icon' => '📧'],
-                ['route' => 'admin.settings',                  'label' => 'Settings',       'icon' => '⚙️'],
+                ['route' => 'admin.ai.edit',           'label' => 'AI keys',      'icon' => 'ai'],
+                ['route' => 'admin.integrations.edit',         'label' => 'Integrations',  'icon' => 'integrations'],
+                ['route' => 'admin.notification-templates.index','label' => 'Templates',    'icon' => 'templates'],
+                ['route' => 'admin.settings',                  'label' => 'Settings',       'icon' => 'settings'],
             ];
         @endphp
         @foreach($items as $it)
+            @php $active = request()->routeIs(str_replace('.index','.*', $it['route'])) || request()->routeIs($it['route']); @endphp
             <a href="{{ route($it['route']) }}"
-               class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition
-                      {{ request()->routeIs(str_replace('.index','.*', $it['route'])) || request()->routeIs($it['route']) ? 'bg-white/10 text-white' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
-                <span>{{ $it['icon'] }}</span> {{ $it['label'] }}
+               class="group flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition
+                      {{ $active ? 'bg-white/10 text-white' : 'text-slate-300 hover:bg-white/5 hover:text-white' }}">
+                <x-icon :name="$it['icon']"
+                        class="h-[18px] w-[18px] shrink-0 {{ $active ? 'text-white' : 'text-slate-400 group-hover:text-white' }}" />
+                {{ $it['label'] }}
             </a>
         @endforeach
 

@@ -19,9 +19,7 @@
             <button type="button" data-sidebar-open
                     class="grid h-9 w-9 place-items-center rounded-lg text-slate-600 hover:bg-slate-100 md:hidden"
                     aria-label="Open menu">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
+                <x-icon name="menu" class="h-5 w-5" />
             </button>
             <a href="{{ url('/') }}" class="flex items-center gap-2 md:hidden">
                 <span class="grid h-8 w-8 place-items-center rounded-xl text-xs font-black text-white shadow-sm"
@@ -35,9 +33,7 @@
             {{-- Notifications bell --}}
             <div class="relative" data-notif-wrap>
                 <button type="button" data-notif-toggle class="btn-ghost relative !p-2" title="Notifications">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0a3 3 0 11-6 0"/>
-                    </svg>
+                    <x-icon name="bell" class="h-5 w-5" />
                     @if(($unreadCount ?? 0) > 0)
                         <span class="absolute -right-0.5 -top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">{{ min(9, $unreadCount) }}{{ $unreadCount > 9 ? '+' : '' }}</span>
                     @endif
@@ -70,9 +66,7 @@
             </div>
 
             <a href="{{ route('messages.index') }}" class="btn-ghost !p-2" title="Messages">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M21 12a8 8 0 01-11.5 7.2L3 21l1.8-6.5A8 8 0 1121 12z"/>
-                </svg>
+                <x-icon name="messages" class="h-5 w-5" />
             </a>
 
             @if($panel === 'brand' && $workspace)
