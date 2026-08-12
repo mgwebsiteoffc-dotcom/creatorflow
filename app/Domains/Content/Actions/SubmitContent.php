@@ -70,6 +70,13 @@ class SubmitContent
                 'assignment_id' => $assignment->id,
                 'submission_id' => $submission->id,
             ]);
+
+            \App\Support\NotifyEvent::fire('brand.content.submitted', $brandUser, [
+                'brand_name'     => $campaign->workspace->name,
+                'creator_name'   => $assignment->creator->display_name ?? 'A creator',
+                'campaign_title' => $campaign->title,
+                'link'           => route('brand.assignments.show', $assignment),
+            ]);
         }
 
         return $submission;

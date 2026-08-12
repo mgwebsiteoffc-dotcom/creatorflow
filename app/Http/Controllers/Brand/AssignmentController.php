@@ -68,6 +68,14 @@ class AssignmentController extends Controller
 
         $submission->requestChanges($data['comment']);
 
+        \App\Support\NotifyEvent::fire('creator.content.changes_requested', $submission->assignment->creator, [
+            'creator_name'   => $submission->assignment->creator->display_name ?? '',
+            'brand_name'     => $submission->campaign->workspace->name ?? '',
+            'campaign_title' => $submission->campaign->title ?? '',
+            'comment'        => $data['comment'],
+            'link'           => route('creator.assignments.show', $submission->assignment),
+        ]);
+
         return back()->with('status', 'Change request sent.');
     }
 }

@@ -81,6 +81,13 @@ class ApplicationController extends Controller
             ],
         );
 
+        \App\Support\NotifyEvent::fire('creator.application.approved', $application->creator, [
+            'creator_name'   => $application->creator->display_name,
+            'brand_name'     => $campaign->workspace->name,
+            'campaign_title' => $campaign->title,
+            'link'           => url('/creator/invitations'),
+        ]);
+
         return back()->with('status', 'Application approved. Creator was invited to accept.');
     }
 
@@ -92,6 +99,13 @@ class ApplicationController extends Controller
             'status' => 'rejected',
             'reviewed_by' => $request->user()->id,
             'reviewed_at' => now(),
+        ]);
+
+        \App\Support\NotifyEvent::fire('creator.application.rejected', $application->creator, [
+            'creator_name'   => $application->creator->display_name,
+            'brand_name'     => $application->campaign->workspace->name,
+            'campaign_title' => $application->campaign->title,
+            'link'           => url('/creator/marketplace'),
         ]);
 
         return back()->with('status', 'Application declined.');

@@ -82,6 +82,16 @@ class AcceptInvitation
 
             event(new CreatorAcceptedInvitation($invitation->id));
 
+            // Notify every brand user (email + WhatsApp + in-app via template).
+            foreach ($campaign->workspace?->users ?? [] as $brandUser) {
+                \App\Support\NotifyEvent::fire('brand.creator.accepted', $brandUser, [
+                    'brand_name'     => $campaign->workspace->name,
+                    'creator_name'   => $creator->display_name,
+                    'campaign_title' => $campaign->title,
+                    'link'           => route('brand.assignments.show', $assignment),
+                ]);
+            }
+
             return $assignment->fresh();
         });
     }

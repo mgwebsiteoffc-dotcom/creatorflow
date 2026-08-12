@@ -42,6 +42,14 @@ class ApproveContent
                 'submission_id' => $submission->id,
             ]);
 
+            // Fire email + WhatsApp via templates (in-app is already handled above).
+            \App\Support\NotifyEvent::fire('creator.content.approved', $assignment->creator, [
+                'creator_name'   => $assignment->creator->display_name,
+                'brand_name'     => $assignment->campaign->workspace->name ?? '',
+                'campaign_title' => $assignment->campaign->title ?? '',
+                'link'           => route('creator.assignments.show', $assignment),
+            ]);
+
             return $submission->fresh();
         });
     }

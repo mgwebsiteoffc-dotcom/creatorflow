@@ -20,6 +20,8 @@
         <a href="#payments"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💳 Payments</a>
         <a href="#analytics" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📊 Analytics &amp; SEO</a>
         <a href="#push"      class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🔔 Push (VAPID)</a>
+        <a href="#whatify"   class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">💬 WhatsApp (Whatify)</a>
+        <a href="{{ route('admin.notification-templates.index') }}" class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">📧 Notification templates →</a>
         <a href="#features"  class="rounded-full bg-white px-4 py-2 font-semibold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:ring-violet-300">🚦 Feature flags</a>
     </div>
 
@@ -221,6 +223,61 @@
                 <input class="input" name="vapid_subject" value="{{ old('vapid_subject', $settings->vapid_subject ?: 'mailto:hello@creatorplex.in') }}" placeholder="mailto:you@example.com">
             </div>
             <div class="md:col-span-2 flex justify-end"><button class="btn-primary">Save VAPID keys</button></div>
+        </form>
+    </section>
+
+    {{-- ═════════════════════════ WHATIFY (WhatsApp) ═════════════════════════ --}}
+    <section id="whatify" class="mt-8 scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-6">
+        <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+                <h2 class="text-xl font-black text-slate-900">💬 WhatsApp (Whatify BSP)</h2>
+                <p class="mt-1 text-xs text-slate-500">Send creator invites, order updates + payout alerts on WhatsApp. Uses <a href="https://whatify.docs.buildwithfern.com/whatify-external-api-v-1/introduction" target="_blank" class="text-violet-700 hover:underline">Whatify External API</a>.</p>
+            </div>
+            @if($settings->whatify_last_test_status)
+                <span class="rounded-full px-3 py-1 text-xs font-semibold {{ str_starts_with($settings->whatify_last_test_status, 'ok') ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700' }}">
+                    {{ str_starts_with($settings->whatify_last_test_status, 'ok') ? '✓ Reachable' : '✗ Error' }} · {{ $settings->whatify_last_tested_at?->diffForHumans() }}
+                </span>
+            @endif
+        </div>
+
+        <form method="POST" action="{{ route('admin.integrations.whatify.update') }}" class="mt-5 grid gap-4 md:grid-cols-2">
+            @csrf
+            <label class="md:col-span-2 flex items-start gap-3 rounded-xl border-2 p-4 {{ $settings->whatify_enabled ? 'border-emerald-300 bg-emerald-50/40' : 'border-slate-200' }}">
+                <input type="hidden" name="whatify_enabled" value="0">
+                <input type="checkbox" name="whatify_enabled" value="1" @checked($settings->whatify_enabled) class="mt-1 h-5 w-5 rounded">
+                <div><p class="font-black text-slate-900">Enable WhatsApp delivery</p><p class="mt-0.5 text-xs text-slate-500">Turn on to allow notification templates to fire via Whatify.</p></div>
+            </label>
+            <div>
+                <label class="label">API key</label>
+                <input class="input font-mono" type="password" name="whatify_api_key" autocomplete="off" placeholder="{{ $settings->whatify_api_key ? $settings->maskedWhatifyKey() : 'X-API-Key value from Whatify' }}">
+                <p class="mt-1 text-xs text-slate-500">Leave blank to keep existing. Stored encrypted.</p>
+            </div>
+            <div>
+                <label class="label">Base URL</label>
+                <input class="input" name="whatify_base_url" value="{{ old('whatify_base_url', $settings->whatify_base_url ?: 'https://app.whatify.in') }}">
+                <p class="mt-1 text-xs text-slate-500">Whatify's API host — usually <code>https://app.whatify.in</code>.</p>
+            </div>
+            <div>
+                <label class="label">WhatsApp account ID (optional)</label>
+                <input class="input font-mono" name="whatify_account_id" value="{{ old('whatify_account_id', $settings->whatify_account_id) }}" placeholder="wa_xxx">
+                <p class="mt-1 text-xs text-slate-500">Only needed if you have multiple WhatsApp Business accounts inside one Whatify project.</p>
+            </div>
+            <div>
+                <label class="label">From number (display only)</label>
+                <input class="input" name="whatify_from_number" value="{{ old('whatify_from_number', $settings->whatify_from_number) }}" placeholder="+91 90000 00000">
+            </div>
+            <div class="md:col-span-2 rounded-xl border border-slate-100 bg-slate-50 p-4 text-xs text-slate-600">
+                <p class="font-bold text-slate-800">Whatsapp template rules</p>
+                <ul class="mt-1 list-disc space-y-1 pl-5">
+                    <li>Approved <strong>templates</strong> can be sent any time. Create + approve them inside your Whatify dashboard first.</li>
+                    <li>Free-form <strong>messages</strong> only work in the 24-hour customer-service window after the user last replied.</li>
+                    <li>CreatorPlex uses templates for every automated event — map template name + params in <a href="{{ route('admin.notification-templates.index') }}" class="text-violet-700 hover:underline">Notification templates</a>.</li>
+                </ul>
+            </div>
+            <div class="md:col-span-2 flex justify-end gap-2">
+                <form method="POST" action="{{ route('admin.integrations.whatify.test') }}">@csrf<button class="btn-secondary">Test connection</button></form>
+                <button class="btn-primary">Save WhatsApp settings</button>
+            </div>
         </form>
     </section>
 

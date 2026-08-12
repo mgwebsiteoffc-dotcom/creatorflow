@@ -64,6 +64,26 @@ class MarketplaceController extends Controller
             'status' => 'submitted',
         ]);
 
+        // Confirmation to creator
+        \App\Support\NotifyEvent::fire('creator.application.received', $creator, [
+            'creator_name'   => $creator->display_name,
+            'brand_name'     => $campaign->workspace->name,
+            'campaign_title' => $campaign->title,
+            'link'           => route('creator.applications'),
+        ]);
+
+        // Notify every user in the campaign's workspace
+        foreach ($campaign->workspace?->users ?? [] as $brandUser) {
+            \App\Support\NotifyEvent::fire('brand.application.received', $brandUser, [
+                'brand_name'      => $campaign->workspace->name,
+                'creator_name'    => $creator->display_name,
+                'campaign_title'  => $campaign->title,
+                'followers'       => number_format((int) $creator->follower_count_total),
+                'engagement_rate' => $creator->engagement_rate,
+                'link'            => route('brand.applications.index'),
+            ]);
+        }
+
         return redirect()
             ->route('creator.applications')
             ->with('status', 'Application sent! Track its status below.');

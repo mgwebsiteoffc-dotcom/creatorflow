@@ -145,6 +145,49 @@ class IntegrationsController extends Controller
         }
     }
 
+    /* ─────────────────────────── WHATIFY (WhatsApp) ─────────────────────────── */
+
+    public function updateWhatify(Request $request)
+    {
+        $this->ensureMigrated();
+
+        $data = $request->validate([
+            'whatify_enabled'    => ['nullable', 'boolean'],
+            'whatify_api_key'    => ['nullable', 'string', 'max:400'],
+            'whatify_base_url'   => ['nullable', 'url', 'max:255'],
+            'whatify_account_id' => ['nullable', 'string', 'max:80'],
+            'whatify_from_number'=> ['nullable', 'string', 'max:30'],
+        ]);
+
+        if (empty($data['whatify_api_key']) || str_contains((string) $data['whatify_api_key'], '•')) {
+            unset($data['whatify_api_key']);
+        }
+
+        PlatformSetting::current()->update([
+            'whatify_enabled'    => (bool) ($request->input('whatify_enabled')),
+            'whatify_base_url'   => $data['whatify_base_url'] ?? 'https://app.whatify.in',
+            'whatify_account_id' => $data['whatify_account_id'] ?? null,
+            'whatify_from_number'=> $data['whatify_from_number'] ?? null,
+            'whatify_last_test_status' => null,
+        ] + (isset($data['whatify_api_key']) ? ['whatify_api_key' => $data['whatify_api_key']] : []));
+
+        return back()->with('status', 'Whatify (WhatsApp) settings saved.');
+    }
+
+    public function testWhatify(\App\Support\WhatifyService $whatify)
+    {
+        $this->ensureMigrated();
+        $ping = $whatify->ping();
+        PlatformSetting::current()->update([
+            'whatify_last_tested_at'   => now(),
+            'whatify_last_test_status' => $ping['ok'] ? 'ok' : 'error',
+        ]);
+        return back()->with(
+            $ping['ok'] ? 'status' : 'error',
+            $ping['ok'] ? '✓ Whatify reachable — health endpoint responded '.$ping['status'] : '❌ '.($ping['error'] ?? 'HTTP '.$ping['status'])
+        );
+    }
+
     /* ─────────────────────────── VAPID (push) ─────────────────────────── */
 
     public function updateVapid(Request $request)

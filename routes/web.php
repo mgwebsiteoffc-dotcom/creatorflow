@@ -231,7 +231,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/integrations/razorpay',           [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateRazorpay'])->name('integrations.razorpay.update');
     Route::post('/integrations/razorpay/test',      [\App\Http\Controllers\Admin\IntegrationsController::class, 'testRazorpay'])->name('integrations.razorpay.test');
     Route::post('/integrations/vapid',               [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateVapid'])->name('integrations.vapid.update');
-    Route::post('/integrations/features',            [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateFeatures'])->name('integrations.features.update');
+    Route::post('/integrations/whatify',              [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateWhatify'])->name('integrations.whatify.update');
+    Route::post('/integrations/whatify/test',         [\App\Http\Controllers\Admin\IntegrationsController::class, 'testWhatify'])->name('integrations.whatify.test');
+    Route::post('/integrations/features',             [\App\Http\Controllers\Admin\IntegrationsController::class, 'updateFeatures'])->name('integrations.features.update');
+
+    // Notification templates (per-event email + whatsapp + in-app)
+    Route::get('/notification-templates',                                 [\App\Http\Controllers\Admin\NotificationTemplateController::class, 'index'])->name('notification-templates.index');
+    Route::get('/notification-templates/{notification_template}/edit',    [\App\Http\Controllers\Admin\NotificationTemplateController::class, 'edit'])->name('notification-templates.edit');
+    Route::patch('/notification-templates/{notification_template}',       [\App\Http\Controllers\Admin\NotificationTemplateController::class, 'update'])->name('notification-templates.update');
+    Route::post('/notification-templates/{notification_template}/test',   [\App\Http\Controllers\Admin\NotificationTemplateController::class, 'test'])->name('notification-templates.test');
 
     Route::get('/seo',       AdminSeoController::class)->name('seo');
 

@@ -60,6 +60,15 @@ class ReleasePayout
         // Trigger the Stripe Connect transfer when credentials are configured.
         $this->stripe->transferPayout($payout);
 
+        // Fire creator payout notification (email + WhatsApp).
+        \App\Support\NotifyEvent::fire('creator.payout.released', $assignment->creator, [
+            'creator_name'   => $assignment->creator->display_name ?? '',
+            'brand_name'     => $campaign->workspace->name ?? '',
+            'campaign_title' => $campaign->title ?? '',
+            'amount'         => number_format($net / 100, 2, '.', ','),
+            'link'           => url('/creator/earnings'),
+        ]);
+
         return $payout;
     }
 }

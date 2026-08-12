@@ -50,8 +50,9 @@
                     ['route' => 'admin.referrals.index', 'label' => 'Referrals', 'icon' => '🎁'],
                 ] : []),
                 ['route' => 'admin.ai.edit',           'label' => 'AI keys',      'icon' => '🤖'],
-                ['route' => 'admin.integrations.edit', 'label' => 'Integrations', 'icon' => '🔌'],
-                ['route' => 'admin.settings',          'label' => 'Settings',     'icon' => '⚙️'],
+                ['route' => 'admin.integrations.edit',         'label' => 'Integrations',  'icon' => '🔌'],
+                ['route' => 'admin.notification-templates.index','label' => 'Templates',    'icon' => '📧'],
+                ['route' => 'admin.settings',                  'label' => 'Settings',       'icon' => '⚙️'],
             ];
         @endphp
         @foreach($items as $it)

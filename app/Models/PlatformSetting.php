@@ -30,6 +30,9 @@ class PlatformSetting extends Model
         'features_json',
         // PWA push (VAPID)
         'vapid_public_key', 'vapid_private_key', 'vapid_subject',
+        // Whatify (WhatsApp)
+        'whatify_enabled', 'whatify_api_key', 'whatify_base_url', 'whatify_account_id',
+        'whatify_from_number', 'whatify_last_tested_at', 'whatify_last_test_status',
     ];
 
     protected $casts = [
@@ -50,6 +53,9 @@ class PlatformSetting extends Model
         'razorpay_key_secret'       => 'encrypted',
         'razorpay_webhook_secret'   => 'encrypted',
         'vapid_private_key'         => 'encrypted',
+        'whatify_api_key'           => 'encrypted',
+        'whatify_enabled'           => 'boolean',
+        'whatify_last_tested_at'    => 'datetime',
     ];
 
     /**
@@ -91,7 +97,16 @@ class PlatformSetting extends Model
         'vapid_public_key'          => null,
         'vapid_private_key'         => null,
         'vapid_subject'             => null,
+        'whatify_enabled'           => false,
+        'whatify_api_key'           => null,
+        'whatify_base_url'          => 'https://app.whatify.in',
+        'whatify_account_id'        => null,
+        'whatify_from_number'       => null,
+        'whatify_last_tested_at'    => null,
+        'whatify_last_test_status'  => null,
     ];
+
+    public function maskedWhatifyKey(): string { return $this->mask($this->whatify_api_key); }
 
     /**
      * Feature flags — everything on the roadmap admin can flip on/off.

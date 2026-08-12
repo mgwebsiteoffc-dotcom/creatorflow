@@ -56,6 +56,18 @@ class RazorpayWebhookController extends Controller
             'amount'     => $payment['amount'] ?? null,
         ]);
 
+        // Send receipt email + WhatsApp to the brand on successful capture.
+        if (in_array($event, ['payment.captured', 'subscription.charged'], true) && ! empty($workspaceId)) {
+            $ws = \App\Models\Workspace::find($workspaceId);
+            if ($ws) {
+                \App\Support\NotifyEvent::fire('brand.payment.received', $ws, [
+                    'brand_name' => $ws->name,
+                    'amount'     => number_format(((int) ($payment['amount'] ?? 0)) / 100, 2, '.', ','),
+                    'link'       => url('/brand/billing'),
+                ]);
+            }
+        }
+
         return response('ok', 200);
     }
 }

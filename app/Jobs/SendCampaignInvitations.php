@@ -60,6 +60,15 @@ class SendCampaignInvitations implements ShouldQueue
             $match->update(['status' => 'invited', 'invited_at' => now()]);
 
             $creator->notify(new InvitationNotification($campaign->id, $creator->id));
+
+            \App\Support\NotifyEvent::fire('creator.invited', $creator, [
+                'creator_name'   => $creator->display_name,
+                'brand_name'     => $campaign->workspace->name,
+                'campaign_title' => $campaign->title,
+                'message'        => \Illuminate\Support\Str::limit((string) $message, 240),
+                'link'           => url('/creator/invitations'),
+            ]);
+
             $invited++;
         }
 

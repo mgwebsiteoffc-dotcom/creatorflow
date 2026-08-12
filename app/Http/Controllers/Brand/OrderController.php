@@ -138,6 +138,18 @@ class OrderController extends Controller
             'status'   => $order->status,
         ]);
 
+        // Fire creator email + WhatsApp only when tracking transitions to shipped/delivered.
+        if (in_array($order->status, ['fulfilled', 'delivered'], true) && ! empty($data['tracking_number'])) {
+            \App\Support\NotifyEvent::fire('creator.order.shipped', $order->creator, [
+                'creator_name'     => $order->creator->display_name ?? '',
+                'brand_name'       => $order->workspace->name ?? '',
+                'product_title'    => optional($order->items->first())->title ?: 'your product',
+                'tracking_number'  => $order->tracking_number,
+                'tracking_company' => $order->tracking_company ?: '—',
+                'link'             => url('/creator/assignments'),
+            ]);
+        }
+
         // Best-effort: push tracking to Shopify if this order originated there.
         if ($order->channel && $order->channel->type === 'shopify' && ! empty($order->external_id) && ! empty($data['tracking_number'])) {
             try {
