@@ -84,28 +84,20 @@
                     <p class="mt-0.5 text-xs text-slate-500">Invitations only go to creators matching these criteria. Leave a group empty to include everyone.</p>
                 </div>
 
-                <div class="rounded-2xl border border-slate-200 bg-white p-5 space-y-6">
+                <div class="rounded-2xl border border-slate-200 bg-white p-5 space-y-5">
 
-                    {{-- Cities: uniform 3-column grid so chips align perfectly --}}
+                    {{-- Cities: Meta-ads style searchable multi-select dropdown --}}
                     <div>
-                        <div class="mb-2 flex items-center justify-between">
-                            <label class="label !mb-0 flex items-center gap-1.5">
-                                <x-icon name="pin" class="h-3.5 w-3.5 text-slate-400" />
-                                Cities
-                            </label>
-                            <div class="flex gap-3 text-xs">
-                                <button type="button" data-multi-toggle="aud-cities" data-action="all"  class="font-semibold text-violet-600 hover:text-violet-800">All</button>
-                                <button type="button" data-multi-toggle="aud-cities" data-action="none" class="text-slate-500 hover:text-slate-800">Clear</button>
-                            </div>
-                        </div>
-                        <div class="grid max-h-56 grid-cols-2 gap-2 overflow-y-auto pr-1 sm:grid-cols-3" data-multi-group="aud-cities">
-                            @foreach($cityOpts as $slug => $label)
-                                <label class="cursor-pointer">
-                                    <input type="checkbox" name="audience[cities][]" value="{{ $slug }}" class="peer sr-only">
-                                    <span class="check-tile">{{ $label }}</span>
-                                </label>
-                            @endforeach
-                        </div>
+                        <label class="label flex items-center gap-1.5">
+                            <x-icon name="pin" class="h-3.5 w-3.5 text-slate-400" />
+                            Cities
+                            <span class="ml-auto text-[11px] font-normal text-slate-400">Type to search · pick as many as you like</span>
+                        </label>
+                        <x-multi-select
+                            name="audience[cities][]"
+                            :options="$cityOpts"
+                            placeholder="Add a city…"
+                            search-placeholder="Search cities…" />
                     </div>
 
                     {{-- Tiers --}}
@@ -133,54 +125,51 @@
                         </div>
                     </div>
 
-                    <div class="grid gap-6 md:grid-cols-2">
-                        {{-- Gender --}}
+                    <div class="grid gap-5 md:grid-cols-2">
+                        {{-- Gender: compact chip row (auto-width, no overlap) --}}
                         <div>
                             <label class="label flex items-center gap-1.5">
                                 <x-icon name="user" class="h-3.5 w-3.5 text-slate-400" />
                                 Creator gender
                             </label>
-                            <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                            <div class="flex flex-wrap gap-1.5">
                                 @foreach($genderOpts as $slug => $label)
                                     <label class="cursor-pointer">
                                         <input type="checkbox" name="audience[genders][]" value="{{ $slug }}" class="peer sr-only">
-                                        <span class="check-tile">{{ $label }}</span>
+                                        <span class="mini-chip">{{ $label }}</span>
                                     </label>
                                 @endforeach
                             </div>
                         </div>
 
-                        {{-- Age --}}
+                        {{-- Age: compact chip row --}}
                         <div>
                             <label class="label flex items-center gap-1.5">
                                 <x-icon name="cake" class="h-3.5 w-3.5 text-slate-400" />
                                 Creator age
                             </label>
-                            <div class="grid grid-cols-3 gap-2 sm:grid-cols-6">
+                            <div class="flex flex-wrap gap-1.5">
                                 @foreach($ageOpts as $slug => $label)
                                     <label class="cursor-pointer">
                                         <input type="checkbox" name="audience[age_ranges][]" value="{{ $slug }}" class="peer sr-only">
-                                        <span class="check-tile">{{ $label }}</span>
+                                        <span class="mini-chip tabular-nums">{{ $label }}</span>
                                     </label>
                                 @endforeach
                             </div>
                         </div>
                     </div>
 
-                    {{-- Languages --}}
+                    {{-- Languages: searchable dropdown like cities --}}
                     <div>
                         <label class="label flex items-center gap-1.5">
                             <x-icon name="languages" class="h-3.5 w-3.5 text-slate-400" />
                             Languages spoken
                         </label>
-                        <div class="grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-8">
-                            @foreach($langOpts as $slug => $label)
-                                <label class="cursor-pointer">
-                                    <input type="checkbox" name="audience[languages][]" value="{{ $slug }}" class="peer sr-only">
-                                    <span class="check-tile">{{ $label }}</span>
-                                </label>
-                            @endforeach
-                        </div>
+                        <x-multi-select
+                            name="audience[languages][]"
+                            :options="$langOpts"
+                            placeholder="Add a language…"
+                            search-placeholder="Search languages…" />
                     </div>
 
                     <div class="grid gap-3 border-t border-slate-100 pt-5 md:grid-cols-3">
@@ -218,30 +207,90 @@
                     </div>
                 </div>
 
-                <h3 class="pt-2 font-semibold">Products &amp; creator targets</h3>
-                <p class="text-xs text-slate-500">Set how many creators should receive each product. We automatically invite ~3x based on a 30% acceptance rate and maintain a waitlist.</p>
+                <div class="pt-2">
+                    <div class="flex flex-wrap items-end justify-between gap-2">
+                        <div>
+                            <h3 class="font-semibold text-slate-900">Products &amp; creator targets</h3>
+                            <p class="mt-0.5 text-xs text-slate-500">Pick the products to seed and how many creators should receive each. We invite ~3× based on a 30% acceptance rate.</p>
+                        </div>
+                        <div class="text-xs text-slate-500">
+                            <span data-product-count-selected>0</span> selected · <span>{{ count($products) }} total</span>
+                        </div>
+                    </div>
 
-                <div class="space-y-2">
-                    @foreach($products as $product)
-                        @php $seed = collect($suggestion['seed_products'] ?? [])->firstWhere('product_id', $product->id); @endphp
-                        <label class="product-row flex items-center gap-3 rounded-xl border border-slate-200 p-3 transition has-[:checked]:border-violet-400 has-[:checked]:bg-violet-50/40">
-                            <input type="checkbox" class="product-toggle h-4 w-4 rounded border-slate-300 text-violet-600 focus:ring-violet-400"
-                                   @checked($seed !== null)>
-                            <input type="hidden" class="product-id" name="products[{{ $loop->index }}][product_id]"
-                                   value="{{ $product->id }}" @if($seed === null) disabled @endif>
-                            <div class="min-w-0 flex-1">
-                                <p class="truncate font-medium">{{ $product->title }}</p>
-                                <p class="text-xs text-slate-500">{{ $currentWorkspace->formatMoney((int) $product->priceCents()) }} · {{ $product->inventoryTotal() }} in stock
-                                    @if($product->hero_score > 70) · <span class="badge-amber">Hero {{ $product->hero_score }}</span>@endif
-                                </p>
+                    {{-- Search + scrollable list. Handles 100s of products without breaking the page. --}}
+                    <div class="mt-3 overflow-hidden rounded-xl border border-slate-200">
+                        <div class="border-b border-slate-100 bg-slate-50 p-2">
+                            <div class="relative">
+                                <x-icon name="search" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                                <input type="search" data-product-search
+                                       class="input !py-2 !pl-9 text-sm"
+                                       placeholder="Search {{ count($products) }} products by title or SKU…"
+                                       autocomplete="off">
                             </div>
-                            <input type="number" min="1" class="product-target input w-20 !py-1.5 text-center"
-                                   name="products[{{ $loop->index }}][target_creators]"
-                                   value="{{ $seed['target_creators'] ?? 10 }}"
-                                   @if($seed === null) disabled @endif>
-                        </label>
-                    @endforeach
+                        </div>
+
+                        <div class="max-h-[380px] overflow-y-auto divide-y divide-slate-100" data-product-list>
+                            @foreach($products as $product)
+                                @php $seed = collect($suggestion['seed_products'] ?? [])->firstWhere('product_id', $product->id); @endphp
+                                <label data-product-row
+                                       data-search="{{ strtolower($product->title) }}"
+                                       class="product-row flex items-center gap-3 bg-white p-3 transition has-[:checked]:bg-violet-50/50">
+                                    <input type="checkbox" class="product-toggle h-4 w-4 shrink-0 rounded border-slate-300 text-violet-600 focus:ring-violet-400"
+                                           @checked($seed !== null)>
+                                    <input type="hidden" class="product-id" name="products[{{ $loop->index }}][product_id]"
+                                           value="{{ $product->id }}" @if($seed === null) disabled @endif>
+                                    <div class="min-w-0 flex-1">
+                                        <p class="truncate text-sm font-medium text-slate-900">{{ $product->title }}</p>
+                                        <p class="truncate text-xs text-slate-500">
+                                            {{ $currentWorkspace->formatMoney((int) $product->priceCents()) }} · {{ $product->inventoryTotal() }} in stock
+                                            @if($product->hero_score > 70) · <span class="badge-amber">Hero {{ $product->hero_score }}</span>@endif
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center gap-1.5">
+                                        <label class="text-[10px] font-semibold uppercase tracking-widest text-slate-400">Target</label>
+                                        <input type="number" min="1" class="product-target input w-16 !py-1 !text-sm text-center"
+                                               name="products[{{ $loop->index }}][target_creators]"
+                                               value="{{ $seed['target_creators'] ?? 10 }}"
+                                               @if($seed === null) disabled @endif>
+                                    </div>
+                                </label>
+                            @endforeach
+                            <div data-product-empty class="hidden p-6 text-center text-sm text-slate-500">No products match your search.</div>
+                        </div>
+                    </div>
                 </div>
+
+                <script>
+                    (function () {
+                        // Live filter of the products list + running "selected" counter.
+                        const search  = document.querySelector('[data-product-search]');
+                        const list    = document.querySelector('[data-product-list]');
+                        const empty   = document.querySelector('[data-product-empty]');
+                        const rows    = list ? list.querySelectorAll('[data-product-row]') : [];
+                        const counter = document.querySelector('[data-product-count-selected]');
+                        if (! list) return;
+
+                        const filter = () => {
+                            const q = (search?.value || '').trim().toLowerCase();
+                            let visible = 0;
+                            rows.forEach(r => {
+                                const match = ! q || r.dataset.search.includes(q);
+                                r.style.display = match ? '' : 'none';
+                                if (match) visible++;
+                            });
+                            if (empty) empty.classList.toggle('hidden', visible > 0);
+                        };
+                        const updateCounter = () => {
+                            if (! counter) return;
+                            counter.textContent = list.querySelectorAll('input.product-toggle:checked').length;
+                        };
+
+                        search?.addEventListener('input', filter);
+                        rows.forEach(r => r.querySelector('input.product-toggle')?.addEventListener('change', updateCounter));
+                        updateCounter();
+                    })();
+                </script>
             </div>
 
             <div class="card h-fit space-y-4 p-5">

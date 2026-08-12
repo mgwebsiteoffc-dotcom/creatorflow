@@ -443,4 +443,85 @@ document.addEventListener('DOMContentLoaded', () => {
         el.querySelector('[data-flash-close]')?.addEventListener('click', close);
         setTimeout(close, 6000);
     });
+
+    /* Global "Select all / Clear" helpers for multi-select chip groups.
+       <button data-multi-toggle="cities" data-action="all|none">…</button>
+       <div    data-multi-group="cities">…checkbox inputs…</div> */
+    document.querySelectorAll('[data-multi-toggle]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = document.querySelector(`[data-multi-group="${btn.dataset.multiToggle}"]`);
+            if (!group) return;
+            const checked = btn.dataset.action === 'all';
+            group.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                if (cb.checked !== checked) { cb.checked = checked; cb.dispatchEvent(new Event('change', { bubbles: true })); }
+            });
+        });
+    });
+
+    /* Searchable multi-select dropdown (Meta-ads style).
+       Wrap the whole widget in [data-ms-wrap]; see <x-multi-select> for markup. */
+    document.querySelectorAll('[data-ms-wrap]').forEach(wrap => {
+        const trigger  = wrap.querySelector('[data-ms-trigger]');
+        const panel    = wrap.querySelector('[data-ms-panel]');
+        const search   = wrap.querySelector('[data-ms-search]');
+        const list     = wrap.querySelector('[data-ms-list]');
+        const empty    = wrap.querySelector('[data-ms-empty]');
+        const countEl  = wrap.querySelector('[data-ms-count]');
+        const pillsBox = wrap.querySelector('[data-ms-pills]') || trigger;
+        const items    = list ? list.querySelectorAll('[data-ms-item]') : [];
+        const checks   = list ? list.querySelectorAll('input[type="checkbox"]') : [];
+        if (!trigger || !panel || !list) return;
+
+        const render = () => {
+            // remove pills for anything no longer checked
+            pillsBox.querySelectorAll('[data-ms-pill]').forEach(p => {
+                const cb = list.querySelector(`input[data-ms-value="${CSS.escape(p.dataset.msPill)}"]`);
+                if (!cb || !cb.checked) p.remove();
+            });
+            // add pills for newly checked options
+            checks.forEach(cb => {
+                if (!cb.checked) return;
+                if (pillsBox.querySelector(`[data-ms-pill="${CSS.escape(cb.dataset.msValue)}"]`)) return;
+                const pill = document.createElement('span');
+                pill.dataset.msPill = cb.dataset.msValue;
+                pill.className = 'inline-flex items-center gap-1 rounded-md bg-violet-100 px-2 py-0.5 text-xs font-semibold text-violet-800';
+                pill.innerHTML = `<span>${cb.dataset.msLabel}</span><button type="button" data-ms-remove="${cb.dataset.msValue}" class="text-violet-500 hover:text-violet-900" aria-label="Remove">×</button>`;
+                if (empty) pillsBox.insertBefore(pill, empty); else pillsBox.appendChild(pill);
+            });
+            const count = Array.from(checks).filter(c => c.checked).length;
+            if (empty) empty.classList.toggle('hidden', count > 0);
+            if (countEl) countEl.textContent = count + ' selected';
+        };
+        render();
+
+        trigger.addEventListener('click', (e) => {
+            if (e.target.closest('[data-ms-remove]')) return;
+            panel.classList.toggle('hidden');
+            if (!panel.classList.contains('hidden')) setTimeout(() => search?.focus(), 30);
+        });
+        document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) panel.classList.add('hidden'); });
+
+        wrap.addEventListener('click', (e) => {
+            const rm = e.target.closest('[data-ms-remove]');
+            if (!rm) return;
+            e.stopPropagation();
+            const cb = list.querySelector(`input[data-ms-value="${CSS.escape(rm.dataset.msRemove)}"]`);
+            if (cb) { cb.checked = false; render(); }
+        });
+
+        checks.forEach(cb => cb.addEventListener('change', render));
+
+        search?.addEventListener('input', () => {
+            const q = search.value.trim().toLowerCase();
+            items.forEach(item => item.style.display = item.dataset.msItem.includes(q) ? '' : 'none');
+        });
+        wrap.querySelector('[data-ms-all]')?.addEventListener('click', () => {
+            items.forEach(item => { if (item.style.display !== 'none') { const cb = item.querySelector('input'); if (cb) cb.checked = true; } });
+            render();
+        });
+        wrap.querySelector('[data-ms-clear]')?.addEventListener('click', () => {
+            checks.forEach(cb => cb.checked = false);
+            render();
+        });
+    });
 });

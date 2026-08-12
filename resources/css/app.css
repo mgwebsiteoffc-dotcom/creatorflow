@@ -567,6 +567,28 @@ body.guest-bg .bg-slate-50  { background-color: rgba(248,250,252,.55) !important
         box-shadow: 0 8px 18px -10px rgba(219,39,119,.5);
     }
 
+    /* Auto-width chip for short labels (gender, age brackets, language codes).
+       Sits in a flex-wrap row and never gets clipped. */
+    .mini-chip {
+        display: inline-flex; align-items: center;
+        border-radius: .5rem;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+        padding: .375rem .625rem;
+        font-size: .75rem; font-weight: 500; color: #475569;
+        line-height: 1;
+        transition: all .12s ease;
+        white-space: nowrap;
+    }
+    label:hover .mini-chip { border-color: #c4b5fd; color: #1e293b; }
+    label:has(input:checked) .mini-chip {
+        border-color: #7c3aed;
+        background: #f5f3ff;
+        color: #6d28d9;
+        font-weight: 600;
+        box-shadow: 0 0 0 1px #7c3aed inset;
+    }
+
     /* Grid-aligned checkbox tile — same width per cell, single line, minimalist.
        Used for cities, gender, age, languages so nothing wraps into pill-fog. */
     .check-tile {

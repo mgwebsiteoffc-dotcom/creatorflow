@@ -41,11 +41,11 @@
                 {{-- Trigger button + selected pills --}}
                 <button type="button" data-ms-trigger
                         class="input flex min-h-[46px] w-full flex-wrap items-center gap-1.5 text-left">
-                    <span data-ms-empty class="text-slate-400 {{ count($cities) ? 'hidden' : '' }}">📍 Pick one or more cities…</span>
+                    <span data-ms-empty class="text-sm text-slate-400 {{ count($cities) ? 'hidden' : '' }}">Pick one or more cities…</span>
                     @foreach($cities as $slug)
                         @if(isset($cityOptions[$slug]))
-                            <span data-ms-pill="{{ $slug }}" class="inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-xs font-semibold text-violet-800">
-                                📍 {{ $cityOptions[$slug] }}
+                            <span data-ms-pill="{{ $slug }}" class="inline-flex items-center gap-1 rounded-md bg-violet-100 px-2 py-0.5 text-xs font-semibold text-violet-800">
+                                <span>{{ $cityOptions[$slug] }}</span>
                                 <button type="button" data-ms-remove="{{ $slug }}" class="text-violet-500 hover:text-violet-900" aria-label="Remove">×</button>
                             </span>
                         @endif
@@ -74,7 +74,7 @@
                                        data-ms-label="{{ $label }}"
                                        class="h-4 w-4 rounded border-slate-300 text-violet-600 focus:ring-violet-400"
                                        @checked(in_array($slug, $cities))>
-                                <span>📍 {{ $label }}</span>
+                                <span>{{ $label }}</span>
                             </label>
                         @endforeach
                     </div>
@@ -227,84 +227,6 @@
             });
         });
 
-        // "Select all / Clear" helpers for multi-select chip groups
-        document.querySelectorAll('[data-multi-toggle]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const group = document.querySelector(`[data-multi-group="${btn.dataset.multiToggle}"]`);
-                if (!group) return;
-                const checked = btn.dataset.action === 'all';
-                group.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = checked);
-            });
-        });
-
-        // Searchable multi-select dropdown (used for the cities picker).
-        document.querySelectorAll('[data-ms-wrap]').forEach(wrap => {
-            const trigger  = wrap.querySelector('[data-ms-trigger]');
-            const panel    = wrap.querySelector('[data-ms-panel]');
-            const search   = wrap.querySelector('[data-ms-search]');
-            const list     = wrap.querySelector('[data-ms-list]');
-            const empty    = wrap.querySelector('[data-ms-empty]');
-            const countEl  = wrap.querySelector('[data-ms-count]');
-            const items    = list.querySelectorAll('[data-ms-item]');
-            const checks   = list.querySelectorAll('input[type="checkbox"]');
-
-            const renderPills = () => {
-                // Remove pills for unchecked options
-                wrap.querySelectorAll('[data-ms-pill]').forEach(p => {
-                    const cb = list.querySelector(`input[data-ms-value="${p.dataset.msPill}"]`);
-                    if (!cb || !cb.checked) p.remove();
-                });
-                // Add pills for newly checked options
-                checks.forEach(cb => {
-                    if (!cb.checked) return;
-                    if (wrap.querySelector(`[data-ms-pill="${cb.dataset.msValue}"]`)) return;
-                    const pill = document.createElement('span');
-                    pill.dataset.msPill = cb.dataset.msValue;
-                    pill.className = 'inline-flex items-center gap-1 rounded-full bg-violet-100 px-2 py-0.5 text-xs font-semibold text-violet-800';
-                    pill.innerHTML = `📍 ${cb.dataset.msLabel} <button type="button" data-ms-remove="${cb.dataset.msValue}" class="text-violet-500 hover:text-violet-900" aria-label="Remove">×</button>`;
-                    trigger.insertBefore(pill, empty);
-                });
-                const count = Array.from(checks).filter(c => c.checked).length;
-                if (empty) empty.classList.toggle('hidden', count > 0);
-                if (countEl) countEl.textContent = `${count} selected`;
-            };
-
-            trigger.addEventListener('click', (e) => {
-                if (e.target.closest('[data-ms-remove]')) return;
-                panel.classList.toggle('hidden');
-                if (!panel.classList.contains('hidden')) setTimeout(() => search?.focus(), 30);
-            });
-            document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) panel.classList.add('hidden'); });
-
-            wrap.addEventListener('click', (e) => {
-                const rm = e.target.closest('[data-ms-remove]');
-                if (!rm) return;
-                e.stopPropagation();
-                const cb = list.querySelector(`input[data-ms-value="${rm.dataset.msRemove}"]`);
-                if (cb) { cb.checked = false; renderPills(); }
-            });
-
-            checks.forEach(cb => cb.addEventListener('change', renderPills));
-
-            search?.addEventListener('input', () => {
-                const q = search.value.trim().toLowerCase();
-                items.forEach(item => {
-                    item.style.display = item.dataset.msItem.includes(q) ? '' : 'none';
-                });
-            });
-
-            wrap.querySelector('[data-ms-all]')?.addEventListener('click', () => {
-                items.forEach(item => {
-                    if (item.style.display === 'none') return;
-                    const cb = item.querySelector('input');
-                    if (cb) cb.checked = true;
-                });
-                renderPills();
-            });
-            wrap.querySelector('[data-ms-clear]')?.addEventListener('click', () => {
-                checks.forEach(cb => cb.checked = false);
-                renderPills();
-            });
-        });
+        // (multi-select and multi-toggle helpers now live globally in resources/js/app.js)
     </script>
 </x-layouts.app>
