@@ -98,24 +98,47 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('[data-reel-prev]').forEach((b) => b.addEventListener('click', () => scrollBy(-1)));
         document.querySelectorAll('[data-reel-next]').forEach((b) => b.addEventListener('click', () => scrollBy(1)));
 
-        // Play buttons — play the video, hide the button while playing
-        reel.querySelectorAll('[data-reel-play]').forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const card = btn.closest('article');
-                const video = card?.querySelector('[data-reel-video]');
-                if (video) {
-                    // Pause any other playing reel first
-                    reel.querySelectorAll('[data-reel-video]').forEach(v => {
-                        if (v !== video) { try { v.pause(); v.currentTime = 0; } catch {} }
-                    });
-                    reel.querySelectorAll('[data-reel-play]').forEach(b => b.classList.remove('opacity-0'));
+        // Autoplay reel videos as they scroll into view (Instagram-style).
+        // Muted + inline → allowed on all modern mobile browsers with no tap.
+        const videos = reel.querySelectorAll('[data-reel-video]');
+        if (videos.length && 'IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((e) => {
+                    const v = e.target;
+                    if (e.isIntersecting && e.intersectionRatio > 0.5) {
+                        v.play().catch(() => {});
+                    } else {
+                        try { v.pause(); } catch {}
+                    }
+                });
+            }, { threshold: [0, 0.5, 1], root: reel });
+            videos.forEach(v => io.observe(v));
+        } else {
+            // Fallback: just try to play them all
+            videos.forEach(v => { try { v.play().catch(() => {}); } catch {} });
+        }
 
-                    video.play().then(() => {
-                        btn.classList.add('opacity-0');
-                    }).catch(() => {});
-                    video.addEventListener('pause', () => btn.classList.remove('opacity-0'), { once: true });
-                    video.addEventListener('ended', () => btn.classList.remove('opacity-0'), { once: true });
+        // Mute / unmute toggle per card
+        reel.querySelectorAll('[data-reel-mute]').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card  = btn.closest('article');
+                const video = card?.querySelector('[data-reel-video]');
+                if (! video) return;
+                video.muted = ! video.muted;
+                btn.querySelector('[data-reel-mute-on]')?.classList.toggle('hidden', ! video.muted);
+                btn.querySelector('[data-reel-mute-off]')?.classList.toggle('hidden',  video.muted);
+                // When unmuting one card, mute all the others so audio doesn't overlap
+                if (! video.muted) {
+                    reel.querySelectorAll('[data-reel-video]').forEach(v => {
+                        if (v !== video) v.muted = true;
+                    });
+                    reel.querySelectorAll('[data-reel-mute]').forEach(b => {
+                        if (b !== btn) {
+                            b.querySelector('[data-reel-mute-on]')?.classList.remove('hidden');
+                            b.querySelector('[data-reel-mute-off]')?.classList.add('hidden');
+                        }
+                    });
                 }
             });
         });

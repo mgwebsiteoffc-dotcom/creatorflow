@@ -592,8 +592,21 @@ body.guest-bg .bg-slate-50  { background-color: rgba(248,250,252,.55) !important
     body { padding-bottom: env(safe-area-inset-bottom); }
 }
 
+/* Testimonial auto-scrolling marquee — infinite loop, pauses on hover */
+.testimonial-marquee { position: relative; }
+.testimonial-track {
+    animation: testimonial-scroll 45s linear infinite;
+    will-change: transform;
+}
+.testimonial-marquee:hover .testimonial-track { animation-play-state: paused; }
+@keyframes testimonial-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); } /* array is duplicated so 50% = one loop */
+}
+
 @media (prefers-reduced-motion: reduce) {
     .aurora::before, .aurora::after, .aurora-3, .marquee-track, .rotator ul,
-    .guest-bg-layer .blob, .guest-bg-layer .floater { animation: none !important; }
+    .guest-bg-layer .blob, .guest-bg-layer .floater,
+    .testimonial-track { animation: none !important; }
     .reveal { opacity: 1; transform: none; }
 }

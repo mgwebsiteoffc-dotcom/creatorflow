@@ -536,13 +536,14 @@
                         <article data-reel-card data-cat="{{ $r['category'] }}"
                                  class="group relative aspect-[9/16] w-[240px] shrink-0 snap-start overflow-hidden rounded-3xl shadow-lg sm:w-[260px] md:w-[280px]">
 
-                            {{-- Video (if uploaded) or gradient poster --}}
+                            {{-- Video (if uploaded) — autoplays when scrolled into view. Falls
+                                 back to the gradient poster when no video is set. --}}
                             @if(! empty($r['video_url']))
                                 <video
                                     src="{{ $r['video_url'] }}"
                                     @if(! empty($r['poster_url'])) poster="{{ $r['poster_url'] }}" @endif
                                     class="absolute inset-0 h-full w-full object-cover"
-                                    muted loop playsinline preload="metadata"
+                                    muted loop playsinline autoplay preload="auto"
                                     data-reel-video></video>
                             @elseif(! empty($r['poster_url']))
                                 <img src="{{ $r['poster_url'] }}" alt="{{ $r['title'] }}" class="absolute inset-0 h-full w-full object-cover">
@@ -551,28 +552,39 @@
                                 <div class="absolute inset-0 opacity-40" style="background: radial-gradient(200px 200px at 30% 30%, rgba(255,255,255,.6), transparent 60%);"></div>
                             @endif
 
+                            {{-- Live "NOW PLAYING" pill (only when a real video is attached) --}}
+                            @if(! empty($r['video_url']))
+                                <span class="pointer-events-none absolute left-3 bottom-24 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur">
+                                    <span class="grid h-1.5 w-1.5 place-items-center rounded-full bg-emerald-400" style="box-shadow: 0 0 0 3px rgba(52,211,153,.35);"></span>
+                                    Now playing
+                                </span>
+                            @endif
+
                             {{-- Chrome overlay: category chip + duration --}}
                             <div class="pointer-events-none absolute inset-x-3 top-3 z-10 flex items-center justify-between text-white">
                                 <span class="rounded-full bg-black/50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest backdrop-blur">{{ $r['category'] }}</span>
                                 <span class="rounded-full bg-black/50 px-2 py-0.5 text-[10px] font-semibold backdrop-blur">0:{{ str_pad(15 + $loop->index * 3, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
 
-                            {{-- Right-rail actions --}}
+                            {{-- Right-rail actions (decorative — matches Reels chrome) --}}
                             <div class="pointer-events-none absolute right-3 bottom-16 z-10 flex flex-col items-center gap-3 text-white">
                                 <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">❤</div>
                                 <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">💬</div>
                                 <div class="grid h-8 w-8 place-items-center rounded-full bg-white/20 backdrop-blur">↗</div>
                             </div>
 
-                            {{-- CENTERED play button — fades out when the video is playing --}}
-                            <button type="button"
-                                    class="absolute inset-0 z-10 grid place-items-center opacity-100 transition duration-300"
-                                    data-reel-play
-                                    aria-label="Play {{ $r['title'] }}">
-                                <span class="grid h-16 w-16 place-items-center rounded-full bg-white/25 text-3xl text-white shadow-lg backdrop-blur transition group-hover:scale-105 group-hover:bg-white/40">▶</span>
-                            </button>
+                            {{-- Mute toggle in the bottom-right (only for real videos) --}}
+                            @if(! empty($r['video_url']))
+                                <button type="button"
+                                        data-reel-mute
+                                        aria-label="Toggle sound"
+                                        class="absolute right-3 top-11 z-20 grid h-8 w-8 place-items-center rounded-full bg-black/55 text-white backdrop-blur transition hover:bg-black/70">
+                                    <span data-reel-mute-on>🔇</span>
+                                    <span data-reel-mute-off class="hidden">🔊</span>
+                                </button>
+                            @endif
 
-                            {{-- Bottom info gradient --}}
+                            {{-- Bottom info gradient (no link, no redirect — video is the content) --}}
                             <div class="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4 pt-14 text-white">
                                 @if($r['creator'])
                                     <div class="text-[11px] font-semibold opacity-90">{{ $r['creator'] }}</div>
@@ -582,10 +594,6 @@
                                     <div class="mt-1 flex items-center gap-2 text-[11px] opacity-90"><span>▶ {{ $r['meta'] }}</span></div>
                                 @endif
                             </div>
-
-                            @if(! empty($r['link']))
-                                <a href="{{ $r['link'] }}" target="_blank" rel="noopener" class="absolute inset-0 z-20 sr-only">Open reel</a>
-                            @endif
                         </article>
                     @endforeach
                 </div>
@@ -720,33 +728,47 @@
                 <h2 class="section-title reveal mt-3">What our customers say</h2>
             </div>
 
-            <div class="mt-12 grid gap-6 md:grid-cols-3">
-                @php
-                    $quotes = [
-                        ['q' => 'CreatorPlex ran our barter campaign end-to-end and the UGC boosted our perfume launch instantly.', 'name' => 'Luxotica', 'role' => 'Cosmetic brand', 'grad' => 'from-pink-500 to-rose-500'],
-                        ['q' => 'Our brand awareness campaign gave us the right exposure in the education space and drove quality traffic.', 'name' => 'Mywbut', 'role' => 'EdTech platform', 'grad' => 'from-violet-500 to-indigo-500'],
-                        ['q' => 'The product review campaign delivered authentic influencer content that built real trust for our fashion line.', 'name' => 'weRbangali', 'role' => 'Regional fashion brand', 'grad' => 'from-cyan-500 to-emerald-500'],
-                    ];
-                @endphp
-                @foreach($quotes as $q)
-                    <figure class="reveal card card-hover p-6">
-                        <div class="flex items-center gap-1 text-amber-500">
-                            @for($i=0;$i<5;$i++)★@endfor
-                        </div>
-                        <blockquote class="mt-4 text-slate-700">
-                            “{{ $q['q'] }}”
-                        </blockquote>
-                        <figcaption class="mt-6 flex items-center gap-3">
-                            <span class="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br {{ $q['grad'] }} text-white font-bold">
-                                {{ substr($q['name'],0,1) }}
-                            </span>
-                            <div>
-                                <div class="text-sm font-bold text-slate-900">{{ $q['name'] }}</div>
-                                <div class="text-xs text-slate-500">{{ $q['role'] }}</div>
-                            </div>
-                        </figcaption>
-                    </figure>
-                @endforeach
+            @php
+                $quotes = [
+                    ['q' => 'CreatorPlex ran our barter campaign end-to-end and the UGC boosted our perfume launch instantly.', 'name' => 'Luxotica', 'role' => 'Cosmetic brand', 'grad' => 'from-pink-500 to-rose-500'],
+                    ['q' => 'Our brand awareness campaign gave us the right exposure in the education space and drove quality traffic.', 'name' => 'Mywbut', 'role' => 'EdTech platform', 'grad' => 'from-violet-500 to-indigo-500'],
+                    ['q' => 'The product review campaign delivered authentic influencer content that built real trust for our fashion line.', 'name' => 'weRbangali', 'role' => 'Regional fashion brand', 'grad' => 'from-cyan-500 to-emerald-500'],
+                    ['q' => 'Set up in 20 minutes and shipped 40 barter kits the next day. Reels racked up 3.4M reach in a week.', 'name' => 'Samsara Ghee', 'role' => 'Food · D2C', 'grad' => 'from-amber-500 to-orange-500'],
+                    ['q' => 'The AI matches were spot-on — we stopped guessing which creator to pick and started shipping.', 'name' => 'Roving Mode', 'role' => 'Fashion brand', 'grad' => 'from-indigo-500 to-violet-500'],
+                    ['q' => 'Escrow + auto payouts to creators changed the trust game. Zero disputes in 3 months.', 'name' => 'Nykaa Sellers', 'role' => 'Beauty · marketplace', 'grad' => 'from-fuchsia-500 to-pink-500'],
+                ];
+            @endphp
+
+            {{-- Marquee-style auto-scroll carousel. Duplicated in the DOM so the
+                 loop is seamless. Hover pauses; respects prefers-reduced-motion. --}}
+            <div class="reveal relative mt-12">
+                {{-- Edge fades so cards feel like they're sliding in / out of view --}}
+                <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent"></div>
+                <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent"></div>
+
+                <div class="testimonial-marquee overflow-hidden">
+                    <div class="testimonial-track flex w-max gap-6 py-2">
+                        @foreach(array_merge($quotes, $quotes) as $q)
+                            <figure class="card card-hover w-[320px] shrink-0 p-6 md:w-[360px]">
+                                <div class="flex items-center gap-1 text-amber-500">
+                                    @for($i=0;$i<5;$i++)★@endfor
+                                </div>
+                                <blockquote class="mt-4 text-slate-700">
+                                    &ldquo;{{ $q['q'] }}&rdquo;
+                                </blockquote>
+                                <figcaption class="mt-6 flex items-center gap-3">
+                                    <span class="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br {{ $q['grad'] }} text-white font-bold">
+                                        {{ substr($q['name'],0,1) }}
+                                    </span>
+                                    <div>
+                                        <div class="text-sm font-bold text-slate-900">{{ $q['name'] }}</div>
+                                        <div class="text-xs text-slate-500">{{ $q['role'] }}</div>
+                                    </div>
+                                </figcaption>
+                            </figure>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </section>
