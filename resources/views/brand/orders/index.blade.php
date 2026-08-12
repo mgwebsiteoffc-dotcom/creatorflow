@@ -5,8 +5,28 @@
             <h1 class="mt-1 text-3xl font-black tracking-tight text-slate-900">Orders</h1>
             <p class="mt-1 text-sm text-slate-500">Ship product to creators, add tracking, and mark delivered — either through Shopify or manually.</p>
         </div>
-        <a href="{{ route('brand.channels.index') }}" class="btn-secondary !py-2 text-sm">Manage channels →</a>
+        <div class="flex flex-wrap items-center gap-2">
+            <a href="{{ route('brand.channels.index') }}" class="btn-secondary !py-2 text-sm">
+                {{ $shopifyConnected ? '✓ Shopify connected' : 'Connect Shopify' }} →
+            </a>
+            <a href="{{ route('brand.orders.create') }}" class="btn-gradient !py-2 text-sm">
+                🎁 Create manual order
+            </a>
+        </div>
     </div>
+
+    @unless($hasAnyRemoteChannel)
+        <div class="mt-6 flex items-start gap-3 rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 to-pink-50 p-4 text-sm text-slate-700">
+            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white shadow-sm">🎁</span>
+            <div class="flex-1">
+                <p class="font-bold text-slate-900">No Shopify store connected — that's OK.</p>
+                <p class="mt-1 text-xs text-slate-600">
+                    Ship products to creators manually using the <strong>Create manual order</strong> button above. Add tracking once you dispatch and the creator will get a WhatsApp + email update.
+                    Prefer auto-fulfillment? <a class="font-semibold text-violet-700 underline" href="{{ route('brand.channels.index') }}">Connect Shopify →</a>
+                </p>
+            </div>
+        </div>
+    @endunless
 
     {{-- Stat band --}}
     <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

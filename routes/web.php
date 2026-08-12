@@ -371,6 +371,8 @@ Route::middleware(['auth', 'workspace'])->prefix('brand')->name('brand.')->group
 
     // Barter / seeding order fulfillment
     Route::get('/orders',                                           [\App\Http\Controllers\Brand\OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/create',                                    [\App\Http\Controllers\Brand\OrderController::class, 'createManual'])->name('orders.create');
+    Route::post('/orders',                                          [\App\Http\Controllers\Brand\OrderController::class, 'storeManual'])->name('orders.store');
     Route::get('/orders/{order}',                                   [\App\Http\Controllers\Brand\OrderController::class, 'show'])->name('orders.show');
     Route::patch('/orders/{order}/shipping',                        [\App\Http\Controllers\Brand\OrderController::class, 'updateShipping'])->name('orders.updateShipping');
     Route::post('/orders/{order}/cancel',                           [\App\Http\Controllers\Brand\OrderController::class, 'cancel'])->name('orders.cancel');

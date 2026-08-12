@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Brand;
 use App\Http\Controllers\Controller;
 use App\Jobs\CreateCreatorOrder;
 use App\Models\CampaignAssignment;
+use App\Models\Channel;
+use App\Models\Creator;
 use App\Models\EventLog;
 use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 use App\Support\TenantContext;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 /**
  * Barter / seeding order fulfillment for brands.
@@ -46,7 +51,131 @@ class OrderController extends Controller
             'needs_ship' => $needsFulfillment->count(),
         ];
 
-        return view('brand.orders.index', compact('orders', 'needsFulfillment', 'stats', 'status'));
+        // Detect whether a Shopify (or any non-manual) channel is connected.
+        // When only the manual channel exists we show the "Create manual order"
+        // CTA and hide any Shopify-specific banners.
+        $shopifyConnected = $workspace->channels()
+            ->where('type', 'shopify')
+            ->where('status', 'active')
+            ->exists();
+        $hasAnyRemoteChannel = $workspace->channels()
+            ->whereNotIn('type', ['manual'])
+            ->where('status', 'active')
+            ->exists();
+
+        return view('brand.orders.index', compact(
+            'orders', 'needsFulfillment', 'stats', 'status',
+            'shopifyConnected', 'hasAnyRemoteChannel'
+        ));
+    }
+
+    /**
+     * Manual "create a gifting order" form — used when the brand has no
+     * Shopify connected and just wants to ship a product to a creator.
+     */
+    public function createManual(TenantContext $tenant)
+    {
+        $workspace = $tenant->active();
+
+        $creators = Creator::query()
+            ->where('status', 'active')
+            ->orderBy('display_name')
+            ->limit(500)
+            ->get(['id', 'uuid', 'display_name', 'city', 'email']);
+
+        $products = Product::where('workspace_id', $workspace->id)
+            ->where('status', 'active')
+            ->with(['variants:id,product_id,title,sku,price_cents,inventory_qty'])
+            ->orderBy('title')
+            ->limit(500)
+            ->get(['id', 'uuid', 'title']);
+
+        return view('brand.orders.create', compact('workspace', 'creators', 'products'));
+    }
+
+    public function storeManual(Request $request, TenantContext $tenant)
+    {
+        $workspace = $tenant->active();
+
+        $data = $request->validate([
+            'creator_id'         => ['required', 'exists:creators,id'],
+            'product_id'         => ['required', 'exists:products,id'],
+            'variant_id'         => ['nullable', 'exists:product_variants,id'],
+            'quantity'           => ['required', 'integer', 'min:1', 'max:99'],
+            'note'               => ['nullable', 'string', 'max:500'],
+            'ship_address_line1' => ['required', 'string', 'max:190'],
+            'ship_address_line2' => ['nullable', 'string', 'max:190'],
+            'ship_city'          => ['required', 'string', 'max:120'],
+            'ship_state'         => ['nullable', 'string', 'max:120'],
+            'ship_postal'        => ['required', 'string', 'max:20'],
+            'ship_country'       => ['nullable', 'string', 'max:80'],
+            'ship_phone'         => ['nullable', 'string', 'max:40'],
+        ]);
+
+        $product = Product::where('workspace_id', $workspace->id)->findOrFail($data['product_id']);
+        $variant = $product->variants()->find($data['variant_id'] ?? null) ?? $product->variants()->first();
+        $price   = (int) ($variant?->price_cents ?? 0);
+
+        // Ensure a manual channel exists so the order has somewhere to live.
+        $channel = Channel::firstOrCreate(
+            ['workspace_id' => $workspace->id, 'type' => 'manual'],
+            ['name' => 'Manual', 'status' => 'active']
+        );
+
+        $address = [
+            'line1'   => $data['ship_address_line1'],
+            'line2'   => $data['ship_address_line2'] ?? null,
+            'city'    => $data['ship_city'],
+            'state'   => $data['ship_state'] ?? null,
+            'postal'  => $data['ship_postal'],
+            'country' => $data['ship_country'] ?? 'IN',
+            'phone'   => $data['ship_phone'] ?? null,
+        ];
+
+        $orderNumber = 'MAN-' . strtoupper(Str::random(6));
+
+        $order = Order::create([
+            'workspace_id'         => $workspace->id,
+            'channel_id'           => $channel->id,
+            'creator_id'           => $data['creator_id'],
+            'external_id'          => 'manual_' . Str::uuid()->toString(),
+            'order_number'         => $orderNumber,
+            'subtotal_cents'       => $price * $data['quantity'],
+            'total_discount_cents' => $price * $data['quantity'],
+            'total_cents'          => 0,
+            'currency'             => $workspace->currency ?: 'INR',
+            'status'               => 'open',
+            'shipping_address'     => $address,
+            'placed_at'            => now(),
+            'raw_payload'          => [
+                'manual'     => true,
+                'note'       => $data['note'] ?? null,
+                'created_by' => $request->user()->id,
+            ],
+        ]);
+
+        OrderItem::create([
+            'order_id'             => $order->id,
+            'product_id'           => $product->id,
+            'variant_id'           => $variant?->id,
+            'title'                => $product->title,
+            'sku'                  => $variant?->sku,
+            'quantity'             => $data['quantity'],
+            'price_cents'          => $price,
+            'total_discount_cents' => $price * $data['quantity'],
+        ]);
+
+        if ($variant && $variant->inventory_qty > 0) {
+            $variant->decrement('inventory_qty', min($data['quantity'], $variant->inventory_qty));
+        }
+
+        EventLog::record('order.manual_created', 'Order', $order->id, [
+            'creator_id' => $data['creator_id'],
+            'product_id' => $product->id,
+        ]);
+
+        return redirect()->route('brand.orders.show', $order)
+            ->with('status', "Manual order {$orderNumber} created. Add tracking below when you ship.");
     }
 
     public function show(Order $order, TenantContext $tenant)
