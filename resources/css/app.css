@@ -567,6 +567,29 @@ body.guest-bg .bg-slate-50  { background-color: rgba(248,250,252,.55) !important
         box-shadow: 0 8px 18px -10px rgba(219,39,119,.5);
     }
 
+    /* Grid-aligned checkbox tile — same width per cell, single line, minimalist.
+       Used for cities, gender, age, languages so nothing wraps into pill-fog. */
+    .check-tile {
+        display: flex; align-items: center; justify-content: flex-start;
+        width: 100%; min-height: 2.5rem;
+        border-radius: .625rem;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+        padding: .5rem .75rem;
+        font-size: .8rem; font-weight: 500; color: #334155;
+        line-height: 1.15;
+        transition: all .12s ease;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    label:hover .check-tile { border-color: #c4b5fd; color: #1e293b; }
+    label:has(input:checked) .check-tile {
+        border-color: #7c3aed;
+        background: #f5f3ff;
+        color: #6d28d9;
+        font-weight: 600;
+        box-shadow: 0 0 0 1px #7c3aed inset;
+    }
+
     /* Tile with a body div wrapper (used for tier picker cards) */
     .pick-tile-body {
         display: block;

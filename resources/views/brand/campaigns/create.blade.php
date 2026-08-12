@@ -77,26 +77,32 @@
                     $langOpts   = \App\Support\CreatorTaxonomy::languages();
                 @endphp
                 <div class="pt-2">
-                    <h3 class="font-semibold">🎯 Who should we invite?</h3>
+                    <h3 class="flex items-center gap-2 font-semibold text-slate-900">
+                        <x-icon name="target" class="h-4 w-4 text-violet-600" />
+                        Who should we invite?
+                    </h3>
                     <p class="mt-0.5 text-xs text-slate-500">Invitations only go to creators matching these criteria. Leave a group empty to include everyone.</p>
                 </div>
 
-                <div class="rounded-2xl border border-violet-100 bg-violet-50/30 p-4 space-y-4">
+                <div class="rounded-2xl border border-slate-200 bg-white p-5 space-y-6">
 
-                    {{-- Cities --}}
+                    {{-- Cities: uniform 3-column grid so chips align perfectly --}}
                     <div>
-                        <div class="mb-1.5 flex items-center justify-between">
-                            <label class="label !mb-0">📍 Cities</label>
-                            <div class="flex gap-2 text-xs">
-                                <button type="button" data-multi-toggle="aud-cities" data-action="all"  class="text-violet-600 hover:underline">All</button>
-                                <button type="button" data-multi-toggle="aud-cities" data-action="none" class="text-slate-500 hover:underline">Clear</button>
+                        <div class="mb-2 flex items-center justify-between">
+                            <label class="label !mb-0 flex items-center gap-1.5">
+                                <x-icon name="pin" class="h-3.5 w-3.5 text-slate-400" />
+                                Cities
+                            </label>
+                            <div class="flex gap-3 text-xs">
+                                <button type="button" data-multi-toggle="aud-cities" data-action="all"  class="font-semibold text-violet-600 hover:text-violet-800">All</button>
+                                <button type="button" data-multi-toggle="aud-cities" data-action="none" class="text-slate-500 hover:text-slate-800">Clear</button>
                             </div>
                         </div>
-                        <div class="flex max-h-40 flex-wrap gap-1.5 overflow-y-auto" data-multi-group="aud-cities">
+                        <div class="grid max-h-56 grid-cols-2 gap-2 overflow-y-auto pr-1 sm:grid-cols-3" data-multi-group="aud-cities">
                             @foreach($cityOpts as $slug => $label)
                                 <label class="cursor-pointer">
                                     <input type="checkbox" name="audience[cities][]" value="{{ $slug }}" class="peer sr-only">
-                                    <span class="chip-body">{{ $label }}</span>
+                                    <span class="check-tile">{{ $label }}</span>
                                 </label>
                             @endforeach
                         </div>
@@ -104,14 +110,17 @@
 
                     {{-- Tiers --}}
                     <div>
-                        <div class="mb-1.5 flex items-center justify-between">
-                            <label class="label !mb-0">⭐ Follower tiers</label>
-                            <div class="flex gap-2 text-xs">
-                                <button type="button" data-multi-toggle="aud-tiers" data-action="all"  class="text-violet-600 hover:underline">All</button>
-                                <button type="button" data-multi-toggle="aud-tiers" data-action="none" class="text-slate-500 hover:underline">Clear</button>
+                        <div class="mb-2 flex items-center justify-between">
+                            <label class="label !mb-0 flex items-center gap-1.5">
+                                <x-icon name="star" class="h-3.5 w-3.5 text-slate-400" />
+                                Follower tiers
+                            </label>
+                            <div class="flex gap-3 text-xs">
+                                <button type="button" data-multi-toggle="aud-tiers" data-action="all"  class="font-semibold text-violet-600 hover:text-violet-800">All</button>
+                                <button type="button" data-multi-toggle="aud-tiers" data-action="none" class="text-slate-500 hover:text-slate-800">Clear</button>
                             </div>
                         </div>
-                        <div class="grid gap-2 sm:grid-cols-3 lg:grid-cols-5" data-multi-group="aud-tiers">
+                        <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5" data-multi-group="aud-tiers">
                             @foreach($tierOpts as $slug => $t)
                                 <label class="cursor-pointer">
                                     <input type="checkbox" name="audience[tiers][]" value="{{ $slug }}" class="peer sr-only">
@@ -124,15 +133,18 @@
                         </div>
                     </div>
 
-                    <div class="grid gap-4 md:grid-cols-2">
+                    <div class="grid gap-6 md:grid-cols-2">
                         {{-- Gender --}}
                         <div>
-                            <label class="label">👤 Creator gender</label>
-                            <div class="flex flex-wrap gap-1.5">
+                            <label class="label flex items-center gap-1.5">
+                                <x-icon name="user" class="h-3.5 w-3.5 text-slate-400" />
+                                Creator gender
+                            </label>
+                            <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
                                 @foreach($genderOpts as $slug => $label)
                                     <label class="cursor-pointer">
                                         <input type="checkbox" name="audience[genders][]" value="{{ $slug }}" class="peer sr-only">
-                                        <span class="chip-body">{{ $label }}</span>
+                                        <span class="check-tile">{{ $label }}</span>
                                     </label>
                                 @endforeach
                             </div>
@@ -140,12 +152,15 @@
 
                         {{-- Age --}}
                         <div>
-                            <label class="label">🎂 Creator age</label>
-                            <div class="flex flex-wrap gap-1.5">
+                            <label class="label flex items-center gap-1.5">
+                                <x-icon name="cake" class="h-3.5 w-3.5 text-slate-400" />
+                                Creator age
+                            </label>
+                            <div class="grid grid-cols-3 gap-2 sm:grid-cols-6">
                                 @foreach($ageOpts as $slug => $label)
                                     <label class="cursor-pointer">
                                         <input type="checkbox" name="audience[age_ranges][]" value="{{ $slug }}" class="peer sr-only">
-                                        <span class="chip-body">{{ $label }}</span>
+                                        <span class="check-tile">{{ $label }}</span>
                                     </label>
                                 @endforeach
                             </div>
@@ -154,36 +169,42 @@
 
                     {{-- Languages --}}
                     <div>
-                        <label class="label">🗣️ Languages spoken</label>
-                        <div class="flex flex-wrap gap-1.5">
+                        <label class="label flex items-center gap-1.5">
+                            <x-icon name="languages" class="h-3.5 w-3.5 text-slate-400" />
+                            Languages spoken
+                        </label>
+                        <div class="grid grid-cols-3 gap-2 sm:grid-cols-5 lg:grid-cols-8">
                             @foreach($langOpts as $slug => $label)
                                 <label class="cursor-pointer">
                                     <input type="checkbox" name="audience[languages][]" value="{{ $slug }}" class="peer sr-only">
-                                    <span class="chip-body">{{ $label }}</span>
+                                    <span class="check-tile">{{ $label }}</span>
                                 </label>
                             @endforeach
                         </div>
                     </div>
 
-                    <div class="grid gap-3 md:grid-cols-3">
+                    <div class="grid gap-3 border-t border-slate-100 pt-5 md:grid-cols-3">
                         <div>
                             <label class="label">Min followers</label>
-                            <input class="input" type="number" name="audience[min_followers]" placeholder="10000">
+                            <input class="input" type="number" name="audience[min_followers]" placeholder="10,000">
                         </div>
                         <div>
                             <label class="label">Max followers</label>
-                            <input class="input" type="number" name="audience[max_followers]" placeholder="—">
+                            <input class="input" type="number" name="audience[max_followers]" placeholder="No limit">
                         </div>
                         <div>
                             <label class="label">Min engagement %</label>
-                            <input class="input" type="number" step="0.1" name="audience[min_engagement]" placeholder="3">
+                            <input class="input" type="number" step="0.1" name="audience[min_engagement]" placeholder="3.0">
                         </div>
                     </div>
 
                     {{-- Audience gender skew (of the creator's followers) --}}
-                    <div class="rounded-xl border border-white/70 bg-white/70 p-3">
-                        <p class="text-xs font-semibold text-slate-600">👥 Their audience skew (optional)</p>
-                        <div class="mt-2 grid gap-2 md:grid-cols-2">
+                    <div class="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+                        <p class="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+                            <x-icon name="users" class="h-3.5 w-3.5 text-slate-400" />
+                            Their audience skew (optional)
+                        </p>
+                        <div class="mt-3 grid gap-2 md:grid-cols-2">
                             <select class="input" name="audience[audience_gender]">
                                 <option value="">Any audience gender</option>
                                 <option value="female">Predominantly female followers</option>

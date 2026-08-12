@@ -57,6 +57,14 @@
         'integrations'  => '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
         'templates'     => '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
         'shield'        => '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/>',
+        // Form / audience picker
+        'target'        => '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>',
+        'pin'           => '<path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11Z"/><circle cx="12" cy="10" r="2.2"/>',
+        'star'          => '<path d="m12 3 2.7 5.7 6.3.9-4.6 4.4 1.1 6.3L12 17.3l-5.5 3 1.1-6.3L3 9.6l6.3-.9L12 3Z"/>',
+        'user'          => '<circle cx="12" cy="8.5" r="3.5"/><path d="M4.5 20c.8-4 4-6 7.5-6s6.7 2 7.5 6"/>',
+        'cake'          => '<rect x="4" y="12" width="16" height="8" rx="1.5"/><path d="M4 16h16"/><path d="M8 12V9a4 4 0 0 1 8 0v3"/><path d="M12 5V3"/>',
+        'languages'     => '<path d="M4 6h9"/><path d="M9 4v2c0 5-3 8-6 8"/><path d="M4 10c0 3 3 5 6 6"/><path d="m13 20 4-10 4 10"/><path d="M14.5 17h5"/>',
+        'users'         => '<circle cx="9" cy="9" r="3.2"/><path d="M3 20c.7-3.2 3-5 6-5s5.3 1.8 6 5"/><circle cx="17" cy="7.5" r="2.2"/><path d="M15.5 14.5c2.4.2 4.2 1.7 4.8 4"/>',
     ];
 
     $body = $paths[$name] ?? $paths['home'];
